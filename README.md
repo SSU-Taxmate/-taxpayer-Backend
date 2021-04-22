@@ -2,7 +2,7 @@
 ---------------------
 The repository for tax pay simulation for children
 ## Front
-[프론트](https://github.com/SSU-PaceMaker/taxpayer/master/front)
+[프론트](https://github.com/SSU-PaceMaker/taxpayer/tree/master/front)
 
 # Collaborator🙅‍♀️
 ----------------------
