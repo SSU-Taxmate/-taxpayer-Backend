@@ -141,7 +141,7 @@
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="#">세수현황</a>
+              <a class="collapse-item" href="revenue.html">세수현황</a>
               <a class="collapse-item" href="#">아무거나 웅웅</a>
             </div>
           </div>
@@ -402,236 +402,82 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-4 text-gray-800">증권사</h1>
-            <span>고지서 템플릿이 있는데 확인하고 수정할 것</span>
+            <h1 class="h3 mb-4 text-gray-800">꿈나무 반</h1>
+            <div class="card shadow mb-4">
+              <h6 class="m-3 font-weight-bold text-primary">
+                이번달 내가 내야할 세금
+              </h6>
 
-            <div class="col-lg-12">
-              <!--tab으로 증권창 row1-->
-              <div class="container mb-4">
-                <div class="row">
-                  <div class="col-10">
-                    <!--*content-->
-                    <div class="tab-content" id="myTabContent">
-                      <!--tab1 시작-->
-                      <div
-                        class="tab-pane fade show active"
-                        id="kospi"
-                        role="tabpanel"
-                        aria-labelledby="kospi-tab"
-                      >
-                        <div class="card shadow h-0 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                <div
-                                  class="text-xl font-weight-bold text-info text-uppercase mb-1"
-                                >
-                                  kospi
-                                  <i
-                                    class="fas fa-chart-area text-gray-300"
-                                  ></i>
-                                  <sub class='text-gray-600 pl-2'>2020.08.15.</sub>
-                                  <button
-                                    class="btn btn-sm text-warning btn-link float-right"
-                                    data-toggle="modal"
-                                    data-target="#EditStockModal"
-                                  >
-                                    edit
-                                  </button>
-                                </div>
-                                <div class='row'>
-                                <p class="h2 pl-1">1921</p>
-                                <p class='p-2 text-danger'>
-                                    <i class="fas fa-arrow-up"></i>
-                                    20 (+0.13%)
-                                </p>
-                                </div>
-
-                                <div class="row">
-                                  <img
-                                    class="img-fluid ml-1"
-                                    src="https://placeimg.com/480/300/any"
-                                  />
-                                  <p class='p5 ml-3'>오늘의 뉴스</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!--tab1 끝-->
-                      <!--tab2 시작-->
-                      <div
-                        class="tab-pane fade"
-                        id="kosdaq"
-                        role="tabpanel"
-                        aria-labelledby="kosdaq-tab"
-                      >
-                        <div class="card shadow h-0 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                <div
-                                  class="text-xl font-weight-bold text-info text-uppercase mb-1"
-                                >
-                                  kospi
-                                  <i
-                                    class="fas fa-chart-area text-gray-300"
-                                  ></i>
-                                  <sub class='text-gray-600 pl-2'>2020.08.15.</sub>
-
-                                  <button
-                                    class="btn btn-sm text-warning btn-link float-right"
-                                    data-toggle="modal"
-                                    data-target="#EditStockModal"
-                                  >
-                                    edit
-                                  </button>
-                                </div>
-                                <div class='row'>
-                                <p class="h2 pl-1">1921</p>
-                                <p class='p-2 text-danger'>
-                                    <i class="fas fa-arrow-up"></i>
-                                    20 (+0.13%)
-                                </p>
-                                </div>
-
-                                <div class="row">
-                                  <img
-                                    class="img-fluid ml-1"
-                                    src="https://placeimg.com/480/300/animals"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!--tab2 끝-->
-                      <!--tab3 시작-->
-                      <div
-                        class="tab-pane fade"
-                        id="dollar"
-                        role="tabpanel"
-                        aria-labelledby="dollar-tab"
-                      >
-                        <div class="card shadow h-0 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                <div
-                                  class="text-xl font-weight-bold text-info text-uppercase mb-1"
-                                >
-                                  kospi
-                                  <i
-                                    class="fas fa-chart-area text-gray-300"
-                                  ></i>
-                                  <sub class='text-gray-600 pl-2'>2020.08.15.</sub>
-
-                                  <button
-                                    class="btn btn-sm text-warning btn-link float-right"
-                                    data-toggle="modal"
-                                    data-target="#EditStockModal"
-                                  >
-                                    edit
-                                  </button>
-                                </div>
-                                <div class='row'>
-                                <p class="h2 pl-1">1921</p>
-                                <p class='p-2 text-danger'>
-                                    <i class="fas fa-arrow-up"></i>
-                                    20 (+0.13%)
-                                </p>
-                                </div>
-
-                                <div class="row">
-                                  <img
-                                    class="img-fluid ml-1"
-                                    src="https://placeimg.com/480/300/any"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!--tab3 끝-->
-                    </div>
-                  </div>
-                  <!--*메뉴(코스피,코스닥,달러)-->
-                  <div class="col-2">
-                    <ul
-                      class="nav flex-column nav-pills"
-                      id="myTab"
-                      role="tablist"
-                      aria-orientation="vertical"
-                    >
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          id="kospi-tab"
-                          data-toggle="tab"
-                          href="#kospi"
-                          role="tab"
-                          aria-controls="kospi"
-                          aria-selected="true"
-                          >kospi</a
-                        >
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          id="kosdaq-tab"
-                          data-toggle="tab"
-                          href="#kosdaq"
-                          role="tab"
-                          aria-controls="kosdaq"
-                          aria-selected="false"
-                          >kosdaq</a
-                        >
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          id="dollar-tab"
-                          data-toggle="tab"
-                          href="#dollar"
-                          role="tab"
-                          aria-controls="dollar"
-                          aria-selected="false"
-                          >dollar</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
+              <div class="card-body">
+                <p class="h5">직접세</p>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">소득세</th>
+                      <th scope="col">부동산세</th>
+                      <th scope="col">자리세</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>350미소</td>
+                      <td>20미소</td>
+                      <td>80미소</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--        -->
+                <p class="h5">
+                  간접세
+                  <i
+                    class="fas fa-info-circle"
+                    id="popover_btn"
+                    data-container="body"
+                    data-toggle="popover"
+                    data-placement="right"
+                    data-content="간접세 설명을 적어봅시다"
+                  ></i>
+                </p>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-sm btn-outline-primary active">
+                    <input
+                      type="radio"
+                      name="options"
+                      id="use"
+                      autocomplete="off"
+                      checked
+                    />
+                    사용
+                  </label>
+                  <label class="btn btn-sm btn-outline-primary">
+                    <input
+                      type="radio"
+                      name="options"
+                      id="notuse"
+                      autocomplete="off"
+                    />
+                    미사용
+                  </label>
                 </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">전기세</th>
+                      <th scope="col">인지세</th>
+                      <th scope="col">부가가치세</th>
+                      <th scope="col">증권거래세</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>350미소</td>
+                      <td>20미소</td>
+                      <td>80미소</td>
+                      <td>100미소</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <!--row1끝-->
-              <!-- row2 시작-->
-              <div class="container mb-4">
-                <div class="card border-left-info shadow h-0 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div
-                          class="text-xl font-weight-bold text-info text-uppercase mb-3"
-                        >
-                          회칙
-                          <i class="fas fa-clipboard-list text-gray-300"></i>
-                          <button
-                            class="btn btn-sm text-warning btn-link float-right"
-                            data-toggle="modal"
-                            data-target="#EditStockModal"
-                          >
-                            edit
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- row2 끝-->
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -698,59 +544,6 @@
       </div>
     </div>
 
-    <!-- Edit Stock Modal-->
-    <div
-      class="modal fade"
-      id="EditStockModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="EditStockModalLabel"
-      aria-hidden="true"
-    >
-      <div
-        class="modal-dialog modal-xl modal-dialog-scrollable"
-        role="document"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="EditStockModalLabel">수정</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="law-title" class="col-form-label">법이름:</label>
-                <input type="text" class="form-control" id="law-title" />
-                <label for="law-content" class="col-form-label">내용:</label>
-                <textarea
-                  class="form-control is-invalid"
-                  id="law-content"
-                  placeholder="Required example textarea"
-                  required
-                ></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <a class="btn btn-primary" href="law.html">Save</a>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -760,5 +553,11 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
+    <script>
+        $( function () {
+          $( '[data-toggle="popover"]' ).popover()
+        } );
+      </script>
   </body>
 </html>

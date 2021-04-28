@@ -4,3 +4,4 @@ const myInput = document.getElementById('myInput')
 myModal.addEventListener('shown.mdb.modal', () => {
   myInput.focus()
 })
+
