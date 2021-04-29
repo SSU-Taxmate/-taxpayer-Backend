@@ -402,82 +402,334 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-4 text-gray-800">꿈나무 반</h1>
-            <div class="card shadow mb-4">
-              <h6 class="m-3 font-weight-bold text-primary">
-                이번달 내가 내야할 세금
-              </h6>
-
-              <div class="card-body">
-                <p class="h5">직접세</p>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">소득세</th>
-                      <th scope="col">부동산세</th>
-                      <th scope="col">자리세</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>350미소</td>
-                      <td>20미소</td>
-                      <td>80미소</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!--        -->
-                <p class="h5">
-                  간접세
+            <h1 class="h3 mb-4 text-gray-800">세금</h1>
+            <div class="container">
+              <!--이번달 내가 내야할 세금 시작-->
+              <div class="card shadow mb-4">
+                <h6 class="ml-3 mb-0 font-weight-bold text-primary py-3">
+                  이번달 내가 내야할 세금
                   <i
                     class="fas fa-info-circle"
                     id="popover_btn"
                     data-container="body"
                     data-toggle="popover"
                     data-placement="right"
-                    data-content="간접세 설명을 적어봅시다"
+                    data-content="학생들에게 보여질 화면입니다.선생님이 수정할 수 있습니다."
                   ></i>
-                </p>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-sm btn-outline-primary active">
-                    <input
-                      type="radio"
-                      name="options"
-                      id="use"
-                      autocomplete="off"
-                      checked
-                    />
-                    사용
-                  </label>
-                  <label class="btn btn-sm btn-outline-primary">
-                    <input
-                      type="radio"
-                      name="options"
-                      id="notuse"
-                      autocomplete="off"
-                    />
-                    미사용
-                  </label>
+                  <button class="btn btn-sm text-warning btn-link float-right">
+                    edit
+                  </button>
+                </h6>
+                <div class="card-body">
+                  <!--직접세  시작-->
+                  <p class="h5 mb-3">직접세</p>
+                  <form class="ml-1">
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="incometaxrate">소득의</label>
+
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="incometaxrate"
+                            placeholder="소득세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >%</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <label for="realestatetaxrate">부동산의</label>
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="realestatetaxrate"
+                            placeholder="부동산세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >%</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <label for="seattaxrate">자리의</label>
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="seattaxrate"
+                            placeholder="자리세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >%</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--직접세  끝-->
+
+                  <!--   간접세  시작     -->
+                  <div class="row mb-3">
+                    <div class="col">
+                      <p class="h5">
+                        간접세
+                        <i
+                          class="fas fa-info-circle"
+                          id="popover_btn"
+                          data-container="body"
+                          data-toggle="popover"
+                          data-placement="right"
+                          data-content="간접세 설명을 적어봅시다"
+                        ></i>
+                      </p>
+                    </div>
+                    <div
+                      class="btn-group btn-group-toggle mr-2"
+                      data-toggle="buttons"
+                    >
+                      <label class="btn btn-sm btn-outline-primary active">
+                        <input
+                          type="radio"
+                          name="options"
+                          id="use"
+                          autocomplete="off"
+                          checked
+                        />
+                        사용
+                      </label>
+                      <label class="btn btn-sm btn-outline-primary">
+                        <input
+                          type="radio"
+                          name="options"
+                          id="notuse"
+                          autocomplete="off"
+                        />
+                        미사용
+                      </label>
+                    </div>
+                  </div>
+                  <form class="ml-1">
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <label for="electrictaxrate">전기요금의</label>
+
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="electrictaxrate"
+                            placeholder="전기세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >%</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="stamptaxrate">부동산거래회당</label>
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="stamptaxrate"
+                            placeholder="인지세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >미소</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="vatrate">물품구입금액의</label>
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="vatrate"
+                            placeholder="부가가치세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >%</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="transactiontax">증권판매금액의</label>
+                        <div class="input-group mb-3">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="transactiontax"
+                            placeholder="증권거래세"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"
+                              >%</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--   간접세  끝     -->
                 </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">전기세</th>
-                      <th scope="col">인지세</th>
-                      <th scope="col">부가가치세</th>
-                      <th scope="col">증권거래세</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>350미소</td>
-                      <td>20미소</td>
-                      <td>80미소</td>
-                      <td>100미소</td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
+              <!--이번달 내가 내야할 세금 끝-->
+
+              <!--재정 상황 시작-->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">재정상황</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive-xl">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">보유세금</th>
+                          <th scope="col">국채</th>
+                          <th scope="col">세입</th>
+                          <th scope="col">세출</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1000미소</td>
+                          <td>980미소</td>
+                          <td>500미소</td>
+                          <td>200미소</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!--재정 상황 끝-->
+
+              <!-- 사업 신설 내역 시작 -->
+              <div class="card shadow mb-1">
+                <!-- Card Header - Accordion -->
+                <a
+                  href="#사업신설내역"
+                  class="d-block card-header py-3"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="사업신설내역"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    사업신설내역
+                  </h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="사업신설내역">
+                  <!--collapse에 넣어서 같이 줄이던지-->
+                  <div class="border-1 bg-transparent">
+                    <button
+                      class="btn btn-sm text-warning btn-link float-right"
+                      data-toggle="modal"
+                      data-target="#EditNewsaupModal"
+                    >
+                      edit
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <p class="h4 font-weight-bold">[사업명]재난지원 사업</p>
+                    [사업내용 및 진행배경]2021.03.16 대통령 주관 회의에서 국민
+                    생활 안정을 위해 재난 지원 사업을 선정하기로 결정내렸습니다.
+                  </div>
+                </div>
+              </div>
+              <!-- 사업 신설 내역 끝 -->
+
+              <!--세입/세출 위치-->
+              <div >
+              <!--  세입 내역 시작 -->
+              <div class="card shadow mb-1">
+                <a
+                  href="#세입내역"
+                  class="d-block card-header py-3"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="세입내역"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">세입내역</h6>
+                </a>
+                <div class="collapse show" id="세입내역">
+                  <div class="card-body">
+                    <p class="h4 font-weight-bold">직접세</p>
+                    <p class="h4 font-weight-bold">간접세</p>
+                  </div>
+                </div>
+              </div>
+              <!--  세입 내역 끝 -->
+              <!--  세출 내역 시작 -->
+              <div class="card shadow mb-1">
+                <a
+                  href="#세출내역"
+                  class="d-block card-header py-3"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="세출내역"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">세출내역</h6>
+                </a>
+                <div class="collapse show" id="세출내역">
+                  <div class="card-body">
+                    <p class="h4 font-weight-bold">문화비</p>
+                    <p class="h4 font-weight-bold">교육비</p>
+                    <p class="h4 font-weight-bold">환경미화비</p>
+
+                  </div>
+                </div>
+              </div>
+              <!--  세출 내역 끝 -->
+              </div>
+              
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -543,7 +795,59 @@
         </div>
       </div>
     </div>
-
+    <!--new saupmodal-->
+    <div
+      class="modal fade"
+      id="EditNewsaupModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="EditNewsaupModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-xl modal-dialog-scrollable"
+        role="document"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="EditNewsaupModalLabel">수정</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="law-title" class="col-form-label">사업 이름:</label>
+                <input type="text" class="form-control" id="law-title" />
+                <label for="law-content" class="col-form-label">내용:</label>
+                <textarea
+                  class="form-control is-invalid"
+                  id="law-content"
+                  placeholder="Required example textarea"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="law.html">Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -553,11 +857,11 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    
+
     <script>
-        $( function () {
-          $( '[data-toggle="popover"]' ).popover()
-        } );
-      </script>
+      $(function () {
+        $('[data-toggle="popover"]').popover();
+      });
+    </script>
   </body>
 </html>
