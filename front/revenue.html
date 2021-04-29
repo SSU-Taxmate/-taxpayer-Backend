@@ -25,6 +25,12 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <!--char.js사용위해서-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+     <!-- Custom styles for this page -->
+     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
   </head>
 
   <body id="page-top">
@@ -439,7 +445,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
+                            <span class="input-group-text" id="percent10"
                               >%</span
                             >
                           </div>
@@ -459,7 +465,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
+                            <span class="input-group-text" id="percent11"
                               >%</span
                             >
                           </div>
@@ -479,7 +485,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
+                            <span class="input-group-text" id="percent12"
                               >%</span
                             >
                           </div>
@@ -545,9 +551,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
-                              >%</span
-                            >
+                            <span class="input-group-text" id="percent">%</span>
                           </div>
                         </div>
                       </div>
@@ -565,7 +569,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
+                            <span class="input-group-text" id="percent2"
                               >미소</span
                             >
                           </div>
@@ -585,7 +589,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
+                            <span class="input-group-text" id="percent3"
                               >%</span
                             >
                           </div>
@@ -605,7 +609,7 @@
                             step="5"
                           />
                           <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"
+                            <span class="input-group-text" id="percent4"
                               >%</span
                             >
                           </div>
@@ -614,6 +618,39 @@
                     </div>
                   </form>
                   <!--   간접세  끝     -->
+
+                  <!--   벌금  시작     -->
+                  <p class="h5 mb-3">
+                    벌금
+                    <i
+                      class="fas fa-info-circle"
+                      id="popover_btn"
+                      data-container="body"
+                      data-toggle="popover"
+                      data-placement="right"
+                      data-content="벌금 탭에서 자세한 설정 확인하세요"
+                    ></i>
+                  </p>
+                  <div class="row ml-1 col-4">
+                    <div class="input-group mb-3">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="electrictaxrate"
+                        placeholder="벌금"
+                        min="0"
+                        max="100"
+                        step="5"
+                        readonly
+                      />
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"
+                          >미소</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <!--   벌금  끝     -->
                 </div>
               </div>
               <!--이번달 내가 내야할 세금 끝-->
@@ -649,7 +686,7 @@
               <!--재정 상황 끝-->
 
               <!-- 사업 신설 내역 시작 -->
-              <div class="card shadow mb-1">
+              <div class="card shadow mb-4">
                 <!-- Card Header - Accordion -->
                 <a
                   href="#사업신설내역"
@@ -684,52 +721,118 @@
               </div>
               <!-- 사업 신설 내역 끝 -->
 
-              <!--세입/세출 위치-->
-              <div >
-              <!--  세입 내역 시작 -->
-              <div class="card shadow mb-1">
+              <!--세입/세출 시작-->
+              <div class="card shadow mb-4">
                 <a
-                  href="#세입내역"
+                  href="#세입세출내역"
                   class="d-block card-header py-3"
                   data-toggle="collapse"
                   role="button"
                   aria-expanded="true"
-                  aria-controls="세입내역"
+                  aria-controls="세입세출내역"
                 >
-                  <h6 class="m-0 font-weight-bold text-primary">세입내역</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    세입/세출 내역
+                  </h6>
                 </a>
-                <div class="collapse show" id="세입내역">
+                <div class="collapse show" id="세입세출내역">
                   <div class="card-body">
-                    <p class="h4 font-weight-bold">직접세</p>
-                    <p class="h4 font-weight-bold">간접세</p>
+                    <div class='row'>
+                    <div class='col-4'>
+                      <p class="h5 font-weight-bold ">세입내역</p>
+                    <p class="h6 font-weight-bold ">직접세</p>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">(재산) 소득세 :</li>
+                      <li class="list-group-item">(재산) 부동산세 :</li>
+                      <li class="list-group-item">(임대) 자리세 : </li>
+                    </ul>
+                    <p class="h6 font-weight-bold ">간접세</p>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">(재산) 부가가치세 :</li>
+                        <li class="list-group-item"> (재산) 인지세</li>
+                        <li class="list-group-item">(재산) 증권 거래세</li>
+                      </ul>
                   </div>
-                </div>
-              </div>
-              <!--  세입 내역 끝 -->
-              <!--  세출 내역 시작 -->
-              <div class="card shadow mb-1">
-                <a
-                  href="#세출내역"
-                  class="d-block card-header py-3"
-                  data-toggle="collapse"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="세출내역"
-                >
-                  <h6 class="m-0 font-weight-bold text-primary">세출내역</h6>
-                </a>
-                <div class="collapse show" id="세출내역">
-                  <div class="card-body">
-                    <p class="h4 font-weight-bold">문화비</p>
-                    <p class="h4 font-weight-bold">교육비</p>
-                    <p class="h4 font-weight-bold">환경미화비</p>
+                    <hr ></hr>
+                    <div class='col-8'>
+                      <p class="h5 font-weight-bold ">세출내역</p>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">문화비 :</li>
+                        <li class="list-group-item"> 교육비 :</li>
+                        <li class="list-group-item">환경미화비 :</li>
+                      </ul>
+                      
+                      <div class='row'>
+                        <div class='col col-xl-6'>
+                          <canvas  id="myChart"></canvas>
+                        </div>
+                        <div class='col col-xl-6'>
+                        <canvas id="myChart2"></canvas>
+                      </div>
+                      </div>
+                        <script src="js/PieChart.js"></script>
 
+                    </div>
+                    
                   </div>
                 </div>
+                <!--card body 끝-->
+                </div>
               </div>
-              <!--  세출 내역 끝 -->
-              </div>
-              
+              <!--세입/세출 끝-->
+              <!--국채 발행 내역 시작-->
+              <div class="card shadow mb-4">
+                <a href="#nationaldebt" class="d-block card-header py-3" data-toggle="collapse"
+                    role="button" aria-expanded="true" aria-controls="nationaldebt">
+                    <h6 class="m-0 font-weight-bold text-primary">국채발행내역</h6>
+                </a>
+                <div class="collapse show" id="nationaldebt">
+                    <div class="card-body">
+
+                      <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>날짜</th>
+                                    <th>내용</th>
+                                    <th>이유</th>
+                                    <th>금액</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th>id</th>
+                                  <th>날짜</th>
+                                  <th>내용</th>
+                                  <th>이유</th>
+                                  <th>금액</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2009/02/14</td>
+                                    <td>San Francisco</td>
+                                    <td>돈이 없다</td>
+                                    <td>$452,500</td>
+                                </tr>
+                                <tr>
+                                  <td>2</td>
+                                  <td>2020/02/14</td>
+                                  <td>an Francisco</td>
+                                  <td>그렇다</td>
+                                  <td>$45,500</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+              <!--국채 발행 내역 끝-->
+
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -858,10 +961,21 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    
+
+    
     <script>
       $(function () {
         $('[data-toggle="popover"]').popover();
       });
     </script>
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+        
   </body>
 </html>
