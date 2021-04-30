@@ -537,7 +537,7 @@
                   </div>
                   <form class="ml-1">
                     <div class="form-row">
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-lg-3">
                         <label for="electrictaxrate">전기요금의</label>
 
                         <div class="input-group mb-3">
@@ -556,7 +556,7 @@
                         </div>
                       </div>
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-lg-3">
                         <label for="stamptaxrate">부동산거래회당</label>
                         <div class="input-group mb-3">
                           <input
@@ -576,7 +576,7 @@
                         </div>
                       </div>
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-lg-3">
                         <label for="vatrate">물품구입금액의</label>
                         <div class="input-group mb-3">
                           <input
@@ -596,7 +596,7 @@
                         </div>
                       </div>
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-lg-3">
                         <label for="transactiontax">증권판매금액의</label>
                         <div class="input-group mb-3">
                           <input
@@ -631,7 +631,7 @@
                       data-content="벌금 탭에서 자세한 설정 확인하세요"
                     ></i>
                   </p>
-                  <div class="row ml-1 col-4">
+                  <div class="form-row col-lg-4">
                     <div class="input-group mb-3">
                       <input
                         type="number"
@@ -832,6 +832,110 @@
                 </div>
             </div>
               <!--국채 발행 내역 끝-->
+            <!--세입 항목별 세부 내역 시작-->
+            <div class="card shadow mb-4">
+              <a href="#revenue" class="d-block card-header py-3" data-toggle="collapse"
+                  role="button" aria-expanded="true" aria-controls="revenue">
+                  <h6 class="m-0 font-weight-bold text-primary">세입 항목별 세부 내역</h6>
+              </a>
+              <div class="collapse show" id="revenue">
+                  <div class="card-body">
+
+                    <div class="table-responsive">
+                      <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                          <thead>
+                              <tr>
+                                  <th>id</th>
+                                  <th>날짜</th>
+                                  <th>내용</th>
+                                  <th>금액</th>
+                                  <th>누적합계</th>
+                              </tr>
+                          </thead>
+                          <tfoot>
+                              <tr>
+                                <th>id</th>
+                                <th>날짜</th>
+                                <th>내용</th>
+                                <th>금액</th>
+                                <th>누적합계</th>
+                              </tr>
+                          </tfoot>
+                          <tbody>
+                              <tr>
+                                  <td>1</td>
+                                  <td>2009/02/14</td>
+                                  <td>San Francisco</td>
+                                  <td>500원</td>
+                                  <td>$45</td>
+                              </tr>
+                              <tr>
+                                <td>2</td>
+                                <td>2020/02/14</td>
+                                <td>an Francisco</td>
+                                <td>500원</td>
+                                <td>$46</td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+
+                  </div>
+              </div>
+            </div>
+            <!--세입 항목별 세부 내역 끝-->
+            <!--세출 항목별 세부 내역 시작-->
+            <div class="card shadow mb-4">
+            <a href="#expenditure" class="d-block card-header py-3" data-toggle="collapse"
+                role="button" aria-expanded="true" aria-controls="expenditure">
+                <h6 class="m-0 font-weight-bold text-primary">세출 항목별 세부 내역</h6>
+                </a>
+              <div class="collapse show" id="expenditure">
+      <div class="card-body">
+
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>id</th>
+                      <th>날짜</th>
+                      <th>내용</th>
+                      <th>금액</th>
+                      <th>누적합계</th>
+                  </tr>
+              </thead>
+              <tfoot>
+                  <tr>
+                    <th>id</th>
+                    <th>날짜</th>
+                    <th>내용</th>
+                    <th>금액</th>
+                    <th>누적합계</th>
+                  </tr>
+              </tfoot>
+              <tbody>
+                  <tr>
+                      <td>1</td>
+                      <td>2009/02/14</td>
+                      <td>San Francisco</td>
+                      <td>500원</td>
+                      <td>$45</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>2020/02/14</td>
+                    <td>an Francisco</td>
+                    <td>500원</td>
+                    <td>$46</td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+
+      </div>
+            </div>
+            </div>
+            <!--세출 항목별 세부 내역 끝-->
 
             </div>
           </div>
