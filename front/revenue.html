@@ -661,7 +661,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">재정상황</h6>
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive-xl">
+                  <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
@@ -738,7 +738,7 @@
                 <div class="collapse show" id="세입세출내역">
                   <div class="card-body">
                     <div class='row'>
-                    <div class='col-4'>
+                    <div class='col-6'>
                       <p class="h5 font-weight-bold ">세입내역</p>
                     <p class="h6 font-weight-bold ">직접세</p>
                     <ul class="list-group list-group-flush">
@@ -754,7 +754,7 @@
                       </ul>
                   </div>
                     <hr ></hr>
-                    <div class='col-8'>
+                    <div class='col-6'>
                       <p class="h5 font-weight-bold ">세출내역</p>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">문화비 :</li>
@@ -763,45 +763,46 @@
                       </ul>
                       
                       <div class='row'>
-                        <div class='col col-xl-6'>
-                          <canvas  id="myChart"></canvas>
+                        <div class='col'>
+                          <p class="h5 font-weight-bold ">한 줄 분석</p>
                         </div>
-                        <div class='col col-xl-6'>
-                        <canvas id="myChart2"></canvas>
+                        <div class='col'>
+                          <div class="border-1 bg-transparent">
+                            <button
+                              class="btn btn-sm text-warning btn-link float-right"
+                            >
+                              save
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='row'>
+                        <div class='col ml-1'>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="evaluation"
+                          placeholder=" 분석 ?해석?을 입력할 수 있습니다."
+                          min="0"
+                          max="100"
+                          step="5"
+                        />
                       </div>
                       </div>
-                        <script src="js/PieChart.js"></script>
-
                     </div>
                     
                   </div>
                   <div class='row'>
-                    <div class='col'>
-                      <p class="h5 font-weight-bold ">한 줄 분석</p>
+                    <div class='col col-xl-6'>
+                      <canvas  id="myChart"></canvas>
                     </div>
-                    <div class='col'>
-                      <div class="border-1 bg-transparent">
-                        <button
-                          class="btn btn-sm text-warning btn-link float-right"
-                        >
-                          save
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class='row'>
-                    <div class='col ml-1'>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="evaluation"
-                      placeholder=" 분석 ?해석?을 입력할 수 있습니다."
-                      min="0"
-                      max="100"
-                      step="5"
-                    />
+                    <div class='col col-xl-6'>
+                    <canvas id="myChart2"></canvas>
                   </div>
                   </div>
+                    <script src="js/PieChart.js"></script>
+                 
+                 
                 </div>
                 <!--card body 끝-->
                 </div>

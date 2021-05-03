@@ -1,12 +1,15 @@
-const labels2 = [
-    '월',
-    '화',
-    '수',
-    '목',
+// === include 'setup' then 'config' above ===
+const labels = [
+    '코스닥',
+    '코스피',
     '금',
+    'April',
+    'May',
+    'June',
+    'July'
   ];
-  const data2 = {
-    labels: labels2,
+  const data = {
+    labels: labels,
     datasets: [{
       label: '매도',
       data: [2, 6, 3, 15, 5, 33, 0],
@@ -54,13 +57,12 @@ const labels2 = [
     }
     ]
   };
-
-   // 설정 
-   const config2 = {
-    type: 'line',
-    data: data2,
+  // 설정 
+  const config = {
+    type: 'bar',
+    data: data,
     options: {
-      indexAxis:'x',
+      indexAxis:'y',
       scales: {
         x: {
           beginAtZero: true
@@ -71,6 +73,6 @@ const labels2 = [
 
   // myChart 위치에 그래프 그리기
   var myChart4 = new Chart(
-    document.getElementById('lineChart'),
-    config2
+    document.getElementById('barChart'),
+    config
   );
