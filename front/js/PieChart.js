@@ -63,13 +63,16 @@ const config2 = {
     }
   }
 };
+
+
 // myChart 위치에 그래프 그리기
 var myChart = new Chart(
   document.getElementById('myChart'),
   config
 );
 
-var myChart = new Chart(
+var myChart2 = new Chart(
   document.getElementById('myChart2'),
   config2
 );
+

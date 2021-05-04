@@ -15,7 +15,8 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <!--char.js사용위해서-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -318,9 +319,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">숙제현황</h1>
-<div class="col-md-4">
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">숙제현황</h1>
+                <div class="col">
                     <div class="card shadow mb-4">
                         <div class="card-body">
                                 <div class="table-responsive">
@@ -387,7 +388,74 @@
                             </tbody>
                         </table>
 
-                    </div></div></div></div>
+                    </div>
+                </div>
+                    </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <canvas id="myChart"></canvas>
+                                <script src="js/PieChart.js"></script>
+                                <div>학생들에게 보여질 부분. 전체 N회 중 i번 숙제를 미제출하였고, j번 늦게 제출하였습니다. 진행중인 과제는 2개입니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                                <div class="table-responsive">
+                        <table class="table table-bordered dataTable " id="dataTable" width="50%" cellspacing="0"
+                            role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                            <thead>
+                                <tr role="row" class="text-center text-primary">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Name: activate to sort column descending" aria-sort="ascending"
+                                        style="width: 73.8px;">날짜</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">내용
+                                    </th>                                    
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">제출여부
+                                    </th>
+                                    
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">면제여부
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">20.03.08</td>
+                                    <td>일기</td>
+                                    <td>O</td>
+                                    <td>쿠폰사용</td>
+
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">20.03.12</td>
+                                    <td>일기</td>
+
+                                    <td>O</td>
+                                    <td>33</td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">20.03.15</td>
+                                    <td>일기</td>
+                                    <td>O</td>
+                                    <td>33</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                    </div>
+                </div>
+
+                  
                 </div>
             </div>
         </div>
