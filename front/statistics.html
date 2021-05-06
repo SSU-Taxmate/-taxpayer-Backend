@@ -15,9 +15,11 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <!--char.js사용위해서-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -41,7 +43,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/">
+                <a class="nav-link collapsed" href="class.html">
                     <i class="fas fa-home"></i>
                     <span>클레스 메인</span>
                 </a>
@@ -62,8 +64,8 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">계좌</h6>
-                        <a class="collapse-item" href="bank.html">은행</a>
-                        <a class="collapse-item" href="#">예금/적금</a>
+                        <a class="collapse-item" href="bank.html">예금</a>
+                        <a class="collapse-item" href="#">적금</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">증권</h6>
                         <a class="collapse-item" href="#">호가창</a>
@@ -104,7 +106,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="revenue.html">세수현황</a>
+                        <a class="collapse-item" href="#">세수현황</a>
                         <a class="collapse-item" href="#">아무거나 웅웅</a>
 
                     </div>
@@ -139,7 +141,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="law.html">
+                <a class="nav-link" href="charts.html">
                     <i class="fas fa-balance-scale"></i>
 
                     <span>헌법</span></a>
@@ -313,124 +315,149 @@
                     </ul>
 
                 </nav>
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">꿈나무 반</h1>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">숙제현황</h1>
+                <div class="col">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                                <div class="table-responsive">
+                        <table class="table table-bordered dataTable " id="dataTable" width="50%" cellspacing="0"
+                            role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                            <thead>
+                                <tr role="row" class="text-center text-primary">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Name: activate to sort column descending" aria-sort="ascending"
+                                        style="width: 73.8px;">이름</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">제출
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">미제출
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">면제
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
 
 
-                    <!--신용등급현황-->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary text-center">신용등급 현황</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="px-3 py-4 bg-primary text-white">
-                                        <div class="creditClass" style="float:left;"><b>1000-800</b></div>
-                                        <div class="creditnum" style="margin-left:50px; float:left;"><b>13명</b></div>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">Airi Satou</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                    <td>33</td>
 
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">Airi Satou</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">Airi Satou</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">Airi Satou</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">Airi Satou</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">Airi Satou</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                    <td>33</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                                        <div class="creditProfile" style="position: relative;right;">
-
-                                            <!--여러개 오른쪽 정렬 겹치게 둥글게 만들기-->
-                                            <a href="#" class="btn btn-circle btn-sm ">
-                                                <img class="img-profile rounded-circle"
-                                                    src="img/undraw_profile.svg"></a>
-
-                                        </div>
-                                    </div>
-                                    <div class="px-3 py-4 bg-info text-white"><b>800-600</b></div>
-                                    <div class="px-3 py-4 bg-success text-white"><b>600-400</b></div>
-                                    <div class="px-3 py-4 bg-warning text-white"><b>400-200</b></div>
-                                    <div class="px-3 py-4 bg-danger text-white"><b>200-0</b></div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-
-                            <div class="card mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">의결</h6>
-                                </div>
-
-                                <!--위아래 margin 추가하기-->
-                                <div class="card-body">
-                                    <div class="mb-1 small">DJ 직업개설</div>
-                                    <div class="progress progress-sm mb-2">
-                                        <div class="progress-bar" role="progressbar" style="width: 75%"
-                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <div class="mb-1 small">세금 올리기</div>
-                                    <div class="progress progress-sm mb-2">
-                                        <div class="progress-bar" role="progressbar" style="width: 80%"
-                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+                    </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <canvas id="myChart"></canvas>
+                                <script src="js/PieChart.js"></script>
+                                <div>학생들에게 보여질 부분. 전체 N회 중 i번 숙제를 미제출하였고, j번 늦게 제출하였습니다. 진행중인 과제는 2개입니다.</div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- /.container-fluid -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                                <div class="table-responsive">
+                        <table class="table table-bordered dataTable " id="dataTable" width="50%" cellspacing="0"
+                            role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                            <thead>
+                                <tr role="row" class="text-center text-primary">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Name: activate to sort column descending" aria-sort="ascending"
+                                        style="width: 73.8px;">날짜</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">내용
+                                    </th>                                    
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">제출여부
+                                    </th>
+                                    
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Age: activate to sort column ascending" style="width: 40px;">면제여부
+                                    </th>
 
-            </div>
-            <!-- End of Main Content -->
+                                </tr>
+                            </thead>
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2020</span>
+                            <tbody>
+
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">20.03.08</td>
+                                    <td>일기</td>
+                                    <td>O</td>
+                                    <td>쿠폰사용</td>
+
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">20.03.12</td>
+                                    <td>일기</td>
+
+                                    <td>O</td>
+                                    <td>33</td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">20.03.15</td>
+                                    <td>일기</td>
+                                    <td>O</td>
+                                    <td>33</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    </div>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+
+                  
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-
-
 </body>
-</html>
