@@ -1,5 +1,5 @@
-<html lang="ko">
-
+<!DOCTYPE html>
+<html>
 <head>
 
     <meta charset="utf-8">
@@ -182,10 +182,7 @@
                     <h1 class="h3 mb-0 text-gray-800">클래스 관리</h1>
                 </div>
 
-                <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
-                <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
-                <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-
+              
                 <div class="row">
 
 
@@ -373,19 +370,8 @@
                         data-dismiss="modal">CLOSE</button>
 
                         <!--TEST코드 시작-->
-                        <form>
-                          <div class="input-group">
-                            <input type="text" class="form-control"
-                                value="/path/to/foo/bar" placeholder="Some path" id="copy-input">
-                            <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" id="copy-button"
-                                  data-toggle="tooltip" data-placement="button"
-                                  title="Copy to Clipboard">
-                                Copy
-                              </button>
-                            </span>
-                          </div>
-                        </form>
+                        <input type="text" id="clipboardExample1" class="form-control" value="hello">
+                        <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample1">Copy</button>
                         <!--TEST코드 끝-->
 
 
@@ -429,7 +415,7 @@ showStepURLhash: false,
 });
     </script>
     <script>
-      $( document ).ready(function() {
+ $( document ).ready(function() {
 
 new ClipboardJS('.btn');
 
