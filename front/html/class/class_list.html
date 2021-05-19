@@ -11,16 +11,17 @@
     <title>TAXMATE</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css" rel="stylesheet" type="text/css" />
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 
 </head>
 
@@ -207,27 +208,28 @@
                                 <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-star"></i>
                                     <a href="class.html">꿈나무 반 </a>
                                 </h6>
-
+                                <!--꿈나무반 card 시작-->
                                 <div class="dropdown no-arrow">
                                     <i class="fas fa-external-link-alt"
                                         style="color:darkgrey; font-size: 20px; margin-right:3px" data-toggle="modal"
                                         data-target="#DisplayCode"></i>
                                     <!--참가코드 생성 창 띄우기-->
-
-
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
                                             style="color: darkgrey; font-size:20px"></i>
                                     </a>
+                                    <!--꿈나무 반 설정-->
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Dropdown Header:</div>
+                                        <div class="dropdown-header">꿈나무 반 설정:</div>
                                         <a class="dropdown-item" href="#">삭제</a>
                                         <a class="dropdown-item" href="#">뭐시기</a>
 
                                     </div>
                                 </div>
+                                 <!--꿈나무반 card 끝-->
+
                             </div>
                             <!-- Card Body 사진을 올리면 사이즈에 맞게 조정해서 fit하게 들어가기 -->
                             <div class="card-body">
@@ -369,6 +371,24 @@
                     <button type="button" class ="btn add col-10 col-md-10 offset-md-1 offset-1">참가코드 복사</button> <!---버튼 눌렀을때 기능 추가 필요-->
                     <button type="button" class="btn add col-10 col-md-10 offset-md-1 offset-1"
                         data-dismiss="modal">CLOSE</button>
+
+                        <!--TEST코드 시작-->
+                        <form>
+                          <div class="input-group">
+                            <input type="text" class="form-control"
+                                value="/path/to/foo/bar" placeholder="Some path" id="copy-input">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" id="copy-button"
+                                  data-toggle="tooltip" data-placement="button"
+                                  title="Copy to Clipboard">
+                                Copy
+                              </button>
+                            </span>
+                          </div>
+                        </form>
+                        <!--TEST코드 끝-->
+
+
                 </div>
             </div>
         </div>
@@ -380,17 +400,41 @@
 
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!--변경 Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!--변경 javascript bundle-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+ <!-- 변경 Core plugin JavaScript-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="../../js/sb-admin-2.min.js"></script>
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
 
+  <!--복사하기-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+
+$('#smartwizard').smartWizard({
+selected: 0,
+theme: 'arrows',
+autoAdjustHeight:true,
+transitionEffect:'fade',
+showStepURLhash: false,
+});
+});
+    </script>
+    <script>
+      $( document ).ready(function() {
+
+new ClipboardJS('.btn');
+
+});
+    </script>
 
 </body>
 
