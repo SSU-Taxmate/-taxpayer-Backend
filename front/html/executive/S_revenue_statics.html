@@ -398,10 +398,11 @@
                   <form class="ml-1">
                     <div class="form-row">
                       <div class="form-group col-md-4">
-                        <label for="incometaxrate">소득의</label>
+                        <label for="incometaxrate">소득세</label>
 
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="incometaxrate"
@@ -419,9 +420,10 @@
                       </div>
 
                       <div class="form-group col-md-4">
-                        <label for="realestatetaxrate">부동산의</label>
+                        <label for="realestatetaxrate">부동산세</label>
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="realestatetaxrate"
@@ -439,9 +441,10 @@
                       </div>
 
                       <div class="form-group col-md-4">
-                        <label for="seattaxrate">자리의</label>
+                        <label for="seattaxrate">자리세</label>
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="seattaxrate"
@@ -476,38 +479,15 @@
                         ></i>
                       </p>
                     </div>
-                    <div
-                      class="btn-group btn-group-toggle mr-2"
-                      data-toggle="buttons"
-                    >
-                      <label class="btn btn-sm btn-outline-primary active">
-                        <input
-                          type="radio"
-                          name="options"
-                          id="use"
-                          autocomplete="off"
-                          checked
-                        />
-                        사용
-                      </label>
-                      <label class="btn btn-sm btn-outline-primary">
-                        <input
-                          type="radio"
-                          name="options"
-                          id="notuse"
-                          autocomplete="off"
-                        />
-                        미사용
-                      </label>
-                    </div>
                   </div>
                   <form class="ml-1">
                     <div class="form-row">
                       <div class="form-group col-lg-3">
-                        <label for="electrictaxrate">전기요금의</label>
+                        <label for="electrictaxrate">전기세</label>
 
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="electrictaxrate"
@@ -523,9 +503,10 @@
                       </div>
 
                       <div class="form-group col-lg-3">
-                        <label for="stamptaxrate">부동산거래회당</label>
+                        <label for="stamptaxrate">인지세</label>
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="stamptaxrate"
@@ -543,9 +524,10 @@
                       </div>
 
                       <div class="form-group col-lg-3">
-                        <label for="vatrate">물품구입금액의</label>
+                        <label for="vatrate">부가가치세</label>
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="vatrate"
@@ -563,9 +545,10 @@
                       </div>
 
                       <div class="form-group col-lg-3">
-                        <label for="transactiontax">증권판매금액의</label>
+                        <label for="transactiontax">증권거래세</label>
                         <div class="input-group mb-3">
                           <input
+                            readonly
                             type="number"
                             class="form-control"
                             id="transactiontax"
@@ -771,9 +754,6 @@
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
 
-    
-
-    
     <script>
       $(function () {
         $('[data-toggle="popover"]').popover();

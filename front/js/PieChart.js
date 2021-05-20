@@ -1,35 +1,31 @@
 // === include 'setup' then 'config' above ===
-const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-];
-// 데이터 설정
-const data = {
+/*세입 내역 */
+const revenue_pie_data = {
   labels: [
-    'Red',
-    'Blue',
-    'Yellow'
+    '소득세',
+    '부동산세',
+    '자리세',
+    '부가가치세',
+    '인지세',
+    '증권 거래세'
   ],
   datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
+    data: [33, 20,2,3,40,10],
     backgroundColor: [
       'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
       'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
     ],
     hoverOffset: 4
   }]
 };
-
-// 설정 
-const config = {
+const revenue_pie_config = {
   type: 'pie',
-  data,
+  data:revenue_pie_data,
   options: {
     responsive:false,
     plugins: {
@@ -45,9 +41,33 @@ const config = {
     }
   }
 };
-const config2 = {
+var rev_pie = new Chart(
+  document.getElementById('revenue_pie'),
+  revenue_pie_config
+);
+
+/*세출 내역 */
+
+const expenditure_pie_data = {
+  labels: [
+    '문화비',
+    '교육비',
+    '환경미화비'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [300, 50, 100],
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 205, 86)',
+      'rgb(153, 102, 255)',
+    ],
+    hoverOffset: 4
+  }]
+};
+const expenditure_pie_config = {
   type: 'pie',
-  data,
+  data:expenditure_pie_data,
   options: {
     responsive:false,
     plugins: {
@@ -63,16 +83,9 @@ const config2 = {
     }
   }
 };
-
-
-// myChart 위치에 그래프 그리기
-var myChart = new Chart(
-  document.getElementById('myChart'),
-  config
+var ex_pie = new Chart(
+  document.getElementById('expenditure_pie'),
+  expenditure_pie_config
 );
 
-var myChart2 = new Chart(
-  document.getElementById('myChart2'),
-  config2
-);
 

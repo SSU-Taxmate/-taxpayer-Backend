@@ -378,14 +378,14 @@
               <!--이번달 내가 내야할 세금 시작-->
               <div class="card shadow mb-4">
                 <h6 class="ml-3 mb-0 font-weight-bold text-primary py-3">
-                  이번달 내가 내야할 세금
+                  이번달 학생이 내야할 세금
                   <i
                     class="fas fa-info-circle"
                     id="popover_btn"
                     data-container="body"
                     data-toggle="popover"
                     data-placement="right"
-                    data-content="학생들에게 보여질 화면입니다.선생님이 수정할 수 있습니다."
+                    data-content="학생들에게 부과될 세금을 정하는 곳입니다. 월급에서 원천징수됩니다."
                   ></i>
                   <button class="btn btn-sm text-warning btn-link float-right">
                     save
@@ -393,7 +393,16 @@
                 </h6>
                 <div class="card-body">
                   <!--직접세  시작-->
-                  <p class="h5 mb-3">직접세</p>
+                  <p class="h5 mb-3">직접세
+                    <i
+                          class="fas fa-info-circle"
+                          id="popover_btn"
+                          data-container="body"
+                          data-toggle="popover"
+                          data-placement="right"
+                          data-content="%의 경우 반올림하여 적용됩니다."
+                        ></i>
+                  </p>
                   <form class="ml-1">
                     <div class="form-row">
                       <div class="form-group col-md-4">
@@ -479,6 +488,7 @@
                       class="btn-group btn-group-toggle mr-2"
                       data-toggle="buttons"
                     >
+                    
                       <label class="btn btn-sm btn-outline-primary active">
                         <input
                           type="radio"
@@ -500,7 +510,9 @@
                       </label>
                     </div>
                   </div>
-                  <form class="ml-1">
+
+                  <div id='useornotarea'>
+                  <form class="ml-1" >
                     <div class="form-row">
                       <div class="form-group col-lg-3">
                         <label for="electrictaxrate">전기요금의</label>
@@ -616,6 +628,8 @@
                     </div>
                   </div>
                   <!--   벌금  끝     -->
+
+                </div>
                 </div>
               </div>
               <!--이번달 내가 내야할 세금 끝-->
@@ -624,9 +638,8 @@
              
               <!--재정 상황 끝-->
 
-              <!-- 사업 신설 내역 시작 -->
+              <!-- 사업 신설 내역 시작 
               <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
                 <a
                   href="#사업신설내역"
                   class="d-block card-header py-3"
@@ -639,16 +652,14 @@
                     사업신설내역
                   </h6>
                 </a>
-                <!-- Card Content - Collapse -->
                 <div class="collapse show" id="사업신설내역">
-                  <!--collapse에 넣어서 같이 줄이던지-->
                   <div class="border-1 bg-transparent">
                     <button
                       class="btn btn-sm text-warning btn-link float-right"
                       data-toggle="modal"
                       data-target="#EditNewsaupModal"
                     >
-                      save
+                      edit
                     </button>
                   </div>
                   <div class="card-body">
@@ -657,7 +668,7 @@
                     생활 안정을 위해 재난 지원 사업을 선정하기로 결정내렸습니다.
                   </div>
                 </div>
-              </div>
+              </div>-->
               <!-- 사업 신설 내역 끝 -->
 
               <!--세입/세출 시작-->
@@ -678,8 +689,6 @@
                   <div class="border-1 bg-transparent">
                     <button
                       class="btn btn-sm text-warning btn-link float-right"
-                      data-toggle="modal"
-                      data-target="#EditNewsaupModal"
                     >
                       save
                     </button>
@@ -697,13 +706,13 @@
                       />
                   <div class='row'>
                     <div class='col col-xl-6'>
-                      <canvas  id="myChart"></canvas>
+                      <canvas  id="revenue_pie"></canvas>
                     </div>
                     <div class='col col-xl-6'>
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="expenditure_pie"></canvas>
                   </div>
                   </div>
-                  <script src="../../js/PieChart.js"></script>
+          
                 </div>
                 <!--card body 끝-->
                 </div>
@@ -832,7 +841,7 @@
             >
               Cancel
             </button>
-            <a class="btn btn-primary" href="law.html">Save</a>
+            <a class="btn btn-primary" href="T_revenue_setting.html">Save</a>
           </div>
         </div>
       </div>
@@ -856,13 +865,25 @@
         $('[data-toggle="popover"]').popover();
       });
     </script>
+    <script>
+      $(function () {
+       $('#use').click(function() {
+        $('#useornotarea').show();
+        })
+        $('#notuse').click(function() {
+        $('#useornotarea').hide();
+        })
+      });
+
+    </script>
     <!--변경 Page level plugins -->
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" ></script>
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js" ></script>
 
     <!-- Page level custom scripts -->
     <script src="../../js/demo/datatables-demo.js"></script>
-
+    <script src="../../js/PieChart.js"></script>
+    <script src="../../js/BarChart.js"></script>
         
   </body>
 </html>

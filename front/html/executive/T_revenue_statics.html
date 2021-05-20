@@ -407,13 +407,18 @@
                       </tbody>
                     </table>
                   </div>
+                  <div class="row">
+                    <div class='col col-xl-12'>
+                  <canvas  id="finance_last" style="height:fit-content; width:fit-content"></canvas>
+                  <script src="../../js/BarChart.js"></script>
+                  </div>
+                    </div>
                 </div>
               </div>
               <!--재정 상황 끝-->
 
-              <!-- 사업 신설 내역 시작 -->
+              <!-- 사업 신설 내역 시작 
               <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
                 <a
                   href="#사업신설내역"
                   class="d-block card-header py-3"
@@ -426,9 +431,7 @@
                     사업신설내역
                   </h6>
                 </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="사업신설내역">
-                  <!--collapse에 넣어서 같이 줄이던지-->
+                <div class="collapse" id="사업신설내역">
                   <div class="border-1 bg-transparent">
     
                   </div>
@@ -438,7 +441,7 @@
                     생활 안정을 위해 재난 지원 사업을 선정하기로 결정내렸습니다.
                   </div>
                 </div>
-              </div>
+              </div>-->
               <!-- 사업 신설 내역 끝 -->
 
               <!--세입/세출 시작-->
@@ -459,23 +462,33 @@
                   <div class="card-body">
                     <div class='row'>
                     <div class='col-6'>
-                      <p class="h5 font-weight-bold ">세입내역</p>
-                    <p class="h6 font-weight-bold ">직접세</p>
-                    <ul class="list-group list-group-flush">
+                      <p class="h5 font-weight-bold "><a href='#revenue_detail'>세입내역</a></p>
+                    <div id='direct_tax'>
+                      <p class="h6 font-weight-bold ">직접세</p>
+                      <ul class="list-group list-group-flush">
                       <li class="list-group-item">(재산) 소득세 :</li>
                       <li class="list-group-item">(재산) 부동산세 :</li>
                       <li class="list-group-item">(임대) 자리세 : </li>
-                    </ul>
-                    <p class="h6 font-weight-bold ">간접세</p>
+                      </ul>
+                    </div>
+                    <div id='indirect_tax'>
+                      <p class="h6 font-weight-bold ">간접세</p>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">(재산) 부가가치세 :</li>
                         <li class="list-group-item"> (재산) 인지세</li>
                         <li class="list-group-item">(재산) 증권 거래세</li>
                       </ul>
+                    </div>
+                    <div>
+                      <p class="h6 font-weight-bold ">벌금</p>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">총 벌금 :</li>
+                        </ul>
+                    </div>
                   </div>
                     <hr ></hr>
                     <div class='col-6'>
-                      <p class="h5 font-weight-bold ">세출내역</p>
+                      <p class="h5 font-weight-bold "><a href='#expenditure_detail'>세출내역</a></p>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">문화비 :</li>
                         <li class="list-group-item"> 교육비 :</li>
@@ -511,10 +524,10 @@
                   </div>
                   <div class='row'>
                     <div class='col col-xl-6'>
-                      <canvas  id="myChart"></canvas>
+                      <canvas  id="revenue_pie"></canvas>
                     </div>
                     <div class='col col-xl-6'>
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="expenditure_pie"></canvas>
                   </div>
                   </div>
                     <script src="../../js/PieChart.js"></script>
@@ -535,7 +548,7 @@
                     <div class="card-body">
 
                       <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="governmentbond" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>id</th>
@@ -578,7 +591,7 @@
             </div>
               <!--국채 발행 내역 끝-->
             <!--세입 항목별 세부 내역 시작-->
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4" id='revenue_detail'>
               <a href="#revenue" class="d-block card-header py-3" data-toggle="collapse"
                   role="button" aria-expanded="true" aria-controls="revenue">
                   <h6 class="m-0 font-weight-bold text-primary">세입 항목별 세부 내역</h6>
@@ -586,7 +599,7 @@
               <div class="collapse show" id="revenue">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                      <table class="table table-bordered" id="revenue_detail_tb" width="100%" cellspacing="0">
                           <thead>
                               <tr>
                                   <th>id</th>
@@ -629,7 +642,7 @@
             </div>
             <!--세입 항목별 세부 내역 끝-->
             <!--세출 항목별 세부 내역 시작-->
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4" id='expenditure_detail'>
             <a href="#expenditure" class="d-block card-header py-3" data-toggle="collapse"
                 role="button" aria-expanded="true" aria-controls="expenditure">
                 <h6 class="m-0 font-weight-bold text-primary">세출 항목별 세부 내역</h6>
@@ -638,7 +651,7 @@
       <div class="card-body">
 
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="expenditure_detail_tb" width="100%" cellspacing="0">
               <thead>
                   <tr>
                       <th>id</th>
