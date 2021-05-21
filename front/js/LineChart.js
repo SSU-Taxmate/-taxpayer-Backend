@@ -1,12 +1,12 @@
-const labels2 = [
+const stock_line_labels = [
     '월',
     '화',
     '수',
     '목',
     '금',
   ];
-  const data2 = {
-    labels: labels2,
+  const stock_line_data = {
+    labels: stock_line_labels,
     datasets: [{
       label: '매도',
       data: [2, 6, 3, 15, 5, 33, 0],
@@ -56,9 +56,9 @@ const labels2 = [
   };
 
    // 설정 
-   const config2 = {
+   const stock_line_config = {
     type: 'line',
-    data: data2,
+    data: stock_line_data,
     options: {
       indexAxis:'x',
       scales: {
@@ -70,7 +70,7 @@ const labels2 = [
   };
 
   // myChart 위치에 그래프 그리기
-  var myChart4 = new Chart(
-    document.getElementById('lineChart'),
-    config2
+  var stock_sale_line = new Chart(
+    document.getElementById('stock_sale_line'),
+    stock_line_config
   );
