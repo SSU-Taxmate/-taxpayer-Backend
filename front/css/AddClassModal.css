@@ -21,3 +21,7 @@ body {
 .mt-200 {
     margin-top: 200px
 }
+
+.upload-hidden{
+    display : none;
+}
