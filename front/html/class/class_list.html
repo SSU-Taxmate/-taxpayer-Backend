@@ -14,17 +14,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<!-- 
+
     <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet" type="text/css" />
-<<<<<<< HEAD
-    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css" rel="stylesheet" type="text/css" /> -->
-=======
+
     <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css" rel="stylesheet" type="text/css" />
-    
->>>>>>> 866710faa791e16f731c14c6f3896b4906afe7f9
+
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
+    <style src = "../../css/AddClassModal.css">
+
+
+    </style>
 
 
 </head>
@@ -252,74 +253,55 @@
 
     <!-- add class --> <!--추가 수정 필요--> <!-- ID는 AddClassModal-->
 
-<!-- 
-    <div class="container">
-        <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="color: darkgreen;">Class 추가</h5> 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="smartwizard">
-                            <ul>
-                                <li><a href="#step-1">Step 1<br /><small>Class Info</small></a></li>
-                                <li><a href="#step-2">Step 2<br /><small>Class Detail Info</small></a></li>
-                                <li><a href="#step-3">Step 3<br /><small>Add Class Photo</small></a></li>
-                                <li><a href="#step-4">Step 4<br /><small>Confirm details</small></a></li>
-                            </ul>
-                            <div class="mt-4">
-                                <div id="step-1">
-                                    <div class="form-group row">
-                                        <div class="col-md-2" style="margin-right: 1px;"> Class 이름 : </div>
-                                        <div class="col-md-4"> 
-                                            <input type="text" class="form-control" placeholder="Class Name" required> </div>
-                                    </div>
-                                </div>
-                                <div id="step-2">
-                                    <div class="row">
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="Address" required> </div>
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="City" required> </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="State" required> </div>
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="Country" required> </div>
-                                    </div>
-                                </div>
-                                <div id="step-3" class="">
-                                    <div class="row">
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="Card Number" required> </div>
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="Card Holder Name" required> </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="CVV"
-                                                required> </div>
-                                        <div class="col-md-6"> <input type="text" class="form-control"
-                                                placeholder="Mobile Number" required> </div>
-                                    </div>
-                                </div>
-                                <div id="step-4" class="">
-                                    <div class="row">
-                                        <div class="col-md-12"> <span>Thanks For submitting your details with
-                                                BBBootstrap.com. we will send you a confirmation email. We will review
-                                                your details and revert back.</span> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    
+
+<!--  
+    <div class="container mt-5">
+        <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-md-6" >
+                  <label for="exampleFormControlInput1" class="form-label">Email address</label> 
+                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>  -->
+
+
+      <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="EditLawModalLabel" aria-hidden="false">
+       <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="AddClassModalLabel">클래스 추가</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                      <div class='input-group mb-3'>
+                            <span class="input-group-text" id="basic-addon3">클래스 이름 </span>
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                      </div>
+                      <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon3">클래스 사진 </span>
+                           <!-- <input type="file" accept=".gif, .jpg, .png"> -->
+                            
+                            <input type="file" id ="upload_file">
+                       </div>
+                      <div class='input-group'>
+                        <span class="input-group-text" id="basic-addon3">클래스 설명 </span>
+                        <textarea class="form-control" style="margin;" aria-label="With textarea"></textarea>
+                      </div>
+                    </form>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                  <a class="btn btn-primary" href="class_list.html">Save</a> <!--클래스 추가 저장-->
+              </div>
+          </div>
+      </div>
+
 
 
 
@@ -393,6 +375,8 @@
   <!--복사하기-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
+  <!-- jquery 호출
+    <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
   <!-- class add 에 들어가는 js
     <script>
       $(document).ready(function(){
@@ -417,6 +401,8 @@
 
         });
     </script>
+
+
 
 </body>
 
