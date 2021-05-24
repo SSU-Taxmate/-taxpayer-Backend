@@ -29,11 +29,9 @@
 
 <body>
 
-    <div id="wrapper">
-
-
-        <!-- Topbar -->
-        <div id="content-wrapper" class="d-flex flex-column">
+      <!--<div id="wrapper"></div>-->
+      <!-- Topbar -->
+      <div id="content-wrapper" class="d-flex flex-column">
 
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -186,8 +184,6 @@
 
               
                 <div class="row">
-
-
                     <!--class 추가-->
                     <div class="col-lg-3">
                         <div class="card mb-4">
@@ -245,27 +241,73 @@
             </div>
         </div>
     </div>
-    <!-- End of Topbar -->
 
 
-    <!-- add class --> <!--추가 수정 필요--> <!-- ID는 AddClassModal-->
 
-    
 
-<!--  
-    <div class="container mt-5">
-        <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-md-6" >
-                  <label for="exampleFormControlInput1" class="form-label">Email address</label> 
-                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+
+    <!-- id : AddClassModal -->
+    <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="AddClassModalLabel" aria-hidden="false">
+       <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="AddClassModalLabel">클래스 추가</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                      <div class='input-group mb-3'>
+                            <span class="input-group-text" id="basic-addon3">클래스 이름 </span>
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                      </div>
+                      <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon3">클래스 사진 </span>
+                           <!-- <input type="file" accept=".gif, .jpg, .png"> -->
+                            
+                            <input type="file" id ="upload_file">
+                       </div>
+                      <div class='input-group'>
+                        <span class="input-group-text" id="basic-addon3">클래스 설명 </span>
+                        <textarea class="form-control" style="margin;" aria-label="With textarea"></textarea>
+                      </div>
+                    </form>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                  <a class="btn btn-primary" href="class_list.html">Save</a> <!--클래스 추가 저장-->
+              </div>
+          </div>
+      </div>
+    </div>
+
+
+        <!-- id: DisplayCode-->
+       <div class="modal fade" id="DisplayCode" tabindex="-1" role="dialog" aria-labelledby="DisplayCodeModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content p-4" style="align-items: center; border-radius: 30px;">
+                <img src="https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp"
+                    style=" width: 200px; height: 150px; object-fit: scale-down; position: relative center;">
+
+                <div class="modal-header">
+                    <div class="modal-code" id="DisplayCodeModal" style="font-weight:800; color: black; padding:0;"> Class : 꿈나무</div>  
                 </div>
+                <div class="form-inline">
+                    <div class="form-group mb-2">
+                         <strong style="font-size: 18px; margin-right:3px; color:black;">참가코드: </strong>
+                    </div>
+                    <div class="form-group mx-sm-1 mb-2">
+                        <label for="CopyCode" class="sr-only" >참가코드</label>
+                           <input type="text" id="CopyCode" class="form-control" style="width:200px; margin-right: 5px" placeholder="Invite Code"> 
+                           <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#CopyCode">Copy</button>
+                    </div>
+                        
+                </div>            
             </div>
-        </div>
-    </div>  -->
-
-
-      
+      </div>
+     
+  
 
 
 
@@ -288,70 +330,10 @@
             </div>
         </div>
     </div>
-
-
-    <!--DisplayCode-->
-    <div class="modal fade" id="DisplayCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content p-4" style="align-items: center; border-radius: 30px;">
-                <img src="https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp"
-                    style=" width: 200px; height: 150px; object-fit: scale-down; position: relative center;">
-
-                <div class="modal-header">
-                    <div class="modal-code" id="modal-code" style="font-weight:800; color: black; padding:0;"> Class : 꿈나무</div>  
-                </div>
-                <div class="form-inline">
-                    <div class="form-group mb-2">
-                         <strong style="font-size: 18px; margin-right:3px; color:black;">참가코드: </strong>
-                    </div>
-                    <div class="form-group mx-sm-1 mb-2">
-                        <label for="CopyCode" class="sr-only" >참가코드</label>
-                          <input type="text" id="CopyCode" class="form-control" style="width:200px; margin-right: 5px" placeholder="Invite Code"> 
-                           <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#CopyCode">Copy</button>
-                    </div>
-                        
-                </div>            
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="EditLawModalLabel" aria-hidden="false">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-           <div class="modal-content">
-               <div class="modal-header">
-                   <h5 class="modal-title" id="AddClassModalLabel">클래스 추가</h5>
-                   <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                       <span aria-hidden="true">×</span>
-                   </button>
-               </div>
-               <div class="modal-body">
-                   <form>
-                       <div class='input-group mb-3'>
-                             <span class="input-group-text" id="basic-addon3">클래스 이름 </span>
-                             <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                       </div>
-                       <div class="input-group mb-3">
-                             <span class="input-group-text" id="basic-addon3">클래스 사진 </span>
-                             <label for="upload_file"><input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"></label>
-                             <input type="file" id ="upload_file">
-                        </div>
-                       <div class='input-group'>
-                         <span class="input-group-text" id="basic-addon3">클래스 설명 </span>
-                         <textarea class="form-control" aria-label="With textarea"></textarea>
-                       </div>
-                     </form>
-               </div>
-               <div class="modal-footer">
-                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                   <a class="btn btn-primary" href="class_list.html">Save</a> <!--클래스 추가 저장-->
-               </div>
-           </div>
-       </div>
-    
  
- 
+
+
+
 
 
 
@@ -371,25 +353,9 @@
   <!--복사하기-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
-  <!-- jquery 호출
-    <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
-  <!-- class add 에 들어가는 js
-    <script>
-      $(document).ready(function(){
 
 
-        $('#smartwizard').smartWizard({
-        selected: 0,
-        theme: 'arrows',
-        autoAdjustHeight:true,
-        transitionEffect:'fade',
-        showStepURLhash: false,
-        }); 
-      });
-
-    </script> -->
-
-     <!-- display code에 들어가는 js -->
+     <!-- display code에 들어가는 js --> <!--추후 js 파일 빼내도 될 듯-->
     <script>
         $( document ).ready(function() {
 
