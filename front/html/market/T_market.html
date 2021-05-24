@@ -300,34 +300,56 @@
                     </ul>
 
                 </nav>
+
+                
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Main Content Here Please-->
                     <div class="row">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card mr-2 ml-2" style="width: 18rem;">
                             <img src="../../../front/img/market_1.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">야채시장</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <a href="#" class="btn btn-primary">수정하기</a>
+                                <a href="#" class="btn btn-primary ml-1" data-toggle="modal" data-target="#MarketModal">삭제하기</a>
                             </div>
                         </div>
-                        <div class="card" style="width: 18rem;">
+                        <div class="card mr-2 ml-2" style="width: 18rem;">
                             <img src="../../../front/img/market_2.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">해산물 시장</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <a href="#" class="btn btn-primary">수정하기</a>
+                                <a href="#" class="btn btn-primary ml-1">삭제하기</a>
                             </div>
                         </div>
-                        <div class="card" style="width: 18rem;">
+
+
+                        <!-- <div class="embed-responsive embed-responsive-4by3">
+                            <img src="../../../front/img/plus.png" class="card-img-top embed-responsive-item" alt="tree">
+                          </div> -->
+
+                          <!-- 해당 BootStap에는 이미지를 조정하여 넣는 기능이 지원되지 않음으로 이렇게 코드를 사용하여 고정하도록한다.-->
+
+
+                        <div class="card mr-2 ml-2" style="width: 18rem;">
                             <img src="../../../front/img/market_3.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">장난감 시장</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <a href="#" class="btn btn-primary">수정하기</a>
+                                <a href="#" class="btn btn-primary ml-1">삭제하기</a>
                             </div>
                         </div>
+                        <div class="card mr-2 ml-2" style="width: 18rem;">
+                                <img src="../../../front/img/plus_market.jpg" class="card-img-top embed-responsive-item" alt="tree">
+                            <div class="card-body">
+                              <h5 class="card-title">시장 추가하기</h5>
+                              <p class="card-text">버튼을 눌러 새로운 시장을 추가해보세요<BR><BR></p>
+                                <a href="#" class="btn btn-primary ml-1" data-toggle="modal" data-target="#MarketAddModal">추가하기</a>
+                            </div>
+                          </div>
                         <!--현재 이미지의 크기가 일정하지 않으면 변경되는 오류가 발견됨. 이후 해결바람.-->
                     </div>
 
@@ -374,6 +396,57 @@
             </div>
         </div>
     </div>
+
+      <!-- Market Delete Modal -->
+<div class="modal fade" id="MarketModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="MarketModaldropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="MarketModaldropLabel">마켓 삭제하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          정말 해당 마켓을 삭제하시겠습니까?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary">삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        <!-- Market Add Modal -->
+        <div class="modal fade" id="MarketAddModal" tabindex="-1" aria-labelledby="MarketAddLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="MarketAddModalLabel">시장 추가하기</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">시장 이름:</label>
+                      <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">시장 내용:</label>
+                      <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                  <button type="button" class="btn btn-primary">추가하기</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
     <!--변경 Bootstrap core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
