@@ -22,10 +22,7 @@
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
-    <style src = "../../css/AddClassModal.css">
-
-
-    </style>
+    <style src = "../../css/AddClassModal.css"></style>
 
 
 </head>
@@ -207,7 +204,7 @@
                                     <a href="class_main.html">꿈나무 반 </a>
                                 </h6>
                                 <!--꿈나무반 card 시작-->
-                                <div class="dropdown no-arrow">
+                                <div class="dropdown no-arrow" >
                                     <i class="fas fa-external-link-alt"
                                         style="color:darkgrey; font-size: 20px; margin-right:3px" data-toggle="modal"
                                         data-target="#DisplayCode"></i>
@@ -249,7 +246,7 @@
 
 
 
-
+    <!-- id : AddClassModal -->
     <div class="modal fade" id="AddClassModal" tabindex="-1" role="dialog" aria-labelledby="AddClassModalLabel" aria-hidden="false">
        <div class="modal-dialog modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -286,15 +283,15 @@
     </div>
 
 
-        <!--DisplayCode-->
-       <div class="modal fade" id="DisplayCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- id: DisplayCode-->
+       <div class="modal fade" id="DisplayCode" tabindex="-1" role="dialog" aria-labelledby="DisplayCodeModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content p-4" style="align-items: center; border-radius: 30px;">
                 <img src="https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp"
                     style=" width: 200px; height: 150px; object-fit: scale-down; position: relative center;">
 
                 <div class="modal-header">
-                    <div class="modal-code" id="modal-code" style="font-weight:800; color: black; padding:0;"> Class : 꿈나무</div>  
+                    <div class="modal-code" id="DisplayCodeModal" style="font-weight:800; color: black; padding:0;"> Class : 꿈나무</div>  
                 </div>
                 <div class="form-inline">
                     <div class="form-group mb-2">
@@ -302,13 +299,13 @@
                     </div>
                     <div class="form-group mx-sm-1 mb-2">
                         <label for="CopyCode" class="sr-only" >참가코드</label>
-                          <input type="text" id="CopyCode" class="form-control" style="width:200px; margin-right: 5px" placeholder="Invite Code"> 
+                           <input type="text" id="CopyCode" class="form-control" style="width:200px; margin-right: 5px" placeholder="Invite Code"> 
                            <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#CopyCode">Copy</button>
                     </div>
                         
                 </div>            
             </div>
-        </div>
+      </div>
      
   
 
@@ -356,25 +353,9 @@
   <!--복사하기-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
-  <!-- jquery 호출
-    <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
-  <!-- class add 에 들어가는 js
-    <script>
-      $(document).ready(function(){
 
 
-        $('#smartwizard').smartWizard({
-        selected: 0,
-        theme: 'arrows',
-        autoAdjustHeight:true,
-        transitionEffect:'fade',
-        showStepURLhash: false,
-        }); 
-      });
-
-    </script> -->
-
-     <!-- display code에 들어가는 js -->
+     <!-- display code에 들어가는 js --> <!--추후 js 파일 빼내도 될 듯-->
     <script>
         $( document ).ready(function() {
 
