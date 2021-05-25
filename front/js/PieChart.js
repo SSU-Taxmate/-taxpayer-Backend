@@ -46,6 +46,7 @@ var rev_pie = new Chart(
   revenue_pie_config
 );
 
+
 /*세출 내역 */
 
 const expenditure_pie_data = {
