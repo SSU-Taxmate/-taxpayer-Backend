@@ -6,31 +6,41 @@ Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
 
 class ChartBar extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            title: props.title ? props.title : '' ,
+            id:props.id,
+            data:props.data
+        }
+    }
     chartRef = React.createRef();
     componentDidMount(){
         const myChartRef = this.chartRef.current.getContext("2d");
-        console.log(this.chartRef);
+        //console.log(this.chartRef);
+        const tmpdata={
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Earnings",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+            }],
+        }
         new Chart(myChartRef, {
             type: 'bar',
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Earnings",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-                }],
-            },
+            data: this.state.data,
             options: {
+                responsive:true,
                 maintainAspectRatio: false,
                 layout: {
                     padding: {
@@ -43,7 +53,7 @@ class ChartBar extends Component {
                 scales: {
                     xAxes: [{
                         time: {
-                            unit: 'date'
+                            unit: 'month'
                         },
                         gridLines: {
                             display: false,
@@ -69,7 +79,7 @@ class ChartBar extends Component {
                     }],
                 },
                 legend: {
-                    display: false
+                    display: true
                 },
                 tooltips: {
                     backgroundColor: "rgb(255,255,255)",
@@ -97,9 +107,11 @@ class ChartBar extends Component {
     }
     render() {
         return (
-
+               <div className='chart-area'>
+                <div class='h6'>{this.state.title}</div>
                 <div className="chart-bar">
                     <canvas id="myBarChart" ref={this.chartRef}></canvas>
+                </div>
                 </div>
             
         )
