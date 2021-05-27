@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //Navigation
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
+import Footer from '../../../components/Footer'
 
 import CardInfo from '../../../components/Cards/Info';
 import ChartDonut from '../../../components/Charts/Donut';
@@ -50,13 +51,7 @@ class SettingTax extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <footer className="sticky-footer bg-white">
-              <div className="container my-auto">
-                <div className="copyright text-center my-auto">
-                  <span>Copyright &copy; Your Website 2019</span>
-                </div>
-              </div>
-            </footer>
+            <Footer></Footer>
             {/* <!-- End of Footer --> */}
 
           </div>

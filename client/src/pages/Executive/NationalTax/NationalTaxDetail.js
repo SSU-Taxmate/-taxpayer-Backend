@@ -5,14 +5,12 @@ import axios from 'axios';
 import ChartBar from '../../../components/Charts/Bar'
 import DataTable from '../../../components/DataTable'
 const NationalTaxDetail=()=> {
-  const [loading, setLoading]=useState(false)
+  const [isLoading, setisLoading]=useState(false)
   const [data,setData]=useState({})
   useEffect(()=>{
     /*progress bar같은거 사용할 때 */
-    setLoading(true)
     axios.get('/api/nationaltax').then(res=>{console.log(res.data) })
-
-    setLoading(false)
+    /* async 함수를 useEffect에서 직접 사용하면 안된다. */
   },[]);
   const revenue_pie_data = {
     labels: [
