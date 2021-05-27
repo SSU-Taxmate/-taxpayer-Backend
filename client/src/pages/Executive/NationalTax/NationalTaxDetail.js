@@ -1,11 +1,19 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import CardCollapse from '../../../components/Cards/Collapse'
 import ChartPie from '../../../components/Charts/Pie'
-import ChartLine from '../../../components/Charts/Line'
-import ChartDonut from '../../../components/Charts/Donut'
+import axios from 'axios';
 import ChartBar from '../../../components/Charts/Bar'
 import DataTable from '../../../components/DataTable'
-function NationalTaxDetail() {
+const NationalTaxDetail=()=> {
+  const [loading, setLoading]=useState(false)
+  const [data,setData]=useState({})
+  useEffect(()=>{
+    /*progress bar같은거 사용할 때 */
+    setLoading(true)
+    axios.get('/api/nationaltax').then(res=>{console.log(res.data) })
+
+    setLoading(false)
+  },[]);
   const revenue_pie_data = {
     labels: [
       '소득세',
@@ -88,6 +96,7 @@ function NationalTaxDetail() {
     }],
   }
   return (
+    
     <div>
 
       {/*<!--재정 상황 시작-->*/}
@@ -170,7 +179,7 @@ function NationalTaxDetail() {
               <div className='col ml-1'>
                 <input
                   type="text"
-                  readonly
+                  readOnly={true}
                   className="form-control"
                   id="evaluation"
                   placeholder=""
@@ -205,7 +214,7 @@ function NationalTaxDetail() {
       {/*<!--세입 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
         <div className="table-responsive">
-          <table className="table table-bordered" id="revenue_detail_tb" width="100%" cellspacing="0">
+          <table className="table table-bordered" id="revenue_detail_tb" width="100%" cellSpacing="0">
             <thead>
               <tr>
                 <th>id</th>
@@ -249,7 +258,7 @@ function NationalTaxDetail() {
       {/*<!--세출 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세출 항목별 세부 내역' area_id='expenditure_detail'>
         <div className="table-responsive">
-          <table className="table table-bordered" id="expenditure_detail_tb" width="100%" cellspacing="0">
+          <table className="table table-bordered" id="expenditure_detail_tb" width="100%" cellSpacing="0">
             <thead>
               <tr>
                 <th>id</th>
@@ -291,6 +300,6 @@ function NationalTaxDetail() {
 
     </div>
   )
-}
+};
 
 export default NationalTaxDetail

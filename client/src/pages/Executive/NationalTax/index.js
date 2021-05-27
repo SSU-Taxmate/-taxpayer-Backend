@@ -4,9 +4,6 @@ import React, { Component } from 'react';
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 
-import CardInfo from '../../../components/Cards/Info';
-import ChartDonut from '../../../components/Charts/Donut';
-import ChartLine from '../../../components/Charts/Line';
 import PageHeading from '../../../components/PageHeading';
 import NationalTaxDetail from './NationalTaxDetail'
 class NationalTax extends Component {
@@ -16,7 +13,7 @@ class NationalTax extends Component {
 
   render() {
     return (
-      <div>
+      <>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
@@ -35,7 +32,7 @@ class NationalTax extends Component {
               {/* <!-- End of Topbar --> */}
 
               {/* <!-- Begin Page Content --> */}
-              <div class="container-fluid">
+              <div className="container-fluid">
 
                 {/* <!-- Page Heading --> */}
 
@@ -69,7 +66,8 @@ class NationalTax extends Component {
         {/* <!-- Scroll to Top Button--> */}
         <a className="scroll-to-top rounded" href="#page-top">
           <i className="fas fa-angle-up"></i>
-        </a></div>
+        </a>
+      </>
     )
   }
 }

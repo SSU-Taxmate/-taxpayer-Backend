@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Chart from "chart.js";
 
-import CardBasic from '../../Cards/Basic';
 Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
 
@@ -108,7 +107,7 @@ class ChartBar extends Component {
     render() {
         return (
                <div className='chart-area'>
-                <div class='h6'>{this.state.title}</div>
+                <div className='h6'>{this.state.title}</div>
                 <div className="chart-bar">
                     <canvas id="myBarChart" ref={this.chartRef}></canvas>
                 </div>

@@ -24,6 +24,35 @@ app.get('/',(req,res)=>res.send('Hello World!'))
 app.get('/api/hello',(req,res)=>{
     res.send("asdf")
 })
+app.get('/api/nationaltax',(req,res)=>{
+ 
+    res.json({
+        "data": [
+          [
+            "Tiger Nixon",
+            "System Architect",
+            "Edinburgh",
+            "5421",
+            "2011/04/25",
+            "$320,800"
+          ],
+          [
+            "Garrett Winters",
+            "Accountant",
+            "Tokyo",
+            "8422",
+            "2011/07/25",
+            "$170,750"
+          ],
+          [
+            "Ashton Cox",
+            "Junior Technical Author",
+            "San Francisco",
+            "1562",
+            "2009/01/12",
+            "$86,000"
+          ]]})
+})
 /**/
 app.post('/api/users/register',(req,res)=>{
     // 회원 가입할 때 필요한 정보들을 client가 넘겨주면,

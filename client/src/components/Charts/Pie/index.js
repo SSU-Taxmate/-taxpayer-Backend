@@ -16,7 +16,7 @@ class ChartPie extends Component {
     componentDidMount() {
 
         const myChartRef = this.chartRef.current.getContext("2d");
-        console.log(this.chartRef);
+        //console.log(this.chartRef);
         //console.log(this.state.data);
         const dataset = this.state.data;
         const title = this.state.title;
@@ -34,7 +34,7 @@ class ChartPie extends Component {
     render() {
         return (
             <div className='chart-area'>
-                <div class='h6'>{this.state.title}</div>
+                <div className='h6'>{this.state.title}</div>
                 <div className='chart-pie'>
                     <canvas id={`${this.state.id}`} ref={this.chartRef} ></canvas>
                 </div>
