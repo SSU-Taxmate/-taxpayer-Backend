@@ -7,4 +7,3 @@ const PageHeading = ({ title = '' }) => (
 )
 
 export default PageHeading;
-

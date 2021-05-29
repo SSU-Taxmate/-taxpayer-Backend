@@ -25,8 +25,6 @@ render() {
           <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
             <div className="dropdown-header">수정/저장</div>
             <a className="dropdown-item" href="#">저장</a>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="#">Something else here</a>
           </div>
         </div>
       </div>

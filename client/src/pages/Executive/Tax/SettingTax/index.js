@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../components/Navigation/Sidebar';
-import Topbar from '../../components/Navigation/Topbar';
-import Footer from '../../components/Footer'
-import PageHeading from '../../components/PageHeading';
-import ClassMainDetail from './ClassMainDetail';
-import ScrollToTop from '../../components/Scroll';
+import Sidebar from '../../../../components/Navigation/Sidebar'
+import Topbar from '../../../../components/Navigation/Topbar';
+import Footer from '../../../../components/Footer'
+import PageHeading from '../../../../components/PageHeading';
 
-class ClassMain extends Component {
+import SettingTaxDetail from './SettingTaxDetail'
+class SettingTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
   }
@@ -38,12 +37,10 @@ class ClassMain extends Component {
 
                 {/* <!-- Page Heading --> */}
 
-                <PageHeading title="클래스 Dashboard" />
+                <PageHeading title="세금설정" />
 
                 {/* <!-- Content Row --> */}
-
-                <ClassMainDetail/>
-
+                <SettingTaxDetail></SettingTaxDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -51,7 +48,7 @@ class ClassMain extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-           <Footer/>
+            <Footer></Footer>
             {/* <!-- End of Footer --> */}
 
           </div>
@@ -61,10 +58,11 @@ class ClassMain extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <ScrollToTop/>
-        </div>
+        <a className="scroll-to-top rounded" href="#page-top">
+          <i className="fas fa-angle-up"></i>
+        </a></div>
     )
   }
 }
 
-export default ClassMain;
+export default SettingTax;

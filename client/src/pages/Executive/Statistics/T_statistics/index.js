@@ -1,20 +1,14 @@
-import React, { Component } from 'react';
-
-//Navigation
-import Sidebar from '../../../components/Navigation/Sidebar';
-import Topbar from '../../../components/Navigation/Topbar';
-import Footer from '../../../components/Footer'
-
-import PageHeading from '../../../components/PageHeading';
-import MyTaxDetail from '../../Executive/MyTax/MyTaxDetail'
-class MyTaxPage extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
-
-  render() {
+import React from 'react'
+import Sidebar from '../../../../components/Navigation/Sidebar'
+import Topbar from '../../../../components/Navigation/Topbar';
+import Footer from '../../../../components/Footer'
+import PageHeading from '../../../../components/PageHeading';
+import NationStatsDetail from './NationStatsDetail'
+import ScrollToTop from '../../../../components/Scroll';
+function NationStats() {
     return (
-      <div>
+        <div>
+              <div>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
@@ -37,10 +31,10 @@ class MyTaxPage extends Component {
 
                 {/* <!-- Page Heading --> */}
 
-                <PageHeading title="세금서"/>
+                <PageHeading title="반 숙제 현황"/>
 
                 {/* <!-- Content Row --> */}
-                <MyTaxDetail></MyTaxDetail>
+                <NationStatsDetail></NationStatsDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -58,11 +52,11 @@ class MyTaxPage extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <a className="scroll-to-top rounded" href="#page-top">
-          <i className="fas fa-angle-up"></i>
-        </a></div>
+       <ScrollToTop/>
+       </div>
+    
+        </div>
     )
-  }
 }
 
-export default MyTaxPage;
+export default NationStats

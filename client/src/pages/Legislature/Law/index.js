@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-
 //Navigation
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import PageHeading from '../../../components/PageHeading';
 import LawDetail from '../Law/LawDetail'
+import ScrollToTop from '../../../components/Scroll';
 class Law extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
-
   render() {
     return (
       <div>
@@ -62,9 +58,9 @@ class Law extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <a className="scroll-to-top rounded" href="#page-top">
-          <i className="fas fa-angle-up"></i>
-        </a></div>
+       
+        <ScrollToTop/>
+        </div>
     )
   }
 }

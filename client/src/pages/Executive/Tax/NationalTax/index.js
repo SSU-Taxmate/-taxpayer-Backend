@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../../components/Navigation/Sidebar';
-import Topbar from '../../../components/Navigation/Topbar';
-import Footer from '../../../components/Footer'
-
-import CardInfo from '../../../components/Cards/Info';
-import ChartDonut from '../../../components/Charts/Donut';
-import ChartLine from '../../../components/Charts/Line';
-import PageHeading from '../../../components/PageHeading';
-import SettingTaxDetail from '../../Executive/SettingTax/SettingTaxDetail'
-class SettingTax extends Component {
+import Sidebar from '../../../../components/Navigation/Sidebar'
+import Topbar from '../../../../components/Navigation/Topbar';
+import Footer from '../../../../components/Footer'
+import PageHeading from '../../../../components/PageHeading';
+import NationalTaxDetail from './NationalTaxDetail'
+import ScrollToTop from '../../../../components/Scroll';
+class NationalTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
   }
 
   render() {
     return (
-      <div>
+      <>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
@@ -40,10 +37,11 @@ class SettingTax extends Component {
 
                 {/* <!-- Page Heading --> */}
 
-                <PageHeading title="세금설정" />
+                <PageHeading title="나라 세금 통계" />
 
                 {/* <!-- Content Row --> */}
-                <SettingTaxDetail></SettingTaxDetail>
+                <NationalTaxDetail/>
+
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -51,7 +49,7 @@ class SettingTax extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <Footer></Footer>
+           <Footer></Footer>
             {/* <!-- End of Footer --> */}
 
           </div>
@@ -61,11 +59,10 @@ class SettingTax extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <a className="scroll-to-top rounded" href="#page-top">
-          <i className="fas fa-angle-up"></i>
-        </a></div>
+        <ScrollToTop/>
+      </>
     )
   }
 }
 
-export default SettingTax;
+export default NationalTax;

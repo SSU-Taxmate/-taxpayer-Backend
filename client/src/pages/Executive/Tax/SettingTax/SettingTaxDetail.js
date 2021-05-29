@@ -1,5 +1,5 @@
 import React from 'react'
-import CardDropdown from '../../../components/Cards/Dropdown';
+import CardDropdown from '../../../../components/Cards/Dropdown';
 
 function SettingTaxDetail() {
     return (

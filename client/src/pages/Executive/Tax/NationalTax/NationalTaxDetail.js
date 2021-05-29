@@ -1,17 +1,33 @@
 import React,{useEffect,useState} from 'react'
-import CardCollapse from '../../../components/Cards/Collapse'
-import ChartPie from '../../../components/Charts/Pie'
+import CardCollapse from '../../../../components/Cards/Collapse'
+import ChartPie from '../../../../components/Charts/Pie'
 import axios from 'axios';
-import ChartBar from '../../../components/Charts/Bar'
-import DataTable from '../../../components/DataTable'
+import ChartBar from '../../../../components/Charts/Bar'
+import DataTable from '../../../../components/DataTable'
 const NationalTaxDetail=()=> {
-  const [isLoading, setisLoading]=useState(false)
-  const [data,setData]=useState({})
-  useEffect(()=>{
-    /*progress bar같은거 사용할 때 */
-    axios.get('/api/nationaltax').then(res=>{console.log(res.data) })
-    /* async 함수를 useEffect에서 직접 사용하면 안된다. */
-  },[]);
+  const [isLoading, setIsLoading]=useState(false)
+  const [data,setData]=useState({debt:[]})
+  const [head,setHead]=useState({head:[]})
+  const [err,setIsError]=useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+ 
+      try {
+        const result = await axios.get('/api/nationaltax');
+        setData(result.data['debt']);
+        setHead(result.data['head'])
+        //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
+        //console.log(result.data['data'])
+      } catch (error) {
+        setIsError(true);
+      }
+ 
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
   const revenue_pie_data = {
     labels: [
       '소득세',
@@ -204,7 +220,12 @@ const NationalTaxDetail=()=> {
 
       {/*<!--국채 발행 내역 시작-->*/}
       <CardCollapse title='국채 발행 내역' area_id='nationaldebt'>
-      <DataTable id='test'/>
+    
+      {isLoading ? 
+      <div>loading</div>:(
+        <DataTable id='debt' data={data} head={head}/>
+      )}
+    
       </CardCollapse>
       {/*<!--국채 발행 내역 끝-->*/}
 

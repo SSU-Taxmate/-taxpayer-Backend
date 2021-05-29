@@ -30,19 +30,19 @@ class Sidebar extends Component {
       <ul className={toggled ? 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled' : 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'} id="accordionSidebar">
 
         {/* <!-- Sidebar - Brand --> */}
-        <a className="sidebar-brand d-flex align-items-center justify-content-center" href='/Classes'>
+        <Link className="sidebar-brand d-flex align-items-center justify-content-center"  to="/classes">
           <div className="sidebar-brand-icon rotate-n-15">
             <i className="fas fa-piggy-bank"></i>
           </div>
           <div className="sidebar-brand-text mx-3">TAX MATE</div>
-        </a>
+        </Link>
 
         {/* <!-- Divider --> */}
         <hr className="sidebar-divider my-0" />
 
         {/* <!-- Nav Item - Dashboard --> */}
         <li className="nav-item">
-          <Link className="nav-link" to="/Classes/:classId">
+          <Link className="nav-link" to="/classes/:classId">
             <i className="fas fa-home"></i>
             <span>학급 메인</span></Link>
         </li>
@@ -111,11 +111,11 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_revenue" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/Classes/:classId/Tax/National">나라 통계</Link>
+              <Link className="collapse-item" to="/classes/:classId/tax-nation">나라 통계</Link>
               <h6 className="collapse-header">학생</h6>
-              <Link className="collapse-item" to="/Classes/:classId/Tax/My">나의 세금</Link>
+              <Link className="collapse-item" to="/classes/:classId/tax-my">나의 세금</Link>
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/Classes/:classId/Tax/Setting">세금 설정</Link>
+              <Link className="collapse-item" to="/classes/:classId/tax-setting">세금 설정</Link>
             </div>
           </div>
         </li>
@@ -128,11 +128,14 @@ class Sidebar extends Component {
           </a>
           <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <h6 className="collapse-header">학생</h6>
-              <a className="collapse-item" href="utilities-color.html">T_statistics</a>
-              <a className="collapse-item" href="utilities-border.html">Borders</a>
-              <a className="collapse-item" href="utilities-animation.html">Animations</a>
+   
+              <h6 className="collapse-header">선생님</h6>
+              <Link className="collapse-item" to="/classes/:classId/stats/nation">나라 통계</Link>
               <a className="collapse-item" href="utilities-other.html">Other</a>
+
+              <h6 className="collapse-header">학생</h6>
+              <Link className="collapse-item" to="/classes/:classId/stats/my">나의 통계</Link>
+              <a className="collapse-item" href="utilities-border.html">Borders</a>
             </div>
           </div>
         </li>
@@ -147,7 +150,7 @@ class Sidebar extends Component {
 
         {/* <!-- Nav Item - Charts --> */}
         <li className="nav-item">
-          <Link className="nav-link" to="/law">
+          <Link className="nav-link" to="/classes/:classId/law">
             <i className="fas fa-balance-scale"></i>
             <span>법률</span></Link>
         </li>

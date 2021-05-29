@@ -1,5 +1,5 @@
 import React from 'react'
-import CardBasic from '../../../components/Cards/Basic';
+import CardBasic from '../../../../components/Cards/Basic';
 
 function MyTaxDetail() {
     return (
