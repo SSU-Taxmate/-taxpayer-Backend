@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-
+import ClassCodeModal from '../../components/Modal/ClassCodeModal'
 class ClassCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title : this.props.title ? this.props.title : ' ',
-            img : this.props.img ? this.props.img:'',
-            comment : this.props.comment? this.props.comment:''       
+            title: this.props.title ? this.props.title : ' ',
+            img: this.props.img ? this.props.img : '',
+            comment: this.props.comment ? this.props.comment : ''
         }
-      }
-    
+    }
+
     render() {
         return (
-            <div className ="col-lg-3">
+            <div className="col-lg-3">
+
                 {/*<!-- Dropdown Card Example -->*/}
                 <div className="card shadow mb-4">
                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -21,9 +22,11 @@ class ClassCard extends Component {
                         </h6>
                         {/*<!--꿈나무반 card 시작-->*/}
                         <div className="dropdown no-arrow">
-                            <i className="fas fa-external-link-alt" data-toggle="modal" data-target="#DisplayCode"></i>
-                            {/*<!--참가코드 생성 창 띄우기-->*/}
-                            <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                         
+                            <ClassCodeModal id='displaycode' icon='fas fa-external-link-alt'>
+                            </ClassCodeModal>
+                              {/*<!--참가코드 생성 창 띄우기-->*/}
+                              <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" ></i>
                             </a>
