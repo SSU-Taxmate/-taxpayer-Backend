@@ -7,12 +7,15 @@ import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
 
 import SettingTaxDetail from './SettingTaxDetail'
+import { data } from 'jquery';
 class SettingTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
   }
 
   render() {
+    const data={data:['1','2','3','4','5'],useTax:true}
+
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
@@ -40,7 +43,7 @@ class SettingTax extends Component {
                 <PageHeading title="세금설정" />
 
                 {/* <!-- Content Row --> */}
-                <SettingTaxDetail></SettingTaxDetail>
+                <SettingTaxDetail data={data}></SettingTaxDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
