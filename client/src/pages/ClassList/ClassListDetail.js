@@ -30,8 +30,7 @@ function ClassListDetail() {
                          {/*<!--참가코드 생성 창 띄우기-->*/}
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
-                                ></i>
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" ></i>
                         </a>
                          {/*<!--꿈나무 반 설정-->*/}
                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
