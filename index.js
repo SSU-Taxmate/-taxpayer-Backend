@@ -27,31 +27,27 @@ app.get('/api/hello',(req,res)=>{
 app.get('/api/nationaltax',(req,res)=>{
  
     res.json({
-        "data": [
+        "debt": [
           [
-            "Tiger Nixon",
-            "System Architect",
-            "Edinburgh",
-            "5421",
             "2011/04/25",
+            "Tiger Nixon",
+            "5421",
             "$320,800"
           ],
           [
-            "Garrett Winters",
-            "Accountant",
-            "Tokyo",
-            "8422",
             "2011/07/25",
+            "Garrett Winters",
+            "8422",
             "$170,750"
           ],
           [
-            "Ashton Cox",
-            "Junior Technical Author",
-            "San Francisco",
-            "1562",
             "2009/01/12",
+            "Ashton Cox",
+            "1562",
             "$86,000"
-          ]]})
+          ]],
+        'head':['날짜','이유','dmdkr','이유']
+        })
 })
 /**/
 app.post('/api/users/register',(req,res)=>{

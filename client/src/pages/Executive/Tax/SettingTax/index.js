@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../../components/Navigation/Sidebar';
-import Topbar from '../../../components/Navigation/Topbar';
+import Sidebar from '../../../../components/Navigation/Sidebar'
+import Topbar from '../../../../components/Navigation/Topbar';
+import Footer from '../../../../components/Footer'
+import PageHeading from '../../../../components/PageHeading';
 
-import CardInfo from '../../../components/Cards/Info';
-import ChartDonut from '../../../components/Charts/Donut';
-import ChartLine from '../../../components/Charts/Line';
-import PageHeading from '../../../components/PageHeading';
-import SettingTaxDetail from '../../Executive/SettingTax/SettingTaxDetail'
+import SettingTaxDetail from './SettingTaxDetail'
+import { data } from 'jquery';
 class SettingTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
   }
 
   render() {
+    const data={data:['1','2','3','4','5'],useTax:true}
+
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
@@ -42,7 +43,7 @@ class SettingTax extends Component {
                 <PageHeading title="세금설정" />
 
                 {/* <!-- Content Row --> */}
-                <SettingTaxDetail></SettingTaxDetail>
+                <SettingTaxDetail data={data}></SettingTaxDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -50,13 +51,7 @@ class SettingTax extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <footer className="sticky-footer bg-white">
-              <div className="container my-auto">
-                <div className="copyright text-center my-auto">
-                  <span>Copyright &copy; Your Website 2019</span>
-                </div>
-              </div>
-            </footer>
+            <Footer></Footer>
             {/* <!-- End of Footer --> */}
 
           </div>

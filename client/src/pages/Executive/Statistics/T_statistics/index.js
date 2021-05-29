@@ -1,21 +1,14 @@
-import React, { Component } from 'react';
-
-//Navigation
-import Sidebar from '../../components/Navigation/Sidebar';
-import Topbar from '../../components/Navigation/Topbar';
-import Footer from '../../components/Footer'
-import PageHeading from '../../components/PageHeading';
-import ClassMainDetail from './ClassMainDetail';
-import ScrollToTop from '../../components/Scroll';
-
-class ClassMain extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
-
-  render() {
+import React from 'react'
+import Sidebar from '../../../../components/Navigation/Sidebar'
+import Topbar from '../../../../components/Navigation/Topbar';
+import Footer from '../../../../components/Footer'
+import PageHeading from '../../../../components/PageHeading';
+import NationStatsDetail from './NationStatsDetail'
+import ScrollToTop from '../../../../components/Scroll';
+function NationStats() {
     return (
-      <div>
+        <div>
+              <div>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
@@ -38,12 +31,10 @@ class ClassMain extends Component {
 
                 {/* <!-- Page Heading --> */}
 
-                <PageHeading title="클래스 Dashboard" />
+                <PageHeading title="반 숙제 현황"/>
 
                 {/* <!-- Content Row --> */}
-
-                <ClassMainDetail/>
-
+                <NationStatsDetail></NationStatsDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -51,7 +42,7 @@ class ClassMain extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-           <Footer/>
+            <Footer></Footer>
             {/* <!-- End of Footer --> */}
 
           </div>
@@ -61,10 +52,11 @@ class ClassMain extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <ScrollToTop/>
+       <ScrollToTop/>
+       </div>
+    
         </div>
     )
-  }
 }
 
-export default ClassMain;
+export default NationStats

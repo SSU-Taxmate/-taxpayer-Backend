@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-
 //Boostrap Libs
 import $ from 'jquery';
 import Popper from 'popper.js';

@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../../components/Navigation/Sidebar';
-import Topbar from '../../../components/Navigation/Topbar';
+import Sidebar from '../../../../components/Navigation/Sidebar'
+import Topbar from '../../../../components/Navigation/Topbar';
+import Footer from '../../../../components/Footer'
+import PageHeading from '../../../../components/PageHeading';
 
-import PageHeading from '../../../components/PageHeading';
-import NationalTaxDetail from './NationalTaxDetail'
-class NationalTax extends Component {
+import MyTaxDetail from './MyTaxDetail'
+import ScrollToTop from '../../../../components/Scroll';
+class MyTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
   }
 
   render() {
     return (
-      <>
+      <div>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
@@ -36,11 +38,10 @@ class NationalTax extends Component {
 
                 {/* <!-- Page Heading --> */}
 
-                <PageHeading title="나라 세금 통계" />
+                <PageHeading title="세금서"/>
 
                 {/* <!-- Content Row --> */}
-                <NationalTaxDetail/>
-
+                <MyTaxDetail></MyTaxDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -48,13 +49,7 @@ class NationalTax extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <footer className="sticky-footer bg-white">
-              <div className="container my-auto">
-                <div className="copyright text-center my-auto">
-                  <span>Copyright &copy; Your Website 2019</span>
-                </div>
-              </div>
-            </footer>
+            <Footer></Footer>
             {/* <!-- End of Footer --> */}
 
           </div>
@@ -64,12 +59,11 @@ class NationalTax extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <a className="scroll-to-top rounded" href="#page-top">
-          <i className="fas fa-angle-up"></i>
-        </a>
-      </>
+        <ScrollToTop/>
+        </div>
+    
     )
   }
 }
 
-export default NationalTax;
+export default MyTax;

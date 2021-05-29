@@ -8,45 +8,39 @@ class DataTable extends Component {
         super(props)
         this.state = {
             id: props.id ? props.id : 'temp',
-            data: props.data
+            head:props.head?props.head:[],
+            data: props.data,
         }
     }
     componentDidMount() {
         //console.log(this.el)
         //console.log(`#${this.state.id}`)
-        var tempdata=[
-            [
-                "2020.05.25",
-                "980미소",
-                "500미소",
-                "500미소",
-            ],
-            [
-                "2021.05.25",
-                "1미소",
-                "500미소",
-                "500미소",
-            ]
-        ]
-            $(`#${this.state.id}`).DataTable({
-                data:tempdata,
-            });
-       
-     }
+        console.log(this.state.data,`#${this.state.id}`)
+      
+        $(`#${this.state.id}`).DataTable({
+            data: this.state.data,
+        });
+    }
+    
+    addth=()=>{
+        const result=[];
+        for (let i=0;i<4;i++){
+        result.push(
+            <th scope="col">{this.state.head[i]}</th>)
+        }
+        return result
+    }
     render() {
         return (
             <div className="container">
-            <table id={this.state.id} className="display" width="100%">
-            <thead>
-              <tr>
-                <th scope="col">날짜</th>
-                <th scope="col">내용</th>
-                <th scope="col">이유</th>
-                <th scope="col">금액</th>
-              </tr>
-            </thead>
-            </table>
-         </div>
+                <table id={this.state.id} className="display" width="100%">
+                    <thead>
+                        <tr>
+                           {this.addth()}
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         )
     }
 }

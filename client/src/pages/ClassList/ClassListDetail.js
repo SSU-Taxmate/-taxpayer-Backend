@@ -20,7 +20,7 @@ function ClassListDetail() {
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-star"></i>
-                        <a href="/Classes/:classId">꿈나무 반 </a>
+                        <a href="/classes/:classId">꿈나무 반 </a>
                     </h6>
                      {/*<!--꿈나무반 card 시작-->*/}
                     <div class="dropdown no-arrow">
