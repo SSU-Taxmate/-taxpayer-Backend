@@ -12,6 +12,11 @@ import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
 import Law from "./pages/Legislature/Law";
+
+/* 증권 거래소 */
+import TradeStock from "./pages/Stock/TradeStock";
+import SettingStock from './pages/Stock/SettingStock'
+
 /*국세청 */
 import NationalTax from  "./pages/Executive/Tax/NationalTax"
 import SettingTax from  "./pages/Executive/Tax/SettingTax"
@@ -29,7 +34,10 @@ const Routes = () => (
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />
 
-            
+            {/* ***************  경제  ************** */}
+            {/* 증권 거래소 */}
+            <Route path="/classes/:classId/stock" component={TradeStock}/>
+            <Route path="/classes/:classId/stock-setting" component={SettingStock} />
             {/* ***************  행정부  ************** */}
             {/* 국세청 */}
             <Route path="/classes/:classId/tax-nation" component={NationalTax} />

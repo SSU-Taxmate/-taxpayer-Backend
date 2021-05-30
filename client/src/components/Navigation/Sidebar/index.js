@@ -30,7 +30,7 @@ class Sidebar extends Component {
       <ul className={toggled ? 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled' : 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'} id="accordionSidebar">
 
         {/* <!-- Sidebar - Brand --> */}
-        <Link className="sidebar-brand d-flex align-items-center justify-content-center"  to="/classes">
+        <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/classes">
           <div className="sidebar-brand-icon rotate-n-15">
             <i className="fas fa-piggy-bank"></i>
           </div>
@@ -48,7 +48,7 @@ class Sidebar extends Component {
         </li>
 
         {/* <!-- Divider --> */}
-        <hr className="sidebar-divider" />
+        <hr className="sidebar-divider my-0" />
         <li className="nav-item">
           <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_class_setting" aria-controls="collapseTwo">
             <i className="fas fa-fw fa-cog"></i>
@@ -61,8 +61,9 @@ class Sidebar extends Component {
             </div>
           </div>
         </li>
+
         {/* <!-- Divider --> */}
-        <hr className="sidebar-divider" />
+        <hr className="sidebar-divider my-0" />
         {/* <!-- Nav Item - Pages Collapse Menu --> */}
         <li className="nav-item">
           <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_bank" aria-controls="collapseTwo">
@@ -74,13 +75,25 @@ class Sidebar extends Component {
               <h6 className="collapse-header">중앙은행</h6>
               <Link className="collapse-item" to="/bank_statics">통계</Link>
               <Link className="collapse-item" to="/bank_setting">설정</Link>
+              <h6 className="collapse-header">신용등급</h6>
+              <Link className="collapse-item" to="/tlsdyd">신용등급</Link>
+            </div>
+          </div>
+        
+        </li>
+        <li className="nav-item">
+          <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_stock" aria-controls="collapseTwo">
+          <i class="fas fa-hand-holding-usd"></i>
+            <span>증권거래소</span>
+          </a>
+          <div id="collapse_stock" className='collapse' aria-labelledby="collapseTwo" data-parent="#accordionSidebar">
+            <div className="bg-white py-2 collapse-inner rounded">
               <h6 className="collapse-header">증권거래소</h6>
-              <Link className="collapse-item" to="/stock_DOM">호가창</Link>
-              <Link className="collapse-item" to="/stock_setting">설정</Link>
+              <Link className="collapse-item" to="/classes/:classId/stock">호가창</Link>
+              <Link className="collapse-item" to="/classes/:classId/stock-setting">설정</Link>
             </div>
           </div>
         </li>
-
         {/* <!-- Nav Item - Utilities Collapse Menu --> */}
         <li className="nav-item">
           <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_market" aria-expanded="true" aria-controls="collapseUtilities">
@@ -128,7 +141,7 @@ class Sidebar extends Component {
           </a>
           <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-   
+
               <h6 className="collapse-header">선생님</h6>
               <Link className="collapse-item" to="/classes/:classId/stats/nation">나라 통계</Link>
               <a className="collapse-item" href="utilities-other.html">Other</a>
@@ -157,10 +170,12 @@ class Sidebar extends Component {
 
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
-        <Link className="nav-link" to="/charts">
+          <Link className="nav-link" to="/charts">
             <i className="fas fa-vote-yea"></i>
             <span>국회</span></Link>
         </li>
+        {/* <!-- Divider --> */}
+        <hr className="sidebar-divider" />
 
         {/* <!-- Heading --> */}
         <div className="sidebar-heading">

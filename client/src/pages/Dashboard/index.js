@@ -8,7 +8,7 @@ import CardInfo from '../../components/Cards/Info';
 import ChartDonut from '../../components/Charts/Donut';
 import ChartLine from '../../components/Charts/Line';
 import PageHeading from '../../components/PageHeading';
-
+import ScrollToTop from '../../components/Scroll'
 class Dashboard extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
@@ -92,9 +92,9 @@ class Dashboard extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-        <a className="scroll-to-top rounded" href="#page-top">
-          <i className="fas fa-angle-up"></i>
-        </a></div>
+        <ScrollToTop/>
+        
+        </div>
     )
   }
 }
