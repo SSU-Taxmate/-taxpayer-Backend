@@ -7,7 +7,8 @@ import DataTable from '../../../../components/DataTable'
 const NationalTaxDetail=()=> {
   const [isLoading, setIsLoading]=useState(false)
   const [data,setData]=useState({debt:[]})
-  const [head,setHead]=useState({head:[]})
+  const [hData,sethData]=useState({hData:[]})
+  const [hSize,sethSize]=useState({hSize:0})
   const [err,setIsError]=useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -15,9 +16,11 @@ const NationalTaxDetail=()=> {
       setIsLoading(true);
  
       try {
-        const result = await axios.get('/api/nationaltax');
+        const result = await axios.get('/api/tax/nation');
+        
         setData(result.data['debt']);
-        setHead(result.data['head'])
+        sethData(result.data['hData'])
+        sethSize(result.data['hSize'])
         //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
         //console.log(result.data['data'])
       } catch (error) {
@@ -27,6 +30,8 @@ const NationalTaxDetail=()=> {
       setIsLoading(false);
     };
     fetchData();
+    console.log(hSize)
+
   }, []);
   const revenue_pie_data = {
     labels: [
@@ -223,7 +228,7 @@ const NationalTaxDetail=()=> {
     
       {isLoading ? 
       <div>loading</div>:(
-        <DataTable id='debt' data={data} head={head}/>
+        <DataTable id='debt' data={data} hData={hData} hSize={hSize}/>
       )}
     
       </CardCollapse>

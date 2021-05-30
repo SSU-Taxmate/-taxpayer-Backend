@@ -83,7 +83,7 @@ class Sidebar extends Component {
         </li>
         <li className="nav-item">
           <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_stock" aria-controls="collapseTwo">
-          <i class="fas fa-hand-holding-usd"></i>
+          <i className="fas fa-hand-holding-usd"></i>
             <span>증권거래소</span>
           </a>
           <div id="collapse_stock" className='collapse' aria-labelledby="collapseTwo" data-parent="#accordionSidebar">
