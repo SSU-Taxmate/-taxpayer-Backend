@@ -6,31 +6,27 @@ import ChartBar from '../../../../components/Charts/Bar'
 import DataTable from '../../../../components/DataTable'
 const NationalTaxDetail=()=> {
   const [isLoading, setIsLoading]=useState(false)
-  const [data,setData]=useState({debt:[]})
-  const [hData,sethData]=useState({hData:[]})
-  const [hSize,sethSize]=useState({hSize:0})
-  const [err,setIsError]=useState(false);
+  const [columns,setColumns]=useState([])
+  const [rows,setRows]=useState([])
+  const [err, setIsError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
- 
+
       try {
-        const result = await axios.get('/api/tax/nation');
-        
-        setData(result.data['debt']);
-        sethData(result.data['hData'])
-        sethSize(result.data['hSize'])
-        //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
-        //console.log(result.data['data'])
+          const result = await axios.get('/api/tax/nation');
+          setRows(result.data['rows']);
+          setColumns(result.data['columns'])
+      //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
+      //console.log('NationalStatsDetail',result.data['headings'])
       } catch (error) {
-        setIsError(true);
+          setIsError(true);
       }
- 
       setIsLoading(false);
-    };
-    fetchData();
-    console.log(hSize)
+  };
+  fetchData();
+  console.log('h')
 
   }, []);
   const revenue_pie_data = {
@@ -228,7 +224,7 @@ const NationalTaxDetail=()=> {
     
       {isLoading ? 
       <div>loading</div>:(
-        <DataTable id='debt' data={data} hData={hData} hSize={hSize}/>
+        <DataTable id='debt' rows={rows} columns={columns} />
       )}
     
       </CardCollapse>

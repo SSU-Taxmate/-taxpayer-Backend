@@ -7,9 +7,8 @@ import axios from 'axios';
 
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading]=useState(false)
-    const [data,setData]=useState({hw:[]})
-    const [hData,sethData]=useState({hData:[]})
-    const [hSize,sethSize]=useState({hSize:0})    
+    const [columns,setColumns]=useState([])
+    const [rows,setRows]=useState([])
     const [err, setIsError] = useState(false);
 
     const hw_pie_data = {
@@ -38,11 +37,10 @@ const NationStatsDetail = () => {
 
             try {
                 const result = await axios.get('/api/stats/nation');
-                setData(result.data['hw']);
-                sethData(result.data['hData'])
-                sethSize(result.data['hSize'])
+                setRows(result.data['rows']);
+                setColumns(result.data['columns'])
             //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
-                //console.log(result.data['data'])
+            //console.log('NationalStatsDetail',result.data['headings'])
             } catch (error) {
                 setIsError(true);
             }
@@ -59,7 +57,7 @@ const NationStatsDetail = () => {
                     <div className="table-responsive">
                         {isLoading ?
                             <div>loading</div> : (
-                                <DataTable id='debt' data={data} hData={hData} hSize={hSize}/>
+                                <DataTable id='debt' columns={columns} rows={rows}/>
                             )}
 
                     
@@ -67,7 +65,6 @@ const NationStatsDetail = () => {
                 </div>
             </div>
             <CardBasic title='표로로'>
-                <DataTable></DataTable>
             </CardBasic>
 
             <CardBasic title='상황'>
