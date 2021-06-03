@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
-import DataTable from '../../../../components/DataTable'
 import ChartPie from './../../../../components/Charts/Pie'
-
+import Table from '../../../../components/Table';
 import axios from 'axios';
 
 const NationStatsDetail = () => {
-    const [isLoading, setIsLoading]=useState(false)
-    const [columns,setColumns]=useState([])
-    const [rows,setRows]=useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [columns, setColumns] = useState([])
+    const [data, setData] = useState([])
     const [err, setIsError] = useState(false);
-
     const hw_pie_data = {
         labels: [
             '제출완료',
@@ -34,35 +32,32 @@ const NationStatsDetail = () => {
         const fetchData = async () => {
             setIsError(false);
             setIsLoading(true);
-
             try {
                 const result = await axios.get('/api/stats/nation');
-                setRows(result.data['rows']);
+                setData(result.data['data']);
                 setColumns(result.data['columns'])
-            //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
-            //console.log('NationalStatsDetail',result.data['headings'])
             } catch (error) {
                 setIsError(true);
-            }
 
+            }
             setIsLoading(false);
+
         };
         fetchData();
     }, []);
-
     return (
         <div className="col">
             <div className="card shadow mb-4">
-                <div className="card-body">
-                    <div className="table-responsive">
-                        {isLoading ?
-                            <div>loading</div> : (
-                                <DataTable id='debt' columns={columns} rows={rows}/>
-                            )}
-
-                    
-                    </div>
-                </div>
+                {isLoading ?
+                    <div>loading</div> : (
+                        <Table
+                            title="제출여부"
+                            columns={columns}
+                            data={data}
+                            options={{
+                                sorting: true, filtering: true
+                            }}
+                        />)}
             </div>
             <CardBasic title='표로로'>
             </CardBasic>

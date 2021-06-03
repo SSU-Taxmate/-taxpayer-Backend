@@ -27,107 +27,223 @@ app.get('/api/hello', (req, res) => {
 app.get('/api/tax/nation', (req, res) => {
 
   res.json({
-    "rows": [
+    "data": [
       [
-        "2011/04/25",
-        "Tiger Nixon",
-        "5421",
-        "$320,800"
-      ],
-      [
-        "2011/07/25",
-        "Garrett Winters",
-        "8422",
-        "$170,750"
-      ],
-      [
-        "2009/01/12",
-        "Ashton Cox",
-        "1562",
-        "$86,000"
-      ]],
-    'columns': [{ "title": '날짜' }, { "title": '이유' }, { "title": 'dmdkr' }, { "title": '번호' }],
+        {
+          date: '2011/04/25',
+          value: '2500미소',
+          reason: '내맘',
+        },
+        {
+          date: '2011/04/29',
+          value: '2500미소',
+          reason: '내맘',
+        },
+        {
+          date: '2011/04/28',
+          value: '200미소',
+          reason: '내맘3',
+        },
 
+      ],
+      [
+        {
+          date: '2011/04/25',
+          type: '직접세(뭐시기)',
+          value: '100미소',
+          sum: '누적합계'
+        },
+        {
+          date: '2011/07/25',
+          type: '직접세(뭐시기)',
+          value: '300미소',
+          sum: '누적합계'
+        },
+      ],
+      [
+        {
+          date: '2011/04/25',
+          type: '장학금',
+          value: '100미소',
+          sum: '누적지출'
+        },
+        {
+          date: '2011/07/25',
+          type: '문화복지',
+          value: '-200미소',
+          sum: '누적지출'
+        },
+      ]
+    ],
+    'columns': [
+      [
+        {
+          title: '날짜',
+          field: 'date',
+        },
+        {
+          title: '금액',
+          field: 'value',
+        },
+        {
+          title: '이유',
+          field: 'reason',
+        },
+      ], 
+      [
+        {
+          title: '날짜',
+          field: 'date',
+        },
+        {
+          title: '종류',
+          field: 'type',
+        },
+        {
+          title: '금액',
+          field: 'value',
+        },
+        {
+          title: '누적합계',
+          field: 'sum',
+        },
+      ],
+      [
+        {
+          title: '날짜',
+          field: 'date',
+        },
+        {
+          title: '지출종류',
+          field: 'type',
+        },
+        {
+          title: '지출내역',
+          field: 'value',
+        },
+        {
+          title: '지출합계',
+          field: 'sum',
+        },
+      ]
+
+    ]
   })
 })
 
 app.get('/api/stats/nation', (req, res) => {
 
   res.json({
-    "rows": [
-      [
-        "2011/04/25",
-        "일기",
-        "EJ",
-        "1",
-        "O"
-      ],
-      [
-        "2012/04/25",
-        "줄넘기",
-        "EJ",
-        "1",
-        "O"
-      ],
-      [
-        "2012/04/25",
-        "일기",
-        "EJ",
-        "1",
-        "O"
-      ],
-      [
-        "2011/04/25",
-        "줄넘기",
-        "EJ",
-        "1",
-        "O"
-      ],
-      [
-        "2011/04/25",
-        "일기",
-        "MH",
-        "2",
-        "X"
-      ],
-
-      [
-        "2012/04/25",
-        "줄넘기",
-        "MH",
-        "2",
-        "O"
-      ],
-      [
-        "2011/04/25",
-        "일기",
-        "SJ",
-        "3",
-        "O(쿠폰)"
-      ],
-      [
-        "2011/04/24",
-        "일기",
-        "SA",
-        "4",
-        "O"
-      ],
-      [
-        "2011/04/25",
-        "일기",
-        "SA",
-        "4",
-        "O"
-      ],
-      [
-        "2011/04/25",
-        "줄넘기",
-        "SA",
-        "4",
-        "O"
-      ]
+    "data": [
+      {
+        date: '2011/04/25',
+        type: '일기',
+        name: 'EJ',
+        sId: '1',
+        isComplete: 'X'
+      },
+      {
+        date: '2012/04/25',
+        type: '줄넘기',
+        name: 'EJ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2015/04/25',
+        type: '노래',
+        name: 'EJ',
+        sId: '1',
+        isComplete: '쿠폰'
+      },
+      {
+        date: '2011/04/25',
+        type: '일기',
+        name: 'EJ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2012/04/25',
+        type: '줄넘기',
+        name: 'EJ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2015/04/25',
+        type: '노래',
+        name: 'EJ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2011/04/25',
+        type: '일기',
+        name: 'ㄹㄹ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2012/04/25',
+        type: '줄넘기',
+        name: 'ㄹㄹ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2015/04/25',
+        type: '노래',
+        name: 'ㄹㄹ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2011/04/25',
+        type: '일기',
+        name: 'ㅠㅠ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2012/04/25',
+        type: '줄넘기',
+        name: 'ㅠㅠ',
+        sId: '1',
+        isComplete: 'O'
+      },
+      {
+        date: '2015/04/25',
+        type: '노래',
+        name: 'EJ',
+        sId: '1',
+        isComplete: 'O'
+      }
     ],
-    'columns': [{ "title": '날짜' }, { "title": '숙제종류' }, { "title": '이름' }, { "title": '번호' }, { "title": '제출여부' }],
+    'columns': [
+      {
+        title: '날짜',
+        field: 'date',
+      },
+      {
+        title: '숙제종류',
+        field: 'type',
+      },
+      {
+        title: '이름',
+        field: 'name',
+      },
+      {
+        title: '번호',
+        field: 'sId',
+      },
+      {
+        title: '제출여부',
+        field: 'isComplete',
+        lookup: { O: 'O', X: 'X', 쿠폰: '쿠폰' },
+
+      },
+    ],
   })
 })
 
