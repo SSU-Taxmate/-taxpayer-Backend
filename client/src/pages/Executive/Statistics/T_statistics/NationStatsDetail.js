@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
-import Table from '../../../../components/Table';
+import Table from '../../../../components/Table/Default';
+import EditableTable from '../../../../components/Table/Editable'
+import DetailTable from '../../../../components/Table/Detail'
 import axios from 'axios';
 
 const NationStatsDetail = () => {
@@ -27,6 +29,7 @@ const NationStatsDetail = () => {
         }],
 
     };
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,14 +55,17 @@ const NationStatsDetail = () => {
                     <div>loading</div> : (
                         <Table
                             title="제출여부"
-                            columns={columns}
-                            data={data}
+                            columns={columns[0]}
+                            data={data[0]}
                             options={{
-                                sorting: true, filtering: true
+                                sorting: true, filtering: true,exportButton: true,
                             }}
-                        />)}
+                        />
+                        )}
             </div>
-            <CardBasic title='표로로'>
+            <CardBasic title='숙제입력'>
+            <EditableTable title='직업관리'></EditableTable>
+            <DetailTable title='세부 테이블'></DetailTable>
             </CardBasic>
 
             <CardBasic title='상황'>

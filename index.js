@@ -89,7 +89,7 @@ app.get('/api/tax/nation', (req, res) => {
           title: '이유',
           field: 'reason',
         },
-      ], 
+      ],
       [
         {
           title: '날짜',
@@ -134,7 +134,7 @@ app.get('/api/tax/nation', (req, res) => {
 app.get('/api/stats/nation', (req, res) => {
 
   res.json({
-    "data": [
+    "data": [[
       {
         date: '2011/04/25',
         type: '일기',
@@ -145,22 +145,22 @@ app.get('/api/stats/nation', (req, res) => {
       {
         date: '2012/04/25',
         type: '줄넘기',
-        name: 'EJ',
-        sId: '1',
+        name: 'SJ',
+        sId: '12',
         isComplete: 'O'
       },
       {
         date: '2015/04/25',
         type: '노래',
-        name: 'EJ',
-        sId: '1',
+        name: 'MH',
+        sId: '2',
         isComplete: '쿠폰'
       },
       {
         date: '2011/04/25',
         type: '일기',
-        name: 'EJ',
-        sId: '1',
+        name: 'SA',
+        sId: '3',
         isComplete: 'O'
       },
       {
@@ -219,9 +219,14 @@ app.get('/api/stats/nation', (req, res) => {
         sId: '1',
         isComplete: 'O'
       }
+    ], 
+    [
+
+    ]
+
     ],
     'columns': [
-      {
+      [{
         title: '날짜',
         field: 'date',
       },
@@ -243,6 +248,10 @@ app.get('/api/stats/nation', (req, res) => {
         lookup: { O: 'O', X: 'X', 쿠폰: '쿠폰' },
 
       },
+      ],
+      [
+
+      ]
     ],
   })
 })

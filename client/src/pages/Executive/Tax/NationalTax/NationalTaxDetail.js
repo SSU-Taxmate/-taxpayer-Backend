@@ -3,7 +3,7 @@ import CardCollapse from '../../../../components/Cards/Collapse'
 import ChartPie from '../../../../components/Charts/Pie'
 import axios from 'axios';
 import ChartBar from '../../../../components/Charts/Bar'
-import Table from '../../../../components/Table';
+import Table from '../../../../components/Table/Default';
 
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
