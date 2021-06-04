@@ -44,10 +44,10 @@ const tableIcons = {
   SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
-  FavoriteBorderIcon:forwardRef((props, ref) => <FavoriteBorderIcon {...props} ref={ref} />),
-  FavoriteIcon:forwardRef((props, ref) => <FavoriteIcon {...props} ref={ref} />),
-  ChatBubbleOutlineIcon:forwardRef((props, ref) => <ChatBubbleOutlineIcon {...props} ref={ref} />),
-  ChatBubbleIcon:forwardRef((props, ref) => <ChatBubbleIcon {...props} ref={ref} />)
+  FavoriteBorderIcon: forwardRef((props, ref) => <FavoriteBorderIcon {...props} ref={ref} />),
+  FavoriteIcon: forwardRef((props, ref) => <FavoriteIcon {...props} ref={ref} />),
+  ChatBubbleOutlineIcon: forwardRef((props, ref) => <ChatBubbleOutlineIcon {...props} ref={ref} />),
+  ChatBubbleIcon: forwardRef((props, ref) => <ChatBubbleIcon {...props} ref={ref} />)
 
 };
 
@@ -67,14 +67,16 @@ export default function DetailTable(props) {
   ]);
 
   const [data, setData] = useState([
-    {id: 1,  name: 'Baran', job: '우체부', salary: 150, creditRating:'3',assets:'10000' },
-    {id: 2, name: 'AELIN' ,job: '통계청',  salary: 200, creditRating:'2',assets:'25000'},
-    {id: 3, name: 'SHWAN',job: '신용평가위원',  salary: 280, creditRating:'3',assets:'40000' },
-    {id: 4, name: 'EUKL', job: '은행원',  salary: 200, creditRating:'6' ,assets:'23900'},
-    {id: 5, name: 'qQE',job: '교실청소부',  salary: 300, creditRating:'4',assets:'39000' },
+    { id: 1, name: 'Baran', job: '우체부', salary: 150, creditRating: '3', assets: '10000' },
+    { id: 2, name: 'AELIN', job: '통계청', salary: 200, creditRating: '2', assets: '25000' },
+    { id: 3, name: 'SHWAN', job: '신용평가위원', salary: 280, creditRating: '3', assets: '40000' },
+    { id: 4, name: 'EUKL', job: '은행원', salary: 200, creditRating: '6', assets: '23900' },
+    { id: 5, name: 'qQE', job: '교실청소부', salary: 300, creditRating: '4', assets: '39000' },
 
   ]);
+  const [options,setOptions]=useState({
 
+  });
 
   const theme = createMuiTheme({
     overrides: {
@@ -111,9 +113,11 @@ export default function DetailTable(props) {
 
       <MaterialTable
         title="학생관리"
-        icons={tableIcons}
         columns={columns}
         data={data}
+        options={options}
+        icons={tableIcons}
+
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
@@ -147,27 +151,55 @@ export default function DetailTable(props) {
             }),
         }}
 
+        //detail
         detailPanel={[
-            {
-              icon: FavoriteBorderIcon,
-              openIcon: FavoriteIcon,
-              tooltip: '학생 통계',
-              render: rowData => {
-                return (
-                  <div
-                    style={{
-                      fontSize: 20,
-                      textAlign: 'center',
-                      color: 'black',
-                      backgroundColor: '#FDD835',
-                    }}
-                  >
-                    {rowData.job}
-                  </div>
-                )
-              },
+          {
+            icon: FavoriteBorderIcon,
+            openIcon: FavoriteIcon,
+            tooltip: '학생 통계',
+            render: rowData => {
+              return (
+                <div
+                  style={{
+                    fontSize: 20,
+                    textAlign: 'center',
+                    color: 'black',
+                    backgroundColor: '#FDD835',
+                  }}
+                >
+                  {rowData.job}
+                </div>
+              )
             },
-          ]}
+          },
+        ]}
+
+        // other props
+        localization={{
+        
+         
+          header: {
+            actions: '수정/삭제'
+          },
+          body: {
+            emptyDataSourceMessage: '보여줄 데이터가 없습니다.',
+            filterRow: {
+              filterTooltip: '필터'
+            }
+          },
+          grouping:{
+            placeholder:'이곳으로 드래그 해주세요',
+            groupedBy: '그룹화 : '
+          },
+          pagination: {
+            labelDisplayedRows: '{from}-{to} of {count}',
+          },
+          toolbar: {
+            nRowsSelected: '{0} 행이 선택되었습니다.',
+            searchTooltip:'검색'
+
+          },
+        }}
       />
     </MuiThemeProvider>
   )

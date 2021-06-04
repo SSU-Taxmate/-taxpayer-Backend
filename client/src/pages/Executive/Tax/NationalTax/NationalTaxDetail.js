@@ -3,7 +3,7 @@ import CardCollapse from '../../../../components/Cards/Collapse'
 import ChartPie from '../../../../components/Charts/Pie'
 import axios from 'axios';
 import ChartBar from '../../../../components/Charts/Bar'
-import Table from '../../../../components/Table/Default';
+import DefaultTable from '../../../../components/Table/Default';
 
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -217,7 +217,7 @@ const NationalTaxDetail = () => {
 
         {isLoading ?
           <div>loading</div> : (
-            <Table
+            <DefaultTable
               title="국채 발행 내역"
               columns={columns[0]}
               data={data[0]}
@@ -234,7 +234,7 @@ const NationalTaxDetail = () => {
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
         {isLoading ?
           <div>loading</div> : (
-            <Table
+            <DefaultTable
               title="세입 항목별 세부 내역"
               columns={columns[1]}
               data={data[1]}
@@ -251,7 +251,7 @@ const NationalTaxDetail = () => {
       <CardCollapse title='세출 항목별 세부 내역' area_id='expenditure_detail'>
         {isLoading ?
           <div>loading</div> : (
-            <Table
+            <DefaultTable
               title="세출 항목별 세부 내역"
               columns={columns[2]}
               data={data[2]}

@@ -20,7 +20,7 @@ class ChartLine extends Component {
     componentDidMount() {
 
         const myChartRef = this.chartRef.current.getContext("2d");
-        console.log(this.chartRef);
+        //console.log(this.chartRef);
         const dataset = this.state.data;
         new Chart(myChartRef, {
             type: 'line',

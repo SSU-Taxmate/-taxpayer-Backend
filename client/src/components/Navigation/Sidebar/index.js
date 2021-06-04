@@ -56,8 +56,8 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_class_setting" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <a className="collapse-item" href="buttons.html">학생관리</a>
-              <Link className="collapse-item" to="/cards">학급관리</Link>
+              <a className="collapse-item" href="/classes/:classId/student-setting">학생관리</a>
+              <Link className="collapse-item" to="/classes/:classId/class-setting">학급관리</Link>
             </div>
           </div>
         </li>

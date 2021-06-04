@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
-import Table from '../../../../components/Table/Default';
-import EditableTable from '../../../../components/Table/Editable'
+import DefaultTable from '../../../../components/Table/Default';
 import DetailTable from '../../../../components/Table/Detail'
 import axios from 'axios';
 
@@ -53,19 +52,18 @@ const NationStatsDetail = () => {
             <div className="card shadow mb-4">
                 {isLoading ?
                     <div>loading</div> : (
-                        <Table
+                        <DefaultTable
                             title="제출여부"
                             columns={columns[0]}
                             data={data[0]}
                             options={{
                                 sorting: true, filtering: true,exportButton: true,
+                                grouping:true,
                             }}
                         />
                         )}
             </div>
             <CardBasic title='숙제입력'>
-            <EditableTable title='직업관리'></EditableTable>
-            <DetailTable title='세부 테이블'></DetailTable>
             </CardBasic>
 
             <CardBasic title='상황'>

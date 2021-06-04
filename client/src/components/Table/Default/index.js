@@ -43,7 +43,7 @@ const tableIcons = {
 
 
 
-function Table(props) {
+function DefaultTable(props) {
     const [title,setTitle]=useState('');
     const [columns,setColumns]=useState([]);
     const [data,setData]=useState([]);
@@ -92,6 +92,25 @@ function Table(props) {
         data={data}
         options={options}
         icons={tableIcons}
+
+         // other props
+         localization={{
+         
+          body: {
+            emptyDataSourceMessage: '보여줄 데이터가 없습니다.',
+            filterRow: {
+              filterTooltip: '필터'
+            }
+          },
+        
+          pagination: {
+            labelDisplayedRows: '{from}-{to} of {count}',
+          },
+          toolbar: {
+            nRowsSelected: '{0} 행이 선택되었습니다.',
+            searchTooltip:'검색',
+          },
+        }}
     />
     </MuiThemeProvider>
     )
@@ -99,6 +118,6 @@ function Table(props) {
 
 
 
-export default Table
+export default DefaultTable
 
 

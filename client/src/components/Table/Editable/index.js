@@ -42,8 +42,8 @@ const tableIcons = {
   SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
-  FavoriteBorderIcon:forwardRef((props, ref) => <FavoriteBorderIcon {...props} ref={ref} />),
-  FavoriteIcon:forwardRef((props, ref) => <FavoriteIcon {...props} ref={ref} />)
+  FavoriteBorderIcon: forwardRef((props, ref) => <FavoriteBorderIcon {...props} ref={ref} />),
+  FavoriteIcon: forwardRef((props, ref) => <FavoriteIcon {...props} ref={ref} />)
 
 };
 
@@ -62,11 +62,11 @@ export default function EditableTable(props) {
   ]);
 
   const [data, setData] = useState([
-    { job: '우체부', personnel: 3, salary: 150, detail: 'Baran',qualification:'신용등급3등급이상' },
-    { job: '통계청', personnel: 1, salary: 200, detail: 'Baran' ,qualification:'수학 자격증 5급 이상'},
-    { job: '신용평가위원', personnel: 1, salary: 280, detail: 'Baran',qualification:'' },
-    { job: '은행원', personnel: 1, salary: 200, detail: 'Baran',qualification:'6급이상 자격증 1개 이상' },
-    { job: '교실청소부', personnel: 3, salary: 300, detail: 'Baran',qualification:'' },
+    { job: '우체부', personnel: 3, salary: 150, detail: 'Baran', qualification: '신용등급3등급이상' },
+    { job: '통계청', personnel: 1, salary: 200, detail: 'Baran', qualification: '수학 자격증 5급 이상' },
+    { job: '신용평가위원', personnel: 1, salary: 280, detail: 'Baran', qualification: '' },
+    { job: '은행원', personnel: 1, salary: 200, detail: 'Baran', qualification: '6급이상 자격증 1개 이상' },
+    { job: '교실청소부', personnel: 3, salary: 300, detail: 'Baran', qualification: '' },
 
   ]);
 
@@ -109,6 +109,9 @@ export default function EditableTable(props) {
         icons={tableIcons}
         columns={columns}
         data={data}
+
+        
+        //editable
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
@@ -141,7 +144,27 @@ export default function EditableTable(props) {
               }, 1000)
             }),
         }}
+        // other props
+        localization={{
+          
+          header: {
+            actions: '수정/삭제'
+          },
+          body: {
+            emptyDataSourceMessage: '보여줄 데이터가 없습니다.',
+            filterRow: {
+              filterTooltip: '필터'
+            }
+          },
+          pagination: {
+            labelDisplayedRows: '{from}-{to} of {count}'
+          },
+          toolbar: {
+            nRowsSelected: '{0} 행이 선택되었습니다.',
+            searchTooltip:'검색'
 
+          },
+        }}
       />
     </MuiThemeProvider>
   )
