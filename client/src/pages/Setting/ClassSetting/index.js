@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
@@ -6,60 +7,88 @@ import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 
 import EditableTable from '../../../components/Table/Editable'
-
+import axios from 'axios'
 function ClassSetting() {
-    return (
-        <>
-        {/* <!-- Page Wrapper --> */}
-        <div id="wrapper">
+  const [isLoading, setIsLoading] = useState(false)
+  const [columns, setColumns] = useState([])
+  const [data, setData] = useState([])
+  const [err, setIsError] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
 
-          {/* <!-- Sidebar --> */}
-          <Sidebar />
-          {/* <!-- End of Sidebar --> */}
+      try {
+        const result = await axios.get('/api/setting/class');
+        setData(result.data['data'])
+        setColumns(result.data['columns'])
+      } catch (error) {
+        setIsError(true);
 
-          {/* <!-- Content Wrapper --> */}
-          <div id="content-wrapper" className="d-flex flex-column">
+      }
+      setIsLoading(false);
 
-            {/* <!-- Main Content --> */}
-            <div id="content">
+    };
+    fetchData();
 
-              {/* <!-- Topbar --> */}
-              <Topbar />
-              {/* <!-- End of Topbar --> */}
+  }, []);
+  return (
+    <>
+      {/* <!-- Page Wrapper --> */}
+      <div id="wrapper">
 
-              {/* <!-- Begin Page Content --> */}
-              <div className="container-fluid">
+        {/* <!-- Sidebar --> */}
+        <Sidebar />
+        {/* <!-- End of Sidebar --> */}
 
-                {/* <!-- Page Heading --> */}
+        {/* <!-- Content Wrapper --> */}
+        <div id="content-wrapper" className="d-flex flex-column">
 
-                <PageHeading title="클래스 세팅" />
+          {/* <!-- Main Content --> */}
+          <div id="content">
 
-                {/* <!-- Content Row --> */}
-                <EditableTable title='직업관리'></EditableTable>
+            {/* <!-- Topbar --> */}
+            <Topbar />
+            {/* <!-- End of Topbar --> */}
 
+            {/* <!-- Begin Page Content --> */}
+            <div className="container-fluid">
 
-              </div>
-              {/* <!-- /.container-fluid --> */}
+              {/* <!-- Page Heading --> */}
+
+              <PageHeading title="클래스 세팅" />
+
+              {/* <!-- Content Row --> */}
+              {isLoading ?
+                <div>loading</div> : (
+                  <EditableTable
+                    title='직업관리'
+                    columns={columns[0]}
+                    data={data[0]} />
+                )}
 
             </div>
-            {/* <!-- End of Main Content --> */}
-
-            {/* <!-- Footer --> */}
-            <Footer/>
-            {/* <!-- End of Footer --> */}
+            {/* <!-- /.container-fluid --> */}
 
           </div>
-          {/* <!-- End of Content Wrapper --> */}
+          {/* <!-- End of Main Content --> */}
+
+          {/* <!-- Footer --> */}
+          <Footer />
+          {/* <!-- End of Footer --> */}
 
         </div>
-        {/* <!-- End of Page Wrapper --> */}
+        {/* <!-- End of Content Wrapper --> */}
 
-        {/* <!-- Scroll to Top Button--> */}
-        <ScrollToTop/>
-        
-        </>
-    
-    )
+      </div>
+      {/* <!-- End of Page Wrapper --> */}
+
+      {/* <!-- Scroll to Top Button--> */}
+      <ScrollToTop />
+
+    </>
+
+  )
 }
 
 export default ClassSetting

@@ -30,47 +30,47 @@ app.get('/api/tax/nation', (req, res) => {
     "data": [
       [
         {
-          date: '2011/04/25',
-          value: '2500미소',
+          date: '2021/04/25',
+          value: '2500',
+          reason: '내맘222',
+        },
+        {
+          date: '2021/04/29',
+          value: '2500',
           reason: '내맘',
         },
         {
-          date: '2011/04/29',
-          value: '2500미소',
-          reason: '내맘',
-        },
-        {
-          date: '2011/04/28',
-          value: '200미소',
+          date: '2021/04/28',
+          value: '200',
           reason: '내맘3',
         },
 
       ],
       [
         {
-          date: '2011/04/25',
+          date: '2021/04/25',
           type: '직접세(뭐시기)',
-          value: '100미소',
+          value: '100',
           sum: '누적합계'
         },
         {
-          date: '2011/07/25',
+          date: '2021/07/25',
           type: '직접세(뭐시기)',
-          value: '300미소',
+          value: '300',
           sum: '누적합계'
         },
       ],
       [
         {
-          date: '2011/04/25',
+          date: '2021/04/25',
           type: '장학금',
-          value: '100미소',
+          value: '100',
           sum: '누적지출'
         },
         {
-          date: '2011/07/25',
+          date: '2021/07/25',
           type: '문화복지',
-          value: '-200미소',
+          value: '-200',
           sum: '누적지출'
         },
       ]
@@ -82,8 +82,9 @@ app.get('/api/tax/nation', (req, res) => {
           field: 'date',
         },
         {
-          title: '금액',
+          title: '금액(미소)',
           field: 'value',
+          type: 'numeric'
         },
         {
           title: '이유',
@@ -100,8 +101,10 @@ app.get('/api/tax/nation', (req, res) => {
           field: 'type',
         },
         {
-          title: '금액',
+          title: '금액(미소)',
           field: 'value',
+          type: 'numeric'
+
         },
         {
           title: '누적합계',
@@ -118,8 +121,10 @@ app.get('/api/tax/nation', (req, res) => {
           field: 'type',
         },
         {
-          title: '지출내역',
+          title: '금액(미소)',
           field: 'value',
+          type: 'numeric'
+
         },
         {
           title: '지출합계',
@@ -219,7 +224,7 @@ app.get('/api/stats/nation', (req, res) => {
         sId: '1',
         isComplete: 'O'
       }
-    ], 
+    ],
     [
 
     ]
@@ -241,6 +246,7 @@ app.get('/api/stats/nation', (req, res) => {
       {
         title: '번호',
         field: 'sId',
+        type: 'numeric'
       },
       {
         title: '제출여부',
@@ -253,6 +259,30 @@ app.get('/api/stats/nation', (req, res) => {
 
       ]
     ],
+  })
+})
+
+app.get('/api/setting/class', (req, res) => {
+  res.json({
+    "data": [
+      [
+        { job: '우체부', personnel: 3, salary: 150, detail: 'Baran', qualification: '신용등급3등급이상' },
+        { job: '통계청', personnel: 1, salary: 200, detail: 'Baran', qualification: '수학 자격증 5급 이상' },
+        { job: '신용평가위원', personnel: 1, salary: 280, detail: 'Baran', qualification: '' },
+        { job: '은행원', personnel: 1, salary: 200, detail: 'Baran', qualification: '6급이상 자격증 1개 이상' },
+        { job: '교실청소부', personnel: 3, salary: 300, detail: 'Baran', qualification: '' },
+    
+      ],[]
+    ],
+    "columns": [
+      [
+        { title: '직업명', field: 'job' },
+        { title: '인원', field: 'personnel' },
+        { title: '예상 월급(미소)', field: 'salary' },
+        { title: '하는일', field: 'detail' },
+        { title: '자격요건', field: 'qualification' },
+      ],[]
+    ]
   })
 })
 

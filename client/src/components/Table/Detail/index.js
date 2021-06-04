@@ -54,7 +54,7 @@ const tableIcons = {
 /* Icon */
 
 export default function DetailTable(props) {
-  const { useState } = React;
+  const [title, setTitle] = useState(props.title);
 
   const [columns, setColumns] = useState([
     { title: '번호', field: 'id' },
@@ -103,16 +103,11 @@ export default function DetailTable(props) {
   });
 
 
-
-  useEffect(() => {
-
-
-  }, [])
   return (
     <MuiThemeProvider theme={theme}>
 
       <MaterialTable
-        title="학생관리"
+        title={title}
         columns={columns}
         data={data}
         options={options}

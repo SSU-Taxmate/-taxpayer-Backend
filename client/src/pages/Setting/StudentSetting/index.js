@@ -8,6 +8,8 @@ import ScrollToTop from '../../../components/Scroll'
 import DetailTable from '../../../components/Table/Detail'
 
 function StudentSetting() {
+
+
     return (
         <>
         {/* <!-- Page Wrapper --> */}
@@ -26,21 +28,14 @@ function StudentSetting() {
               {/* <!-- Topbar --> */}
               <Topbar />
               {/* <!-- End of Topbar --> */}
-
               {/* <!-- Begin Page Content --> */}
               <div className="container-fluid">
-
                 {/* <!-- Page Heading --> */}
-
-                <PageHeading title="클래스 세팅" />
-
+                <PageHeading title="학생 세팅" />
                 {/* <!-- Content Row --> */}
-                <DetailTable title='세부 테이블'></DetailTable>
-
-
+                <DetailTable title='학생 설정 테이블'></DetailTable>
               </div>
               {/* <!-- /.container-fluid --> */}
-
             </div>
             {/* <!-- End of Main Content --> */}
 

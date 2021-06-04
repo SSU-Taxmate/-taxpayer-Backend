@@ -50,27 +50,12 @@ const tableIcons = {
 /* Icon */
 
 export default function EditableTable(props) {
-  const { useState } = React;
-
-  const [columns, setColumns] = useState([
-    { title: '직업명', field: 'job' },
-    { title: '인원', field: 'personnel' },
-    { title: '예상 월급(미소)', field: 'salary' },
-    { title: '하는일', field: 'detail' },
-    { title: '자격요건', field: 'qualification' },
-
-  ]);
-
-  const [data, setData] = useState([
-    { job: '우체부', personnel: 3, salary: 150, detail: 'Baran', qualification: '신용등급3등급이상' },
-    { job: '통계청', personnel: 1, salary: 200, detail: 'Baran', qualification: '수학 자격증 5급 이상' },
-    { job: '신용평가위원', personnel: 1, salary: 280, detail: 'Baran', qualification: '' },
-    { job: '은행원', personnel: 1, salary: 200, detail: 'Baran', qualification: '6급이상 자격증 1개 이상' },
-    { job: '교실청소부', personnel: 3, salary: 300, detail: 'Baran', qualification: '' },
-
-  ]);
-
-
+  const [title, setTitle] = useState(props.title);
+  const [columns, setColumns] = useState(props.columns);
+  const [data, setData] = useState(props.data);
+  const [options,setOptions]=useState({
+  });
+ 
   const theme = createMuiTheme({
     overrides: {
       MuiTableCell: {
@@ -95,21 +80,14 @@ export default function EditableTable(props) {
 
   });
 
-
-
-  useEffect(() => {
-
-
-  }, [])
   return (
     <MuiThemeProvider theme={theme}>
-
       <MaterialTable
-        title="직업관리"
-        icons={tableIcons}
+        title={title}
         columns={columns}
         data={data}
-
+        options={options}
+        icons={tableIcons}
         
         //editable
         editable={{

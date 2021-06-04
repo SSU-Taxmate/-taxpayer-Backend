@@ -7,7 +7,6 @@ import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
 
 import SettingTaxDetail from './SettingTaxDetail'
-import { data } from 'jquery';
 class SettingTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
@@ -43,7 +42,7 @@ class SettingTax extends Component {
                 <PageHeading title="세금설정" />
 
                 {/* <!-- Content Row --> */}
-                <SettingTaxDetail data={data}></SettingTaxDetail>
+                <SettingTaxDetail ></SettingTaxDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 

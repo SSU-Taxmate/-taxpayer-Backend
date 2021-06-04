@@ -2,12 +2,11 @@ import React,{useEffect, useState} from 'react'
 import CardDropdown from '../../../../components/Cards/Dropdown';
 import Popover from '../../../../components/Popover';
 
-function SettingTaxDetail(props) {
-  const [data,setData]=useState(true);
+function SettingTaxDetail() {
+ /* const [data,setData]=useState(true);
+  
   useEffect(()=>{
-    setData(props.data)
-    //console.log(data['data'],data['useTax'])
-  })
+  })*/
     return (
         <CardDropdown title='이번달 내가 내야할 세금'>
                   {/*<!--직접세  시작-->*/}
