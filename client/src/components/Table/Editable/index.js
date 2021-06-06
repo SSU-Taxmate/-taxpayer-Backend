@@ -23,7 +23,6 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 /*theme */
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { number } from 'prop-types';
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -53,8 +52,7 @@ export default function EditableTable(props) {
   const [title, setTitle] = useState(props.title);
   const [columns, setColumns] = useState(props.columns);
   const [data, setData] = useState(props.data);
-  const [options,setOptions]=useState({
-  });
+  const [options,setOptions]=useState(props.options);
  
   const theme = createMuiTheme({
     overrides: {
@@ -64,7 +62,8 @@ export default function EditableTable(props) {
           paddingBottom: 5,
           "&:last-child": {
             paddingRight: 5
-          }
+          },
+          
         }
       }
     },
@@ -95,7 +94,6 @@ export default function EditableTable(props) {
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 setData([...data, newData]);
-
                 resolve();
               }, 1000)
             }),
@@ -113,11 +111,11 @@ export default function EditableTable(props) {
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
+                //이 부분에 함수를 만들자!
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
                 setData([...dataDelete]);
-
                 resolve();
               }, 1000)
             }),
@@ -129,10 +127,17 @@ export default function EditableTable(props) {
             actions: '수정/삭제'
           },
           body: {
+            editRow:{
+              deleteText: '이 행을 정말 삭제 하시겠습니까?',
+            },
             emptyDataSourceMessage: '보여줄 데이터가 없습니다.',
             filterRow: {
               filterTooltip: '필터'
             }
+          },
+          grouping:{
+            placeholder:'여기에 그룹화 할 헤더를 끌어다놓으세요',
+            groupedBy: '그룹화 : '
           },
           pagination: {
             labelDisplayedRows: '{from}-{to} of {count}'

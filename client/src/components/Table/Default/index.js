@@ -96,7 +96,10 @@ function DefaultTable(props) {
               filterTooltip: '필터'
             }
           },
-
+          grouping:{
+            placeholder:'여기에 그룹화 할 헤더를 끌어다놓으세요',
+            groupedBy: '그룹화 : '
+          },
           pagination: {
             labelDisplayedRows: '{from}-{to} of {count}',
           },

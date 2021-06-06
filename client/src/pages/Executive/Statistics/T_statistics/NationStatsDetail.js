@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
 import DefaultTable from '../../../../components/Table/Default';
-import DetailTable from '../../../../components/Table/Detail'
+import EditableTable from '../../../../components/Table/Editable'
 import axios from 'axios';
 
 const NationStatsDetail = () => {
@@ -28,7 +28,7 @@ const NationStatsDetail = () => {
         }],
 
     };
-    
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,20 +52,31 @@ const NationStatsDetail = () => {
             <div className="card shadow mb-4">
                 {isLoading ?
                     <div>loading</div> : (
+                        <EditableTable
+                            title="제출여부"
+                            columns={columns[0]}
+                            data={data[0]}
+                            options={{
+                                sorting: true, filtering: true, exportButton: true,
+                                grouping: true, 
+                            }}
+                        />
+                    )}
+            </div>
+            <div className="card shadow mb-4">
+                {isLoading ?
+                    <div>loading</div> : (
                         <DefaultTable
                             title="제출여부"
                             columns={columns[0]}
                             data={data[0]}
                             options={{
-                                sorting: true, filtering: true,exportButton: true,
-                                grouping:true,
+                                sorting: true, filtering: true, exportButton: true,
+                                grouping: true, 
                             }}
                         />
-                        )}
+                    )}
             </div>
-            <CardBasic title='숙제입력'>
-            </CardBasic>
-
             <CardBasic title='상황'>
                 <div className="row">
                     <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />

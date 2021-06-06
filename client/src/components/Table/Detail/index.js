@@ -87,6 +87,7 @@ export default function DetailTable(props) {
           "&:last-child": {
             paddingRight: 5
           }
+          
         }
       }
     },

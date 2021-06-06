@@ -144,7 +144,7 @@ class Sidebar extends Component {
 
               <h6 className="collapse-header">선생님</h6>
               <Link className="collapse-item" to="/classes/:classId/stats/nation">나라 통계</Link>
-              <a className="collapse-item" href="utilities-other.html">Other</a>
+              <a className="collapse-item" href="/classes/:classId/stats/nation-setting">숙제 관리</a>
 
               <h6 className="collapse-header">학생</h6>
               <Link className="collapse-item" to="/classes/:classId/stats/my">나의 통계</Link>

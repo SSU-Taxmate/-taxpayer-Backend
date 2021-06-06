@@ -226,7 +226,50 @@ app.get('/api/stats/nation', (req, res) => {
       }
     ],
     [
-
+      {
+        date: '2020/06/06',
+        type: '수학',
+        detail: '수학익힘책 35쪽~45쪽'
+      },
+      {
+        date: '2020/06/06',
+        type: '일기',
+        detail: ''
+      },
+      {
+        date: '2020/06/06',
+        type: '체육',
+        detail: '줄넘기 10회이상'
+      },
+      {
+        date: '2020/06/05',
+        type: '수학',
+        detail: '수학익힘책 25쪽~35쪽'
+      },
+      {
+        date: '2020/06/05',
+        type: '일기',
+        detail: ''
+      },
+      {
+        date: '2020/06/05',
+        type: '체육',
+        detail: '줄넘기 10회이상'
+      }
+    ],
+    [
+      {
+        hwId: 1,
+        type: '일기',
+      },
+      {
+        hwId: 2,
+        type: '줄넘기',
+      },
+      {
+        hwId: 3,
+        type: '수학',
+      },
     ]
 
     ],
@@ -256,7 +299,25 @@ app.get('/api/stats/nation', (req, res) => {
       },
       ],
       [
-
+        {
+          title: '날짜',
+          field: 'date',
+          defaultGroupOrder: 0
+        },
+        {
+          title: '종류',
+          field: 'type',
+        },
+        {
+          title: '상세설명',
+          field: 'detail'
+        },
+      ],
+      [
+        {
+          title: '종류',
+          field: 'type',
+        },
       ]
     ],
   })
@@ -271,8 +332,8 @@ app.get('/api/setting/class', (req, res) => {
         { job: '신용평가위원', personnel: 1, salary: 280, detail: 'Baran', qualification: '' },
         { job: '은행원', personnel: 1, salary: 200, detail: 'Baran', qualification: '6급이상 자격증 1개 이상' },
         { job: '교실청소부', personnel: 3, salary: 300, detail: 'Baran', qualification: '' },
-    
-      ],[]
+
+      ], []
     ],
     "columns": [
       [
@@ -281,7 +342,7 @@ app.get('/api/setting/class', (req, res) => {
         { title: '예상 월급(미소)', field: 'salary' },
         { title: '하는일', field: 'detail' },
         { title: '자격요건', field: 'qualification' },
-      ],[]
+      ], []
     ]
   })
 })

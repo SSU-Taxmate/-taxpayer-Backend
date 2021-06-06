@@ -3,53 +3,53 @@ import React, { Component } from 'react'
 export default class TradeStockDetail extends Component {
     render() {
         return (
-            <div class="col-lg-12">
-              <div class="container mb-4">
-                <div class="row">
-                  <div class="col-10">
-                    <div class="tab-content" id="myTabContent">
+            <div className="col-lg-12">
+              <div className="container mb-4">
+                <div className="row">
+                  <div className="col-10">
+                    <div className="tab-content" id="myTabContent">
                       <div
-                        class="tab-pane fade show active"
+                        className="tab-pane fade show active"
                         id="kospi"
                         role="tabpanel"
                         aria-labelledby="kospi-tab"
                       >
-                        <div class="card shadow h-0 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
+                        <div className="card shadow h-0 py-2">
+                          <div className="card-body">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col mr-2">
                                 <div
-                                  class="text-xl font-weight-bold text-info text-uppercase mb-1"
+                                  className="text-xl font-weight-bold text-info text-uppercase mb-1"
                                 >
                                   kospi
                                   <i
-                                    class="fas fa-chart-area text-gray-300"
+                                    className="fas fa-chart-area text-gray-300"
                                   ></i>
-                                  <sub class="text-gray-600 pl-2"
+                                  <sub className="text-gray-600 pl-2"
                                     >2020.08.15.</sub
                                   >
                                   <button
-                                    class="btn btn-sm text-warning btn-link float-right"
+                                    className="btn btn-sm text-warning btn-link float-right"
                                     data-toggle="modal"
                                     data-target="#EditStockModal"
                                   >
                                     edit
                                   </button>
                                 </div>
-                                <div class="row">
-                                  <p class="h2 pl-1">1921</p>
-                                  <p class="p-2 text-danger">
-                                    <i class="fas fa-arrow-up"></i>
+                                <div className="row">
+                                  <p className="h2 pl-1">1921</p>
+                                  <p className="p-2 text-danger">
+                                    <i className="fas fa-arrow-up"></i>
                                     20 (+0.13%)
                                   </p>
                                 </div>
 
-                                <div class="row">
+                                <div className="row">
                                   <img
-                                    class="img-fluid ml-1"
+                                    className="img-fluid ml-1"
                                     src="https://placeimg.com/480/300/any"
                                   />
-                                  <p class="p5 ml-3">오늘의 뉴스</p>
+                                  <p className="p5 ml-3">오늘의 뉴스</p>
                                 </div>
                               </div>
                             </div>
@@ -57,45 +57,45 @@ export default class TradeStockDetail extends Component {
                         </div>
                       </div>
                       <div
-                        class="tab-pane fade"
+                        className="tab-pane fade"
                         id="kosdaq"
                         role="tabpanel"
                         aria-labelledby="kosdaq-tab"
                       >
-                        <div class="card shadow h-0 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
+                        <div className="card shadow h-0 py-2">
+                          <div className="card-body">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col mr-2">
                                 <div
-                                  class="text-xl font-weight-bold text-info text-uppercase mb-1"
+                                  className="text-xl font-weight-bold text-info text-uppercase mb-1"
                                 >
                                   kospi
                                   <i
-                                    class="fas fa-chart-area text-gray-300"
+                                    className="fas fa-chart-area text-gray-300"
                                   ></i>
-                                  <sub class="text-gray-600 pl-2"
+                                  <sub className="text-gray-600 pl-2"
                                     >2020.08.15.</sub
                                   >
 
                                   <button
-                                    class="btn btn-sm text-warning btn-link float-right"
+                                    className="btn btn-sm text-warning btn-link float-right"
                                     data-toggle="modal"
                                     data-target="#EditStockModal"
                                   >
                                     edit
                                   </button>
                                 </div>
-                                <div class="row">
-                                  <p class="h2 pl-1">1921</p>
-                                  <p class="p-2 text-danger">
-                                    <i class="fas fa-arrow-up"></i>
+                                <div className="row">
+                                  <p className="h2 pl-1">1921</p>
+                                  <p className="p-2 text-danger">
+                                    <i className="fas fa-arrow-up"></i>
                                     20 (+0.13%)
                                   </p>
                                 </div>
 
-                                <div class="row">
+                                <div className="row">
                                   <img
-                                    class="img-fluid ml-1"
+                                    className="img-fluid ml-1"
                                     src="https://placeimg.com/480/300/animals"
                                   />
                                 </div>
@@ -105,45 +105,45 @@ export default class TradeStockDetail extends Component {
                         </div>
                       </div>
                       <div
-                        class="tab-pane fade"
+                        className="tab-pane fade"
                         id="dollar"
                         role="tabpanel"
                         aria-labelledby="dollar-tab"
                       >
-                        <div class="card shadow h-0 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
+                        <div className="card shadow h-0 py-2">
+                          <div className="card-body">
+                            <div className="row no-gutters align-items-center">
+                              <div className="col mr-2">
                                 <div
-                                  class="text-xl font-weight-bold text-info text-uppercase mb-1"
+                                  className="text-xl font-weight-bold text-info text-uppercase mb-1"
                                 >
                                   kospi
                                   <i
-                                    class="fas fa-chart-area text-gray-300"
+                                    className="fas fa-chart-area text-gray-300"
                                   ></i>
-                                  <sub class="text-gray-600 pl-2"
+                                  <sub className="text-gray-600 pl-2"
                                     >2020.08.15.</sub
                                   >
 
                                   <button
-                                    class="btn btn-sm text-warning btn-link float-right"
+                                    className="btn btn-sm text-warning btn-link float-right"
                                     data-toggle="modal"
                                     data-target="#EditStockModal"
                                   >
                                     edit
                                   </button>
                                 </div>
-                                <div class="row">
-                                  <p class="h2 pl-1">1921</p>
-                                  <p class="p-2 text-danger">
-                                    <i class="fas fa-arrow-up"></i>
+                                <div className="row">
+                                  <p className="h2 pl-1">1921</p>
+                                  <p className="p-2 text-danger">
+                                    <i className="fas fa-arrow-up"></i>
                                     20 (+0.13%)
                                   </p>
                                 </div>
 
-                                <div class="row">
+                                <div className="row">
                                   <img
-                                    class="img-fluid ml-1"
+                                    className="img-fluid ml-1"
                                     src="https://placeimg.com/480/300/any"
                                   />
                                 </div>
@@ -154,16 +154,16 @@ export default class TradeStockDetail extends Component {
                       </div>
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div className="col-2">
                     <ul
-                      class="nav flex-column nav-pills"
+                      className="nav flex-column nav-pills"
                       id="myTab"
                       role="tablist"
                       aria-orientation="vertical"
                     >
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <a
-                          class="nav-link active"
+                          className="nav-link active"
                           id="kospi-tab"
                           data-toggle="tab"
                           href="#kospi"
@@ -173,9 +173,9 @@ export default class TradeStockDetail extends Component {
                           >kospi</a
                         >
                       </li>
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <a
-                          class="nav-link"
+                          className="nav-link"
                           id="kosdaq-tab"
                           data-toggle="tab"
                           href="#kosdaq"
@@ -185,9 +185,9 @@ export default class TradeStockDetail extends Component {
                           >kosdaq</a
                         >
                       </li>
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <a
-                          class="nav-link"
+                          className="nav-link"
                           id="dollar-tab"
                           data-toggle="tab"
                           href="#dollar"
@@ -202,24 +202,24 @@ export default class TradeStockDetail extends Component {
                 </div>
               </div>
     
-              <div class="container mb-4">
-                <div class="row">
-                  <div class="col-6">
+              <div className="container mb-4">
+                <div className="row">
+                  <div className="col-6">
                  
 
-                    <div class="card border-left-info shadow h-0 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
+                    <div className="card border-left-info shadow h-0 py-2">
+                      <div className="card-body">
+                        <div className="row no-gutters align-items-center">
+                          <div className="col mr-2">
                             <div
-                              class="text-xl font-weight-bold text-info text-uppercase mb-3"
+                              className="text-xl font-weight-bold text-info text-uppercase mb-3"
                             >
                               시장 운영 공지 / 신규 상장 회사
                               <i
-                                class="fas fa-clipboard-list text-gray-300"
+                                className="fas fa-clipboard-list text-gray-300"
                               ></i>
                               <button
-                                class="btn btn-sm text-warning btn-link float-right"
+                                className="btn btn-sm text-warning btn-link float-right"
                                 data-toggle="modal"
                                 data-target="#EditStockModal"
                               >
@@ -233,20 +233,20 @@ export default class TradeStockDetail extends Component {
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <div class="card border-bottom-info shadow h-0 py-2">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col mr-2">
+                  <div className="col-6">
+                    <div className="card border-bottom-info shadow h-0 py-2">
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="col mr-2">
                             <div
-                              class="text-xl font-weight-bold text-info text-uppercase mb-3"
+                              className="text-xl font-weight-bold text-info text-uppercase mb-3"
                             >
                               매매 동향
                               <i
-                                class="fas fa-clipboard-list text-gray-300"
+                                className="fas fa-clipboard-list text-gray-300"
                               ></i>
                               <button
-                                class="btn btn-sm text-warning btn-link float-right"
+                                className="btn btn-sm text-warning btn-link float-right"
                                 data-toggle="modal"
                                 data-target="#EditStockModal"
                               >
@@ -255,39 +255,39 @@ export default class TradeStockDetail extends Component {
                             </div>
                           </div>
                         </div>
-                        <div class="row">
+                        <div className="row">
                           <div
-                            class="btn-group btn-group-toggle m-auto"
+                            className="btn-group btn-group-toggle m-auto"
                             data-toggle="buttons"
                           >
                             <label
-                              class="btn btn-sm btn-outline-secondary active"
+                              className="btn btn-sm btn-outline-secondary active"
                             >
                               <input
                                 type="radio"
                                 name="options"
                                 id="opt-day"
-                                autocomplete="off"
-                                checked
-                              />
+                                autoComplete="off"
+                                defaultChecked
+                                />
                               Day
                             </label>
-                            <label class="btn btn-sm btn-outline-secondary">
+                            <label className="btn btn-sm btn-outline-secondary">
                               <input
                                 type="radio"
                                 name="options"
                                 id="opt-weeks"
-                                autocomplete="off"
+                                autoComplete="off"
                               />
                               Weeks
                             </label>
                           </div>
                         </div>
-                        <div class="row">
+                        <div className="row">
                           <canvas id="stock_sale_bar"></canvas>
                           <script src="../../js/BarChart.js"></script>
                         </div>
-                        <div class='row'>
+                        <div className='row'>
                           <canvas id="stock_sale_line"></canvas>
                           <script src="../../js/LineChart.js"></script>
                         </div>

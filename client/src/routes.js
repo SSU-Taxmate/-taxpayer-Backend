@@ -27,6 +27,8 @@ import MyTax from "./pages/Executive/Tax/MyTax"
 
 /*통계청 */
 import NationStats from './pages/Executive/Statistics/T_statistics'
+import SettingHw from './pages/Executive/Statistics/Setting'
+
 import MyStats from './pages/Executive/Statistics/S_statistics'
 
 const Routes = () => (
@@ -54,6 +56,8 @@ const Routes = () => (
             {/* 통계청 */}
 
             <Route path="/classes/:classId/stats/nation" component={NationStats} />
+            <Route path="/classes/:classId/stats/nation-setting" component={SettingHw} />
+
             <Route path="/classes/:classId/stats/my" component={MyStats} />
 
             {/* 그 외 */}

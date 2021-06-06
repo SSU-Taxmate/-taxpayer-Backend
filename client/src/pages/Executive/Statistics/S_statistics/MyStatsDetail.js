@@ -1,5 +1,6 @@
 import React from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
+import DefaultTable from '../../../../components/Table/Default';
 import ChartPie from './../../../../components/Charts/Pie'
 function MyStatsDetail() {
     const hw_pie_data = {
@@ -23,6 +24,9 @@ function MyStatsDetail() {
 
     return (
         <div className="col">
+             <CardBasic title='새로운 과제'>
+                <DefaultTable title='새로운 과제' />
+            </CardBasic>
             <CardBasic title='과제현황'>
             <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />
 
