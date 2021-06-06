@@ -5,6 +5,7 @@ import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
+import LogoutModal from '../../../../components/Modal/Logout'
 
 import MyTaxDetail from './MyTaxDetail'
 import ScrollToTop from '../../../../components/Scroll';
@@ -60,6 +61,7 @@ class MyTax extends Component {
 
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
+        <LogoutModal/>
         </div>
     
     )

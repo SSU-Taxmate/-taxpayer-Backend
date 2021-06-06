@@ -5,6 +5,8 @@ import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
+import LogoutModal from '../../../../components/Modal/Logout'
+import ScrollToTop from '../../../../components/Scroll';
 
 import SettingTaxDetail from './SettingTaxDetail'
 class SettingTax extends Component {
@@ -62,7 +64,11 @@ class SettingTax extends Component {
         {/* <!-- Scroll to Top Button--> */}
         <a className="scroll-to-top rounded" href="#page-top">
           <i className="fas fa-angle-up"></i>
-        </a></div>
+        </a>
+        <ScrollToTop/>
+        <LogoutModal/>
+        </div>
+        
     )
   }
 }

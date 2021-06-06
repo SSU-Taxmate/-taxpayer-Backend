@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+import ChartPie from '../../components/Charts/Pie'
 import Sidebar from '../../components/Navigation/Sidebar';
 import Topbar from '../../components/Navigation/Topbar';
 import PageHeading from '../../components/PageHeading';
-import ChartPie from '../../components/Charts/Pie'
+import ScrollToTop from '../../components/Scroll'
+import LogoutModal from '../../components/Modal/Logout'
 
 import ChartBar from '../../components/Charts/Bar'
 class Charts extends Component {
@@ -32,12 +33,15 @@ class Charts extends Component {
 
                                 {/* <!-- Page Heading --> */}
                                 <PageHeading title="Charts" />
-                                <ChartPie/>
-                                <ChartBar/>
+                                <ChartPie />
+                                <ChartBar />
                             </div>
                         </div>
                     </div>
                 </div>
+                {/* <!-- Scroll to Top Button--> */}
+                <ScrollToTop />
+                <LogoutModal />
             </div>
 
         )
