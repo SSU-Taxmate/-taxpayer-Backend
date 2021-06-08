@@ -1,6 +1,6 @@
 import React from 'react'
 import CardCollapse from '../../../components/Cards/Collapse'
-
+import EditableTable from '../../../components/Table/Editable'
 function LawDetail() {
     return (
         <>

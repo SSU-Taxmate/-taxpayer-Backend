@@ -7,6 +7,8 @@ import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
 import NationalTaxDetail from './NationalTaxDetail'
 import ScrollToTop from '../../../../components/Scroll';
+import LogoutModal from '../../../../components/Modal/Logout'
+
 class NationalTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
@@ -60,6 +62,7 @@ class NationalTax extends Component {
 
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
+        <LogoutModal/>
       </>
     )
   }

@@ -4,6 +4,7 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
+import LogoutModal from '../../../components/Modal/Logout';
 export default class SettingStock extends Component {
     render() {
         return (
@@ -53,7 +54,7 @@ export default class SettingStock extends Component {
     
             {/* <!-- Scroll to Top Button--> */}
             <ScrollToTop/>
-            
+            <LogoutModal/>
             </div>
        
         )

@@ -46,9 +46,8 @@ class SignUp extends Component {
                           </div>
                           
                         </div>
-                        <a href="login.html" className="btn btn-primary btn-user btn-block">
-                          회원가입
-                        </a>
+                        <Link className="btn btn-primary btn-user btn-block" to="/">회원가입</Link>
+
                         <hr/>
                         <a href="index.html" className="btn btn-google btn-user btn-block">
                           <i className="fab fa-google fa-fw"></i> Google로 로그인하기

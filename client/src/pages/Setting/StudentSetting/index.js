@@ -1,22 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react'
+import Sidebar from '../../../components/Navigation/Sidebar';
+import Topbar from '../../../components/Navigation/Topbar';
+import Footer from '../../../components/Footer'
+import PageHeading from '../../../components/PageHeading';
+import ScrollToTop from '../../../components/Scroll'
 
-//Navigation
-import Sidebar from '../../../../components/Navigation/Sidebar'
-import Topbar from '../../../../components/Navigation/Topbar';
-import Footer from '../../../../components/Footer'
-import PageHeading from '../../../../components/PageHeading';
-import LogoutModal from '../../../../components/Modal/Logout'
+import DetailTable from '../../../components/Table/Detail'
+import LogoutModal from '../../../components/Modal/Logout';
 
-import MyTaxDetail from './MyTaxDetail'
-import ScrollToTop from '../../../../components/Scroll';
-class MyTax extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
+function StudentSetting() {
 
-  render() {
+
     return (
-      <div>
+        <>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
@@ -33,24 +29,19 @@ class MyTax extends Component {
               {/* <!-- Topbar --> */}
               <Topbar />
               {/* <!-- End of Topbar --> */}
-
               {/* <!-- Begin Page Content --> */}
               <div className="container-fluid">
-
                 {/* <!-- Page Heading --> */}
-
-                <PageHeading title="세금서"/>
-
+                <PageHeading title="학생 세팅" />
                 {/* <!-- Content Row --> */}
-                <MyTaxDetail></MyTaxDetail>
+                <DetailTable title='학생 설정 테이블'></DetailTable>
               </div>
               {/* <!-- /.container-fluid --> */}
-
             </div>
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <Footer></Footer>
+            <Footer/>
             {/* <!-- End of Footer --> */}
 
           </div>
@@ -62,10 +53,10 @@ class MyTax extends Component {
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
         <LogoutModal/>
-        </div>
+        
+        </>
     
     )
-  }
 }
 
-export default MyTax;
+export default StudentSetting

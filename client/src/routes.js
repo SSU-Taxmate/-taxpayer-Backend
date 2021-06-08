@@ -15,17 +15,22 @@ import Law from "./pages/Legislature/Law";
 /*신용등급*/
 import Credit from  "./pages/Credit"
 
+/*클래스 설정 */
+import StudentSetting from './pages/Setting/StudentSetting'
+import ClassSetting from './pages/Setting/ClassSetting'
 /* 증권 거래소 */
 import TradeStock from "./pages/Stock/TradeStock";
 import SettingStock from './pages/Stock/SettingStock'
 
 /*국세청 */
-import NationalTax from  "./pages/Executive/Tax/NationalTax"
-import SettingTax from  "./pages/Executive/Tax/SettingTax"
+import NationalTax from "./pages/Executive/Tax/NationalTax"
+import SettingTax from "./pages/Executive/Tax/SettingTax"
 import MyTax from "./pages/Executive/Tax/MyTax"
 
 /*통계청 */
 import NationStats from './pages/Executive/Statistics/T_statistics'
+import SettingHw from './pages/Executive/Statistics/Setting'
+
 import MyStats from './pages/Executive/Statistics/S_statistics'
 
 const Routes = () => (
@@ -35,22 +40,27 @@ const Routes = () => (
             <Route path="/signup" component={SignUp} />
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />
+            {/* 클래스 설정 */}
+            <Route path="/classes/:classId/student-setting" component={StudentSetting}/>
+            <Route path="/classes/:classId/class-setting" component={ClassSetting}/>
 
             {/* ***************  경제  ************** */}
             {/* 증권 거래소 */}
-            <Route path="/classes/:classId/stock" component={TradeStock}/>
+            <Route path="/classes/:classId/stock" component={TradeStock} />
             <Route path="/classes/:classId/stock-setting" component={SettingStock} />
             {/* ***************  행정부  ************** */}
             {/* 국세청 */}
             <Route path="/classes/:classId/tax-nation" component={NationalTax} />
             <Route path="/classes/:classId/tax-setting" component={SettingTax} />
-            <Route path="/classes/:classId/tax-my" component={MyTax}/>
+            <Route path="/classes/:classId/tax-my" component={MyTax} />
             <Route path="/classes/:classId/law" component={Law} />
-            
+
             {/* 통계청 */}
-            
-            <Route path="/classes/:classId/stats/nation" component={NationStats}/>
-            <Route path="/classes/:classId/stats/my" component={MyStats}/>
+
+            <Route path="/classes/:classId/stats/nation" component={NationStats} />
+            <Route path="/classes/:classId/stats/nation-setting" component={SettingHw} />
+
+            <Route path="/classes/:classId/stats/my" component={MyStats} />
 
             {/*신용등급 */}
             <Route path="/classes/:classId/credit" component={Credit} />

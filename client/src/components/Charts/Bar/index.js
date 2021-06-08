@@ -10,7 +10,7 @@ class ChartBar extends Component {
         this.state={
             title: props.title ? props.title : '' ,
             id:props.id,
-            data:props.data
+            data:props.data?props.data:[],
         }
     }
     chartRef = React.createRef();

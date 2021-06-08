@@ -8,6 +8,8 @@ import CardCollapse from '../../components/Cards/Collapse';
 import CardDropdown from '../../components/Cards/Dropdown';
 
 import PageHeading from '../../components/PageHeading';
+import ScrollToTop from '../../components/Scroll';
+import LogoutModal from '../../components/Modal/Logout'
 
 //Navigation
 import Sidebar from '../../components/Navigation/Sidebar';
@@ -91,6 +93,9 @@ class Cards extends Component {
                         </div>
                     </div>
                 </div>
+             {/* <!-- Scroll to Top Button--> */}
+             <ScrollToTop />
+            <LogoutModal/>
             </div>
 
         )

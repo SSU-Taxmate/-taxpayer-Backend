@@ -5,6 +5,7 @@ import Topbar from '../../../components/Navigation/Topbar';
 import PageHeading from '../../../components/PageHeading';
 import LawDetail from '../Law/LawDetail'
 import ScrollToTop from '../../../components/Scroll';
+import LogoutModal from '../../../components/Modal/Logout';
 class Law extends Component {
   render() {
     return (
@@ -60,6 +61,7 @@ class Law extends Component {
         {/* <!-- Scroll to Top Button--> */}
        
         <ScrollToTop/>
+        <LogoutModal/>
         </div>
     )
   }

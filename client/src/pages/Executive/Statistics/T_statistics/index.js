@@ -5,58 +5,58 @@ import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
 import NationStatsDetail from './NationStatsDetail'
 import ScrollToTop from '../../../../components/Scroll';
+import LogoutModal from '../../../../components/Modal/Logout'
 function NationStats() {
-    return (
-        <div>
-              <div>
-        {/* <!-- Page Wrapper --> */}
-        <div id="wrapper">
+  return (
+    <div>
+      {/* <!-- Page Wrapper --> */}
+      <div id="wrapper">
 
-          {/* <!-- Sidebar --> */}
-          <Sidebar />
-          {/* <!-- End of Sidebar --> */}
+        {/* <!-- Sidebar --> */}
+        <Sidebar />
+        {/* <!-- End of Sidebar --> */}
 
-          {/* <!-- Content Wrapper --> */}
-          <div id="content-wrapper" className="d-flex flex-column">
+        {/* <!-- Content Wrapper --> */}
+        <div id="content-wrapper" className="d-flex flex-column">
 
-            {/* <!-- Main Content --> */}
-            <div id="content">
+          {/* <!-- Main Content --> */}
+          <div id="content">
 
-              {/* <!-- Topbar --> */}
-              <Topbar />
-              {/* <!-- End of Topbar --> */}
+            {/* <!-- Topbar --> */}
+            <Topbar />
+            {/* <!-- End of Topbar --> */}
 
-              {/* <!-- Begin Page Content --> */}
-              <div className="container-fluid">
+            {/* <!-- Begin Page Content --> */}
+            <div className="container-fluid">
 
-                {/* <!-- Page Heading --> */}
+              {/* <!-- Page Heading --> */}
 
-                <PageHeading title="반 숙제 현황"/>
+              <PageHeading title="반 숙제 현황" />
 
-                {/* <!-- Content Row --> */}
-                <NationStatsDetail></NationStatsDetail>
-              </div>
-              {/* <!-- /.container-fluid --> */}
-
+              {/* <!-- Content Row --> */}
+              <NationStatsDetail></NationStatsDetail>
             </div>
-            {/* <!-- End of Main Content --> */}
-
-            {/* <!-- Footer --> */}
-            <Footer></Footer>
-            {/* <!-- End of Footer --> */}
+            {/* <!-- /.container-fluid --> */}
 
           </div>
-          {/* <!-- End of Content Wrapper --> */}
+          {/* <!-- End of Main Content --> */}
+
+          {/* <!-- Footer --> */}
+          <Footer></Footer>
+          {/* <!-- End of Footer --> */}
 
         </div>
-        {/* <!-- End of Page Wrapper --> */}
+        {/* <!-- End of Content Wrapper --> */}
 
-        {/* <!-- Scroll to Top Button--> */}
-       <ScrollToTop/>
-       </div>
-    
-        </div>
-    )
+      </div>
+      {/* <!-- End of Page Wrapper --> */}
+
+      {/* <!-- Scroll to Top Button--> */}
+      <ScrollToTop />
+      <LogoutModal/>
+    </div>
+
+  )
 }
 
 export default NationStats

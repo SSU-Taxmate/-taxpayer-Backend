@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ClassCodeModal from '../../components/Modal/ClassCodeModal'
+import LogoutModal from '../../components/Modal/Logout';
 class ClassCard extends Component {
     constructor(props) {
         super(props)
@@ -25,6 +26,7 @@ class ClassCard extends Component {
                          
                             <ClassCodeModal id='displaycode' icon='fas fa-external-link-alt'>
                             </ClassCodeModal>
+                            
                               {/*<!--참가코드 생성 창 띄우기-->*/}
                               <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

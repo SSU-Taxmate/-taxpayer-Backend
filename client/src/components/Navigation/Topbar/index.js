@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clickMenuOpen } from '../../../redux/_actions';
-
+import LogoutModal from '../../../components/Modal/Logout'
 class Topbar extends Component {
     render() {
       const { clickMenuOpen } = this.props;
@@ -184,6 +184,7 @@ class Topbar extends Component {
                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                       </a>
+
                 </div>
               </li>
 

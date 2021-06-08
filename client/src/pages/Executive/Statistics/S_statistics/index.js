@@ -3,11 +3,11 @@ import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
+import LogoutModal from '../../../../components/Modal/Logout'
 import MyStatsDetail from './MyStatsDetail'
 import ScrollToTop from '../../../../components/Scroll';
 function NationStats() {
     return (
-        <div>
             <div>
                 {/* <!-- Page Wrapper --> */}
                 <div id="wrapper">
@@ -53,9 +53,10 @@ function NationStats() {
 
                 {/* <!-- Scroll to Top Button--> */}
                 <ScrollToTop/>
+                <LogoutModal/>
+
                 </div>
 
-        </div>
     )
 }
 

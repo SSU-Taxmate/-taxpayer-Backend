@@ -6,6 +6,7 @@ import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 
 import TradeStockDetail from './TradeStockDetail'
+import LogoutModal from '../../../components/Modal/Logout';
 export default class TradeStock extends Component {
     render() {
         return (
@@ -55,7 +56,7 @@ export default class TradeStock extends Component {
     
             {/* <!-- Scroll to Top Button--> */}
             <ScrollToTop/>
-            
+            <LogoutModal/>
             </div>
        
         )

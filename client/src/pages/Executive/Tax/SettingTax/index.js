@@ -5,9 +5,10 @@ import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
+import LogoutModal from '../../../../components/Modal/Logout'
+import ScrollToTop from '../../../../components/Scroll';
 
 import SettingTaxDetail from './SettingTaxDetail'
-import { data } from 'jquery';
 class SettingTax extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
@@ -43,7 +44,7 @@ class SettingTax extends Component {
                 <PageHeading title="세금설정" />
 
                 {/* <!-- Content Row --> */}
-                <SettingTaxDetail data={data}></SettingTaxDetail>
+                <SettingTaxDetail ></SettingTaxDetail>
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -63,7 +64,11 @@ class SettingTax extends Component {
         {/* <!-- Scroll to Top Button--> */}
         <a className="scroll-to-top rounded" href="#page-top">
           <i className="fas fa-angle-up"></i>
-        </a></div>
+        </a>
+        <ScrollToTop/>
+        <LogoutModal/>
+        </div>
+        
     )
   }
 }

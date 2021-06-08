@@ -1,32 +1,33 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import CardCollapse from '../../../../components/Cards/Collapse'
 import ChartPie from '../../../../components/Charts/Pie'
 import axios from 'axios';
 import ChartBar from '../../../../components/Charts/Bar'
-import DataTable from '../../../../components/DataTable'
-const NationalTaxDetail=()=> {
-  const [isLoading, setIsLoading]=useState(false)
-  const [data,setData]=useState({debt:[]})
-  const [head,setHead]=useState({head:[]})
-  const [err,setIsError]=useState(false);
+import DefaultTable from '../../../../components/Table/Default';
+const NationalTaxDetail = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [columns, setColumns] = useState([])
+  const [data, setData] = useState([])
+  const [err, setIsError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
- 
+
       try {
-        const result = await axios.get('/api/nationaltax');
-        setData(result.data['debt']);
-        setHead(result.data['head'])
-        //지금 이렇게 보내지고 있기 때문에...! 더 잘 생각해보자 
-        //console.log(result.data['data'])
+        const result = await axios.get('/api/tax/nation');
+
+        setData(result.data['data']);
+        setColumns(result.data['columns'])
       } catch (error) {
         setIsError(true);
+
       }
- 
       setIsLoading(false);
+
     };
     fetchData();
+
   }, []);
   const revenue_pie_data = {
     labels: [
@@ -85,34 +86,26 @@ const NationalTaxDetail=()=> {
     datasets: [{
       label: '세입',
       data: [5, 6, 3, 8, 5, 0, 0],
-      backgroundColor:'rgba(201, 203, 207, 0.2)',
+      backgroundColor: 'rgba(201, 203, 207, 0.2)',
       borderColor: 'rgb(153, 102, 255)',
       borderWidth: 1
     }, {
       label: '세출',
       data: [10, 0, 3, 1, 10, 0, 0],
-      backgroundColor: 
+      backgroundColor:
         'rgba(255, 159, 64, 0.2)',
-      borderColor: 
+      borderColor:
         'rgb(255, 99, 132)',
-     
+
       borderWidth: 1
     }
     ]
   };
-  const datae = {
-    labels: ["Direct", "Referral", "Social"],
-    datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-      hoverBorderColor: "rgba(234, 236, 244, 1)",
-    }],
-  }
-  return (
-    
-    <div>
 
+  return (
+
+    <div>
+ 
       {/*<!--재정 상황 시작-->*/}
       <CardCollapse title="재정상황" area_id='재정상황'>
         <div className="table-responsive">
@@ -220,100 +213,51 @@ const NationalTaxDetail=()=> {
 
       {/*<!--국채 발행 내역 시작-->*/}
       <CardCollapse title='국채 발행 내역' area_id='nationaldebt'>
-    
-      {isLoading ? 
-      <div>loading</div>:(
-        <DataTable id='debt' data={data} head={head}/>
-      )}
-    
+
+        {isLoading ?
+          <div>loading</div> : (
+            <DefaultTable
+              title="국채 발행 내역"
+              columns={columns[0]}
+              data={data[0]}
+              options={{
+                sorting: true, filtering: true
+              }}
+            />)}
+
       </CardCollapse>
       {/*<!--국채 발행 내역 끝-->*/}
 
 
       {/*<!--세입 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
-        <div className="table-responsive">
-          <table className="table table-bordered" id="revenue_detail_tb" width="100%" cellSpacing="0">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>날짜</th>
-                <th>내용</th>
-                <th>금액</th>
-                <th>누적합계</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th>id</th>
-                <th>날짜</th>
-                <th>내용</th>
-                <th>금액</th>
-                <th>누적합계</th>
-              </tr>
-            </tfoot>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>2009/02/14</td>
-                <td>San Francisco</td>
-                <td>500원</td>
-                <td>$45</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>2020/02/14</td>
-                <td>an Francisco</td>
-                <td>500원</td>
-                <td>$46</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {isLoading ?
+          <div>loading</div> : (
+            <DefaultTable
+              title="세입 항목별 세부 내역"
+              columns={columns[1]}
+              data={data[1]}
+              options={{
+                sorting: true, filtering: true
+              }}
+            />)}
+
       </CardCollapse>
       {/*<!--세입 항목별 세부 내역 끝-->*/}
 
 
       {/*<!--세출 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세출 항목별 세부 내역' area_id='expenditure_detail'>
-        <div className="table-responsive">
-          <table className="table table-bordered" id="expenditure_detail_tb" width="100%" cellSpacing="0">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>날짜</th>
-                <th>내용</th>
-                <th>금액</th>
-                <th>누적합계</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th>id</th>
-                <th>날짜</th>
-                <th>내용</th>
-                <th>금액</th>
-                <th>누적합계</th>
-              </tr>
-            </tfoot>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>2009/02/14</td>
-                <td>San Francisco</td>
-                <td>500원</td>
-                <td>$45</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>2020/02/14</td>
-                <td>an Francisco</td>
-                <td>500원</td>
-                <td>$46</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {isLoading ?
+          <div>loading</div> : (
+            <DefaultTable
+              title="세출 항목별 세부 내역"
+              columns={columns[2]}
+              data={data[2]}
+              options={{
+                sorting: true, filtering: true
+              }}
+            />)}
       </CardCollapse>
       {/*<!--세출 항목별 세부 내역 끝-->*/}
 
