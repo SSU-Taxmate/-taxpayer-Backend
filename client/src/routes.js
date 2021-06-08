@@ -15,6 +15,10 @@ import Law from "./pages/Legislature/Law";
 /*신용등급*/
 import Credit from  "./pages/Credit"
 
+/* 마켓 */
+
+import Market from "./pages/Market"
+
 /*클래스 설정 */
 import StudentSetting from './pages/Setting/StudentSetting'
 import ClassSetting from './pages/Setting/ClassSetting'
@@ -64,6 +68,9 @@ const Routes = () => (
 
             {/*신용등급 */}
             <Route path="/classes/:classId/credit" component={Credit} />
+
+            {/* 시장 */}
+            <Route path="/classes/:classId/market" component={Market} />
 
             {/* 그 외 */}
             <Route path="/cards" component={Cards} />
