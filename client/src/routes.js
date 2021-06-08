@@ -12,6 +12,8 @@ import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
 import Law from "./pages/Legislature/Law";
+/*신용등급*/
+import Credit from  "./pages/Credit"
 
 /* 증권 거래소 */
 import TradeStock from "./pages/Stock/TradeStock";
@@ -49,6 +51,9 @@ const Routes = () => (
             
             <Route path="/classes/:classId/stats/nation" component={NationStats}/>
             <Route path="/classes/:classId/stats/my" component={MyStats}/>
+
+            {/*신용등급 */}
+            <Route path="/classes/:classId/credit" component={Credit} />
 
             {/* 그 외 */}
             <Route path="/cards" component={Cards} />

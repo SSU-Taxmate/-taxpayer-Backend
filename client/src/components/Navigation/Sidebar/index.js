@@ -76,7 +76,7 @@ class Sidebar extends Component {
               <Link className="collapse-item" to="/bank_statics">통계</Link>
               <Link className="collapse-item" to="/bank_setting">설정</Link>
               <h6 className="collapse-header">신용등급</h6>
-              <Link className="collapse-item" to="/tlsdyd">신용등급</Link>
+              <Link className="collapse-item" to="/classes/:classId/Credit">신용등급</Link>
             </div>
           </div>
         
