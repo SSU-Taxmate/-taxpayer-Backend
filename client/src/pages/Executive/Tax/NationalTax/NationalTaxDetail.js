@@ -4,7 +4,6 @@ import ChartPie from '../../../../components/Charts/Pie'
 import axios from 'axios';
 import ChartBar from '../../../../components/Charts/Bar'
 import DefaultTable from '../../../../components/Table/Default';
-
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -106,7 +105,7 @@ const NationalTaxDetail = () => {
   return (
 
     <div>
-
+ 
       {/*<!--재정 상황 시작-->*/}
       <CardCollapse title="재정상황" area_id='재정상황'>
         <div className="table-responsive">

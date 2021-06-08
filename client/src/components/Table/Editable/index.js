@@ -52,8 +52,8 @@ export default function EditableTable(props) {
   const [title, setTitle] = useState(props.title);
   const [columns, setColumns] = useState(props.columns);
   const [data, setData] = useState(props.data);
-  const [options,setOptions]=useState(props.options);
- 
+  const [options, setOptions] = useState(props.options);
+
   const theme = createMuiTheme({
     overrides: {
       MuiTableCell: {
@@ -63,7 +63,7 @@ export default function EditableTable(props) {
           "&:last-child": {
             paddingRight: 5
           },
-          
+
         }
       }
     },
@@ -87,7 +87,7 @@ export default function EditableTable(props) {
         data={data}
         options={options}
         icons={tableIcons}
-        
+
         //editable
         editable={{
           onRowAdd: newData =>
@@ -122,12 +122,12 @@ export default function EditableTable(props) {
         }}
         // other props
         localization={{
-          
+
           header: {
             actions: '수정/삭제'
           },
           body: {
-            editRow:{
+            editRow: {
               deleteText: '이 행을 정말 삭제 하시겠습니까?',
             },
             emptyDataSourceMessage: '보여줄 데이터가 없습니다.',
@@ -135,8 +135,8 @@ export default function EditableTable(props) {
               filterTooltip: '필터'
             }
           },
-          grouping:{
-            placeholder:'여기에 그룹화 할 헤더를 끌어다놓으세요',
+          grouping: {
+            placeholder: '여기에 그룹화 할 헤더를 끌어다놓으세요',
             groupedBy: '그룹화 : '
           },
           pagination: {
@@ -144,7 +144,7 @@ export default function EditableTable(props) {
           },
           toolbar: {
             nRowsSelected: '{0} 행이 선택되었습니다.',
-            searchTooltip:'검색'
+            searchTooltip: '검색'
 
           },
         }}

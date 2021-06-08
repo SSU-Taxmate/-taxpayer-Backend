@@ -52,6 +52,7 @@ const SettingHw = () => {
                             {/* <!-- Page Heading --> */}
                             <PageHeading title="숙제 관리" />
                             {/* <!-- Content Row --> */}
+                   
                             <div className="col">
                                 <div className="card shadow mb-4">
 
@@ -99,7 +100,7 @@ const SettingHw = () => {
 
             {/* <!-- Scroll to Top Button--> */}
             <ScrollToTop />
-            <LogoutModal/>
+            <LogoutModal />
         </div>
 
     )
