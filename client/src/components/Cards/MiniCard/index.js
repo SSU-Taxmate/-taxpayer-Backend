@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ClassCodeModal from '../../components/Modal/ClassCodeModal'
-class ClassCard extends Component {
+import ClassCodeModal from '../../../components/Modal/ClassCodeModal'
+class MiniCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -17,7 +17,7 @@ class ClassCard extends Component {
                 {/*<!-- Dropdown Card Example -->*/}
                 <div className="card shadow mb-4">
                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 className="m-0 font-weight-bold text-primary"><i class="fas fa-star"></i>
+                        <h6 className="m-0 font-weight-bold text-primary">
                             <a href="/classes/:classId">{this.state.title} </a>
                         </h6>
                         {/*<!--꿈나무반 card 시작-->*/}
@@ -56,4 +56,4 @@ class ClassCard extends Component {
     }
 }
 
-export default ClassCard;
+export default MiniCard;
