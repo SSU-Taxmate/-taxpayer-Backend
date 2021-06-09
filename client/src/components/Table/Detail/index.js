@@ -121,7 +121,7 @@ export default function DetailTable(props) {
                 setData([...data, newData]);
 
                 resolve();
-              }, 1000)
+              }, 5000)
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
@@ -132,7 +132,7 @@ export default function DetailTable(props) {
                 setData([...dataUpdate]);
 
                 resolve();
-              }, 1000)
+              }, 5000)
             }),
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
@@ -143,7 +143,7 @@ export default function DetailTable(props) {
                 setData([...dataDelete]);
 
                 resolve();
-              }, 1000)
+              }, 5000)
             }),
         }}
 
