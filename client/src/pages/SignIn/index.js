@@ -40,7 +40,7 @@ class SignIn extends Component {
                             <div className="form-group">
                               <div className="custom-control custom-checkbox small">
                                 <input type="checkbox" className="custom-control-input" id="customCheck"/>
-                                <label className="custom-control-label" for="customCheck">Remember Me</label>
+                                <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
                               </div>
                             </div>
                             <button  type="submit" className="btn btn-primary btn-user btn-block">

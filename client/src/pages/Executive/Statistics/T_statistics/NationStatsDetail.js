@@ -3,7 +3,6 @@ import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
 import DefaultTable from '../../../../components/Table/Default';
 import EditableTable from '../../../../components/Table/Editable'
-import CardInfo from '../../../../components/Cards/Info'
 import axios from 'axios';
 
 const NationStatsDetail = () => {

@@ -20,7 +20,7 @@ export default class LogoutModal extends Component {
                             <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                             <div className="modal-footer">
                                 <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                <a className="btn btn-primary" href="login.html">Logout</a>
+                                <a className="btn btn-primary" href="/">Logout</a>
                             </div>
                         </div>
                     </div>
