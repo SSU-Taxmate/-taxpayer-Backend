@@ -35,21 +35,21 @@ function MyStatsDetail() {
             </CardBasic>
             <CardBasic title='날짜, 내용, 제출여부, 면제여부'>
                 <div className="table-responsive">
-                    <table className="table table-bordered dataTable " id="S_dataTable" width="50%" cellspacing="0"
+                    <table className="table table-bordered dataTable " id="S_dataTable" width="50%" cellSpacing="0"
                         role="grid" aria-describedby="dataTable_info" >
                         <thead>
                             <tr role="row" className="text-center text-primary">
-                                <th className="sorting" tabindex="0" aria-controls="S_dataTable" rowspan="1" colspan="1"
+                                <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Name: activate to sort column descending" aria-sort="ascending"
                                 >날짜</th>
-                                <th className="sorting" tabindex="0" aria-controls="S_dataTable" rowspan="1" colspan="1"
+                                <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Age: activate to sort column ascending" >내용
                         </th>
-                                <th className="sorting" tabindex="0" aria-controls="S_dataTable" rowspan="1" colspan="1"
+                                <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Age: activate to sort column ascending" >제출여부
                         </th>
 
-                                <th className="sorting" tabindex="0" aria-controls="S_dataTable" rowspan="1" colspan="1"
+                                <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Age: activate to sort column ascending" >면제여부
                         </th>
 
