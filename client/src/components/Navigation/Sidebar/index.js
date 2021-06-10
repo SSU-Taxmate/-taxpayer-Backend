@@ -184,7 +184,7 @@ class Sidebar extends Component {
 
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
-          <a className="nav-link" href="tables.html">
+          <a className="nav-link" href="/classes/:classId/penalty">
             <i className="fas fa-gavel"></i>
             <span>벌금</span></a>
         </li>

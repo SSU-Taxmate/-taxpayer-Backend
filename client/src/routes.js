@@ -37,6 +37,8 @@ import SettingHw from './pages/Executive/Statistics/Setting'
 
 import MyStats from './pages/Executive/Statistics/S_statistics'
 
+import Penalty from './pages/Judicature/Penalty'
+
 const Routes = () => (
     <BrowserRouter>
         <Switch>
@@ -65,6 +67,11 @@ const Routes = () => (
             <Route path="/classes/:classId/stats/nation-setting" component={SettingHw} />
 
             <Route path="/classes/:classId/stats/my" component={MyStats} />
+
+            {/* ***************  사법부  ************** */}
+            {/* 벌금 */}
+            <Route path="/classes/:classId/penalty" component={Penalty} />
+
 
             {/*신용등급 */}
             <Route path="/classes/:classId/credit" component={Credit} />
