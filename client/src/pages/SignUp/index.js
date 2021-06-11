@@ -12,7 +12,6 @@ function SignUp(props) {
     document.getElementById('body').className = 'bg-gradient-primary'
   })
   const dispatch = useDispatch()
-
   return (
     <div className="container">
 
@@ -53,9 +52,8 @@ function SignUp(props) {
                     entryCode: Yup.string()
                       .required('선생님이 알려준 entryCode를 입력하세요'),
                   })}
-                  onSubmit={(values, { setSubmitting }) => {
-                    alert(JSON.stringify(values, null, 2))
-                    /* 
+                  onSubmit={(values, {setSubmitting }) => {
+                    //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
 
                       let dataToSubmit = {
@@ -68,7 +66,7 @@ function SignUp(props) {
 
                       dispatch(registerUser(dataToSubmit)).then(response => {
                         if (response.payload.success) {
-                          props.history.push("/login");
+                          props.history.push("/");
                         } else {
                           alert(response.payload.err.errmsg)
                         }
@@ -76,7 +74,7 @@ function SignUp(props) {
 
                       setSubmitting(false);
                     }, 500);
-                    */
+                    /*  */
 
                   }}
                 >
@@ -129,8 +127,8 @@ function SignUp(props) {
                             )}
                           </div>
                         </div>
-                        <div className="form-group">
-
+                        <div className="form-group row">
+                        <div className="col-sm-6 mb-3 mb-sm-0">
                           <input
                             id="email"
                             placeholder="이메일 주소"
@@ -142,6 +140,7 @@ function SignUp(props) {
                           {errors.email && touched.email && (
                             <div className="input-feedback">{errors.email}</div>
                           )}
+                        </div>
                         </div>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
