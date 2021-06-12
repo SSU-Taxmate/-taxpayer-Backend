@@ -36,7 +36,7 @@ import NationStats from './pages/Executive/Statistics/T_statistics'
 import SettingHw from './pages/Executive/Statistics/Setting'
 
 import MyStats from './pages/Executive/Statistics/S_statistics'
-
+import Auth from "../src/hoc/auth";
 const Routes = () => (
     <BrowserRouter>
         <Switch>

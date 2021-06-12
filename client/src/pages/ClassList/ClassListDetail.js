@@ -4,13 +4,13 @@ import ClassCard from './ClassCard'
 function ClassListDetail() {
     return (
         
-        <div class="row">
+        <div className="row">
 
-        {/*<!--class 추가-->*/}
-        <div class="col-lg-3">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <i class="far fa-plus-square" 
+        {/*<!--className 추가-->*/}
+        <div className="col-lg-3">
+            <div className="card mb-4">
+                <div className="card-body">
+                    <i className="far fa-plus-square" 
                         data-toggle="modal" data-target="#AddClassModal"></i>
                 </div>
             </div>

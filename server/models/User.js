@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose =require('mongoose')
 const bcrypt = require('bcrypt');
 const saltRounds = 10
 const jwt = require('jsonwebtoken');
@@ -18,15 +18,11 @@ const userSchema = mongoose.Schema({
         type: String,
         minlength: 5
     },
-    lastname: {
-        type: String,
-        maxlength: 50
-    },
+  
     role: {
         type: Number,
         default: 0
     },
-    image: String,
     token: {
         type: String
     },
