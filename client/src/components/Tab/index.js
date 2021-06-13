@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  //<Tab label="Kosdaq" {...a11yProps(1)} />      <Tab label="dollar" {...a11yProps(2)} />
   return (
     <div
       role="tabpanel"
@@ -52,68 +52,64 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function VerticalTabs() {
+  //vertical tab 테마 설정 const useStyles=
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
+  //무슨 값일까panel
+  const [value, setValue] = useState(0);
+//  const [tabItem, setTabItem] = useState(['kosdaq', 'kospi', 'gold'])
+const [tabItem, setTabItem] = useState([{title:'kosdaq',money:'100'},{title:'kospi',money:'200'},{title:'gold',money:'300'}])
+  //tab menu선택할 때 마다 변경되는 값
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
     <div>
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        <Tab label="kospi" {...a11yProps(0)} />
-        <Tab label="Kosdaq" {...a11yProps(1)} />
-        <Tab label="dollar" {...a11yProps(2)} />
-        <Tab label="S-Group" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
+      <sub className="text-gray-600 pl-2">2020.08.15. 10시 업데이트</sub>
 
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <div
-          className="text-xl font-weight-bold text-info text-uppercase mb-1"
+      <div className={classes.root}>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Stock"
+          className={classes.tabs}
         >
-          kospi
-                                  <i
-            className="fas fa-chart-area text-gray-300"
-          ></i>
-          <sub className="text-gray-600 pl-2"
-          >2020.08.15.</sub
-          >
-    
-        </div>
-        <div className="row">
-          <p className="h2 pl-1">1921</p>
-          <p className="p-2 text-danger">
-            <i className="fas fa-arrow-up"></i>
-                                    20 (+0.13%)
-                                  </p>
-        </div>
+          {tabItem.map((item, i) => {
+            return (<Tab label={item.title} {...a11yProps(i)} />)
+          })
+          }
 
-     
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        코스닥
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        달러
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        삼성그룹
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
+        </Tabs>
 
-    </div>
+        {tabItem.map((item, i) => {
+          return (
+            <TabPanel value={value} index={i}>
+              <div
+                className="font-weight-bold text-info text-uppercase mb-1"
+              >
+                {item.title}
+                <i
+                  className="fas fa-chart-area text-gray-300"
+                ></i>
+
+              </div>
+              <div className="row">
+                <p className="h2 pl-1">{item.money}</p>
+                <p className="p-2 text-danger">
+                  <i className="fas fa-arrow-up"></i>
+                  20 (+0.13%)
+                </p>
+              </div>
+            </TabPanel>
+          )
+        })}
+      
+
+
+
+      </div>
     </div>
   );
 }

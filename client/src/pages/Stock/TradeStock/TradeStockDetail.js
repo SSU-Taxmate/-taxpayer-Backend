@@ -7,7 +7,7 @@ export default class TradeStockDetail extends Component {
 
       <div >
         <div className="card shadow mb-4">
-          <VerticalTabs />
+          <VerticalTabs></VerticalTabs>
         </div>
         <div className='row'>
           <CardInfo title="시장 운영 공지 / 신규 상장 회사"
