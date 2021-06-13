@@ -15,7 +15,6 @@ router.get("/auth", auth, (req, res) => {
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
-        lastname: req.user.lastname,
         role: req.user.role,
         image: req.user.image,
     });
@@ -60,6 +59,7 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/logout", auth, (req, res) => {
+   //undefined로 에러나는 중 console.log(req.user._id)
     User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).send({

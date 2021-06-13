@@ -1,7 +1,20 @@
-import React, { Component } from 'react'
-export default class LogoutModal extends Component {
+import React from 'react'
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
-    render() {
+function LogoutModal (props) {
+    
+    const LogoutEvent=()=>{
+        console.log('LogoutEvent')
+        axios.get('/api/users/logout').then(response => {
+            if (response.status === 200) {
+              //console.log(response)
+              props.history.push("/");
+            } else {
+              alert('Log Out Failed')
+            }
+          });
+    }
         return (
             <>
                 {/**/}
@@ -17,9 +30,10 @@ export default class LogoutModal extends Component {
                                 </button>
                             </div>
 
-                            <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                            <div className="modal-body">"Logout"하고 싶다면 Logout 버튼을 클릭해주세요</div>
                             <div className="modal-footer">
                                 <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <button className="btn btn-primary" type="button" data-dismiss="modal" onClick={LogoutEvent}>Logout</button>
                                 <a className="btn btn-primary" href="/">Logout</a>
                             </div>
                         </div>
@@ -31,4 +45,4 @@ export default class LogoutModal extends Component {
             </>
         )
     }
-}
+    export default withRouter(LogoutModal);
