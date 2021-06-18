@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Chart from "chart.js";
 
-import CardBasic from '../../Cards/Basic';
-
 Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
 
@@ -11,14 +9,13 @@ class ChartLine extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: props.title ? props.title : 'title없음',
+            title: props.title ? props.title : '',
             id: props.id,
             data: props.data
         }
     }
     chartRef = React.createRef();
-    componentDidMount() {
-
+    componentDidMount(props) {
         const myChartRef = this.chartRef.current.getContext("2d");
         //console.log(this.chartRef);
         const dataset = this.state.data;

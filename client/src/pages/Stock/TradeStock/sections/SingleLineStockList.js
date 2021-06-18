@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
-import StockInfo from './sections/StockInfo';
+import StockInfo from './StockInfo';
 
-export default function SingleLineGridList(props) {
+export default function SingleLineStockList(props) {
   const [data, setTabItem] = useState(props.data)
   return (
     <div >
-      <div class='row flex-row flex-nowrap overflow-auto'>
+      <div className='row flex-row flex-nowrap overflow-auto'>
         {data.map((item, i)=> (
          <StockInfo 
+         key={i}
          title={item.title}
          stockId={item.stockId}
-         option={{icon:"arrow-up",color:'red'}}
+         option={{icon:"caret-up",color:'red'}}
          currentValue={item.currentValue}
          />
         ))}
