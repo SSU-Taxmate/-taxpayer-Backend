@@ -1,36 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  //<Tab label="Kosdaq" {...a11yProps(1)} />      <Tab label="dollar" {...a11yProps(2)} />
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+import TabPanel from '../../../components/Tab/TabPanel';
 
 function a11yProps(index) {
   return {
@@ -44,20 +16,19 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: '#fff',
     display: 'flex',
-    height: 224,
+    height: 400,
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
 }));
 
-export default function VerticalTabs() {
+export default function VerticalTabs(props) {
   //vertical tab 테마 설정 const useStyles=
   const classes = useStyles();
   //무슨 값일까panel
   const [value, setValue] = useState(0);
-//  const [tabItem, setTabItem] = useState(['kosdaq', 'kospi', 'gold'])
-const [tabItem, setTabItem] = useState([{title:'kosdaq',money:'100'},{title:'kospi',money:'200'},{title:'gold',money:'300'}])
+const [tabItem, setTabItem] = useState(props.tabItem)
   //tab menu선택할 때 마다 변경되는 값
   const handleChange = (event, newValue) => {
     setValue(newValue);

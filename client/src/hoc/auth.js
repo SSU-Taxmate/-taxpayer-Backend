@@ -23,10 +23,10 @@ export default function (SpecificComponent, option, adminRoute = null) {
                     if (adminRoute && !response.payload.isAdmin) {
                         props.history.push('/')
                     }
-                    //Logged in Status, but Try to go into log in page 
+                    // 로그인 페이지에 가고 싶다면
                     else {
                         if (option === false) {
-                            props.history.push('/')
+                            props.history.push('/Classes')
                         }
                     }
                 }

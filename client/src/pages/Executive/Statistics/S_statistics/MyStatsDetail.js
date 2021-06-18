@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import CardBasic from '../../../../components/Cards/Basic'
 import DefaultTable from '../../../../components/Table/Default';
 import ChartPie from './../../../../components/Charts/Pie'
@@ -21,19 +22,51 @@ function MyStatsDetail() {
         }],
 
     };
-
+    const [isLoading, setIsLoading] = useState(false)
+    const [columns, setColumns] = useState([])
+    const [data, setData] = useState([])
+    const [err, setIsError] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsError(false);
+            setIsLoading(true);
+            try {
+                const result = await axios.get('/api/stats/nation');
+                setData(result.data['data']);
+                setColumns(result.data['columns'])
+            } catch (error) {
+                setIsError(true);
+            }
+            setIsLoading(false);
+        };
+        fetchData();
+        console.log(data)
+    }, []);
     return (
-        <div className="col">
-             <CardBasic title='새로운 과제'>
-                <DefaultTable title='새로운 과제' />
-            </CardBasic>
-            <CardBasic title='과제현황'>
-            <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />
+        <div >
+            <div className="card shadow mb-4">
 
-                <div>전체 N회 중 i번 숙제를 미제출하였고, j번 늦게 제출하였습니다.</div>
+                {isLoading ?
+                    <div>loading</div> : (
+                        <DefaultTable title='새로운 과제'
+                            columns={columns[0]}
+                            data={data[0]} />)
+                }
+            </div>
+                <CardBasic title='과제현황'>
+                    <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />
 
-            </CardBasic>
-            <CardBasic title='날짜, 내용, 제출여부, 면제여부'>
+                    <div>전체 N회 중 i번 숙제를 미제출하였고, j번 늦게 제출하였습니다.</div>
+
+                </CardBasic>
+                <div className="card shadow mb-4">
+                    {isLoading ?
+                        <div>loading</div> : (
+                            <DefaultTable title="날짜 내용 제출여부 면제여부"
+                                columns={columns[1]}
+                                data={data[1]}
+                            />)}
+                </div>
                 <div className="table-responsive">
                     <table className="table table-bordered dataTable " id="S_dataTable" width="50%" cellSpacing="0"
                         role="grid" aria-describedby="dataTable_info" >
@@ -44,14 +77,14 @@ function MyStatsDetail() {
                                 >날짜</th>
                                 <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Age: activate to sort column ascending" >내용
-                        </th>
+                                </th>
                                 <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Age: activate to sort column ascending" >제출여부
-                        </th>
+                                </th>
 
                                 <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
                                     aria-label="Age: activate to sort column ascending" >면제여부
-                        </th>
+                                </th>
 
                             </tr>
                         </thead>
@@ -92,11 +125,10 @@ function MyStatsDetail() {
 
                 </div>
 
-            </CardBasic>
 
-        </div>
+            </div>
 
-    )
+            )
 }
 
-export default MyStatsDetail
+            export default MyStatsDetail
