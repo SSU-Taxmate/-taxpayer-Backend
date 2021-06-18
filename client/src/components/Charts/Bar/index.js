@@ -13,6 +13,7 @@ class ChartBar extends Component {
             data:props.data?props.data:[],
         }
     }
+
     chartRef = React.createRef();
     componentDidMount(){
         const myChartRef = this.chartRef.current.getContext("2d");

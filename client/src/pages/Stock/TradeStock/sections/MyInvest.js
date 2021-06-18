@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function MyInvest() {
     return (
-        <div className="col-6 mb-2">
-            <div className="card shadow py-2">
+        <div className="col-6">
+            <div className="card py-2">
                 <div className='row ml-2 '>
                     <div className='col-8'>
 

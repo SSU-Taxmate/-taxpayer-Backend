@@ -1,28 +1,76 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import ChartLine from '../../../../components/Charts/Line'
+import ChartPie from '../../../../components/Charts/Pie';
 export default function TradeSection() {
-    const [stock, setStock] = useState(["kospi", "kosdaq", "dddd"])
-    const [chart,setChart]=useState('kospi')
+    const testdata =
+    {
+        'kospi': {
+            labels: ["Mar", "Apr", "May", "Jun", "Jul", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Earnings",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: [0, 10000, 5000, 15000, 10000, 30000, 25000, 40000],
+            }],
+        },
+        'kosdaq': {
+            labels: ["Mar", "Apr", "May", "Jun", "Jul", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Earnings",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: [50000, 4000, 3, 0, 30000, 25000, 40000],
+            }],
+        }
+    };
+    const [stock, setStock] = useState(["kospi", "kosdaq"])
+    const [chart, setChart] = useState('kospi')
+    const [data, setData] = useState(testdata['kospi'])
     const handleAddrTypeChange = (e) => {
-       // console.log(e.target.value)
-        console.log(stock[e.target.value])
         setChart(stock[e.target.value])
+        setData(testdata[stock[e.target.value]])
     }//(setStock[e.target.value])
-   
+
     return (
-        <div className='row'>
-            <div className="col-6">
-                <ChartLine title={chart}/>
+        <div className='row row-sm-auto'>
+            <div className="col-7">
+                <ChartLine id='stock' title={chart} data={data} />
+                <div>1. 차트 하나하나 rerender되는지, destory되는지 체크 2.</div>
+                <ChartPie id='stock2' title={chart} data={data}/>
             </div>
-            <div className="col-6">
+            <div className="col-5">
                 < select
                     onChange={e => handleAddrTypeChange(e)}>
                     {
                         stock.map((address, i) => <option key={i} value={i}>{address}</option>)
                     }
                 </select >
-
+                <div className="h2 font-weight-bold text-gray-800">
+                    현재가 : {data.datasets[0].data[0]}
+                </div>
+      
+                <button className="btn btn-outline-primary btn-sm float-right mr-2">매도</button>
+                <button className="btn btn-outline-danger btn-sm float-right mr-2">매수</button>
             </div>
+
 
         </div>
     )

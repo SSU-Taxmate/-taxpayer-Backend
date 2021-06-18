@@ -7,7 +7,7 @@ export default function StockInfo(props) {
     const [option, setoption] = useState(props.option)
     return (
         <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-2">
-            <div className="card border-bottom-primary shadow h-100 py-2">
+            <div className="card border-bottom-primary h-100 py-2">
                 <div className="card-body pb-0">
                     <div className="row no-gutters align-items-center">
                         <div className="col">
@@ -18,15 +18,13 @@ export default function StockInfo(props) {
 
                             </div>
                             <div className='row ml-4'>
-                                <i className={`fas fa-${option.icon} ml-3`} style={{ color: option.color }}/>
+                                <i className={`fas fa-${option.icon} ml-3`} style={{ color: option.color }} />
                                 <p className="ml-2 text-danger">
                                     {currentValue}
                                 </p>
                                 <div className='ml-2'>(0.31%)</div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>

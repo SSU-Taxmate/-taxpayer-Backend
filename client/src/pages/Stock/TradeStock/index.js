@@ -38,11 +38,11 @@ export default class TradeStock extends Component {
                 <PageHeading title="주식거래창" />
 
                 {/* <!-- Content Row --> */}
-                <h4>오늘의 주식</h4>
+                <h4 className='pt-2'>오늘의 주식</h4>
                 <SingleLineStockList data={[{ title: 'kosdaq', stockId: 'id1', currentValue: 100 }, { title: 'kospi', stockId: 'id2', 'currentValue': 1550 }, { title: 'kosdaq', stockId: 'id3', 'currentValue': 100 }, { title: 'kospi', stockId: 'id4', 'currentValue': 1550 }, { title: 'gold', stockId: '300', 'currentValue': 150 }, { title: 'gold', stockId: '300', 'currentValue': 150 }, { title: 'kosdaq', stockId: '100', 'currentValue': 100 }, { title: 'kospi', stockId: '200', 'currentValue': 1550 }, { title: 'gold', stockId: '300', '현재가': 150 }]} />
                 <div className='row'>
                   <div className="col-6">
-                    <h4>오늘의 주식 브리핑</h4>
+                    <h4 className='pt-2'>오늘의 주식 브리핑</h4>
                     <CardBasic title='실시간 Best'></CardBasic>
 
                   </div>
@@ -50,35 +50,33 @@ export default class TradeStock extends Component {
 
                   </div>
                 </div>
-                <h4>주식 매도 매수 창</h4>
+                <h4 className='pt-2'>주식 매도 매수 창</h4>
                 <div className="card shadow py-2">
                   <TradeSection></TradeSection>
                 </div>
 
-                <h4 className='ml-1'>내 투자 현황</h4>
-                <div className='row ml-1'>
-                  <div className="card shadow py-1 col-auto">
+                <h4 className='pt-2'>내 투자 현황</h4>
+                  <div className="card shadow py-1 col-3">
                     <table className='m-3'>
                       <tbody>
-                      <tr>
-                        <td>투자 가능 금액</td>
-                        <td>1000원</td>
-                      </tr>
-                      <tr>
-                        <td>손익</td>
-                        <td>1000원</td>
-                      </tr>
-                      <tr>
-                        <td>수익률</td>
-                        <td>1.26%</td>
-                      </tr>
+                        <tr>
+                          <td>투자 가능 금액</td>
+                          <td>1000원</td>
+                        </tr>
+                        <tr>
+                          <td>손익</td>
+                          <td>1000원</td>
+                        </tr>
+                        <tr>
+                          <td>수익률</td>
+                          <td>1.26%</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
-                  <div className='col'>
-                    <SingleLineMyInvest />
-                  </div>
-                </div>
+                 
+                <h4 className='pt-2'>내 보유 주식</h4>
+                <SingleLineMyInvest />
               </div>
               {/* <!-- /.container-fluid --> */}
 
