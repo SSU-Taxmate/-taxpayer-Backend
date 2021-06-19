@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ChartLine from '../../../../components/Charts/Line'
-import ChartPie from '../../../../components/Charts/Pie';
+import ChartDonut from '../../../../components/Charts/Donut';
 export default function TradeSection() {
     const testdata =
     {
@@ -41,7 +41,7 @@ export default function TradeSection() {
             }],
         }
     };
-    const [stock, setStock] = useState(["kospi", "kosdaq"])
+    const [stock, setStock] = useState(["kospi", "kosdaq"])//사용하는 주식 리스트를 받아와야함
     const [chart, setChart] = useState('kospi')
     const [data, setData] = useState(testdata['kospi'])
     const handleAddrTypeChange = (e) => {
@@ -53,8 +53,7 @@ export default function TradeSection() {
         <div className='row row-sm-auto'>
             <div className="col-7">
                 <ChartLine id='stock' title={chart} data={data} />
-                <div>1. 차트 하나하나 rerender되는지, destory되는지 체크 2.</div>
-                <ChartPie id='stock2' title={chart} data={data}/>
+
             </div>
             <div className="col-5">
                 < select

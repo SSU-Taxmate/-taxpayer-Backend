@@ -10,7 +10,7 @@ export default function ChartLine(props) {
     const chartRef = React.createRef();
     useEffect(() => {
             const myChartRef = chartRef.current.getContext("2d");
-            console.log(typeof linechart)
+            //console.log(typeof linechart)
 
             if (typeof linechart !== "undefined"){
                 linechart.destroy() 

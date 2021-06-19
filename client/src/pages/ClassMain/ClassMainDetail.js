@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ClassMainDetail() {
+export default function ClassMainDetail() {
     return (
         <div className="row">
         <div className="col-md-6">
@@ -47,4 +47,3 @@ function ClassMainDetail() {
     )
 }
 
-export default ClassMainDetail
