@@ -7,6 +7,7 @@ import LogoutModal from '../../../components/Modal/Logout'
 import ScrollToTop from '../../../components/Scroll';
 import PenaltyDetail from './PenaltyDetail';
 
+
 function Penalty() {
     return (
             <div>

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 
 //Pages
+import Main from "./pages/Main"
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ClassMain from "./pages/ClassMain";
@@ -39,10 +40,12 @@ import MyStats from './pages/Executive/Statistics/S_statistics'
 
 import Penalty from './pages/Judicature/Penalty'
 
+
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={SignIn} />
+            <Route exact path="/" component={Main} />
+            <Route exact path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />

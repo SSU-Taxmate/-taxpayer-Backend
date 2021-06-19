@@ -18,3 +18,28 @@
 @import "login.scss";
 @import "error.scss";
 @import "footer.scss";
+
+.account-card{
+
+    text-decoration: none;
+    position: relative;
+    padding: 3rem 3rem 2rem 3rem;
+    border-radius: 20px
+   
+}
+
+.seperator-black{
+
+height: 30px;
+width: 1px;
+background: #000;
+
+}
+
+.seperator-gray{
+
+    height: 30px;
+    width: 1px;
+    background:#6e707e;
+    
+    }
