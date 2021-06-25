@@ -129,17 +129,18 @@ class Sidebar extends Component {
               <Link className="collapse-item" to="/classes/:classId/tax-my">나의 세금</Link>
               <h6 className="collapse-header">선생님</h6>
               <Link className="collapse-item" to="/classes/:classId/tax-setting">세금 설정</Link>
+
             </div>
           </div>
         </li>
 
         {/* <!-- Nav Item - Utilities Collapse Menu --> */}
         <li className="nav-item">
-          <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStats" aria-expanded="true" aria-controls="collapseStats">
             <i className="fas fa-chart-line"></i>
             <span>통계청</span>
           </a>
-          <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div id="collapseStats" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
 
               <h6 className="collapse-header">선생님</h6>
@@ -148,7 +149,6 @@ class Sidebar extends Component {
 
               <h6 className="collapse-header">학생</h6>
               <Link className="collapse-item" to="/classes/:classId/stats/my">나의 통계</Link>
-              <a className="collapse-item" href="utilities-border.html">Borders</a>
             </div>
           </div>
         </li>
@@ -162,12 +162,21 @@ class Sidebar extends Component {
         </div>
 
         {/* <!-- Nav Item - Charts --> */}
+       
         <li className="nav-item">
-          <Link className="nav-link" to="/classes/:classId/law">
-            <i className="fas fa-balance-scale"></i>
-            <span>법률</span></Link>
-        </li>
+          <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaws" aria-expanded="true" aria-controls="collapseLaws">
+            <i className="fas fas fa-balance-scale"></i>
+            <span>법률</span>
+          </a>
+          <div id="collapseLaws" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div className="bg-white py-2 collapse-inner rounded">
 
+              <Link className="collapse-item" to="/classes/:classId/law">법</Link>
+              <h6 className="collapse-header">선생님</h6>
+              <Link className="collapse-item" to="/classes/:classId/set-up/law">법 관리</Link>
+            </div>
+          </div>
+        </li>
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
           <Link className="nav-link" to="/charts">

@@ -5,6 +5,7 @@ import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 import CardBasic from '../../../components/Cards/Basic'
+import CardDefault from '../../../components/Cards/Default'
 import TradeSection from './sections/TradeSection'
 import SingleLineStockList from './sections/SingleLineStockList'
 import LogoutModal from '../../../components/Modal/Logout';
@@ -40,13 +41,13 @@ export default class TradeStock extends Component {
                 {/* <!-- Content Row --> */}
                 <h4 className='pt-2'>오늘의 주식</h4>
                 <SingleLineStockList data={[{ title: 'kosdaq', stockId: 'id1', currentValue: 100 }, { title: 'kospi', stockId: 'id2', 'currentValue': 1550 }, { title: 'kosdaq', stockId: 'id3', 'currentValue': 100 }, { title: 'kospi', stockId: 'id4', 'currentValue': 1550 }, { title: 'gold', stockId: '300', 'currentValue': 150 }, { title: 'gold', stockId: '300', 'currentValue': 150 }, { title: 'kosdaq', stockId: '100', 'currentValue': 100 }, { title: 'kospi', stockId: '200', 'currentValue': 1550 }, { title: 'gold', stockId: '300', '현재가': 150 }]} />
+                <h4 className='pt-2'>오늘의 주식 브리핑</h4>
                 <div className='row'>
                   <div className="col-6">
-                    <h4 className='pt-2'>오늘의 주식 브리핑</h4>
-                    <CardBasic title='실시간 Best'></CardBasic>
-
+                    <CardBasic title='뉴스'>선생님 오늘 곱창먹으러 감</CardBasic>
                   </div>
                   <div className="col-6">
+                  <CardBasic title='지난주 매도/매수 Best'></CardBasic>
 
                   </div>
                 </div>
@@ -56,7 +57,7 @@ export default class TradeStock extends Component {
                 </div>
 
                 <h4 className='pt-2'>내 투자 현황</h4>
-                  <div className="card shadow py-1 col-3">
+                  <div className="card shadow py-1 col-lg-4">
                     <table className='m-3'>
                       <tbody>
                         <tr>

@@ -40,10 +40,61 @@ export default function SettingStock() {
               <PageHeading title="주식설정" />
 
               {/* <!-- Content Row --> */}
-              <h3>주식 종류 추가</h3>
-              <div className="col-6">
-                <h6>선택 추가</h6>
-                <TransferList />
+              <div className='row'>
+                <div className="col-sm-6 border-right">
+                  <h5>선택 추가</h5>
+                  <TransferList />
+
+                </div>
+                <div className="col-sm-6">
+                  <h5>직접 추가</h5>
+                  <form>
+                    <div class="form-group row">
+                      <label for="inputstockname" class="col-sm-2 col-form-label">주식명</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputstockname" placeholder="주식명" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputstockinfo" class="col-sm-2 col-form-label">주식설명</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputstockinfo" placeholder="주식설명" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputstockname" class="col-sm-2 col-form-label">초기값</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" id="inputstockname" placeholder="초기값" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col">
+                        <div>추가 버튼 클릭시 사용가능한 주식에 추가됨
+                        </div>
+                        <div>
+                          사용 가능한 주식은 받아오는 데이터 + 직접 생성한 주식
+                        </div>
+                        <hr />
+                        <button type="submit" class="btn btn-primary float-right">추가</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <h5 className='border-top pt-3'>오늘의 뉴스 입력</h5>
+              <div className='col'>
+                <form>
+                  <div class="form-group row">
+                    <label for="inputnews" class="col-sm-2 col-form-label">한 줄 뉴스</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputnews" placeholder="뉴스" />
+                    </div>
+                  </div>
+                  <div class="form-group row float-right pr-2">
+                    <button type="submit" class="btn btn-primary">입력</button>
+                  </div>
+                </form>
               </div>
 
             </div>

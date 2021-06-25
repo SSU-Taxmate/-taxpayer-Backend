@@ -6,12 +6,11 @@ export default function MyInvest() {
             <div className="card py-2">
                 <div className='row ml-2 '>
                     <div className='col-8'>
-
                         <div className="h5 font-weight-bold text-gray-800">TIGER 탄소효율그린뉴딜</div>
                     </div>
                     <div className='col-4'>
-                        <button className="btn btn-outline-primary btn-sm float-right mr-2">매도</button>
-                        <button className="btn btn-outline-danger btn-sm float-right mr-2">매수</button>
+                        <button className="btn btn-outline-primary btn-sm float-right m-2">매도</button>
+                        <button className="btn btn-outline-danger btn-sm float-right m-2">매수</button>
                     </div>
 
                 </div>

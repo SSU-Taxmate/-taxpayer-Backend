@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ChartLine from '../../../../components/Charts/Line'
-import ChartDonut from '../../../../components/Charts/Donut';
 export default function TradeSection() {
     const testdata =
     {
@@ -50,24 +49,42 @@ export default function TradeSection() {
     }//(setStock[e.target.value])
 
     return (
-        <div className='row row-sm-auto'>
-            <div className="col-7">
+        <div className='row'>
+            <div className="col-sm-6 m-2">
                 <ChartLine id='stock' title={chart} data={data} />
-
             </div>
-            <div className="col-5">
+            <div className="col-sm-5 m-2">
                 < select
                     onChange={e => handleAddrTypeChange(e)}>
                     {
                         stock.map((address, i) => <option key={i} value={i}>{address}</option>)
                     }
                 </select >
-                <div className="h2 font-weight-bold text-gray-800">
+                <div className="h2 mt-2 font-weight-bold text-gray-800">
                     현재가 : {data.datasets[0].data[0]}
                 </div>
-      
-                <button className="btn btn-outline-primary btn-sm float-right mr-2">매도</button>
-                <button className="btn btn-outline-danger btn-sm float-right mr-2">매수</button>
+                <div className='h5 float-right'>보유 : 3주</div>
+
+                <div className='row-sm-*'>
+                    <div className="input-group">
+                        <input type="number" readOnly className="form-control" id="tradeShare" placeholder="현재가" min="0" max="100" step="1" />
+                        <div className="input-group-append"><span className="input-group-text outline-none">X</span></div>
+                        <input type="number" className="form-control" id="tradeShare" placeholder="'판매/구입' 할" min="0" max="100" step="1" />
+                        <div className="input-group-append"><span className="input-group-text">주</span></div>
+                    </div>
+                </div>
+                <div className='row-sm-* mt-2'>
+                    <div className="input-group">
+                        <div className="input-group-prepend"><span className="input-group-text">=</span></div>
+                        <input type="number" readOnly className="form-control" id="tradeShare" placeholder="총 금액" min="0" max="100" step="1" />
+                    </div>
+                </div>
+
+                <div className='row-sm-* mt-2'>
+                    <button className="btn btn-outline-danger btn-sm float-right m-2 col-*">매수</button>
+                    <button className="btn btn-outline-primary btn-sm float-right m-2 col-*">매도</button>
+
+                </div>
             </div>
 
 

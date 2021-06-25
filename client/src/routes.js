@@ -30,7 +30,6 @@ import SettingStock from './pages/Stock/SettingStock'
 import NationalTax from "./pages/Executive/Tax/NationalTax"
 import SettingTax from "./pages/Executive/Tax/SettingTax"
 import MyTax from "./pages/Executive/Tax/MyTax"
-
 /*통계청 */
 import NationStats from './pages/Executive/Statistics/T_statistics'
 import SettingHw from './pages/Executive/Statistics/Setting'
@@ -56,6 +55,7 @@ const Routes = () => (
             {/* 국세청 */}
             <Route path="/classes/:classId/tax-nation" component={NationalTax} />
             <Route path="/classes/:classId/tax-setting" component={SettingTax} />
+
             <Route path="/classes/:classId/tax-my" component={MyTax} />
             <Route path="/classes/:classId/law" component={Law} />
 

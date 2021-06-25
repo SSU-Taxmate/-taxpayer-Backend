@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   paper: {
-    width: 200,
-    height: 230,
+    width: 220,
+    height: 400,
     overflow: 'auto',
   },
   button: {
@@ -34,8 +34,9 @@ function intersection(a, b) {
 export default function TransferList() {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState(['kosdaq', 'kospi', 'samsung', 'kakao','abc','def','gtd']);//사용하지 않는 주식
-  const [right, setRight] = React.useState([  '엔화', '선생님몸무게']);//사용하는 주식
+  const [right, setRight] = React.useState([  '엔화', '선생님몸무게']);//사용하는 주식 - db에저장
+  //right을 제외한 모든 주식
+  const [left, setLeft] = React.useState(['kosdaq', 'kospi', 'samsung', 'kakao','abc','def','gtd']);//사용하지 않는 주식 직접추가 + 받아온주식
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);

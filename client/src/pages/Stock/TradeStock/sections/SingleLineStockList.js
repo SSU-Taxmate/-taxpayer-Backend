@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import StockInfo from './StockInfo';
-
+const iconSet=[{icon:"caret-up",color:'red'},{icon:"caret-down",color:'blue'}]
 export default function SingleLineStockList(props) {
+
   const [data, setTabItem] = useState(props.data)
   return (
     <div >
@@ -12,7 +13,7 @@ export default function SingleLineStockList(props) {
          key={i}
          title={item.title}
          stockId={item.stockId}
-         option={{icon:"caret-up",color:'red'}}
+         option={iconSet[0]}
          currentValue={item.currentValue}
          />
         ))}
