@@ -41,8 +41,11 @@ class Market extends Component {
                 <PageHeading title="시장관리" />
 
                {/* <!-- Content Row --> */}
-              <T_market_porduct></T_market_porduct>
-
+               <div className="row">
+              <T_market_porduct title="야채시장" comment="야채를 팔아요 근데 신선함을 곁들인 " img="https://www.kyeonggi.com/news/photo/201907/2126550_917024_5351.jpg" href="./pages/Market/Market_add"></T_market_porduct>
+              <T_market_porduct title="고기시장" comment="고기를 팔아요 근데 신선함을 곁들인 " img="http://www.lamb.international/news/photo/202003/724_555_637.jpg"></T_market_porduct>
+              <T_market_porduct title="장난감시장" comment="장난감을 팔아요 근데 재미를 곁들인 " img="https://i.ytimg.com/vi/AFXyZa5WfHA/maxresdefault.jpg"></T_market_porduct>
+              </div>
               </div>
               {/* <!-- /.container-fluid --> */}
 

@@ -16,6 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import Credit from  "./pages/Credit"
 
 /* 마켓 */
+
+import MarketProduct from "./pages/Market/Market_add"
 import Market from "./pages/Market"
 
 /*클래스 설정 */
@@ -85,8 +87,9 @@ const Routes = () => (
             <Route path="/classes/:classId/credit" component={Credit} />
 
             {/* 시장 */}
-            <Route path="/classes/:classId/market" component={Market} />
-   
+
+            <Route exact path="/classes/:classId/market" component={Market} />
+            <Route exact path="/classes/:classId/market/marketproduct" component={MarketProduct} />
 
 
             {/* 그 외 */}
