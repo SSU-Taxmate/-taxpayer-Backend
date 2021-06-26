@@ -58,6 +58,9 @@ class Sidebar extends Component {
             <div className="bg-white py-2 collapse-inner rounded">
               <a className="collapse-item" href="/classes/:classId/student-setting">학생관리</a>
               <Link className="collapse-item" to="/classes/:classId/class-setting">학급관리</Link>
+              <h6 className="collapse-header">학생</h6>
+              <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산/직업</Link>
+            
             </div>
           </div>
         </li>
