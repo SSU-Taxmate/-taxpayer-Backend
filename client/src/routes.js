@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 
 //Pages
+import Main from "./pages/Main"
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ClassMain from "./pages/ClassMain";
@@ -11,12 +12,10 @@ import Cards from "./pages/Cards";
 import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
-import Law from "./pages/Legislature/Law";
 /*신용등급*/
 import Credit from  "./pages/Credit"
 
 /* 마켓 */
-
 import Market from "./pages/Market"
 
 /*클래스 설정 */
@@ -35,11 +34,18 @@ import NationStats from './pages/Executive/Statistics/T_statistics'
 import SettingHw from './pages/Executive/Statistics/Setting'
 
 import MyStats from './pages/Executive/Statistics/S_statistics'
+
+/*법*/
+import Penalty from './pages/Judicature/Penalty'
+import Deposit from "./pages/Bank/Deposit";
+import Law from "./pages/Legislature/Law";
 import Auth from "../src/hoc/auth";
+
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={SignIn} />
+            <Route exact path="/" component={Main} />
+            <Route exact path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />
@@ -48,6 +54,10 @@ const Routes = () => (
             <Route path="/classes/:classId/class-setting" component={ClassSetting}/>
 
             {/* ***************  경제  ************** */}
+
+            {/*은행*/}
+            <Route path="/classes/:classId/bank/deposit" component={Deposit} />
+
             {/* 증권 거래소 */}
             <Route path="/classes/:classId/stock" component={TradeStock} />
             <Route path="/classes/:classId/stock-setting" component={SettingStock} />
@@ -66,11 +76,18 @@ const Routes = () => (
 
             <Route path="/classes/:classId/stats/my" component={MyStats} />
 
+            {/* ***************  사법부  ************** */}
+            {/* 벌금 */}
+            <Route path="/classes/:classId/penalty" component={Penalty} />
+
+
             {/*신용등급 */}
             <Route path="/classes/:classId/credit" component={Credit} />
 
             {/* 시장 */}
             <Route path="/classes/:classId/market" component={Market} />
+   
+
 
             {/* 그 외 */}
             <Route path="/cards" component={Cards} />
