@@ -102,7 +102,7 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_market" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/real_estate_setting">부동산</Link>
+              <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산</Link>
               <Link className="collapse-item" to="/classes/:classId/Market">매점</Link>
             </div>
           </div>
