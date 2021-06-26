@@ -46,25 +46,25 @@ const Routes = () => (
         <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <Route exact path="/signup" component={SignUp} />
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />
             {/* 클래스 설정 */}
-            <Route path="/classes/:classId/student-setting" component={StudentSetting}/>
-            <Route path="/classes/:classId/class-setting" component={ClassSetting}/>
+            <Route exact path="/classes/:classId/student-setting" component={StudentSetting}/>
+            <Route exact path="/classes/:classId/class-setting" component={ClassSetting}/>
 
             {/* ***************  경제  ************** */}
 
             {/*은행*/}
-            <Route path="/classes/:classId/bank/deposit" component={Deposit} />
+            <Route exact path="/classes/:classId/bank/deposit" component={Deposit} />
 
             {/* 증권 거래소 */}
-            <Route path="/classes/:classId/stock" component={TradeStock} />
-            <Route path="/classes/:classId/stock-setting" component={SettingStock} />
+            <Route exact path="/classes/:classId/stock" component={TradeStock} />
+            <Route exact path="/classes/:classId/stock-setting" component={SettingStock} />
             {/* ***************  행정부  ************** */}
             {/* 국세청 */}
-            <Route path="/classes/:classId/tax-nation" component={NationalTax} />
-            <Route path="/classes/:classId/tax-setting" component={SettingTax} />
+            <Route exact path="/classes/:classId/tax-nation" component={NationalTax} />
+            <Route exact path="/classes/:classId/tax-setting" component={SettingTax} />
 
             <Route path="/classes/:classId/tax-my" component={MyTax} />
             <Route path="/classes/:classId/law" component={Law} />
