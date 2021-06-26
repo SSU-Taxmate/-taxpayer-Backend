@@ -3,7 +3,6 @@ import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
 import DefaultTable from '../../../../components/Table/Default';
 import EditableTable from '../../../../components/Table/Editable'
-import CardInfo from '../../../../components/Cards/Info'
 import axios from 'axios';
 
 const NationStatsDetail = () => {
@@ -63,23 +62,6 @@ const NationStatsDetail = () => {
                                 headerStyle: {
                                      whiteSpace: 'nowrap'
                                   }
-                            }}
-                        />
-                    )}
-            </div>
-            <div className="card shadow mb-4">
-                {isLoading ?
-                    <div>loading</div> : (
-                        <DefaultTable
-                            title="제출여부"
-                            columns={columns[0]}
-                            data={data[0]}
-                            options={{
-                                sorting: true, filtering: true, exportButton: true,
-                                grouping: true,
-                                headerStyle: {
-                                    whiteSpace: 'nowrap'
-                                 }
                             }}
                         />
                     )}

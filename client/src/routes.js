@@ -12,12 +12,10 @@ import Cards from "./pages/Cards";
 import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
-import Law from "./pages/Legislature/Law";
 /*신용등급*/
 import Credit from  "./pages/Credit"
 
 /* 마켓 */
-
 import Market from "./pages/Market"
 
 /*클래스 설정 */
@@ -31,17 +29,17 @@ import SettingStock from './pages/Stock/SettingStock'
 import NationalTax from "./pages/Executive/Tax/NationalTax"
 import SettingTax from "./pages/Executive/Tax/SettingTax"
 import MyTax from "./pages/Executive/Tax/MyTax"
-
 /*통계청 */
 import NationStats from './pages/Executive/Statistics/T_statistics'
 import SettingHw from './pages/Executive/Statistics/Setting'
 
 import MyStats from './pages/Executive/Statistics/S_statistics'
 
+/*법*/
 import Penalty from './pages/Judicature/Penalty'
-
 import Deposit from "./pages/Bank/Deposit";
-
+import Law from "./pages/Legislature/Law";
+import Auth from "../src/hoc/auth";
 
 const Routes = () => (
     <BrowserRouter>
@@ -56,6 +54,10 @@ const Routes = () => (
             <Route path="/classes/:classId/class-setting" component={ClassSetting}/>
 
             {/* ***************  경제  ************** */}
+
+            {/*은행*/}
+            <Route path="/classes/:classId/bank/deposit" component={Deposit} />
+
             {/* 증권 거래소 */}
             <Route path="/classes/:classId/stock" component={TradeStock} />
             <Route path="/classes/:classId/stock-setting" component={SettingStock} />
@@ -63,6 +65,7 @@ const Routes = () => (
             {/* 국세청 */}
             <Route path="/classes/:classId/tax-nation" component={NationalTax} />
             <Route path="/classes/:classId/tax-setting" component={SettingTax} />
+
             <Route path="/classes/:classId/tax-my" component={MyTax} />
             <Route path="/classes/:classId/law" component={Law} />
 
@@ -84,7 +87,6 @@ const Routes = () => (
             {/* 시장 */}
             <Route path="/classes/:classId/market" component={Market} />
    
-            <Route path="/classes/:classId/bank/deposit" component={Deposit} />
 
 
             {/* 그 외 */}

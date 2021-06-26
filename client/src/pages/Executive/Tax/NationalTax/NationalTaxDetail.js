@@ -4,6 +4,7 @@ import ChartPie from '../../../../components/Charts/Pie'
 import axios from 'axios';
 import ChartBar from '../../../../components/Charts/Bar'
 import DefaultTable from '../../../../components/Table/Default';
+import EditableTable from '../../../../components/Table/Editable';
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -175,27 +176,17 @@ const NationalTaxDetail = () => {
             <div className='row'>
               <div className='col'>
                 <p className="h5 font-weight-bold ">한 줄 분석</p>
-              </div>
-              <div className='col'>
-                <div className="border-1 bg-transparent">
-
-                </div>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col ml-1'>
-                <input
-                  type="text"
+                <div className='col ml-1'>
+                <textarea
+                  rows='5'
                   readOnly={true}
                   className="form-control"
                   id="evaluation"
-                  placeholder=""
-                  min="0"
-                  max="100"
-                  step="5"
                 />
               </div>
+              </div>
             </div>
+         
           </div>
 
         </div>
@@ -250,7 +241,7 @@ const NationalTaxDetail = () => {
       <CardCollapse title='세출 항목별 세부 내역' area_id='expenditure_detail'>
         {isLoading ?
           <div>loading</div> : (
-            <DefaultTable
+            <EditableTable
               title="세출 항목별 세부 내역"
               columns={columns[2]}
               data={data[2]}

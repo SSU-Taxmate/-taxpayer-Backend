@@ -1,3 +1,12 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Reducers } from '../_reducers';
-export const Store = createStore(Reducers);
+import promiseMiddleware from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
+
+const createStoreWithMiddleware =applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
+
+export const Store = createStoreWithMiddleware(
+    Reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+)

@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import PageHeading from '../../../components/PageHeading';
-import LawDetail from '../Law/LawDetail'
 import ScrollToTop from '../../../components/Scroll';
 import LogoutModal from '../../../components/Modal/Logout';
+import CardCollapse from '../../../components/Cards/Collapse'
+import Footer from '../../../components/Footer'
 class Law extends Component {
   render() {
+   const laws=['헌법','질서유지법','도로교통법','교육법','형사법','환경보호법','금융거래법']
+
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
@@ -32,10 +35,17 @@ class Law extends Component {
 
                 {/* <!-- Page Heading --> */}
 
-                <PageHeading title="법" />
-
+                <PageHeading title="법"><h5>시행일 2021-06-26</h5></PageHeading>
+                
                 {/* <!-- Content Row --> */}
-                <LawDetail></LawDetail>
+                {  laws.map((law,i)=>(
+                  <CardCollapse key={i} title={law} area_id={law}>
+                  This is a collapsable card example using Bootstrap's built in collapse
+                  functionality. <strong>Click on the card header</strong> to see the card body
+                </CardCollapse>
+                ))
+                }
+              
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -43,13 +53,7 @@ class Law extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <footer className="sticky-footer bg-white">
-              <div className="container my-auto">
-                <div className="copyright text-center my-auto">
-                  <span>Copyright &copy; Your Website 2019</span>
-                </div>
-              </div>
-            </footer>
+            <Footer/>
             {/* <!-- End of Footer --> */}
 
           </div>
@@ -59,10 +63,10 @@ class Law extends Component {
         {/* <!-- End of Page Wrapper --> */}
 
         {/* <!-- Scroll to Top Button--> */}
-       
-        <ScrollToTop/>
-        <LogoutModal/>
-        </div>
+
+        <ScrollToTop />
+        <LogoutModal />
+      </div>
     )
   }
 }

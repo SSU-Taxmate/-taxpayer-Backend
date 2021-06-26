@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clickMenuOpen } from '../../../redux/_actions';
-import LogoutModal from '../../../components/Modal/Logout'
 class Topbar extends Component {
     render() {
       const { clickMenuOpen } = this.props;

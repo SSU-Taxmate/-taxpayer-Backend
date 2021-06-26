@@ -19,10 +19,14 @@ function ScrollToTop() {
           behavior: "smooth"
         });
       };
+    
       useEffect(() => {
         window.addEventListener("scroll", toggleVisibility);
-        console.log(isVisible)
-      }, []);
+        return () => {
+          //cleanup
+          window.removeEventListener("scroll",toggleVisibility);
+        }
+      }, [])
     return (
         <>
         {isVisible && 

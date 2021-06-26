@@ -1,47 +1,21 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Chart from "chart.js";
-
-import CardBasic from '../../Cards/Basic';
 
 Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
 
+export default function ChartLine(props) {
+    // var linechart;
+    const chartRef = React.createRef();
 
-class ChartLine extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            title: props.title ? props.title : 'title없음',
-            id: props.id,
-            data: props.data
-        }
-    }
-    chartRef = React.createRef();
-    componentDidMount() {
+    useEffect(() => {
+        const myChartRef = chartRef.current.getContext("2d");
 
-        const myChartRef = this.chartRef.current.getContext("2d");
-        //console.log(this.chartRef);
-        const dataset = this.state.data;
-        new Chart(myChartRef, {
+        var linechart;
+
+        linechart = new Chart(myChartRef, {
             type: 'line',
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Earnings",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-                }],
-            },
+            data: props.data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -107,19 +81,21 @@ class ChartLine extends Component {
                 }
             }
         });
-    }
+        return () => {
 
-    render() {
-        return (
-            <div className="chart-area">
-                 <div className='h6'>{this.state.title}</div>
-                <div className='chart-pie'>
-                    <canvas id={`${this.state.id}`} ref={this.chartRef}></canvas>
-                    </div>
+                linechart.destroy()
+            
+        }
+    })
+    return (
+        <div className="chart-area">
+            <div className='h6'>{props.title}</div>
+            <div className='chart-pie'>
+                <canvas id={`${props.id}`} ref={chartRef}></canvas>
             </div>
+        </div>
 
-        )
-    }
+    )
+
 }
 
-export default ChartLine;

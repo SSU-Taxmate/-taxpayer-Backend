@@ -1,46 +1,38 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Chart from "chart.js";
 
 Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
-class ChartPie extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            title: props.title ? props.title : '',
-            id: props.id,
-            data: props.data
+
+export default function ChartPie(props) {
+    //class로 바꾸었을 때는? 몇번이나..?
+    const chartRef=React.createRef();
+    useEffect(() => {
+        //console.log('useEffect-ChartPie',props.data)
+
+        const myChartRef = chartRef.current.getContext("2d");
+        var pieChart;
+         pieChart=new Chart(myChartRef, {
+             type: 'pie',
+             data: props.data,
+             options: {
+                 responsive: true,
+                 maintainAspectRatio: false,
+             }
+         });
+        return () => {
+            //console.log('useEffect-CleanUP-ChartPie',pieChart)
+            pieChart.destroy() 
+           
         }
-    }
-    chartRef = React.createRef();
-    componentDidMount() {
-
-        const myChartRef = this.chartRef.current.getContext("2d");
-        //console.log(this.chartRef);
-        //console.log(this.state.data);
-        const dataset = this.state.data;
-        const title = this.state.title;
-        new Chart(myChartRef, {
-            type: 'pie',
-            data: dataset,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-
-            }
-
-        });
-    }
-    render() {
-        return (
-            <div className='chart-area'>
-                <div className='h6'>{this.state.title}</div>
-                <div className='chart-pie'>
-                    <canvas id={`${this.state.id}`} ref={this.chartRef} ></canvas>
-                </div>
+    }, [props.data])
+    return (
+        <div className='chart-area'>
+            <div className='h6'>{props.title}</div>
+            <div className='chart-pie'>
+                <canvas id={`${props.id}`} ref={chartRef} ></canvas>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-export default ChartPie;
