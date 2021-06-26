@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import {Editor, EditorState} from 'draft-js';
+import 'draft-js/dist/Draft.css';
 //Navigation
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
@@ -9,7 +12,7 @@ import CardCollapse from '../../../components/Cards/Collapse'
 import Footer from '../../../components/Footer'
 class Law extends Component {
   render() {
-   const laws=['헌법','질서유지법','도로교통법','교육법','형사법','환경보호법','금융거래법']
+    const laws = ['헌법', '질서유지법', '도로교통법', '교육법', '형사법', '환경보호법', '금융거래법']
 
     return (
       <div>
@@ -36,16 +39,17 @@ class Law extends Component {
                 {/* <!-- Page Heading --> */}
 
                 <PageHeading title="법"><h5>시행일 2021-06-26</h5></PageHeading>
-                
+
                 {/* <!-- Content Row --> */}
-                {  laws.map((law,i)=>(
+                {laws.map((law, i) => (
                   <CardCollapse key={i} title={law} area_id={law}>
-                  This is a collapsable card example using Bootstrap's built in collapse
-                  functionality. <strong>Click on the card header</strong> to see the card body
-                </CardCollapse>
+                    This is a collapsable card example using Bootstrap's built in collapse
+                    functionality. <strong>Click on the card header</strong> to see the card body
+                  </CardCollapse>
                 ))
                 }
-              
+                <Editor editorState={this.state.editorState} onChange={this.onChange} />
+
               </div>
               {/* <!-- /.container-fluid --> */}
 
@@ -53,7 +57,7 @@ class Law extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <Footer/>
+            <Footer />
             {/* <!-- End of Footer --> */}
 
           </div>

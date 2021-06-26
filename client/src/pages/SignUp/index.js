@@ -66,7 +66,7 @@ function SignUp(props) {
 
                       dispatch(registerUser(dataToSubmit)).then(response => {
                         if (response.payload.success) {
-                          props.history.push("/");
+                          props.history.push("/signin");
                         } else {
                           alert(response.payload.err.errmsg)
                         }
@@ -190,11 +190,11 @@ function SignUp(props) {
                         <button onClick={handleSubmit} disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button>
 
                         <hr />
-                        <Link to="/" className="btn btn-google btn-user btn-block">
-                          <i className="fab fa-google fa-fw"></i> Google로 로그인하기
+                        <Link to="/classes" className="btn btn-google btn-user btn-block">
+                          <i className="fab fa-google fa-fw"></i> Google로 회원 가입하기
                         </Link>
-                        <Link to="/" className="btn btn-facebook btn-user btn-block">
-                          <i className="fab fa-facebook-f fa-fw"></i> Facebook으로 로그인하기
+                        <Link to="/classes" className="btn btn-facebook btn-user btn-block">
+                          <i className="fab fa-facebook-f fa-fw"></i> Facebook으로 회원 가입하기
                         </Link>
                       </form>
                     );
@@ -244,7 +244,7 @@ function SignUp(props) {
                   <a className="small" href="forgot-password.html">비밀번호를 잊어버리셨습니까?</a>
                 </div>
                 <div className="text-center">
-                  <Link className="small" to="/">이미 계정이 있나요? 로그인하러가기!</Link>
+                  <Link className="small" to="/signin">이미 계정이 있나요? 로그인하러가기!</Link>
                 </div>
               </div>
             </div>
