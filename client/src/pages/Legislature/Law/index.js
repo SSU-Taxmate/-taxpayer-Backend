@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {Editor, EditorState} from 'draft-js';
-import 'draft-js/dist/Draft.css';
 //Navigation
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
@@ -13,7 +11,6 @@ import Footer from '../../../components/Footer'
 class Law extends Component {
   render() {
     const laws = ['헌법', '질서유지법', '도로교통법', '교육법', '형사법', '환경보호법', '금융거래법']
-
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
@@ -48,8 +45,7 @@ class Law extends Component {
                   </CardCollapse>
                 ))
                 }
-                <Editor editorState={this.state.editorState} onChange={this.onChange} />
-
+  
               </div>
               {/* <!-- /.container-fluid --> */}
 
