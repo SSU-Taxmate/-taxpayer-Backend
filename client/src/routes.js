@@ -40,6 +40,8 @@ import MyStats from './pages/Executive/Statistics/S_statistics'
 
 import Penalty from './pages/Judicature/Penalty'
 
+import Deposit from "./pages/Bank/Deposit";
+
 
 const Routes = () => (
     <BrowserRouter>
@@ -81,6 +83,9 @@ const Routes = () => (
 
             {/* 시장 */}
             <Route path="/classes/:classId/market" component={Market} />
+   
+            <Route path="/classes/:classId/bank/deposit" component={Deposit} />
+
 
             {/* 그 외 */}
             <Route path="/cards" component={Cards} />

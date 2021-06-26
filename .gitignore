@@ -10,6 +10,10 @@
 /server/config/dev.js
 # testing
 /coverage
+/front/html/utility/test.html
+/front/html/utility/css
+
+
 
 # production
 /build
