@@ -176,27 +176,17 @@ const NationalTaxDetail = () => {
             <div className='row'>
               <div className='col'>
                 <p className="h5 font-weight-bold ">한 줄 분석</p>
-              </div>
-              <div className='col'>
-                <div className="border-1 bg-transparent">
-
-                </div>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col ml-1'>
-                <input
-                  type="text"
+                <div className='col ml-1'>
+                <textarea
+                  rows='5'
                   readOnly={true}
                   className="form-control"
                   id="evaluation"
-                  placeholder=""
-                  min="0"
-                  max="100"
-                  step="5"
                 />
               </div>
+              </div>
             </div>
+         
           </div>
 
         </div>

@@ -36,7 +36,7 @@ export default function TransferList() {
   const [checked, setChecked] = React.useState([]);
   const [right, setRight] = React.useState([  '엔화', '선생님몸무게']);//사용하는 주식 - db에저장
   //right을 제외한 모든 주식
-  const [left, setLeft] = React.useState(['kosdaq', 'kospi', 'samsung', 'kakao','abc','def','gtd']);//사용하지 않는 주식 직접추가 + 받아온주식
+  const [left, setLeft] = React.useState(['A엔터', 'B엔터', 'C IT', 'D IT','E 바이오','F 바이오','선생님 몸무게']);//사용하지 않는 주식 직접추가 + 받아온주식
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);

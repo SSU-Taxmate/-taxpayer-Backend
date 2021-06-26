@@ -4,7 +4,7 @@ export default class Popover extends Component {
  
     componentDidMount(){
         $(function () {
-            $('[data-toggle="popover"]').popover();
+            $('[data-toggle="popover"]').popover({trigger:'hover'});
           });
     }
 

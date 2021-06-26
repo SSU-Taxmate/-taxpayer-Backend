@@ -58,7 +58,7 @@ export default function SettingStock() {
                     <div class="form-group row">
                       <label for="inputstockinfo" class="col-sm-2 col-form-label">주식설명</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputstockinfo" placeholder="주식설명" />
+                        <textarea class="form-control" id="inputstockinfo" placeholder="주식설명" rows="3"/>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -88,7 +88,7 @@ export default function SettingStock() {
                   <div class="form-group row">
                     <label for="inputnews" class="col-sm-2 col-form-label">한 줄 뉴스</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputnews" placeholder="뉴스" />
+                      <textarea  class="form-control" id="inputnews" rows='3' placeholder="뉴스" />
                     </div>
                   </div>
                   <div class="form-group row float-right pr-2">

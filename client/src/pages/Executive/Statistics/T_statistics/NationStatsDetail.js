@@ -66,23 +66,6 @@ const NationStatsDetail = () => {
                         />
                     )}
             </div>
-            <div className="card shadow mb-4">
-                {isLoading ?
-                    <div>loading</div> : (
-                        <DefaultTable
-                            title="제출여부"
-                            columns={columns[0]}
-                            data={data[0]}
-                            options={{
-                                sorting: true, filtering: true, exportButton: true,
-                                grouping: true,
-                                headerStyle: {
-                                    whiteSpace: 'nowrap'
-                                 }
-                            }}
-                        />
-                    )}
-            </div>
             <CardBasic title='상황'>
                 <div className="row">
                     <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />
