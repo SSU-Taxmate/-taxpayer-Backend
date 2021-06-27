@@ -3,6 +3,16 @@ import React, { Component } from 'react';
 //Navigation
 import Card from '../../components/Cards/MiniCard';
 class T_market_porduct extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            title: this.props.title ? this.props.title : ' ',
+            img: this.props.img ? this.props.img : '',
+            comment: this.props.comment ? this.props.comment : ''
+        }
+    }
+    
     componentWillMount() {
         document.getElementById('body').className = 'page-top'
     }
@@ -11,12 +21,11 @@ class T_market_porduct extends Component {
         return (
             
 
-            <Card title="야채시장" img="https://www.kyeonggi.com/news/photo/201907/2126550_917024_5351.jpg" comment="햇빛반은 6-3반!"/>
+            <Card title={this.state.title} img={this.state.img} comment={this.state.comment}/>
             
         )
     }
 }
-
 // page/classlistDEtail 참고하기
 
 export default T_market_porduct;

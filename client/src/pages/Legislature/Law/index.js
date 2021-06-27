@@ -13,7 +13,6 @@ import Footer from '../../../components/Footer'
 class Law extends Component {
   render() {
     const laws = ['헌법', '질서유지법', '도로교통법', '교육법', '형사법', '환경보호법', '금융거래법']
-
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
