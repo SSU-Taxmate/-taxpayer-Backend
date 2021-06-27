@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import {Editor, EditorState} from 'draft-js';
+import Draft from '../../../components/Editor'
+
 import 'draft-js/dist/Draft.css';
 //Navigation
 import Sidebar from '../../../components/Navigation/Sidebar';
@@ -39,7 +39,8 @@ class Law extends Component {
                 {/* <!-- Page Heading --> */}
 
                 <PageHeading title="법"><h5>시행일 2021-06-26</h5></PageHeading>
-
+                <Draft/>
+                
                 {/* <!-- Content Row --> */}
                 {laws.map((law, i) => (
                   <CardCollapse key={i} title={law} area_id={law}>
@@ -48,7 +49,7 @@ class Law extends Component {
                   </CardCollapse>
                 ))
                 }
-                <Editor editorState={this.state.editorState} onChange={this.onChange} />
+                
 
               </div>
               {/* <!-- /.container-fluid --> */}

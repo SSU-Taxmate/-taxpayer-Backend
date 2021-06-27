@@ -4,7 +4,7 @@ import StockInfo from './StockInfo';
 const iconSet=[{icon:"caret-up",color:'red'},{icon:"caret-down",color:'blue'}]
 export default function SingleLineStockList(props) {
 
-  const [data, setTabItem] = useState(props.data)
+  const [data] = useState(props.data)
   return (
     <div >
       <div className='row flex-row flex-nowrap overflow-auto'>

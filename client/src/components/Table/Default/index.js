@@ -1,5 +1,5 @@
 import MaterialTable from 'material-table';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { forwardRef } from 'react';
 
 import AddBox from '@material-ui/icons/AddBox';

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
-import DefaultTable from '../../../../components/Table/Default';
 import EditableTable from '../../../../components/Table/Editable'
 import axios from 'axios';
 

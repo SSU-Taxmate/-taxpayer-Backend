@@ -5,7 +5,6 @@ import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 import CardBasic from '../../../components/Cards/Basic'
-import CardDefault from '../../../components/Cards/Default'
 import TradeSection from './sections/TradeSection'
 import SingleLineStockList from './sections/SingleLineStockList'
 import LogoutModal from '../../../components/Modal/Logout';
