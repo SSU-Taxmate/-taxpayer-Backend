@@ -22,8 +22,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users',require('./routes/users'));
-app.use('/api/stock',require('./routes/stock'));
-
+app.use('/api/classes/:classId/stock',require('./routes/stock'));
+app.use('/api/classes/:classId/homeworks',require('./routes/homework'))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/api/hello', (req, res) => {

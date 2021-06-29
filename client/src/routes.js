@@ -53,8 +53,8 @@ const Routes = () => (
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />
             {/* 클래스 설정 */}
-            <Route exact path="/classes/:classId/student-setting" component={StudentSetting}/>
-            <Route exact path="/classes/:classId/class-setting" component={ClassSetting}/>
+            <Route exact path="/classes/:classId/set-up/student" component={StudentSetting}/>
+            <Route exact path="/classes/:classId/set-up/class" component={ClassSetting}/>
 
             {/* ***************  경제  ************** */}
 
@@ -63,21 +63,21 @@ const Routes = () => (
 
             {/* 증권 거래소 */}
             <Route exact path="/classes/:classId/stock" component={TradeStock} />
-            <Route exact path="/classes/:classId/stock-setting" component={SettingStock} />
+            <Route exact path="/classes/:classId/set-up/stock" component={SettingStock} />
             {/* ***************  행정부  ************** */}
             {/* 국세청 */}
-            <Route exact path="/classes/:classId/tax-nation" component={NationalTax} />
-            <Route exact path="/classes/:classId/tax-setting" component={SettingTax} />
+            <Route exact path="/classes/:classId/national-tax" component={NationalTax} />
+            <Route exact path="/classes/:classId/set-up/tax" component={SettingTax} />
 
-            <Route exact path="/classes/:classId/tax-my" component={MyTax} />
+            <Route exact path="/classes/:classId/tax-invoice" component={MyTax} />
             <Route exact path="/classes/:classId/law" component={Law} />
 
             {/* 통계청 */}
 
-            <Route exact path="/classes/:classId/stats/nation" component={NationStats} />
-            <Route exact path="/classes/:classId/stats/nation-setting" component={SettingHw} />
+            <Route exact path="/classes/:classId/national-stats" component={NationStats} />
+            <Route exact path="/classes/:classId/set-up/stats" component={SettingHw} />
 
-            <Route exact path="/classes/:classId/stats/my" component={MyStats} />
+            <Route exact path="/classes/:classId/personal-stats" component={MyStats} />
 
             {/* ***************  사법부  ************** */}
             {/* 벌금 */}

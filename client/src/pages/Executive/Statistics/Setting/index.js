@@ -9,19 +9,21 @@ import PageHeading from '../../../../components/PageHeading';
 import ScrollToTop from '../../../../components/Scroll';
 const SettingHw = () => {
     const [isLoading, setIsLoading] = useState(false)
-    const [columns, setColumns] = useState([])
-    const [data, setData] = useState([])
+    const [homework, sethomework] = useState([])
     const [err, setIsError] = useState(false);
 
-
+    const [hwtype,sethwtype]=useState([]);
     useEffect(() => {
         const fetchData = async () => {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get('/api/stats/nation');
-                setData(result.data['data']);
-                setColumns(result.data['columns'])
+               /* const result = await axios.get('/api/classes/:classId/homeworks');
+                sethomework(result.data.data);
+                setColumns(result.data.columns)
+                */
+                const hwtype = await axios.get('/api/classes/:classId/homeworks/types');
+                sethwtype(hwtype.data.data)
             } catch (error) {
                 setIsError(true);
 
@@ -29,6 +31,7 @@ const SettingHw = () => {
             setIsLoading(false);
 
         };
+
         fetchData();
     }, []);
     return (
@@ -55,13 +58,21 @@ const SettingHw = () => {
                    
                             <div className="col">
                                 <div className="card shadow mb-4">
-
+                                    {/*columns은 기본으로 줘야할듯 */}
                                     {isLoading ?
                                         <div>loading</div> : (
                                             <EditableTable
                                                 title='숙제부여'
-                                                columns={columns[1]}
-                                                data={data[1]}
+                                                columns={[
+                                                    {title:'타입id',field:'_id'},
+                                                    {title:"이름",field:"name"},
+                                                    {title:'최초생성날짜',field:'date'},
+                                                    {title:'만료일',field:"expDate"},
+                                                    {title:'자세한내용',field:'detail'},
+                                                    {title:'student_id',field:'student_id'},
+                                                    {title:'coupon_id',field:'coupon_id'},
+                                                  ]}
+                                                data={homework}
                                                 options={{
                                                     sorting: true, exportButton: true,
                                                     grouping: true,
@@ -74,8 +85,8 @@ const SettingHw = () => {
                                         <div>loading</div> : (
                                             <EditableTable
                                                 title='종류관리(자주 사용하는 과제)'
-                                                columns={columns[2]}
-                                                data={data[2]} />)}
+                                                columns={[{title:'타입',field:"type"},{title:"자세한내용",field:"detail"}]}
+                                                data={hwtype} />)}
                                 </div>
 
 
