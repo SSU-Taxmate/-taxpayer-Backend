@@ -3,7 +3,7 @@ const homeworkTypeSchema = mongoose.Schema({
   /*  _id:{
         type:String,
     },*/
-    type:{
+    typeName:{
         type:String,
     },
     detail:{
@@ -14,16 +14,17 @@ const homeworkTypeSchema = mongoose.Schema({
 const HomeworkType = mongoose.model('HomeworkType', homeworkTypeSchema)
 
 const homeworkSchema = mongoose.Schema({
-    homeworkType_id:{
-        type: String, 
-        ref: 'HomeworkType'
+    homeworkType:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'HomeworkType',
     },
     name: {
         type: String,
         maxlength: 50
     },
     date:{
-        type:Date
+        type:Date,
+       // default:Date.now
     },
     expDate:{
         type: Date
@@ -31,17 +32,18 @@ const homeworkSchema = mongoose.Schema({
     detail:{
         type:String,
     },
-    student_id:{
+    /*student_id:{
         type: String, 
-        ref: 'User'
-    },
+        ref: User
+    },*/
     submit:{
         type:Boolean,
         default:false
-    },
+    },/*
     coupon_id:{
         type:String,
-    }
+        default: null
+    }*/
     
 })
 

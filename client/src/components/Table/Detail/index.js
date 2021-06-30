@@ -138,7 +138,7 @@ export default function DetailTable(props) {
             }
           },
           grouping:{
-            placeholder:'이곳으로 드래그 해주세요',
+            placeholder:'여기에 그룹화 할 헤더를 끌어다놓으세요',
             groupedBy: '그룹화 : '
           },
           pagination: {
