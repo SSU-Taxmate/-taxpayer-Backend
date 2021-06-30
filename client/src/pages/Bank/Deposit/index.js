@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditableTable from '../../../components/Table/Editable';
+import TableTheme from '../../../components/Table/TableTheme';
 import Sidebar from '../../../components/Navigation/Sidebar'
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
@@ -58,7 +58,7 @@ class Deposit extends Component {
 
             </div>
 
-            <EditableTable
+            <TableTheme
             title="예금상품"
                 />
 
