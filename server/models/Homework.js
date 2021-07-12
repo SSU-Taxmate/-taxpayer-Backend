@@ -1,17 +1,4 @@
 const mongoose =require('mongoose')
-const homeworkTypeSchema = mongoose.Schema({
-  /*  _id:{
-        type:String,
-    },*/
-    typeName:{
-        type:String,
-    },
-    detail:{
-        type:String
-    }
-
-})
-const HomeworkType = mongoose.model('HomeworkType', homeworkTypeSchema)
 
 const homeworkSchema = mongoose.Schema({
     homeworkType:{
@@ -49,4 +36,4 @@ const homeworkSchema = mongoose.Schema({
 
 const Homework = mongoose.model('Homework', homeworkSchema)
 
-module.exports = {Homework,HomeworkType }
+module.exports = {Homework }

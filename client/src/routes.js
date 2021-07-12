@@ -34,7 +34,7 @@ import SettingTax from "./pages/Executive/Tax/SettingTax"
 import MyTax from "./pages/Executive/Tax/MyTax"
 /*통계청 */
 import NationStats from './pages/Executive/Statistics/T_statistics'
-import SettingHw from './pages/Executive/Statistics/Setting'
+import SettingHw from './pages/Executive/Statistics/SetUp'
 
 import MyStats from './pages/Executive/Statistics/S_statistics'
 
