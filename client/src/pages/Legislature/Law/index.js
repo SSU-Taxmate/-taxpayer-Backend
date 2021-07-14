@@ -52,7 +52,10 @@ export default function Law() {
       console.log(_id)
     }
   };
+  const onChange = (value) => {
+    setlaws(...laws,value);
 
+  };
   return (
     <div>
       {/* <!-- Page Wrapper --> */}
@@ -92,7 +95,7 @@ export default function Law() {
                                 <div className="form-inline">
 
                                     <label className="mr-2 my-1" htmlFor="lawcontent">내용</label>
-                                    <Draft id='lawcontent' editorState={law.content}/>
+                                    <Draft id='lawcontent' editorState={law.content} onChange={onChange}/>
                                 </div>
                             </form>
                       </div>
