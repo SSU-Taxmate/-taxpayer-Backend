@@ -8,7 +8,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ClassMain from "./pages/ClassMain";
 import NotFound from "./pages/NotFound";
-import Cards from "./pages/Cards";
 import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
@@ -42,6 +41,7 @@ import MyStats from './pages/Executive/Statistics/S_statistics'
 import Penalty from './pages/Judicature/Penalty'
 import Deposit from "./pages/Bank/Deposit";
 import Law from "./pages/Legislature/Law";
+import Entactment from "./pages/Legislature/Enactment";
 import Auth from "../src/hoc/auth";
 
 const Routes = () => (
@@ -68,9 +68,10 @@ const Routes = () => (
             {/* 국세청 */}
             <Route exact path="/classes/:classId/national-tax" component={NationalTax} />
             <Route exact path="/classes/:classId/set-up/tax" component={SettingTax} />
-
+            {/*법*/}
             <Route exact path="/classes/:classId/tax-invoice" component={MyTax} />
             <Route exact path="/classes/:classId/law" component={Law} />
+            <Route exact path="/classes/:classId/set-up/law" component={Entactment} />
 
             {/* 통계청 */}
 
@@ -95,7 +96,6 @@ const Routes = () => (
 
 
             {/* 그 외 */}
-            <Route path="/cards" component={Cards} />
             <Route path="/charts" component={Charts} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/charts" component={Charts} />

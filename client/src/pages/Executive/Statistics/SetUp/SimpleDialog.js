@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,8 +11,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import { blue } from '@material-ui/core/colors';
 import { Button, Icon, IconButton } from '@material-ui/core';
-
-const unSubmitStd = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
@@ -23,25 +21,39 @@ const useStyles = makeStyles({
 export default function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue, open } = props;
+  const [unSubmitStd, setunSubmitStd] = useState(['홍길동', '김철수'])
 
   const handleClose = () => {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value) => {
-    onClose(value);
+  const handleListItemClick = (value, type) => {
+    if (type == 'delete') {
+      setunSubmitStd(unSubmitStd.filter(std => std !== value))
+    }
+    else if (type =='useCoupon'){
+
+    }else if (type=='addUnSubmitStd'){
+
+    }
+    
+
   };
 
   return (
     <Dialog fullScreen onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">미제출 학생</DialogTitle>
-
       <List>
-        {unSubmitStd.map((email) => (
-          <ListItem >
-            <IconButton onClick={() => handleListItemClick(email)} key={email}>
+        {unSubmitStd.map((std) => (
+          <ListItem key={std}>
+             <IconButton onClick={() => handleListItemClick(std, 'delete')}>
               <Icon>
-              remove_circle_outline
+                remove_circle_outline
+              </Icon>
+            </IconButton>
+            <IconButton onClick={() => handleListItemClick(std,'useCoupon')}>
+              <Icon>
+                card_giftcard
               </Icon>
             </IconButton>
             <ListItemAvatar>
@@ -51,11 +63,12 @@ export default function SimpleDialog(props) {
                 </Icon>
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={email} />
+            <ListItemText primary={std} />
+           
           </ListItem>
         ))}
 
-        <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+        <ListItem autoFocus button onClick={() => handleListItemClick('addUnSubmitStd')}>
           <ListItemAvatar>
             <Avatar>
               <Icon>
@@ -67,7 +80,8 @@ export default function SimpleDialog(props) {
         </ListItem>
       </List>
       <DialogActions>
-        <Button color="primary" onClick={handleListItemClick}>취소</Button>
+      <Button color="primary" onClick={() => handleClose()}>저장</Button>
+        <Button color="primary" onClick={() => handleClose()}>취소</Button>
       </DialogActions>
     </Dialog>
   );

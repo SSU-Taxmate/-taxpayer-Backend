@@ -8,7 +8,6 @@ import ScrollToTop from '../../../components/Scroll'
 
 import TableTheme from '../../../components/Table/TableTheme'
 import axios from 'axios'
-import LogoutModal from '../../../components/Modal/Logout';
 function ClassSetting() {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -86,7 +85,6 @@ function ClassSetting() {
 
       {/* <!-- Scroll to Top Button--> */}
       <ScrollToTop />
-      <LogoutModal/>
     </>
 
   )

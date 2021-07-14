@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { Dialog, DialogActions } from '@material-ui/core';
 
 function LogoutModal(props) {
-    const { onClose, selectedValue, open } = props;
-
+    const { onClose,  open } = props;
+console.log(props.open)
     const LogoutEvent = () => {
         console.log('LogoutEvent')
         axios.get('/api/users/logout').then(response => {
@@ -18,7 +18,7 @@ function LogoutModal(props) {
         });
     }
     const handleClose = () => {
-        onClose(selectedValue);
+        onClose();
     };
     
     return (

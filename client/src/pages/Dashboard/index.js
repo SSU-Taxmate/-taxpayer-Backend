@@ -9,7 +9,6 @@ import ChartDonut from '../../components/Charts/Donut';
 import ChartLine from '../../components/Charts/Line';
 import PageHeading from '../../components/PageHeading';
 import ScrollToTop from '../../components/Scroll'
-import LogoutModal from '../../components/Modal/Logout'
 
 class Dashboard extends Component {
   componentWillMount() {
@@ -95,7 +94,6 @@ class Dashboard extends Component {
 
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
-        <LogoutModal/>
         </div>
     )
   }

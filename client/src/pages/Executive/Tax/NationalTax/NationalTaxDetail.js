@@ -5,6 +5,7 @@ import axios from 'axios';
 import ChartBar from '../../../../components/Charts/Bar'
 import DefaultTable from '../../../../components/Table/Default';
 import TableTheme from '../../../../components/Table/TableTheme';
+import MaterialTable from 'material-table';
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -106,7 +107,7 @@ const NationalTaxDetail = () => {
   return (
 
     <div>
- 
+
       {/*<!--재정 상황 시작-->*/}
       <CardCollapse title="재정상황" area_id='재정상황'>
         <div className="table-responsive">
@@ -177,16 +178,16 @@ const NationalTaxDetail = () => {
               <div className='col'>
                 <p className="h5 font-weight-bold ">한 줄 분석</p>
                 <div className='col ml-1'>
-                <textarea
-                  rows='5'
-                  readOnly={true}
-                  className="form-control"
-                  id="evaluation"
-                />
-              </div>
+                  <textarea
+                    rows='5'
+                    readOnly={true}
+                    className="form-control"
+                    id="evaluation"
+                  />
+                </div>
               </div>
             </div>
-         
+
           </div>
 
         </div>
@@ -224,14 +225,17 @@ const NationalTaxDetail = () => {
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
         {isLoading ?
           <div>loading</div> : (
-            <DefaultTable
-              title="세입 항목별 세부 내역"
-              columns={columns[1]}
-              data={data[1]}
-              options={{
-                sorting: true, filtering: true
-              }}
-            />)}
+            <TableTheme>
+            <MaterialTable
+                title="세입 항목별 세부 내역"
+                columns={columns[1]}
+                data={data[1]}
+                options={{
+                  sorting: true, filtering: true
+                }}
+            />
+          </TableTheme>
+            )}
 
       </CardCollapse>
       {/*<!--세입 항목별 세부 내역 끝-->*/}
@@ -241,14 +245,17 @@ const NationalTaxDetail = () => {
       <CardCollapse title='세출 항목별 세부 내역' area_id='expenditure_detail'>
         {isLoading ?
           <div>loading</div> : (
-            <TableTheme
-              title="세출 항목별 세부 내역"
-              columns={columns[2]}
-              data={data[2]}
-              options={{
-                sorting: true, filtering: true
-              }}
-            />)}
+            <TableTheme>
+              <MaterialTable
+                title="세출 항목별 세부 내역"
+                columns={columns[2]}
+                data={data[2]}
+                options={{
+                  sorting: true, filtering: true
+                }}
+              />
+            </TableTheme>
+          )}
       </CardCollapse>
       {/*<!--세출 항목별 세부 내역 끝-->*/}
 

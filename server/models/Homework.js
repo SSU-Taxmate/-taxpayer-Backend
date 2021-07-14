@@ -1,10 +1,6 @@
 const mongoose =require('mongoose')
 
 const homeworkSchema = mongoose.Schema({
-    homeworkType:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'HomeworkType',
-    },
     name: {
         type: String,
         maxlength: 50
@@ -20,17 +16,18 @@ const homeworkSchema = mongoose.Schema({
         type:String,
     },
     /*student_id:{
-        type: String, 
+        type: mongoose.Schema.Types.ObjectId, 
         ref: User
     },*/
     submit:{
         type:Boolean,
         default:false
-    },/*
+    },
     coupon_id:{
-        type:String,
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Coupon',
         default: null
-    }*/
+    }/**/
     
 })
 
