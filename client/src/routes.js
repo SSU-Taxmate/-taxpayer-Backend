@@ -11,8 +11,12 @@ import NotFound from "./pages/NotFound";
 import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
+
 /*신용등급*/
 import Credit from  "./pages/Credit"
+
+/*은행 */
+import Bank from "./pages/Bank/CurrentBank";
 
 /* 마켓 */
 
@@ -59,6 +63,7 @@ const Routes = () => (
             {/* ***************  경제  ************** */}
 
             {/*은행*/}
+            <Route exact path="/classes/:classId/bank" component={Bank} />
             <Route exact path="/classes/:classId/bank/deposit" component={Deposit} />
 
             {/* 증권 거래소 */}
