@@ -6,9 +6,8 @@ import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 
-import EditableTable from '../../../components/Table/Editable'
+import TableTheme from '../../../components/Table/TableTheme'
 import axios from 'axios'
-import LogoutModal from '../../../components/Modal/Logout';
 function ClassSetting() {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -62,7 +61,7 @@ function ClassSetting() {
               {/* <!-- Content Row --> */}
               {isLoading ?
                 <div>loading</div> : (
-                  <EditableTable
+                  <TableTheme
                     title='직업관리'
                     columns={columns[0]}
                     data={data[0]} />
@@ -86,7 +85,6 @@ function ClassSetting() {
 
       {/* <!-- Scroll to Top Button--> */}
       <ScrollToTop />
-      <LogoutModal/>
     </>
 
   )

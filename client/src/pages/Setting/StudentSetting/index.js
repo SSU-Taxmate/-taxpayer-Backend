@@ -6,7 +6,6 @@ import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 
 import DetailTable from '../../../components/Table/Detail'
-import LogoutModal from '../../../components/Modal/Logout';
 
 function StudentSetting() {
 
@@ -52,7 +51,6 @@ function StudentSetting() {
 
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
-        <LogoutModal/>
         
         </>
     

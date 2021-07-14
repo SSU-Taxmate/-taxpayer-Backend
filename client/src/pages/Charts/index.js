@@ -4,7 +4,6 @@ import Sidebar from '../../components/Navigation/Sidebar';
 import Topbar from '../../components/Navigation/Topbar';
 import PageHeading from '../../components/PageHeading';
 import ScrollToTop from '../../components/Scroll'
-import LogoutModal from '../../components/Modal/Logout'
 
 import ChartBar from '../../components/Charts/Bar'
 class Charts extends Component {
@@ -41,7 +40,6 @@ class Charts extends Component {
                 </div>
                 {/* <!-- Scroll to Top Button--> */}
                 <ScrollToTop />
-                <LogoutModal />
             </div>
 
         )

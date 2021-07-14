@@ -1,12 +1,17 @@
-import React  ,{Component}                          from "react";
-import {Editor, EditorState, RichUtils, convertToRaw} from "draft-js";
+import React  ,{Component} from "react";
+import {Editor, EditorState, RichUtils, convertToRaw, convertFromRaw} from "draft-js";
 import './richstyle.css'
 export default class Draft extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
-
+    //console.log(props.editorState)
+    if (props.editorState){
+      const content=convertFromRaw(JSON.parse(props.editorState))
+      this.state={editorState:EditorState.createWithContent(content)}
+    }else{
+      this.state = {editorState: EditorState.createEmpty()};
+    }
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({editorState});
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
@@ -16,7 +21,7 @@ export default class Draft extends Component {
   }
   _onTab(e) {
     const maxDepth = 4;
-    console.log( this.state.editorState)
+    //console.log( this.state.editorState)
     this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
   }
   _handleKeyCommand(command) {
@@ -61,7 +66,7 @@ export default class Draft extends Component {
     }
 
     return (
-      <div className="RichEditor-root">
+      <div className="RichEditor-root rounded" >
         <BlockStyleControls
           editorState={editorState}
           onToggle={this.toggleBlockType}
@@ -78,7 +83,7 @@ export default class Draft extends Component {
             customStyleMap={styleMap}
             onTab={this.onTab}
             handleKeyCommand={this.handleKeyCommand}
-            placeholder="Tell a story..."
+            placeholder="내용을 입력해주세요"
             ref="editor"
             spellCheck={true}
           />

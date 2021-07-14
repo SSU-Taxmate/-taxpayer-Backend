@@ -5,7 +5,6 @@ import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
 import NationStatsDetail from './NationStatsDetail'
 import ScrollToTop from '../../../../components/Scroll';
-import LogoutModal from '../../../../components/Modal/Logout'
 function NationStats() {
   return (
     <div>
@@ -53,7 +52,6 @@ function NationStats() {
 
       {/* <!-- Scroll to Top Button--> */}
       <ScrollToTop />
-      <LogoutModal/>
     </div>
 
   )

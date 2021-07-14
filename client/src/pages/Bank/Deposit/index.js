@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import EditableTable from '../../../components/Table/Editable';
+import TableTheme from '../../../components/Table/TableTheme';
 import Sidebar from '../../../components/Navigation/Sidebar'
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
-import PageHeading from '../../../components/PageHeading';
-import LogoutModal from '../../../components/Modal/Logout'
 import ScrollToTop from '../../../components/Scroll';
 
 class Deposit extends Component {
@@ -58,7 +56,7 @@ class Deposit extends Component {
 
             </div>
 
-            <EditableTable
+            <TableTheme
             title="예금상품"
                 />
 
@@ -83,7 +81,6 @@ class Deposit extends Component {
 
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
-        <LogoutModal/>
 
         </div>
 
