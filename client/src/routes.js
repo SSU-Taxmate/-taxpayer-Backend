@@ -12,8 +12,12 @@ import Cards from "./pages/Cards";
 import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
+
 /*신용등급*/
 import Credit from  "./pages/Credit"
+
+/*은행 */
+import Bank from "./pages/Bank/CurrentBank";
 
 /* 마켓 */
 import Market from "./pages/Market"
@@ -57,6 +61,7 @@ const Routes = () => (
 
             {/*은행*/}
             <Route path="/classes/:classId/bank/deposit" component={Deposit} />
+            <Route path="/classes/:classId/bank" component={Bank} />
 
             {/* 증권 거래소 */}
             <Route path="/classes/:classId/stock" component={TradeStock} />

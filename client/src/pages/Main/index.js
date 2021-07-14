@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import MainHeader from '../../components/Navigation/MainHeader';
 import Footer from '../../components/Footer';
-import Account from '../../components/BankComponents/Account';
+import Account from '../Bank/BankComponents/Account';
 
 class Main extends Component{
     componentWillMount(){

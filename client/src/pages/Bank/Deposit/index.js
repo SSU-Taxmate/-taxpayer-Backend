@@ -6,6 +6,7 @@ import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import LogoutModal from '../../../components/Modal/Logout'
 import ScrollToTop from '../../../components/Scroll';
+import DepositCloseModal from '../../../components/Modal/DepositCloseModal/depositCloseModal';
 
 class Deposit extends Component {
 
@@ -41,7 +42,7 @@ class Deposit extends Component {
 
              <div className="row py-4">    
              <div className="col-md-3"></div>           
-            <div className="account-card shadow justify-content-center col-md-6">
+            <div className="account-card shadow justify-content-center col-md-6 bg-white">
             <div className="text-sm"> 1등급 똑똑저축 상품 <span className="tooltip"><i class="fas fa-info-circle" ></i></span> </div>
             <span class="tooltip-text">이율 10% 뭐시기 뭐시기의 1등급만을 위한 최상위 상품</span>
 
@@ -51,8 +52,8 @@ class Deposit extends Component {
 
    <hr/>
 
-<div className="text-sm text-center">해지하기</div></div>
-
+   <DepositCloseModal id='depositCloseModal'> <div> 해지하기</div>
+                            </DepositCloseModal>
 <div className="col-md-3"></div>           
 
 
@@ -85,7 +86,7 @@ class Deposit extends Component {
         <ScrollToTop/>
         <LogoutModal/>
 
-        </div>
+        </div></div>
 
 
 
