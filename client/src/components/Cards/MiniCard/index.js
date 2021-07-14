@@ -18,7 +18,7 @@ class MiniCard extends Component {
                 <div className="card shadow mb-4">
                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 className="m-0 font-weight-bold text-primary">
-                            <a href="/classes/:classId">{this.state.title} </a>
+                            <a href="/classes/:classId/market/marketproduct">{this.state.title} </a>
                         </h6>
                         {/*<!--꿈나무반 card 시작-->*/}
                         <div className="dropdown no-arrow">

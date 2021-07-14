@@ -7,7 +7,6 @@ import Footer from '../../components/Footer'
 import PageHeading from '../../components/PageHeading';
 import ClassMainDetail from './ClassMainDetail';
 import ScrollToTop from '../../components/Scroll';
-import LogoutModal from '../../components/Modal/Logout'
 class ClassMain extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
@@ -63,7 +62,6 @@ class ClassMain extends Component {
         {/* <!-- Scroll to Top Button--> */}
           {/* <!-- Scroll to Top Button--> */}
           <ScrollToTop/>
-        <LogoutModal/>
         </div>
     )
   }

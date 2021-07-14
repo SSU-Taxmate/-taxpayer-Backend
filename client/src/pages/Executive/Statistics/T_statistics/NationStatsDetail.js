@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
-import DefaultTable from '../../../../components/Table/Default';
-import EditableTable from '../../../../components/Table/Editable'
+import TableTheme from '../../../../components/Table/TableTheme'
 import axios from 'axios';
+import MaterialTable from 'material-table';
 
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -50,20 +50,22 @@ const NationStatsDetail = () => {
     return (
         <div className="col">
             <div className="card shadow mb-4">
-                {isLoading ?
+                {err&&isLoading ?
                     <div>loading</div> : (
-                        <EditableTable
-                            title="제출여부"
-                            columns={columns[0]}
-                            data={data[0]}
-                            options={{
-                                sorting: true, filtering: true, exportButton: true,
-                                grouping: true,
-                                headerStyle: {
-                                     whiteSpace: 'nowrap'
-                                  }
-                            }}
-                        />
+                        <TableTheme>
+                            <MaterialTable
+                                title="제출여부"
+                                columns={columns[0]}
+                                data={data[0]}
+                                options={{
+                                    sorting: true, filtering: true, exportButton: true,
+                                    grouping: true,
+                                    headerStyle: {
+                                        whiteSpace: 'nowrap'
+                                    }
+                                }}
+                            />
+                        </TableTheme>
                     )}
             </div>
             <CardBasic title='상황'>

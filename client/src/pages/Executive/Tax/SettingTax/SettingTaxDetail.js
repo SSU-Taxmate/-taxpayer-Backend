@@ -1,236 +1,130 @@
-import React,{useEffect, useState} from 'react'
-import CardDropdown from '../../../../components/Cards/Dropdown';
+import React, { useEffect, useState } from 'react'
+import CardBasic from '../../../../components/Cards/Basic';
 import Popover from '../../../../components/Popover';
-
+import axios from 'axios'
+import InputTax from './sections/InputTax';
 function SettingTaxDetail() {
- /* const [data,setData]=useState(true);
+  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState({})
+  const [err, setIsError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+
+      try {
+        const result = await axios.get('/api/classes/:classId/taxes/set-up');
+        console.log(result.data)
+
+        setData(result.data['setTax']);
+      } catch (error) {
+        setIsError(true);
+
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const onChange = (e) => {
+    console.log(e.target.id, e.target.value)
+    //    setData({ ...data, [e.target.id]: Number(e.target.value) });
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].typename === e.target.id) {
+         data[i].value=Number(e.target.value)
+      }
+    }
+  }
+  const handleSetupTax = (e) => {
+    e.preventDefault();
+   // console.log('handleSetupTax', data)
+/*동일한 ObjectId가 나와서 고민임 */
+    axios.post('/api/classes/:classId/taxes/set-up', data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const findvalue = (v) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].typename === v) {
+        return data[i].value;
+      }
+    }
+  }
   
-  useEffect(()=>{
-  })*/
-    return (
-        <CardDropdown title='이번달 내가 내야할 세금'>
-                  {/*<!--직접세  시작-->*/}
-                  <p className="h5 mb-3">직접세
-                    <Popover id='직접세설명' icon='info-circle'>직접세 설명을 적어봅시다</Popover>
-                  </p>
-                  <form className="ml-1">
-                    <div className="form-row">
-                      <div className="form-group col-md-4">
-                        <label htmlFor="incometaxrate">소득의</label>
+  return (
+    <>
+      {isLoading ?
+        <div>loading</div> :
+        <CardBasic title='세금 설정 현황'>
+          <form className="ml-1" onSubmit={handleSetupTax}>
 
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="incometaxrate"
-                            placeholder="소득세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent10"
-                              >%</span
-                            >
-                          </div>
-                        </div>
-                      </div>
+            {/*<!--직접세  시작-->*/}
+            <p className="h5 mb-3">직접세
+              <Popover id='직접세설명' icon='info-circle'>직접세 설명을 적어봅시다</Popover>
+            </p>
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <InputTax id='income' title='소득세 : 소득의' value={findvalue('income')} unit='%' onChange={onChange} />
+              </div>
+              <div className="form-group col-md-4">
+                <InputTax id='realestate' title='부동산세 : 부동산의' value={findvalue('realestate')} unit='%' onChange={onChange} />
+              </div>
+              <div className="form-group col-md-4">
+                <InputTax id='seat' title='자리세 : 자리의' value={findvalue('seat')} unit='%'  onChange={onChange}/>
+              </div>
+            </div>
+            {/*<!--직접세  끝-->*/}
 
-                      <div className="form-group col-md-4">
-                        <label htmlFor="realestatetaxrate">부동산의</label>
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="realestatetaxrate"
-                            placeholder="부동산세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent11"
-                              >%</span
-                            >
-                          </div>
-                        </div>
-                      </div>
+            {/*<!--   간접세  시작     -->*/}
+            <div className="row mb-3">
+              <div className="col">
+                <p className="h5">
+                  간접세
+                  <Popover id='간접세설명' icon='info-circle'>간접세 설명을 적어봅시다</Popover>
+                </p>
+              </div>
+    
+            </div>
 
-                      <div className="form-group col-md-4">
-                        <label htmlFor="seattaxrate">자리의</label>
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="seattaxrate"
-                            placeholder="자리세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent12"
-                              >%</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                  {/*<!--직접세  끝-->*/}
-
-                  {/*<!--   간접세  시작     -->*/}
-                  <div className="row mb-3">
-                    <div className="col">
-                      <p className="h5">
-                        간접세
-                        <Popover id='간접세설명' icon='info-circle'>간접세 설명을 적어봅시다</Popover>
-                      </p>
-                    </div>
-                    <div
-                      className="btn-group btn-group-toggle mr-2"
-                      data-toggle="buttons"
-                    >
-                    
-                      <label className="btn btn-sm btn-outline-primary active">
-                        <input
-                          type="radio"
-                          name="options"
-                          id="use"
-                          autoComplete="off"
-                          defaultChecked
-                        />
-                        사용
-                      </label>
-                      <label className="btn btn-sm btn-outline-primary">
-                        <input
-                          type="radio"
-                          name="options"
-                          id="notuse"
-                          autoComplete="off"
-                        />
-                        미사용
-                      </label>
-                    </div>
+              <div className="ml-1" >
+                <div className="form-row">
+                  <div className="form-group col-lg-3">
+                    <InputTax id='electric' title='전기세 : 전기요금의' value={findvalue('electric')} unit='%' onChange={onChange} />
                   </div>
-
-                  <div id='useornotarea'>
-                  <form className="ml-1" >
-                    <div className="form-row">
-                      <div className="form-group col-lg-3">
-                        <label htmlFor="electrictaxrate">전기요금의</label>
-
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="electrictaxrate"
-                            placeholder="전기세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent">%</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group col-lg-3">
-                        <label htmlFor="stamptaxrate">부동산거래회당</label>
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="stamptaxrate"
-                            placeholder="인지세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent2"
-                              >미소</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group col-lg-3">
-                        <label htmlFor="vatrate">물품구입금액의</label>
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="vatrate"
-                            placeholder="부가가치세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent3"
-                              >%</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group col-lg-3">
-                        <label htmlFor="transactiontax">증권판매금액의</label>
-                        <div className="input-group mb-3">
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="transactiontax"
-                            placeholder="증권거래세"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text" id="percent4"
-                              >%</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                  {/*<!--   간접세  끝     -->*/}
-
-                  {/*<!--   벌금  시작     -->*/}
-                  <p className="h5 mb-3">
-                    벌금
-                    <Popover id='벌금정보' icon='info-circle'>벌금 탭에서 자세한 내용 확인하세요</Popover>
-                  </p>
-                  <div className="form-row col-lg-4" >
-                    <div className="input-group mb-3">
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="electrictaxrate"
-                        placeholder="벌금"
-                        min="0"
-                        max="100"
-                        step="5"
-                        readOnly={true}
-                      />
-                      <div className="input-group-append">
-                        <span className="input-group-text" id="basic-addon2"
-                          >미소</span
-                        >
-                      </div>
-                    </div>
+                  <div className="form-group col-lg-3">
+                    <InputTax id='stamp' title='인지세 : 부동산거래회당' value={findvalue('stamp')} unit='미소' onChange={onChange} />
                   </div>
-                  {/*<!--   벌금  끝     -->*/}
-
+                  <div className="form-group col-lg-3">
+                    <InputTax id='vat' title='부가가치세 : 물품구입금액의' value={findvalue('vat')} unit='%'  onChange={onChange}/>
+                  </div>
+                  <div className="form-group col-lg-3">
+                    <InputTax id='stock' title='증권거래세 : 증권판매금액의' value={findvalue('stock')} unit='%'  onChange={onChange}/>
+                  </div>
                 </div>
-         
+              </div>
 
-        </CardDropdown>
 
-    )
+            {/*<!--   간접세  끝     -->*/}
+
+            {/*<!--   벌금  시작     -->*/}
+            <p className="h5 mb-3">
+              벌금
+              <Popover id='벌금정보' icon='info-circle'>벌금 탭에서 자세한 내용 확인하세요</Popover>
+            </p>
+
+            {/*<!--   벌금  끝     -->*/}
+
+            <button type="submit" style={{ float: 'right' }} className='btn btn-md btn-outline-primary' value="Submit" >저장</button>
+          </form>
+        </CardBasic>
+      }
+    </>
+  )
 }
 
 export default SettingTaxDetail

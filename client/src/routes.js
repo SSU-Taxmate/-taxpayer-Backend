@@ -8,7 +8,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ClassMain from "./pages/ClassMain";
 import NotFound from "./pages/NotFound";
-import Cards from "./pages/Cards";
 import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList"
 import Dashboard from "./pages/Dashboard";
@@ -20,7 +19,10 @@ import Credit from  "./pages/Credit"
 import Bank from "./pages/Bank/CurrentBank";
 
 /* 마켓 */
+
+import MarketProduct from "./pages/Market/Market_add"
 import Market from "./pages/Market"
+import EstateSetting from "./pages/Market/real_estate_setting"
 
 /*클래스 설정 */
 import StudentSetting from './pages/Setting/StudentSetting'
@@ -35,7 +37,7 @@ import SettingTax from "./pages/Executive/Tax/SettingTax"
 import MyTax from "./pages/Executive/Tax/MyTax"
 /*통계청 */
 import NationStats from './pages/Executive/Statistics/T_statistics'
-import SettingHw from './pages/Executive/Statistics/Setting'
+import SettingHw from './pages/Executive/Statistics/SetUp'
 
 import MyStats from './pages/Executive/Statistics/S_statistics'
 
@@ -43,6 +45,7 @@ import MyStats from './pages/Executive/Statistics/S_statistics'
 import Penalty from './pages/Judicature/Penalty'
 import Deposit from "./pages/Bank/Deposit";
 import Law from "./pages/Legislature/Law";
+import Entactment from "./pages/Legislature/Enactment";
 import Auth from "../src/hoc/auth";
 
 const Routes = () => (
@@ -50,52 +53,54 @@ const Routes = () => (
         <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <Route exact path="/signup" component={SignUp} />
             <Route exact path="/classes" component={ClassList} />
             <Route exact path="/classes/:classId" component={ClassMain} />
             {/* 클래스 설정 */}
-            <Route path="/classes/:classId/student-setting" component={StudentSetting}/>
-            <Route path="/classes/:classId/class-setting" component={ClassSetting}/>
+            <Route exact path="/classes/:classId/set-up/student" component={StudentSetting}/>
+            <Route exact path="/classes/:classId/set-up/class" component={ClassSetting}/>
 
             {/* ***************  경제  ************** */}
 
             {/*은행*/}
-            <Route path="/classes/:classId/bank/deposit" component={Deposit} />
-            <Route path="/classes/:classId/bank" component={Bank} />
+            <Route exact path="/classes/:classId/bank" component={Bank} />
+            <Route exact path="/classes/:classId/bank/deposit" component={Deposit} />
 
             {/* 증권 거래소 */}
-            <Route path="/classes/:classId/stock" component={TradeStock} />
-            <Route path="/classes/:classId/stock-setting" component={SettingStock} />
+            <Route exact path="/classes/:classId/stock" component={TradeStock} />
+            <Route exact path="/classes/:classId/set-up/stock" component={SettingStock} />
             {/* ***************  행정부  ************** */}
             {/* 국세청 */}
-            <Route path="/classes/:classId/tax-nation" component={NationalTax} />
-            <Route path="/classes/:classId/tax-setting" component={SettingTax} />
-
-            <Route path="/classes/:classId/tax-my" component={MyTax} />
-            <Route path="/classes/:classId/law" component={Law} />
+            <Route exact path="/classes/:classId/national-tax" component={NationalTax} />
+            <Route exact path="/classes/:classId/set-up/tax" component={SettingTax} />
+            {/*법*/}
+            <Route exact path="/classes/:classId/tax-invoice" component={MyTax} />
+            <Route exact path="/classes/:classId/law" component={Law} />
+            <Route exact path="/classes/:classId/set-up/law" component={Entactment} />
 
             {/* 통계청 */}
 
-            <Route path="/classes/:classId/stats/nation" component={NationStats} />
-            <Route path="/classes/:classId/stats/nation-setting" component={SettingHw} />
+            <Route exact path="/classes/:classId/national-stats" component={NationStats} />
+            <Route exact path="/classes/:classId/set-up/stats" component={SettingHw} />
 
-            <Route path="/classes/:classId/stats/my" component={MyStats} />
+            <Route exact path="/classes/:classId/personal-stats" component={MyStats} />
 
             {/* ***************  사법부  ************** */}
             {/* 벌금 */}
-            <Route path="/classes/:classId/penalty" component={Penalty} />
+            <Route exact path="/classes/:classId/penalty" component={Penalty} />
 
 
             {/*신용등급 */}
-            <Route path="/classes/:classId/credit" component={Credit} />
+            <Route exact path="/classes/:classId/credit" component={Credit} />
 
             {/* 시장 */}
-            <Route path="/classes/:classId/market" component={Market} />
-   
+
+            <Route exact path="/classes/:classId/market" component={Market} />
+            <Route exact path="/classes/:classId/market/marketproduct" component={MarketProduct} />
+            <Route exact path="/classes/:classId/real_estate_setting" component={EstateSetting} />
 
 
             {/* 그 외 */}
-            <Route path="/cards" component={Cards} />
             <Route path="/charts" component={Charts} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/charts" component={Charts} />

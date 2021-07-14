@@ -137,11 +137,11 @@ function SignIn(props) {
                                 Login
                               </button>
                               <hr />
-                              <a href="/Classes" className="btn btn-google btn-user btn-block">
-                                <i className="fab fa-google fa-fw"></i> Login with Google
+                              <a href="/classes" className="btn btn-google btn-user btn-block">
+                                <i className="fab fa-google fa-fw"></i> Google으로 로그인
                               </a>
-                              <a href="/Classes" className="btn btn-facebook btn-user btn-block">
-                                <i className="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                              <a href="/classes" className="btn btn-facebook btn-user btn-block">
+                                <i className="fab fa-facebook-f fa-fw"></i> Facebook으로 로그인
                               </a>
                             </form>
 

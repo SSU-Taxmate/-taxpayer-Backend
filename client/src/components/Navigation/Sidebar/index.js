@@ -56,8 +56,11 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_class_setting" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <a className="collapse-item" href="/classes/:classId/student-setting">학생관리</a>
-              <Link className="collapse-item" to="/classes/:classId/class-setting">학급관리</Link>
+              <a className="collapse-item" href="/classes/:classId/set-up/student">학생관리</a>
+              <Link className="collapse-item" to="/classes/:classId/set-up/class">학급관리</Link>
+              <h6 className="collapse-header">학생</h6>
+              <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산/직업</Link>
+            
             </div>
           </div>
         </li>
@@ -74,9 +77,9 @@ class Sidebar extends Component {
             <div className="bg-white py-2 collapse-inner rounded">
               <h6 className="collapse-header">중앙은행</h6>
               <Link className="collapse-item" to="/bank_statics">통계</Link>
-              <Link className="collapse-item" to="/bank_setting">설정</Link>
+              <Link className="collapse-item" to="/set-up/bank">설정</Link>
               <h6 className="collapse-header">신용등급</h6>
-              <Link className="collapse-item" to="/classes/:classId/Credit">신용등급</Link>
+              <Link className="collapse-item" to="/classes/:classId/credit">신용등급</Link>
             </div>
           </div>
         
@@ -90,7 +93,7 @@ class Sidebar extends Component {
             <div className="bg-white py-2 collapse-inner rounded">
               <h6 className="collapse-header">증권거래소</h6>
               <Link className="collapse-item" to="/classes/:classId/stock">호가창</Link>
-              <Link className="collapse-item" to="/classes/:classId/stock-setting">설정</Link>
+              <Link className="collapse-item" to="/classes/:classId/set-up/stock">설정</Link>
             </div>
           </div>
         </li>
@@ -102,8 +105,8 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_market" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/real_estate_setting">부동산</Link>
-              <Link className="collapse-item" to="/classes/:classId/Market">매점</Link>
+              <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산</Link>
+              <Link className="collapse-item" to="/classes/:classId/market">매점</Link>
             </div>
           </div>
         </li>
@@ -124,11 +127,11 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_revenue" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/classes/:classId/tax-nation">나라 통계</Link>
+              <Link className="collapse-item" to="/classes/:classId/national-tax">나라 통계</Link>
               <h6 className="collapse-header">학생</h6>
-              <Link className="collapse-item" to="/classes/:classId/tax-my">나의 세금</Link>
+              <Link className="collapse-item" to="/classes/:classId/tax-invoice">나의 세금</Link>
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/classes/:classId/tax-setting">세금 설정</Link>
+              <Link className="collapse-item" to="/classes/:classId/set-up/tax">세금 설정</Link>
 
             </div>
           </div>
@@ -144,11 +147,11 @@ class Sidebar extends Component {
             <div className="bg-white py-2 collapse-inner rounded">
 
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/classes/:classId/stats/nation">나라 통계</Link>
-              <a className="collapse-item" href="/classes/:classId/stats/nation-setting">숙제 관리</a>
+              <Link className="collapse-item" to="/classes/:classId/national-stats">나라 통계</Link>
+              <a className="collapse-item" href="/classes/:classId/set-up/stats">숙제 관리</a>
 
               <h6 className="collapse-header">학생</h6>
-              <Link className="collapse-item" to="/classes/:classId/stats/my">나의 통계</Link>
+              <Link className="collapse-item" to="/classes/:classId/personal-stats">나의 통계</Link>
             </div>
           </div>
         </li>

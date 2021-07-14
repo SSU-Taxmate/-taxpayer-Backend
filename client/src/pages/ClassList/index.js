@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../components/Navigation/Sidebar';
 import Topbar from '../../components/Navigation/Topbar';
 import ScrollToTop from '../../components/Scroll'
 import PageHeading from '../../components/PageHeading';
-import LogoutModal from '../../components/Modal/Logout'
 import ClassListDetail from './ClassListDetail'
 class ClassList extends Component {
   componentWillMount() {
@@ -64,7 +62,6 @@ class ClassList extends Component {
 
         {/* <!-- Scroll to Top Button--> */}
         <ScrollToTop/>
-        <LogoutModal/>
 
         </div>
     )

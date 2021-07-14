@@ -1,6 +1,6 @@
 import React, { Component,useEffect, useState } from "react";
 import CardBasic from "../../../components/Cards/Basic"
-import EditableTable from "../../../components/Table/Editable"
+import TableTheme from "../../../components/Table/TableTheme"
 import axios from 'axios';
 
 
@@ -121,7 +121,7 @@ function PenaltyDetail() {
 
         {isLoading ?
                     <div>loading</div> : (
-                        <EditableTable
+                        <TableTheme
                             title="제출여부"
                             columns={columns[0]}
                             data={data[0]}
