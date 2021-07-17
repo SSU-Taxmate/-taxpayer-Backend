@@ -6,7 +6,9 @@ const lawSchema = mongoose.Schema({
         default:Date.now
     },
     title:{
-        type:String
+        type:String,
+        unique : true ,
+        trim : true 
     },
     content:{
         type:String

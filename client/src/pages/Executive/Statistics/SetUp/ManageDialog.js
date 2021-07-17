@@ -18,13 +18,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleDialog(props) {
+export default function ManageDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue, open } = props;
   const [unSubmitStd, setunSubmitStd] = useState(['홍길동', '김철수'])
 
   const handleClose = () => {
-    onClose(selectedValue);
+    onClose();
   };
 
   const handleListItemClick = (value, type) => {
@@ -87,9 +87,9 @@ export default function SimpleDialog(props) {
   );
 }
 
-SimpleDialog.propTypes = {
+ManageDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
+  selectedValue: PropTypes.object.isRequired,
 };
 

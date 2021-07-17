@@ -4,7 +4,7 @@ const router = express.Router();
 //create
 router.post('/', (req, res) => {
   const laws=new Law(req.body);
-  //console.log(chomework)
+  console.log(laws)
   laws.save((err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({

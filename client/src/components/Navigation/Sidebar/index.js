@@ -174,8 +174,8 @@ class Sidebar extends Component {
           <div id="collapseLaws" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
 
-              <Link className="collapse-item" to="/classes/:classId/law">법</Link>
               <h6 className="collapse-header">선생님</h6>
+              <Link className="collapse-item" to="/classes/:classId/law">법</Link>
               <Link className="collapse-item" to="/classes/:classId/set-up/law">법 관리</Link>
             </div>
           </div>

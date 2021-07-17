@@ -6,7 +6,7 @@ import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 import CardBasic from '../../../components/Cards/Basic'
 import TradeSection from './sections/TradeSection'
-import SingleLineStockList from './sections/SingleLineStockList'
+import StockList from './sections/StockList'
 import SingleLineMyInvest from './sections/SingleLineMyInvest'
 export default class TradeStock extends Component {
   render() {
@@ -38,7 +38,7 @@ export default class TradeStock extends Component {
 
                 {/* <!-- Content Row --> */}
                 <h4 className='pt-2'>오늘의 주식</h4>
-                <SingleLineStockList data={[{ title: 'A엔터', stockId: 'id1', currentValue: 100 }, { title: 'B엔터', stockId: 'id2', 'currentValue': 1550 }, { title: 'C IT', stockId: 'id3', 'currentValue': 100 }, { title: 'kospi', stockId: 'id4', 'currentValue': 1550 }, { title: 'gold', stockId: '300', 'currentValue': 150 }, { title: 'gold', stockId: '300', 'currentValue': 150 }, { title: 'kosdaq', stockId: '100', 'currentValue': 100 }, { title: 'kospi', stockId: '200', 'currentValue': 1550 }, { title: 'gold', stockId: '300', '현재가': 150 }]} />
+                <StockList data={[{ title: 'A엔터', stockId: 'id1', currentValue: 100 }, { title: 'B엔터', stockId: 'id2', 'currentValue': 1550 }, { title: 'C IT', stockId: 'id3', 'currentValue': 100 }, { title: 'kospi', stockId: 'id4', 'currentValue': 1550 }, { title: 'gold', stockId: 'id5', 'currentValue': 150 }, { title: 'gold', stockId: 'id6', 'currentValue': 150 }, { title: 'kosdaq', stockId: 'ud7', 'currentValue': 100 }, { title: 'kospi', stockId: 'id8', 'currentValue': 1550 }, { title: 'gold', stockId: 'id9', '현재가': 150 }]} />
                 <h4 className='pt-2'>오늘의 주식 브리핑</h4>
                 <div className='row'>
                   <div className="col-6">
