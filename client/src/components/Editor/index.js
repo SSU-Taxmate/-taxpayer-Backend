@@ -11,7 +11,7 @@ export default class Draft extends Component {
       this.state={editorState:EditorState.createWithContent(content)}
       this.onChange = (editorState) => {
         this.setState({editorState}); 
-          props.onChange(props.content.title,JSON.stringify(convertToRaw(editorState.getCurrentContent())));   
+      props.onChange(JSON.stringify(convertToRaw(editorState.getCurrentContent())));   
     };
     }else{//create
       this.state = {editorState: EditorState.createEmpty()};

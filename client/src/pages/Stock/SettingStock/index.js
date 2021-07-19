@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
-
+import axios from 'axios'
 import TransferList from './sections/TransferList'
 export default function SettingStock() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [stockName, setstockName] = useState('')
+  const [stockDescription, setstockDescription] = useState('')
+  const [stockInit, setstockInit] = useState(0)
+  const handleStockName = (e) => {
+    //e.preventDefault()
+    setstockName(e.target.value)
+  }
+  const handleStockDetail = (e) => {
+    setstockDescription(e.target.value)
+  }
+  const handleStockInit = (e) => {
+    setstockInit(Number(e.target.value))
+  }
+  const handleSubmit = (e) => {
+    const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
+    axios.post('/api/classes/:classId/stocks', 
+      { stockName: stockName, 
+        description:stockDescription,
+        prices: [{ updateDate: now, value: stockInit }] })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <div>
       {/* <!-- Page Wrapper --> */}
@@ -47,23 +68,23 @@ export default function SettingStock() {
                 </div>
                 <div className="col-sm-6">
                   <h5>직접 추가</h5>
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div className="form-group row">
                       <label htmlFor="inputstockname" className="col-sm-2 col-form-label">주식명</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control" id="inputstockname" placeholder="주식명" />
+                        <input type="text" className="form-control" id="inputstockname" placeholder="주식명" onChange={handleStockName} />
                       </div>
                     </div>
                     <div className="form-group row">
                       <label htmlFor="inputstockinfo" className="col-sm-2 col-form-label">주식설명</label>
                       <div className="col-sm-10">
-                        <textarea className="form-control" id="inputstockinfo" placeholder="주식설명" rows="3"/>
+                        <textarea className="form-control" id="inputstockinfo" placeholder="주식설명" onChange={handleStockDetail} rows="3" />
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label htmlFor="inputstockname" className="col-sm-2 col-form-label">초기값</label>
+                      <label htmlFor="inputstockinit" className="col-sm-2 col-form-label">초기값</label>
                       <div className="col-sm-10">
-                        <input type="number" className="form-control" id="inputstockname" placeholder="초기값" />
+                        <input type="number" className="form-control" id="inputstockinit" placeholder="초기값" onChange={handleStockInit} />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -87,7 +108,7 @@ export default function SettingStock() {
                   <div className="form-group row">
                     <label htmlFor="inputnews" className="col-sm-2 col-form-label">한 줄 뉴스</label>
                     <div className="col-sm-10">
-                      <textarea  className="form-control" id="inputnews" rows='3' placeholder="뉴스" />
+                      <textarea className="form-control" id="inputnews" rows='3' placeholder="뉴스" />
                     </div>
                   </div>
                   <div className="form-group row float-right pr-2">

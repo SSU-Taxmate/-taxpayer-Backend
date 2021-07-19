@@ -1,24 +1,11 @@
 import React, { useState } from 'react';
-import { IconButton, Icon } from '@material-ui/core';
 import DetailStockDialog from './DetailStockDialog';
 
 const iconSet = [{ icon: "caret-up", color: 'red' }, { icon: "caret-down", color: 'blue' }]
 export default function StockList(props) {
 
   const [data] = useState(props.data)
-  const [open, setOpen] = useState(false);
-  const [selectedValue, setselectedValue] = useState();
 
-  const handleClose = (item) => {
-    setOpen(false);
-    setselectedValue()
-    //console.log(item)
-  };
-  const handleListItemClick =(item)=>{
-    //console.log(item)
-    setOpen(true);
-    setselectedValue(item)
-  }
   return (
     <div >
       <div className='row flex-row flex-nowrap overflow-auto'>
@@ -46,8 +33,7 @@ export default function StockList(props) {
 
                   </div>
                   <div className='col'>
-                    <IconButton onClick={() => handleListItemClick(item) } style={{ float: 'right' }}> <Icon color="primary"> chevron_right </Icon></IconButton>
-
+                    <DetailStockDialog selectedValue={item}  />
                   </div>
                 
                 </div>
@@ -55,9 +41,7 @@ export default function StockList(props) {
             </div>
           </div>
 
-        ))}  {selectedValue&&
-                  <DetailStockDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-                  }
+        ))}  
       </div>
       
     </div>

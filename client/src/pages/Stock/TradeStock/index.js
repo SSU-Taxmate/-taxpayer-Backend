@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { useEffect,useState } from 'react'
+import axios from 'axios'
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
@@ -8,8 +9,20 @@ import CardBasic from '../../../components/Cards/Basic'
 import TradeSection from './sections/TradeSection'
 import StockList from './sections/StockList'
 import SingleLineMyInvest from './sections/SingleLineMyInvest'
-export default class TradeStock extends Component {
-  render() {
+export default function TradeStock () {
+  useEffect(() => {
+    
+    axios.get('/api/classes/:classId/stocks')
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    return () => {
+      
+    }
+  }, [])
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
@@ -97,5 +110,4 @@ export default class TradeStock extends Component {
       </div>
 
     )
-  }
 }

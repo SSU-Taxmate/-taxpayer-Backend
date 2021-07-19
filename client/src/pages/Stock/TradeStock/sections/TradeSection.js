@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ChartLine from '../../../../components/Charts/Line'
+import TradeDialog from './TradeDialog';
 export default function TradeSection() {
     const testdata =
     {
@@ -81,9 +82,8 @@ export default function TradeSection() {
                 </div>
 
                 <div className='row-sm-* mt-2'>
-                    <button className="btn btn-outline-danger btn-sm float-right m-2 col-*">매수</button>
-                    <button className="btn btn-outline-primary btn-sm float-right m-2 col-*">매도</button>
-
+                    <TradeDialog title='매수' data='100미소' color='danger'/>
+                    <TradeDialog title='매도' data='100미소' color='primary'/>
                 </div>
             </div>
 
