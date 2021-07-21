@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
@@ -10,6 +10,33 @@ export default function SettingStock() {
   const [stockName, setstockName] = useState('')
   const [stockDescription, setstockDescription] = useState('')
   const [stockInit, setstockInit] = useState(0)
+
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const [stocks, setstocks] = useState()
+  const [selectedValue, setSelectedValue] = useState()
+
+  const handleAddrTypeChange = (e) => {
+    setSelectedValue(e.target.value)
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        const result = await axios.get('/api/classes/:classId/stocks');
+        setstocks(result.data)
+
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+
+    };
+    fetchData();
+    return () => {
+    }
+  }, [])
   const handleStockName = (e) => {
     //e.preventDefault()
     setstockName(e.target.value)
@@ -22,10 +49,12 @@ export default function SettingStock() {
   }
   const handleSubmit = (e) => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
-    axios.post('/api/classes/:classId/stocks', 
-      { stockName: stockName, 
-        description:stockDescription,
-        prices: [{ updateDate: now, value: stockInit }] })
+    axios.post('/api/classes/:classId/stocks',
+      {
+        stockName: stockName,
+        description: stockDescription,
+        prices: [{ updateDate: now, value: stockInit }]
+      })
       .then(function (response) {
         console.log(response);
       })
@@ -99,23 +128,36 @@ export default function SettingStock() {
                       </div>
                     </div>
                   </form>
+                  <div>값 입력</div>
+
+                  <h5 className='border-top pt-3'>오늘의 뉴스 입력</h5>
+                  <div className='col'>
+                    <form>
+                      {stocks ?
+                        < select
+                          className="form-control"
+                          onChange={e => handleAddrTypeChange(e)}>
+                          {
+                            stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)
+                          }
+                        </select >
+                        : <select className="form-control"></select>
+                      }
+                      <input type="number" className="form-control" id="dailyvalue" placeholder="오늘의 주가"
+                        onChange={handleStockName} />
+                      <label htmlFor="inputnews" className="col-sm-2 col-form-label">한 줄 뉴스</label>
+                      <div className="col-sm-10">
+                        <textarea className="form-control" id="inputnews" rows='3' placeholder="뉴스" />
+                      </div>
+                      <div className="form-group row float-right pr-2">
+                        <button type="submit" className="btn btn-primary">입력</button>
+                      </div>
+                    </form>
+                  </div>
+
                 </div>
               </div>
 
-              <h5 className='border-top pt-3'>오늘의 뉴스 입력</h5>
-              <div className='col'>
-                <form>
-                  <div className="form-group row">
-                    <label htmlFor="inputnews" className="col-sm-2 col-form-label">한 줄 뉴스</label>
-                    <div className="col-sm-10">
-                      <textarea className="form-control" id="inputnews" rows='3' placeholder="뉴스" />
-                    </div>
-                  </div>
-                  <div className="form-group row float-right pr-2">
-                    <button type="submit" className="btn btn-primary">입력</button>
-                  </div>
-                </form>
-              </div>
 
             </div>
             {/* <!-- /.container-fluid --> */}

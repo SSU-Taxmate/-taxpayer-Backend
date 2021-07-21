@@ -31,7 +31,6 @@ function EditLawDialog(props) {
     };
     const getDate=(date)=>{
         let localtime=moment(date).tz('Asia/Seoul').format()
-        let res=''+localtime.split('T')[0]
         return localtime
       }
     
@@ -80,3 +79,4 @@ function EditLawDialog(props) {
 }
 
 export default EditLawDialog
+

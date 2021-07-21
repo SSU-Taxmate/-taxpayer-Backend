@@ -6,12 +6,18 @@ const taxPriceSchema=mongoose.Schema({
     },
     value:{
         type:Number,
+        default: 10000
+    },
+    hint:{
+        type:String,
+        default:''
     }
 })
 const stockSchema = mongoose.Schema({
     stockName:{
         type:String,
         unique:true,
+        required:true,
     },
     description:{
         type:String,
