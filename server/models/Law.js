@@ -3,7 +3,7 @@ const mongoose =require('mongoose')
 const lawSchema = mongoose.Schema({
     issuedate:{
         type:Date,
-        default:Date.now
+        default: Date.now
     },
     title:{
         type:String,

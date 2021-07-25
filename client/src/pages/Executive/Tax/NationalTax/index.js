@@ -9,9 +9,6 @@ import NationalTaxDetail from './NationalTaxDetail'
 import ScrollToTop from '../../../../components/Scroll';
 
 class NationalTax extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
 
   render() {
     return (

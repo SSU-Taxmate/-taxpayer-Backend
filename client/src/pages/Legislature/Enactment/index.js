@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import Draft from '../../../components/Editor'
 import 'draft-js/dist/Draft.css';
 //Navigation
@@ -9,6 +9,13 @@ import ScrollToTop from '../../../components/Scroll';
 import Footer from '../../../components/Footer'
 
 function Entactment() {
+    const [title, settitle] = useState()
+    const [content, setcontent] = useState()
+
+    const onChange = (content) => {
+        setcontent(content)
+    };
+
     return (
         <div>
             {/* <!-- Page Wrapper --> */}
@@ -44,7 +51,7 @@ function Entactment() {
                                 <div className="form-inline">
 
                                     <label className="mr-2 my-1" htmlFor="lawcontent">내용</label>
-                                    <Draft id='lawcontent' />
+                                    <Draft onChange={onChange} />
                                 </div>
                                 <button className='btn btn-md btn-outline-primary float-right'>등록</button>
                             </form>

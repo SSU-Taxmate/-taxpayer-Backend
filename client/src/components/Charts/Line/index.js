@@ -4,15 +4,13 @@ import Chart from "chart.js";
 Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-export default function ChartLine(props) {
+ function ChartLine(props) {
     // var linechart;
     const chartRef = React.createRef();
-
+    console.log('charline',props)
     useEffect(() => {
         const myChartRef = chartRef.current.getContext("2d");
-
         var linechart;
-
         linechart = new Chart(myChartRef, {
             type: 'line',
             data: props.data,
@@ -98,4 +96,4 @@ export default function ChartLine(props) {
     )
 
 }
-
+export default React.memo(ChartLine)

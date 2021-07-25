@@ -1,32 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* auth 기능 */
 import React, { useEffect } from 'react';
 import { auth } from '../../src/redux/_actions/index';
 import { useSelector, useDispatch } from "react-redux";
 
 export default function (SpecificComponent, option, adminRoute = null) {
+    //option - null(아무나 출입이 가능) true(로그인한 user만 출입 가능) false(로그인한 user는 출입 불가능)
+    //adminRoute - admin user만 들어가기 원하는 페이지 
+
     function AuthenticationCheck(props) {
 
         let user = useSelector(state => state.user);
         const dispatch = useDispatch();
 
         useEffect(() => {
-            //현재 상태를 알기 위해 Auth Request를 보낸다.
             dispatch(auth()).then(response => {
-                //Login한 상태가 아니라면
+                console.log('client/src/hoc/auth.js',response)
                 if (!response.payload.isAuth) {
                     if (option) {
                         props.history.push('/')
                     }
-                    //Login한 상태라면
                 } else {
-                    //Admin 권한이 없는 사람이 Admin Page에 들어가고자 한다면
                     if (adminRoute && !response.payload.isAdmin) {
-                        props.history.push('/')
+                        props.history.push('/classes')
                     }
-                    // 로그인 페이지에 가고 싶다면
                     else {
                         if (option === false) {
-                            props.history.push('/Classes')
+                            props.history.push('/classes')
                         }
                     }
                 }

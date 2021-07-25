@@ -140,6 +140,7 @@ const Routes = () => (
       <Route path="*" component={NotFound} />
     </Switch>
   </BrowserRouter>
+   
 );
 
 export default Routes;
