@@ -3,7 +3,6 @@ import Sidebar from '../../../components/Navigation/Sidebar'
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
-import LogoutModal from '../../../components/Modal/Logout'
 import ScrollToTop from '../../../components/Scroll';
 import PenaltyDetail from './PenaltyDetail';
 
@@ -55,7 +54,6 @@ function Penalty() {
 
                 {/* <!-- Scroll to Top Button--> */}
                 <ScrollToTop/>
-                <LogoutModal/>
 
                 </div>
 

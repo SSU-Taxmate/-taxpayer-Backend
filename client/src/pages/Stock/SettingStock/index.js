@@ -4,7 +4,6 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
-import LogoutModal from '../../../components/Modal/Logout';
 
 import TransferList from './sections/TransferList'
 export default function SettingStock() {
@@ -115,7 +114,6 @@ export default function SettingStock() {
 
       {/* <!-- Scroll to Top Button--> */}
       <ScrollToTop />
-      <LogoutModal />
     </div>
 
   )

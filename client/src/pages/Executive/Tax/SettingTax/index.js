@@ -5,7 +5,6 @@ import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
-import LogoutModal from '../../../../components/Modal/Logout'
 import ScrollToTop from '../../../../components/Scroll';
 
 import SettingTaxDetail from './SettingTaxDetail'
@@ -66,7 +65,6 @@ class SettingTax extends Component {
           <i className="fas fa-angle-up"></i>
         </a>
         <ScrollToTop/>
-        <LogoutModal/>
         </div>
         
     )

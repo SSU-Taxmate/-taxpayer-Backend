@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import MainHeader from '../../components/Navigation/MainHeader';
 import Footer from '../../components/Footer';
-import Account from '../Bank/BankComponents/Account';
 
 class Main extends Component{
     componentWillMount(){
@@ -57,7 +56,7 @@ return(
 				<div class="row justify-content-center">
 					<div class="col-md-7 text-gray-900">
 
-                        <Account></Account>
+
                         </div>
 						
 					<div class="col-md-5 text-gray-900">

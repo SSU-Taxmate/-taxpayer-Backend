@@ -22,8 +22,14 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users',require('./routes/users'));
-app.use('/api/stock',require('./routes/stock'));
-
+/*주식 */
+app.use('/api/classes/:classId/stocks',require('./routes/stock'));
+/*통계청 */
+app.use('/api/classes/:classId/homeworks',require('./routes/homework'))
+/* 국세청 */
+app.use('/api/classes/:classId/taxes',require('./routes/tax'))
+/* 법 */
+app.use('/api/classes/:classId/laws',require('./routes/law'))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/api/hello', (req, res) => {
