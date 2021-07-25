@@ -5,11 +5,8 @@ import Topbar from "../../components/Navigation/Topbar";
 import ScrollToTop from "../../components/Scroll";
 import PageHeading from "../../components/PageHeading";
 import ClassListDetail from "./ClassListDetail";
-
+import Footer from '../../components/Footer'
 class ClassList extends Component {
-  componentWillMount() {
-    document.getElementById("body").className = "page-top";
-  }
 
   render() {
     return (
@@ -41,13 +38,7 @@ class ClassList extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <footer className="sticky-footer bg-white">
-              <div className="container my-auto">
-                <div className="copyright text-center my-auto">
-                  <span>Copyright &copy; Your Website 2019</span>
-                </div>
-              </div>
-            </footer>
+            <Footer/>
             {/* <!-- End of Footer --> */}
           </div>
           {/* <!-- End of Content Wrapper --> */}

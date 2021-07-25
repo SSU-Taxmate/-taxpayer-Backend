@@ -1,5 +1,5 @@
 const mongoose =require('mongoose')
-const taxPriceSchema=mongoose.Schema({
+const stockPriceSchema=mongoose.Schema({
     updateDate:{
         type:Date,
         unique:true,
@@ -22,7 +22,7 @@ const stockSchema = mongoose.Schema({
     description:{
         type:String,
     },
-    prices:[taxPriceSchema]
+    prices:[stockPriceSchema]
       
 })
 

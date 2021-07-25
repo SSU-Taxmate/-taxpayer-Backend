@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 //             User
 //=================================
 
-router.get("/auth", auth, (req, res) => {
+router.get("/auth", auth, (req, res) => { /*auth라는 미들웨어 추가 */
     res.status(200).json({
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false : true,
@@ -39,11 +39,11 @@ router.post("/login", (req, res) => {
                 loginSuccess: false,
                 message: "Auth failed, email not found"
             });
-
+        // 비밀번호 비교
         user.comparePassword(req.body.password, (err, isMatch) => {
             if (!isMatch)
                 return res.json({ loginSuccess: false, message: "Wrong password" });
-
+            // Token 생성
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);
                 res.cookie("w_authExp", user.tokenExp);
@@ -59,7 +59,7 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/logout", auth, (req, res) => {
-   //undefined로 에러나는 중 console.log(req.user._id)
+    //undefined로 에러나는 중 console.log(req.user._id)
     User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).send({

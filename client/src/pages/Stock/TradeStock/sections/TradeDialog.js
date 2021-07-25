@@ -11,9 +11,9 @@ function TradeDialog(props) {
         setOpen(false);
     };
     const handleTradeComplete = () => {
-        console.log('trade complete')
+        console.log('trade complete',data.price)
     }
-    console.log(data)
+    console.log('trade dialog',title,quantity,data)
     return (
         <div>
             <button className={`btn btn-outline-${color} btn-sm float-right m-2 col-*`} onClick={handleClickOpen}>
@@ -22,22 +22,22 @@ function TradeDialog(props) {
             {data &&
                 <Dialog aria-labelledby="customized-dialog-title" open={open}>
                     <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        '삼성전자-종목 이름{ }' {title}
+                        '삼성전자-종목 이름' {title}
                     </DialogTitle>
                     <DialogContent >
                         <form onSubmit={handleTradeComplete}>
                             <div >
                                 <div className="input-group">
-                                    <input type="number" readOnly className="form-control" id="currentValue" placeholder="현재가" value={'data.price'} />
+                                    <input type="number" readOnly className="form-control" id="currentValue" placeholder="현재가" value={data.price} />
                                     <div className="input-group-append"><span className="input-group-text outline-none">X</span></div>
-                                    <input type="number" readOnly className="form-control" id="tradeShare" placeholder="'판매/구입' 할" value={'data.quantity'} />
+                                    <input type="number" readOnly className="form-control" id="tradeShare" placeholder="'판매/구입' 할" value={quantity} />
                                     <div className="input-group-append"><span className="input-group-text">주</span></div>
                                 </div>
                             </div>
                             <div >
                                 <div className="input-group">
                                     <div className="input-group-prepend"><span className="input-group-text">=</span></div>
-                                    <input type="number" readOnly className="form-control" id="tradeAmount" placeholder="총 금액" value={'data.amount'} />
+                                    <input type="number" readOnly className="form-control" id="tradeAmount" placeholder="총 금액" value={data.price*quantity} />
                                 </div>
                             </div>
                         </form>
@@ -57,4 +57,4 @@ function TradeDialog(props) {
     )
 }
 
-export default TradeDialog
+export default React.memo(TradeDialog)

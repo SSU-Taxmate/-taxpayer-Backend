@@ -51,12 +51,12 @@ import Auth from "../src/hoc/auth";
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={Main} />
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/classes" component={ClassList} />
+            <Route exact path="/" component={Auth(Main,null)} />
+            <Route exact path="/signin" component={Auth(SignIn,false)} />
+            <Route exact path="/signup" component={Auth(SignUp,false)} />
+            <Route exact path="/classes" component={Auth(ClassList,true)} />
             <Route exact path="/classes/:classId" component={ClassMain} />
-            {/* 클래스 설정 */}
+            {/* 클래스 설정 - 선생님만이 들어갈 수 있음 */}
             <Route exact path="/classes/:classId/set-up/student" component={StudentSetting}/>
             <Route exact path="/classes/:classId/set-up/class" component={ClassSetting}/>
 
@@ -69,6 +69,7 @@ const Routes = () => (
             {/* 증권 거래소 */}
             <Route exact path="/classes/:classId/stock" component={TradeStock} />
             <Route exact path="/classes/:classId/set-up/stock" component={SettingStock} />
+
             {/* ***************  행정부  ************** */}
             {/* 국세청 */}
             <Route exact path="/classes/:classId/national-tax" component={NationalTax} />

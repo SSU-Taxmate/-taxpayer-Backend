@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import DetailStockDialog from './DetailStockDialog';
 
 const iconSet = [{ icon: "caret-up", color: 'red' }, { icon: "caret-down", color: 'blue' }]
-export default function StockList(props) {
-
-  const [data] = useState(props.data)
-  console.log(data)
+function StockList(props) {
+  console.log('stockList',props.data)
+  const {data}=props;
   return (
     <div >
       <div className='row flex-row flex-nowrap overflow-auto'>
@@ -48,3 +47,4 @@ export default function StockList(props) {
     
   );
 }
+export default React.memo(StockList)
