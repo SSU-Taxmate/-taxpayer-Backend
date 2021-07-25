@@ -34,6 +34,7 @@ function FormDialog(props) {
   };
 
   const handleSubmit = (e) => {
+    //데이터 저장
     //e.preventDefault();
     // axios.post('/api/classes/:classId/laws',{"title":lawtitle,"content":lawcontent,"issuedate":issuedate})
     // .then(function (response) {
