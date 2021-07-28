@@ -13,7 +13,6 @@ function TradeDialog(props) {
     const handleTradeComplete = () => {
         console.log('trade complete',data.price)
     }
-    console.log('trade dialog',title,quantity,data)
     return (
         <div>
             <button className={`btn btn-outline-${color} btn-sm float-right m-2 col-*`} onClick={handleClickOpen}>

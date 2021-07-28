@@ -7,7 +7,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
  function ChartLine(props) {
     // var linechart;
     const chartRef = React.createRef();
-    console.log('charline',props)
+    
     useEffect(() => {
         const myChartRef = chartRef.current.getContext("2d");
         var linechart;
@@ -86,13 +86,15 @@ Chart.defaults.global.defaultFontColor = '#858796';
         }
     })
     return (
+        <>
+        {console.log('charline',props)}
         <div className="chart-area">
             <div className='h6'>{props.title}</div>
             <div className='chart-pie'>
                 <canvas id={`${props.id}`} ref={chartRef}></canvas>
             </div>
         </div>
-
+        </>
     )
 
 }

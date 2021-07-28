@@ -6,13 +6,12 @@ function TradeSection(props) {
     const [selectedValue, setSelectedValue] = useState()
     const [quantity, setquantity] = useState(0)
 
-    const handleAddrTypeChange = (e) => {
+    const hadleStockChange = (e) => {
         e.preventDefault()
         if (e.target.value === 'default') {
             setSelectedValue()
         } else {
             setSelectedValue(stocks[stocks.findIndex(i => i._id == e.target.value)])
-            //console.log('handleAddrTypeChange', stocks[stocks.findIndex(i => i._id == e.target.value)])
         }
         // setData(testdata[stock[e.target.value]])
     }//(setStock[e.target.value])
@@ -40,14 +39,13 @@ function TradeSection(props) {
         e.preventDefault()
         setquantity(e.target.value)
     }
-    console.log('tradesection', stocks)
 
     return (
         <div className='row'>
+            {console.log('tradesection')}
             <div className="col-sm-6 m-2">
 
                 {selectedValue &&
-
                     <ChartLine id='stock' title={selectedValue.stockName} data={adjustData(selectedValue.prices)} />
                 }
             </div>
@@ -55,7 +53,7 @@ function TradeSection(props) {
                 {stocks ?
                     < select
                         className="form-control"
-                        onChange={e => handleAddrTypeChange(e)}>
+                        onChange={e => hadleStockChange(e)}>
                         <option key='default' value='default'>선택해주세요</option>
                         {
                             stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)

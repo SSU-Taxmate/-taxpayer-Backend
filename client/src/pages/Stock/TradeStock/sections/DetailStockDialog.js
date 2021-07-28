@@ -20,7 +20,7 @@ export default function DetailStockDialog(props) {
     };
     const handleAddrTypeChange = (e) => {
         setSelected(e.target.value)
-        console.log(selectedHint)
+        //console.log(selectedHint)
     }
     return (
         <>
