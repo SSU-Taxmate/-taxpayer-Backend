@@ -22,6 +22,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users',require('./routes/users'));
+app.use('/api/classes',require('./routes/class'));
+
 /*주식 */
 app.use('/api/classes/:classId/stocks',require('./routes/stock'));
 /*통계청 */

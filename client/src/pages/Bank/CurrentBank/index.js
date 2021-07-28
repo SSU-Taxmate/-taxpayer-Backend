@@ -5,7 +5,6 @@ import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import LogoutModal from '../../../components/Modal/Logout'
 import ScrollToTop from '../../../components/Scroll';
-import Modal from 'react-modal';
 
 
 const customStyles = {
@@ -165,80 +164,7 @@ function Bank() {
                                             <i class="fas fa-plus"></i>
 
                                         </div>
-                                        <Modal
-                                            isOpen={modalIsOpen}
-                                            onAfterOpen={afterOpenModal}
-                                            onRequestClose={closeModal}
-                                            style={customStyles}
-                                            contentLabel="Example Modal">
-
-                                            <button onClick={closeModal}>close</button>
-
-
-                                            <ul className="nav nav-tabs" id="deposit_tabs" role="tablist">
-                                                <li className="nav-item">
-                                                    <a className="nav-link active " id="deposit_list_tab" data-toggle="tab" href="#deposit_list" role="tab"
-                                                        aria-controls="deposit_list" aria-selected="true">예금상품</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="nav-link" id="input_money_tab" data-toggle="tab" href="#input_money" role="tab"
-                                                        aria-controls="input_money" aria-selected="false">금액입력</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="nav-link" id="deposit_complete_tab" data-toggle="tab" href="#deposit_complete" role="tab"
-                                                        aria-controls="deposit_complete" aria-selected="false">예금 확인</a>
-                                                </li>
-
-
-                                            </ul>
-
-                                            <div className="tab-content" id="depositTabContent">
-                                                <div className="tab-pane fade show active" id="deposit_list" role="tabpanel" aria-labelledby="deposit_list_tab">
-                                                    예금 테이블</div>
-                                                <a href="#input_money" data-toggle="tab"
-                                                    className="btn btn-primary btn-icon-split btn-lg font-weight-bold">
-                                                    <span className="text">다음</span>
-                                                </a>
-
-                                                <div className="tab-pane fade show active" id="input_money" role="tabpanel" aria-labelledby="input_money_tab">
-
-                                                    <h5> 1등급을 위한 똑똑 예금</h5>
-
-
-                                                    <div className="mb-4"></div>
-
-                                                    <div className="input-group input-group-newsletter col-lg-12 py-3">
-                                                        <input className="form-control nav-item dropdown nav-link" type="text"
-                                                            placeholder="100,000" aria-describedby="submit-button"></input>
-                                                    </div>
-                                                    <a href="#deposit_complete"
-                                                        className="btn btn-primary btn-icon-split btn-lg font-weight-bold">
-                                                        <span className="text">다음</span>
-                                                    </a>
-
-                                                </div>
-
-                                                <div className="tab-pane fade show active" id="deposit_complete" role="tabpanel" aria-labelledby="deposit_complete_tab">
-
-
-                                                    <div className="text-sm"> 1등급 똑똑저축 상품</div>
-
-                                                    <div className="text-center py-4" > 예금현황: $ 100,000 </div>
-                                                    <div className="text-center py-4" > 만기시: $ 101,000 </div>
-
-                                                    <div className="text-center py-3" > <h5>2021. 03. 21 ~ 2021. 05. 21</h5></div>
-
-                                                    <a href="#" onClick={closeModal}
-                                                        className="btn btn-primary btn-icon-split btn-lg font-weight-bold">
-                                                        <span className="text">완료</span>
-                                                    </a>
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </Modal>
+                            
 
                                         <div>
 

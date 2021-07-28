@@ -5,9 +5,10 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
-
+import MaterialTable from 'material-table';
 import TableTheme from '../../../components/Table/TableTheme'
 import axios from 'axios'
+import { editLocal } from '../../../components/Table/SetUp';
 function ClassSetting() {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -61,10 +62,45 @@ function ClassSetting() {
               {/* <!-- Content Row --> */}
               {isLoading ?
                 <div>loading</div> : (
-                  <TableTheme
-                    title='직업관리'
-                    columns={columns[0]}
-                    data={data[0]} />
+                  <TableTheme>
+                    <MaterialTable
+                      title='직업관리'
+                      columns={columns[0]}
+                      data={data[0]}
+                      actions={[
+                        {
+                          icon: 'checklist',
+                          tooltip: 'Save User',
+                        }]}
+                      options={{
+                        sorting: true, exportButton: true,
+                        grouping: true,
+                      }}
+                      //editable
+                      editable={{
+                        onRowAdd: newData =>
+                          new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                              resolve();
+                            }, 1000)
+                          }),
+                        onRowUpdate: (newData, oldData) =>
+                          new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                              resolve();
+                            }, 1000)
+                          }),
+                        onRowDelete: oldData =>
+                          new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                             
+                              resolve();
+                            }, 1000)
+                          }),
+                      }}
+                      localization={editLocal}
+                    ></MaterialTable>
+                  </TableTheme>
                 )}
 
             </div>

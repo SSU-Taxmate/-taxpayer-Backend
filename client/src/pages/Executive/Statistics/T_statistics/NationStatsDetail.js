@@ -9,7 +9,7 @@ const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [columns, setColumns] = useState([])
     const [data, setData] = useState([])
-    const [err, setIsError] = useState(false);
+    const [isError, setIsError] = useState(false);
     const hw_pie_data = {
         labels: [
             '제출완료',
@@ -50,7 +50,9 @@ const NationStatsDetail = () => {
     return (
         <div className="col">
             <div className="card shadow mb-4">
-                {err&&isLoading ?
+            {isError && <div>Something went wrong ...</div>}
+
+                {isLoading ?
                     <div>loading</div> : (
                         <TableTheme>
                             <MaterialTable

@@ -1,15 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClassCard from "./ClassCard";
-import Draft from "../../components/Editor";
-// form dialog (react metrial ui)
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import axios from "axios";
+
+function ClassListDetail() {
+  const [classes, setclasses] = useState([]);
+  const [updateTime, setupdateTime] = useState("****-**-**");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        /*const data={
+          classno:10,
+          name:'별님반',
+          image:"https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp",
+          comment:'별님반에는 별들이 많아요!!!',
+          year:"2020.03.08",
+          teacher:'60c42f3195c0fa4a2418e979'
+        }*/
+        const result = await axios.get("/api/classes");
+        //console.log(result.data.classes)
+        setclasses(result.data.classes);
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+  return (
+    <div className="row">
+      {/*<!--className 추가-->*/}
+      <div className="col-lg-3">
+        <div className="card mb-4">
+          <div className="card-body">{FormDialog()}</div>
+        </div>
+      </div>
+
+      {/* 데이터 만큼 */}
+      {isError && <div>Something went wrong ...</div>}
+      {isLoading ? 
+        <div>로딩중</div>
+    
+        : classes.map((info, u) => (
+          <ClassCard
+            title={info.name}
+            img={info.image}
+            comment={info.comment}
+          ></ClassCard>
+        )
+        )}
+
+    </div>
+  );
+}
+
+export default ClassListDetail;
 //수정
 function FormDialog(props) {
   const [classtitle, setclasstitle] = useState("");
@@ -34,6 +90,7 @@ function FormDialog(props) {
   };
 
   const handleSubmit = (e) => {
+    //데이터 저장
     //e.preventDefault();
     // axios.post('/api/classes/:classId/laws',{"title":lawtitle,"content":lawcontent,"issuedate":issuedate})
     // .then(function (response) {
@@ -95,25 +152,3 @@ function FormDialog(props) {
     </div>
   );
 }
-
-function ClassListDetail() {
-  return (
-    <div className="row">
-      {/*<!--className 추가-->*/}
-      <div className="col-lg-3">
-        <div className="card mb-4">
-          <div className="card-body">{FormDialog()}</div>
-        </div>
-      </div>
-
-      {/* 데이터 만큼 */}
-      <ClassCard
-        title="햇빛반"
-        img="https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp"
-        comment="햇빛반은 6-3반!"
-      ></ClassCard>
-    </div>
-  );
-}
-
-export default ClassListDetail;

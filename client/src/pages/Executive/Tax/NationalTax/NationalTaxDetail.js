@@ -10,7 +10,7 @@ const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
   const [data, setData] = useState([])
-  const [err, setIsError] = useState(false);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
@@ -205,7 +205,7 @@ const NationalTaxDetail = () => {
 
       {/*<!--국채 발행 내역 시작-->*/}
       <CardCollapse title='국채 발행 내역' area_id='nationaldebt'>
-
+        {isError && <div>something went wrong</div>}
         {isLoading ?
           <div>loading</div> : (
             <DefaultTable
@@ -223,19 +223,20 @@ const NationalTaxDetail = () => {
 
       {/*<!--세입 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
+      {isError && <div>something went wrong</div>}
         {isLoading ?
           <div>loading</div> : (
             <TableTheme>
-            <MaterialTable
+              <MaterialTable
                 title="세입 항목별 세부 내역"
                 columns={columns[1]}
                 data={data[1]}
                 options={{
                   sorting: true, filtering: true
                 }}
-            />
-          </TableTheme>
-            )}
+              />
+            </TableTheme>
+          )}
 
       </CardCollapse>
       {/*<!--세입 항목별 세부 내역 끝-->*/}

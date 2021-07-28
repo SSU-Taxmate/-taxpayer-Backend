@@ -9,7 +9,7 @@ function PenaltyDetail() {
     const [isLoading, setIsLoading] = useState(false)
     const [columns, setColumns] = useState([])
     const [data, setData] = useState([])
-    const [err, setIsError] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -118,7 +118,7 @@ function PenaltyDetail() {
 <div className="tab-pane fade" id="penal_list" role="tabpanel" aria-labelledby="penal_list_tab">
 
     <CardBasic >
-
+    {isError && <div>something went wrong</div>}
         {isLoading ?
                     <div>loading</div> : (
                         <TableTheme

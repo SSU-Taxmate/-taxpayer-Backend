@@ -23,8 +23,10 @@ const SetTax = mongoose.model('SetTax', setTaxSchema)
 const taxSchema = mongoose.Schema({
     /*TaxType_id:{
         type: mongoose.Schema.Types.ObjectId, 
-        ref: TaxType
-    },*/
+        ref: 'TaxType'
+
+
+   },*/
     date:{
         type:Date,
         default:Date.now
