@@ -64,7 +64,10 @@ const Routes = () => (
 
             {/*은행*/}
             <Route exact path="/classes/:classId/bank" component={Bank} />
+<<<<<<< HEAD
 
+=======
+>>>>>>> df4b5df0c2618f91f8472968ed9c41c5f7637eb6
             <Route exact path="/classes/:classId/bank/deposit" component={Deposit} />
 
             {/* 증권 거래소 */}

@@ -21,10 +21,18 @@
     "node-sass": "^4.12.0",
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
+<<<<<<< HEAD
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-modal": "^3.14.3",
     "react-number-format": "^4.6.4",
+=======
+
+    "react-modal": "^3.14.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+
+>>>>>>> df4b5df0c2618f91f8472968ed9c41c5f7637eb6
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
     "redux-promise": "^0.6.0",
