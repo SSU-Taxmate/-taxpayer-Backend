@@ -34,16 +34,23 @@ function CreditDetail() {
 
   return (
     <div>
-      <CardCollapse title="신용등급 기준표" area_id="신용등급 기준표">
+      <CardCollapse title={"신용등급 기준표"} area_id={"credit"} key={"credit"}>
         <CreditTable></CreditTable>
       </CardCollapse>
 
       <CardBasic title="신용등급 상황">
         <div className="row">
-          <div className="col">
+          <div className="col col-sm-6">
             <CreditStudentTable></CreditStudentTable>
           </div>
-          <div className="col">
+          <div
+            className="col col-sm-5"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: " space-around",
+            }}
+          >
             <ChartPie
               title="신용등급 현황"
               id="신용등급 현황"
