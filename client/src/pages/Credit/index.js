@@ -8,7 +8,6 @@ import PageHeading from "../../components/PageHeading";
 
 import ScrollToTop from "../../components/Scroll";
 import CreditDetail from "./CreditDetail";
-
 class Credit extends Component {
   componentWillMount() {
     document.getElementById("body").className = "page-top";

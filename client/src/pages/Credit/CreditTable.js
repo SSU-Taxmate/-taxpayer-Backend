@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import "../../styles/css/credit.css";
 
 function CreditTable() {
   return (
     <div className="table-responsive">
       <table className="table">
         <thead>
-          <tr>
+          <tr className="creditBaseTable">
             <th scope="col">1등급</th>
             <th scope="col">2등급</th>
             <th scope="col">3등급</th>
