@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import Chart from "chart.js";
-var donutChart;
+
 export default function ChartDonut(props) {
     const chartRef = React.createRef();
     useEffect(() => {
         const myChartRef = chartRef.current.getContext("2d");
-        if(typeof donutChart!=='undefined'){
-            donutChart.destroy()
-        }
+        var donutChart;
         donutChart=new Chart(myChartRef, {
             type: 'doughnut',
             data: props.data,
@@ -33,6 +31,7 @@ export default function ChartDonut(props) {
 
 
         return () => {
+            donutChart.destroy()
 
         }
     })

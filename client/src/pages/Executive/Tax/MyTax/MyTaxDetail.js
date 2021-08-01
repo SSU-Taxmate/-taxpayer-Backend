@@ -1,10 +1,10 @@
 import React from 'react'
-import CardDropdown from '../../../../components/Cards/Dropdown'
+import CardBasic from '../../../../components/Cards/Basic'
 import Popover from '../../../../components/Popover'
 import InputTax from '../SettingTax/sections/InputTax'
 function MyTaxDetail() {
     return (
-        <CardDropdown title='이번달 내가 내야할 세금'>
+        <CardBasic title='이번달 내가 내야할 세금'>
         {/*<!--직접세  시작-->*/}
         <p className="h5 mb-3">직접세
           <Popover id='직접세설명' icon='info-circle'>직접세 설명을 적어봅시다</Popover>
@@ -31,16 +31,6 @@ function MyTaxDetail() {
               간접세
               <Popover id='간접세설명' icon='info-circle'>간접세 설명을 적어봅시다</Popover>
             </p>
-          </div>
-          <div className="btn-group btn-group-toggle mr-2" data-toggle="buttons">
-            <label className="btn btn-sm btn-outline-primary active">
-              <input type="radio"name="options"id="use"autoComplete="off" defaultChecked />
-              사용
-            </label>
-            <label className="btn btn-sm btn-outline-primary">
-              <input type="radio"name="options"id="notuse"autoComplete="off"/>
-              미사용
-            </label>
           </div>
         </div>
   
@@ -78,7 +68,7 @@ function MyTaxDetail() {
         </div>
   
   
-      </CardDropdown>
+      </CardBasic>
   
     )
 }

@@ -7,7 +7,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent'
 import ChartLine from '../../../../components/Charts/Line'
 
-export default function DetailStockDialog(props) {
+function DetailStockDialog(props) {
+    //console.log('DetailStockDialog', props)
     const { selectedValue } = props;
     const [open, setOpen] = useState(false);
 
@@ -18,9 +19,29 @@ export default function DetailStockDialog(props) {
     const handleClose = () => {
         setOpen(false);
     };
-    const handleAddrTypeChange = (e) => {
+    const handleDateChange = (e) => {
         setSelected(e.target.value)
         //console.log(selectedHint)
+    }
+    const adjustData = (data) => {
+        return {
+            labels: data.map((n, i) => { return n['updateDate'].split('T')[0] }),
+            datasets: [{
+                label: '주가',
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: data.map((n, i) => { return n['value'] })
+            }]
+        }
     }
     return (
         <>
@@ -29,14 +50,17 @@ export default function DetailStockDialog(props) {
             <Dialog aria-labelledby={`${selectedValue.stockName}dialog-title`} open={open} fullWidth={true} maxWidth='lg'>
                 <DialogTitle id={`${selectedValue.stockName}dialog-title`} >
                     자세히 '{selectedValue.stockName}' 보기
-                    <IconButton className='float-right'color="primary" onClick={handleClose}>
+                    <IconButton className='float-right' color="primary" onClick={handleClose}>
                         <Icon>close</Icon>
                     </IconButton>
                 </DialogTitle>
                 <DialogContent className='mb-4'>
                     <div className='row'>
                         <div className='col-11'>
-                            <ChartLine id="tester" title={`${selectedValue.stockName} 주가 그래프`} />
+                            {selectedValue &&
+                                <ChartLine id={`${selectedValue.stockName} 주가`} title={`${selectedValue.stockName} 주가 그래프`}
+                                    data={adjustData(selectedValue.prices)} />
+                            }
                         </div>
                         <div className='col-1'>
                             <div className='float-right'>
@@ -55,11 +79,10 @@ export default function DetailStockDialog(props) {
                     </div>
 
                     <div className='row'>
-                        <div className='col-4'>
                             <label htmlFor={`${selectedValue.stockName}date`}>날짜</label>
                             < select
                                 id={`${selectedValue.stockName}date`}
-                                onChange={e => handleAddrTypeChange(e)}
+                                onChange={e => handleDateChange(e)}
                                 className="form-control" >
                                 <option key='default' value='default'>선택해주세요</option>
                                 {
@@ -72,10 +95,7 @@ export default function DetailStockDialog(props) {
                                 className="form-control" id={`${selectedValue.stockName}hint`}
                                 style={{ backgroundColor: "transparent" }}>
                             </textarea>
-                        </div>
-                        <div className='col-8'>
-
-                        </div>
+                    
                     </div>
 
                 </DialogContent>
@@ -83,7 +103,7 @@ export default function DetailStockDialog(props) {
         </>
     );
 }
-
+export default DetailStockDialog;
 DetailStockDialog.propTypes = {
     selectedValue: PropTypes.object.isRequired,
 };

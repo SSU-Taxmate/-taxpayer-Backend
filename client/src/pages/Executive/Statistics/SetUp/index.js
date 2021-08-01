@@ -9,6 +9,7 @@ import ScrollToTop from '../../../../components/Scroll';
 import MaterialTable from 'material-table';
 import { editLocal } from '../../../../components/Table/SetUp'
 import ManageDialog from './ManageDialog';
+import Error from '../../../../components/Error';
 const SettingHw = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [homework, sethomework] = useState([])
@@ -68,7 +69,7 @@ const SettingHw = () => {
                             <div className="col">
                                 <div className="card shadow mb-4">
                                     {/*columns은 기본으로 줘야할듯 */}
-                                    {isError && <div>Something went wrong ...</div>}
+                                    {isError && <Error></Error>}
                                     {isLoading ?
                                         <div>loading</div> : (
                                             <>

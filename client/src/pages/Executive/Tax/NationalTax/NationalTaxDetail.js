@@ -6,6 +6,7 @@ import ChartBar from '../../../../components/Charts/Bar'
 import DefaultTable from '../../../../components/Table/Default';
 import TableTheme from '../../../../components/Table/TableTheme';
 import MaterialTable from 'material-table';
+import Error from '../../../../components/Error';
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -223,7 +224,7 @@ const NationalTaxDetail = () => {
 
       {/*<!--세입 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
-      {isError && <div>something went wrong</div>}
+      {isError && <Error></Error>}
         {isLoading ?
           <div>loading</div> : (
             <TableTheme>

@@ -84,7 +84,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
                 linechart.destroy()
             
         }
-    })
+    },)
     return (
         <>
         {console.log('charline',props)}

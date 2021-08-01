@@ -1,14 +1,12 @@
 import React ,{useState}from 'react'
-import Draft from '../../../components/Editor'
-import 'draft-js/dist/Draft.css';
 //Navigation
 import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll';
 import Footer from '../../../components/Footer'
-
-function Entactment() {
+import ProposalDialog from './ProposalDialog'
+function Congress() {
     const [title, settitle] = useState()
     const [content, setcontent] = useState()
 
@@ -40,21 +38,10 @@ function Entactment() {
 
                             {/* <!-- Page Heading --> */}
 
-                            <PageHeading title="법 개정 공지"></PageHeading>
-
+                            <PageHeading title="국회(입법)"></PageHeading>
+                            <h3>제안리스트</h3>
                             {/* <!-- Content Row --> */}
-                            <form>
-                                <div className="form-inline mb-3">
-                                    <label className="mr-2 my-1" htmlFor="lawtitle">제목</label>
-                                    <input type="text" className="form-control" id="lawtitle" />
-                                </div>
-                                <div className="form-inline">
-
-                                    <label className="mr-2 my-1" htmlFor="lawcontent">내용</label>
-                                    <Draft onChange={onChange} />
-                                </div>
-                                <button className='btn btn-md btn-outline-primary float-right'>등록</button>
-                            </form>
+                            <ProposalDialog/>
                         </div>
                         {/* <!-- /.container-fluid --> */}
 
@@ -79,4 +66,4 @@ function Entactment() {
     )
 }
 
-export default Entactment
+export default Congress

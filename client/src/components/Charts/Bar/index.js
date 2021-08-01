@@ -4,14 +4,12 @@ import Chart from "chart.js";
 
 Chart.defaults.global.defaultFontFamily = 'Nunito';
 Chart.defaults.global.defaultFontColor = '#858796';
-var barChart;
+
 export default function ChartBar(props) {
     const chartRef = React.createRef();
     useEffect(() => {
         const myChartRef = chartRef.current.getContext("2d");
-        if (typeof barChart!=='undefined'){
-            barChart.destroy()
-        }
+        var barChart;
         barChart=new Chart(myChartRef, {
             type: 'bar',
             data: props.data,
@@ -81,6 +79,7 @@ export default function ChartBar(props) {
             }
         });
         return () => {
+            barChart.destroy()
         }
     }, )
 

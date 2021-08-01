@@ -4,7 +4,7 @@ import ChartPie from './../../../../components/Charts/Pie'
 import TableTheme from '../../../../components/Table/TableTheme'
 import axios from 'axios';
 import MaterialTable from 'material-table';
-
+import Error from '../../../../components/Error';
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [columns, setColumns] = useState([])
@@ -50,7 +50,7 @@ const NationStatsDetail = () => {
     return (
         <div className="col">
             <div className="card shadow mb-4">
-            {isError && <div>Something went wrong ...</div>}
+            {isError && <Error></Error>}
 
                 {isLoading ?
                     <div>loading</div> : (

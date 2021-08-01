@@ -6,24 +6,6 @@ import { bindActionCreators } from 'redux';
 import { clickMenuOpen } from '../../../redux/_actions';
 
 class Sidebar extends Component {
-  // componentDidMount() {
-  //   document.getElementById('body').className = 'page-top';
-  // }
-  // state = {
-  //   sidebarToggled: false,
-  // }
-
-  // handleSideBarToggle() {
-  //   if (this.sidebarToogled === true) {
-  //     this.setState({ sidebarToggled: !this.state.sidebarToggled });
-  //     document.getElementById('body').className = 'page-top sidebar-toggled';
-  //   } else {
-  //     this.setState({ sidebarToggled: !this.state.sidebarToggled });
-  //     document.getElementById('body').className = 'page-top';
-  //   }
-
-  // }
-
   render() {
     const { clickMenuOpen, toggled } = this.props;
     return (
@@ -93,6 +75,7 @@ class Sidebar extends Component {
             <div className="bg-white py-2 collapse-inner rounded">
               <h6 className="collapse-header">증권거래소</h6>
               <Link className="collapse-item" to="/classes/:classId/stock">호가창</Link>
+              <Link className="collapse-item" to="/classes/:classId/stock-account">내계좌</Link>
               <Link className="collapse-item" to="/classes/:classId/set-up/stock">설정</Link>
             </div>
           </div>
@@ -176,13 +159,12 @@ class Sidebar extends Component {
 
               <h6 className="collapse-header">선생님</h6>
               <Link className="collapse-item" to="/classes/:classId/law">법</Link>
-              <Link className="collapse-item" to="/classes/:classId/set-up/law">법 관리</Link>
             </div>
           </div>
         </li>
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
-          <Link className="nav-link" to="/charts">
+          <Link className="nav-link" to="/classes/:classId/lawmaking">
             <i className="fas fa-vote-yea"></i>
             <span>국회</span></Link>
         </li>

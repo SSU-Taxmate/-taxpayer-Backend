@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
+import Error from "../../components/Error";
 import axios from "axios";
 
 function ClassListDetail() {
@@ -48,7 +48,7 @@ function ClassListDetail() {
       </div>
 
       {/* 데이터 만큼 */}
-      {isError && <div>Something went wrong ...</div>}
+      {isError && <Error></Error>}
       {isLoading ? 
         <div>로딩중</div>
     

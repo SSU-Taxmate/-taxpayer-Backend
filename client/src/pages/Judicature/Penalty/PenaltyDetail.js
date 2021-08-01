@@ -2,7 +2,7 @@ import React, { Component,useEffect, useState } from "react";
 import CardBasic from "../../../components/Cards/Basic"
 import TableTheme from "../../../components/Table/TableTheme"
 import axios from 'axios';
-
+import Error from "../../../components/Error";
 
 function PenaltyDetail() {
 
@@ -118,7 +118,7 @@ function PenaltyDetail() {
 <div className="tab-pane fade" id="penal_list" role="tabpanel" aria-labelledby="penal_list_tab">
 
     <CardBasic >
-    {isError && <div>something went wrong</div>}
+    {isError && <Error></Error>}
         {isLoading ?
                     <div>loading</div> : (
                         <TableTheme

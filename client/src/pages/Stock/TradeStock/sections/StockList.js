@@ -3,7 +3,7 @@ import DetailStockDialog from './DetailStockDialog';
 
 const iconSet = [{ icon: "caret-up", color: 'red' }, { icon: "caret-down", color: 'blue' }]
 function StockList(props) {
-  console.log('stockList',props.data)
+  //console.log('stockList',props.data)
   const {data}=props;
   return (
     <div >

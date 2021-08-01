@@ -3,6 +3,7 @@ import axios from 'axios'
 import CardBasic from '../../../../components/Cards/Basic'
 import DefaultTable from '../../../../components/Table/Default';
 import ChartPie from './../../../../components/Charts/Pie'
+import Error from '../../../../components/Error';
 function MyStatsDetail() {
     const hw_pie_data = {
         labels: [
@@ -45,7 +46,7 @@ function MyStatsDetail() {
     return (
         <div >
             <div className="card shadow mb-4">
-                {isError && <div>Something went wrong ...</div>}
+                {isError && <Error></Error>}
 
                 {isLoading ?
                     <div>loading</div> : (

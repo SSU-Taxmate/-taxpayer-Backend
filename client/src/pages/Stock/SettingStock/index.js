@@ -41,6 +41,9 @@ export default function SettingStock() {
     //e.preventDefault()
     setstockName(e.target.value)
   }
+  const handleStockData=(e)=>{
+
+  }
   const handleStockDetail = (e) => {
     setstockDescription(e.target.value)
   }
@@ -61,6 +64,9 @@ export default function SettingStock() {
       .catch(function (error) {
         console.log(error);
       });
+  }
+  const onhandledailydata=(e)=>{
+    e.preventDefaultValue()
   }
   return (
     <div>
@@ -132,7 +138,7 @@ export default function SettingStock() {
 
                   <h5 className='border-top pt-3'>오늘의 뉴스 입력</h5>
                   <div className='col'>
-                    <form>
+                    <form onSubmit={onhandledailydata}>
                       {stocks ?
                         < select
                           className="form-control"
@@ -144,7 +150,7 @@ export default function SettingStock() {
                         : <select className="form-control"></select>
                       }
                       <input type="number" className="form-control" id="dailyvalue" placeholder="오늘의 주가"
-                        onChange={handleStockName} />
+                        onChange={handleStockData} />
                       <label htmlFor="inputnews" className="col-sm-2 col-form-label">한 줄 뉴스</label>
                       <div className="col-sm-10">
                         <textarea className="form-control" id="inputnews" rows='3' placeholder="뉴스" />

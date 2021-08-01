@@ -24,8 +24,6 @@ const taxSchema = mongoose.Schema({
     /*TaxType_id:{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'TaxType'
-
-
    },*/
     date:{
         type:Date,

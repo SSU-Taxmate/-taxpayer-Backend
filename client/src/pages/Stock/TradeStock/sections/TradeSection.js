@@ -65,8 +65,6 @@ function TradeSection(props) {
                 <div className="h2 mt-2 font-weight-bold text-gray-800">
                     현재가 : {selectedValue ? selectedValue['prices'][selectedValue['prices'].length - 1].value : ''}
                 </div>
-                <div className='h5 float-right'>보유 : 3주</div>
-
                 <div className='row-sm-*'>
                     <div className="input-group">
                         {/*selectedValue에 따라 바뀌면 됨 */}

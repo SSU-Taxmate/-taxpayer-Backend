@@ -39,7 +39,6 @@ app.get('/api/hello', (req, res) => {
 })
 
 app.get('/api/tax/nation', (req, res) => {
-
   res.json({
     "data": [
       [
@@ -145,7 +144,6 @@ app.get('/api/tax/nation', (req, res) => {
           field: 'sum',
         },
       ]
-
     ]
   })
 })
