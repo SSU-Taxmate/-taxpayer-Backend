@@ -16,6 +16,7 @@ import Credit from "./pages/Credit";
 
 /*은행 */
 import Bank from "./pages/Bank/CurrentBank";
+import Deposit from "./pages/Bank/Deposit";
 
 /* 마켓 */
 
@@ -42,7 +43,6 @@ import MyStats from "./pages/Executive/Statistics/S_statistics";
 
 /*법*/
 import Penalty from "./pages/Judicature/Penalty";
-import Deposit from "./pages/Bank/Deposit";
 import Law from "./pages/Legislature/Law";
 import Congress from "./pages/Legislature/Congress";
 import Auth from "../src/hoc/auth";
