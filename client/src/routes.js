@@ -29,7 +29,7 @@ import ClassSetting from "./pages/Setting/ClassSetting";
 /* 증권 거래소 */
 import TradeStock from "./pages/Stock/TradeStock";
 import SettingStock from "./pages/Stock/SettingStock";
-
+import AccountStock from './pages/Stock/AccountStock'
 /*국세청 */
 import NationalTax from "./pages/Executive/Tax/NationalTax";
 import SettingTax from "./pages/Executive/Tax/SettingTax";
@@ -44,7 +44,7 @@ import MyStats from "./pages/Executive/Statistics/S_statistics";
 import Penalty from "./pages/Judicature/Penalty";
 import Deposit from "./pages/Bank/Deposit";
 import Law from "./pages/Legislature/Law";
-import Entactment from "./pages/Legislature/Enactment";
+import Congress from "./pages/Legislature/Congress";
 import Auth from "../src/hoc/auth";
 
 const Routes = () => (
@@ -53,8 +53,8 @@ const Routes = () => (
       <Route exact path="/" component={Auth(Main, null)} />
       <Route exact path="/signin" component={Auth(SignIn, false)} />
       <Route exact path="/signup" component={Auth(SignUp, false)} />
-      <Route exact path="/classes" component={Auth(ClassList, true)} />
-      <Route exact path="/classes/:classId" component={ClassMain} />
+      <Route exact path="/classes" component={Auth(ClassList,true)} />
+      <Route exact path="/classes/:classId" component={Auth(ClassMain,true)} />
       {/* 클래스 설정 - 선생님만이 들어갈 수 있음 */}
       <Route
         exact
@@ -75,24 +75,17 @@ const Routes = () => (
 
       {/* 증권 거래소 */}
       <Route exact path="/classes/:classId/stock" component={TradeStock} />
-      <Route
-        exact
-        path="/classes/:classId/set-up/stock"
-        component={SettingStock}
-      />
-
+      <Route exact path="/classes/:classId/set-up/stock" component={SettingStock} />
+      <Route exact path='/classes/:classId/stock-account' component={AccountStock}/>
       {/* ***************  행정부  ************** */}
       {/* 국세청 */}
-      <Route
-        exact
-        path="/classes/:classId/national-tax"
-        component={NationalTax}
-      />
+      <Route exact path="/classes/:classId/national-tax" component={NationalTax} />
       <Route exact path="/classes/:classId/set-up/tax" component={SettingTax} />
-      {/*법*/}
       <Route exact path="/classes/:classId/tax-invoice" component={MyTax} />
+
+      {/*법*/}
       <Route exact path="/classes/:classId/law" component={Law} />
-      <Route exact path="/classes/:classId/set-up/law" component={Entactment} />
+      <Route exact path="/classes/:classId/lawmaking" component={Congress} />
 
       {/* 통계청 */}
 

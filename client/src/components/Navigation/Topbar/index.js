@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { clickMenuOpen } from '../../../redux/_actions';
 import LogoutModal from '../../Modal/Logout'
 function Topbar(props) {
+  
   const { clickMenuOpen } = props;
 
   const [open, setOpen] = useState(false);
