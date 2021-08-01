@@ -70,40 +70,29 @@ const [modalIsOpen, setIsOpen] = React.useState(false);
 
                         {/* <!-- Page Heading --> */}
 
-                        <div>
-                            
+                        <div className="row">
+                            <div className="col-lg-6 justify-content-center">
                             <Account
                             user="홍길동"
                             balance="10000"/>
     
-            <Deposit 
-            balance="10000"
-            interest="0.1"/>
+                            <Deposit 
+                            balance="10000"
+                            interest="0.1"/>
 
-       <DepositAdd/>
-
-            <div className="row justify-content-center">    
-            <div className="account-card shadow justify-content-center col-md-6 bg-white">
+                            <DepositAdd/>
+                            </div>
+                    
+                    <div className="col-lg-6 justify-content-center py-3">
+                        <div className="account-card shadow justify-content-center bg-white">
                 <div className="text-center">
 
-                <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_bank_statics" aria-controls="collapseTwo">
-                <i class="fas fa-chevron-down"></i>            <span>내정보 보기</span>
-          </a>
 
-
-                <div id="collapse_bank_statics" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div className="bg-white py-2 collapse-inner rounded">
-                <h1>1등급</h1>
-             
-            </div>
-          </div>
-                  
-                </div>
             </div>
             </div> 
 
            
-
+</div>
         </div>
 
                         {/* <!-- Content Row --> */}

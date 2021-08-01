@@ -23,7 +23,7 @@ class Deposit extends React.Component{
             return(
 
             <div className="row justify-content-center">    
-            <div className="account-card shadow justify-content-center col-md-6 bg-white nav-link collapsed"  href="#" data-toggle="collapse" data-target="#collapse_deposit" aria-controls="collapseTwo">
+            <div className="account-card shadow justify-content-center col-md-12 bg-white nav-link collapsed"  href="#" data-toggle="collapse" data-target="#collapse_deposit" aria-controls="collapseTwo">
                 <div className="d-flex justify-content-between">
                     <div className="col-md-4" >예금 계좌</div>
                     <div className="col-md-8" style={{textAlign:'right'}}>$ {this.props.balance} </div>
@@ -37,7 +37,7 @@ class Deposit extends React.Component{
             <div className="text-center py-3" > 지금 해지시: $ {this.props.balance} </div>
 
             <div className="d-flex justify-content-center">
-            <div className="p-2 btn btn-primary"> 이체하기 </div>
+            <div className="p-2 btn btn-primary"> 해지하기 </div>
         </div>
              
             </div>

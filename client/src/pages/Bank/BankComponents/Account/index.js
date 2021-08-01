@@ -18,7 +18,7 @@ class Account extends React.Component{
         <div id="account">
                                     
             <div className="row py-3 justify-content-center">    
-            <div className="account-card shadow justify-content-center col-md-6 bg-white">
+            <div className="account-card shadow justify-content-center col-md-12 bg-white">
 
                 <div className="text-sm">{this.props.user}님의 계좌</div>
                 <div className="text-center py-4" > <h1> $ {this.props.balance} </h1></div>

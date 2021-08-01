@@ -61,7 +61,7 @@ render(){
         required
 
         
-        renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />} />
+        renderInput={(params) => <TextField {...params} label="받는사람 이름" variant="outlined" />} />
 
 
         <TextField className="col-lg-12"
