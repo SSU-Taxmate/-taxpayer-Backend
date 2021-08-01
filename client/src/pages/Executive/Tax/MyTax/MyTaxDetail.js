@@ -32,28 +32,13 @@ function MyTaxDetail() {
               <Popover id='간접세설명' icon='info-circle'>간접세 설명을 적어봅시다</Popover>
             </p>
           </div>
-          <div
-            className="btn-group btn-group-toggle mr-2"
-            data-toggle="buttons"
-          >
-  
+          <div className="btn-group btn-group-toggle mr-2" data-toggle="buttons">
             <label className="btn btn-sm btn-outline-primary active">
-              <input
-                type="radio"
-                name="options"
-                id="use"
-                autoComplete="off"
-                defaultChecked
-              />
+              <input type="radio"name="options"id="use"autoComplete="off" defaultChecked />
               사용
             </label>
             <label className="btn btn-sm btn-outline-primary">
-              <input
-                type="radio"
-                name="options"
-                id="notuse"
-                autoComplete="off"
-              />
+              <input type="radio"name="options"id="notuse"autoComplete="off"/>
               미사용
             </label>
           </div>

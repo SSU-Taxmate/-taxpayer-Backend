@@ -3,7 +3,6 @@ const { User } = require('../models/User');
 let auth = (req, res, next) => {
     //인증 처리를 하는곳 
     //클라이언트 쿠키에서 토큰을 가져온다.
-    
     let token = req.cookies.w_auth;
     //console.log('token: auth:',req.cookies.w_auth)
 

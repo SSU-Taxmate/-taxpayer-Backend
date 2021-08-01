@@ -3,7 +3,7 @@ const mongoose =require('mongoose')
 const couponSchema = mongoose.Schema({
     issuedate:{
         type:Date,
-       // default:Date.now
+        default:Date.now
     },
     use:{
         type:Boolean,

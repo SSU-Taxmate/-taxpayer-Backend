@@ -1,28 +1,47 @@
 import React  ,{Component} from "react";
-import {Editor, EditorState, RichUtils, convertToRaw, convertFromRaw} from "draft-js";
+import {getDefaultKeyBinding,Editor, EditorState, RichUtils, convertToRaw, convertFromRaw} from "draft-js";
 import './richstyle.css'
 export default class Draft extends Component {
 
   constructor(props) {
     super(props);
-    //console.log(props.editorState)
-    if (props.editorState){
-      const content=convertFromRaw(JSON.parse(props.editorState))
+    //edit
+    if (props.type==='edit'){
+      const content=convertFromRaw(JSON.parse(props.content.content))
       this.state={editorState:EditorState.createWithContent(content)}
-    }else{
+      this.onChange = (editorState) => {
+        this.setState({editorState}); 
+      props.onChange(JSON.stringify(convertToRaw(editorState.getCurrentContent())));   
+    };
+    }else{//create
       this.state = {editorState: EditorState.createEmpty()};
+      this.onChange = (editorState) => {
+        this.setState({editorState}); 
+        props.onChange(JSON.stringify(convertToRaw(editorState.getCurrentContent())));   
+    };
     }
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({editorState});
+    
+    
+   
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
-   this.onTab=(e)=>this._onTab(e);
+    this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
   }
-  _onTab(e) {
-    const maxDepth = 4;
-    //console.log( this.state.editorState)
-    this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
+  _mapKeyToEditorCommand(e) {
+    if (e.keyCode === 9 /* TAB */) {
+      const newEditorState = RichUtils.onTab(
+        e,
+        this.state.editorState,
+        4, /* maxDepth */
+      );
+      if (newEditorState !== this.state.editorState) {
+        this.onChange(newEditorState);
+      }
+      return;
+    }
+    return getDefaultKeyBinding(e);
   }
   _handleKeyCommand(command) {
     const {editorState} = this.state;
@@ -51,6 +70,7 @@ export default class Draft extends Component {
       )
     );
   }
+ 
 
   render() {
     const {editorState} = this.state;
@@ -81,7 +101,7 @@ export default class Draft extends Component {
             blockStyleFn={getBlockStyle}
             onChange={this.onChange}
             customStyleMap={styleMap}
-            onTab={this.onTab}
+            keyBindingFn={this.mapKeyToEditorCommand}
             handleKeyCommand={this.handleKeyCommand}
             placeholder="내용을 입력해주세요"
             ref="editor"
@@ -166,6 +186,7 @@ const BlockStyleControls = (props) => {
           style={type.style}
         />
       )}
+ 
     </div>
   );
 };

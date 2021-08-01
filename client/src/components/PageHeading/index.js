@@ -4,7 +4,7 @@ const PageHeading = (props) => (
         <h1 className="h3 mb-0 text-gray-800">
             {props.title}
         </h1>
-        <div className='row'>
+        <div style={{float:'right'}}>
         {props.children}
         </div>
     </div >

@@ -74,7 +74,7 @@ function SignIn(props) {
                                 } else {
                                   localStorage.removeItem('rememberMe');
                                 }
-                                props.history.push("/Classes");
+                                props.history.push("/classes");
                               } else {
                                 setFormErrorMessage('Check out your Account or Password again')
                               }

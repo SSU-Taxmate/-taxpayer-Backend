@@ -26,7 +26,6 @@ export function loginUser(dataToSubmit) {
         .then(response => response.data)
 
     return {
-        //request를 reducer에 넘겨줌.
         type: LOGIN_USER,
         payload: request
 
@@ -39,7 +38,6 @@ export function registerUser(dataToSubmit) {
         .then(response => response.data)
 
     return {
-        //request를 reducer에 넘겨줌.
         type: REGISTER_USER,
         payload: request
 
@@ -49,7 +47,7 @@ export function registerUser(dataToSubmit) {
 export function logoutUser(){
     const request = axios.get('/api/users/logout')
     .then(response => response.data);
-
+    
     return {
         type: LOGOUT_USER,
         payload: request
