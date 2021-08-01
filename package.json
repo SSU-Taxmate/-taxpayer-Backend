@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/SSU-PaceMaker/taxpayer#readme",
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^6.0.2",
@@ -27,6 +29,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+<<<<<<< HEAD
     "mongoose": "^5.12.5"
+=======
+    "mongoose": "^5.12.5",
+    "react-number-format": "^4.6.4"
+>>>>>>> 35e95af9b6f12f2605a5031e1747a3eb5500ac2b
   }
 }
