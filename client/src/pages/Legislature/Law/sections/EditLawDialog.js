@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 import Draft from '../../../../components/Editor';
-const moment=require('moment-timezone');
+import moment from 'moment-timezone'
 
 function EditLawDialog(props) {
     const [open, setOpen] = useState(false);

@@ -4,8 +4,16 @@ import {
     CLICK_OPEN_MENU,
     LOGIN_USER,
     LOGOUT_USER,
-    REGISTER_USER } from "./ActionTypes";
+    REGISTER_USER ,
+    SELECT_CLASS} from "./ActionTypes";
 
+/*selectClass - 아직 사용하지 않고 있음 */
+export function selectClass (selectedClass){
+    return{
+        type:SELECT_CLASS,
+        payload:selectedClass
+    }
+}
 export const clickMenuOpen = value => ({
     type: CLICK_OPEN_MENU,
     newValue: value
@@ -22,6 +30,9 @@ export function auth(){
 }
 
 export function loginUser(dataToSubmit) {
+    /*클라이언트=>서버 보낼때도 암호화되어야함
+    현재는 서버에서 암호화해서 mongoDB에 올림 */
+    console.log('redux/_actions : login원하는 User정보',dataToSubmit)
     const request = axios.post('/api/users/login', dataToSubmit)
         .then(response => response.data)
 

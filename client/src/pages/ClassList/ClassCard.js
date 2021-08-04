@@ -18,12 +18,12 @@ class ClassCard extends Component {
           <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 className="m-0 font-weight-bold text-primary">
               <i className="fas fa-star"></i>
-              <a href="/classes/:classId">{this.state.title} </a>
+              <a href={`/classes/:classId`}>{this.state.title} </a>
             </h6>
             {/*<!--꿈나무반 card 시작-->*/}
             <div className="dropdown no-arrow">
               <ClassCodeModal
-                id="displaycode"
+                id={`${this.state.title}displaycode`}
                 icon="fas fa-external-link-alt"
               ></ClassCodeModal>
 

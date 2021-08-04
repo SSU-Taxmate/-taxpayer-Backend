@@ -8,15 +8,15 @@ const { auth } = require("../middleware/auth");
 //             User
 //=================================
 
-router.get("/auth", auth, (req, res) => { /*auth라는 미들웨어 추가 */
+router.get("/auth", auth, (req, res) => {
+    //auth를 통과했다.( user와 token이 올바르다=로그인한 상태) 
     res.status(200).json({
         _id: req.user._id,
-        isAdmin: req.user.role === 0 ? false : true,
+        isAdmin: req.user.role === 0 ? true : false,/*0이면 선생님, 1이면 학생 */
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
         role: req.user.role,
-        image: req.user.image,
     });
 });
 

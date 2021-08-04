@@ -5,7 +5,15 @@ import axios from 'axios'
 import InputTax from './sections/InputTax';
 function SettingTaxDetail() {
   const [isLoading, setIsLoading] = useState(false)
-  const [data, setData] = useState({})
+  const [data, setData] = useState({
+    income:0,
+    realestate:0,
+    seat:0,
+    electric:0,
+    stamp:0,
+    vat:0,
+    stock:0
+  })
   const [err, setIsError] = useState(false);
 
   useEffect(() => {
@@ -29,17 +37,14 @@ function SettingTaxDetail() {
 
   const onChange = (e) => {
     console.log(e.target.id, e.target.value)
-    //    setData({ ...data, [e.target.id]: Number(e.target.value) });
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].typename === e.target.id) {
-         data[i].value=Number(e.target.value)
-      }
-    }
+    setData({ ...data, [e.target.id]: Number(e.target.value) });
+   
+  
   }
   const handleSetupTax = (e) => {
     e.preventDefault();
+    
    // console.log('handleSetupTax', data)
-/*동일한 ObjectId가 나와서 고민임 */
     axios.post('/api/classes/:classId/taxes/set-up', data)
       .then(function (response) {
         console.log(response);
@@ -69,13 +74,13 @@ function SettingTaxDetail() {
             </p>
             <div className="form-row">
               <div className="form-group col-md-4">
-                <InputTax id='income' title='소득세 : 소득의' value={findvalue('income')} unit='%' onChange={onChange} />
+                <InputTax id='income' title='소득세 : 소득의' value={data.income} unit='%' onChange={onChange} />
               </div>
               <div className="form-group col-md-4">
-                <InputTax id='realestate' title='부동산세 : 부동산의' value={findvalue('realestate')} unit='%' onChange={onChange} />
+                <InputTax id='realestate' title='부동산세 : 부동산의' value={data.realestate} unit='%' onChange={onChange} />
               </div>
               <div className="form-group col-md-4">
-                <InputTax id='seat' title='자리세 : 자리의' value={findvalue('seat')} unit='%'  onChange={onChange}/>
+                <InputTax id='seat' title='자리세 : 자리의' value={data.seat} unit='%'  onChange={onChange}/>
               </div>
             </div>
             {/*<!--직접세  끝-->*/}
@@ -94,16 +99,16 @@ function SettingTaxDetail() {
               <div className="ml-1" >
                 <div className="form-row">
                   <div className="form-group col-lg-3">
-                    <InputTax id='electric' title='전기세 : 전기요금의' value={findvalue('electric')} unit='%' onChange={onChange} />
+                    <InputTax id='electric' title='전기세 : 전기요금의' value={data.electric} unit='%' onChange={onChange} />
                   </div>
                   <div className="form-group col-lg-3">
-                    <InputTax id='stamp' title='인지세 : 부동산거래회당' value={findvalue('stamp')} unit='미소' onChange={onChange} />
+                    <InputTax id='stamp' title='인지세 : 부동산거래회당' value={data.stamp} unit='미소' onChange={onChange} />
                   </div>
                   <div className="form-group col-lg-3">
-                    <InputTax id='vat' title='부가가치세 : 물품구입금액의' value={findvalue('vat')} unit='%'  onChange={onChange}/>
+                    <InputTax id='vat' title='부가가치세 : 물품구입금액의' value={data.vat} unit='%'  onChange={onChange}/>
                   </div>
                   <div className="form-group col-lg-3">
-                    <InputTax id='stock' title='증권거래세 : 증권판매금액의' value={findvalue('stock')} unit='%'  onChange={onChange}/>
+                    <InputTax id='stock' title='증권거래세 : 증권판매금액의' value={data.stock} unit='%'  onChange={onChange}/>
                   </div>
                 </div>
               </div>

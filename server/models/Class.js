@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
-
+/*
+    Class
+*/
 const classSchema = mongoose.Schema({
     /*참가코드*/
     entrycode: {
@@ -17,37 +19,66 @@ const classSchema = mongoose.Schema({
         type: String,
         default: ""
     },
-    year: {
+    createdAt: {
         type: Date,
+        default: Date.now
     },
-    teacher: {
+    teacher: {/*owned*/
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required:true,
     },
-    students: [{
+    /*
+    //joinClass로 필요없어짐.
+    students: [{//participate
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    settings: {/*클래스 세팅 정보*/
-        updatedate: {
-            type: Date,
+    //클래스 세팅 정보 Mapping Table을 두면
+    //필요없는 거 아닌가?
+    settings: {
+        stocks:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ClassStock'
         },
-        SetTax_id: {
+        taxes: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'SetTax'
+            ref: 'ClassTax'
         },
-        stocks: [{
+        laws:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'ClassLaw'
+        },
+        coupons:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'ClassCoupon'
+        },
+        homeworks:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'ClassHomework'
+        },
+        jobs: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Stock'
-        }],
-        jobs: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Job'
-        }]
-    }
+            ref: 'ClassJob'
+        },
+    }*/
 
 })
-
 const Class = mongoose.model('Class', classSchema)
 
-module.exports = { Class }
+/*
+    JoinClass
+    : Class와 Student를 연결짓는 Schema
+*/
+const joinClassSchema = mongoose.Schema({
+    classId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Class'
+    },
+    studentId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
+})
+const JoinClass=mongoose.model('JoinClass',joinClassSchema);
+module.exports = { Class ,JoinClass}

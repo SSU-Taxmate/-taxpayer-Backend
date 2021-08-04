@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 
 /*theme */
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 
 
 /* Icon */
@@ -10,7 +10,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 export default function TableTheme(props) {
 
 
-  const theme = createMuiTheme({
+  const theme = createTheme({
     overrides: {
       MuiTableCell: {
         root: {

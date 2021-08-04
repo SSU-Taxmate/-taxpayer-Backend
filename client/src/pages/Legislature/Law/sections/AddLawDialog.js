@@ -24,7 +24,7 @@ export default function AddLawDialog() {
     const handleSubmit = (e) => {
         //e.preventDefault();
     
-        axios.post('/api/classes/:classId/laws',{"title":lawtitle,"content":lawcontent})//,"issuedate":issuedate(자동으로 현재시간)
+        axios.post(`/api/classes/:classId/laws`,{"title":lawtitle,"content":lawcontent})//,"issuedate":issuedate(자동으로 현재시간)
         .then(function (response) {
             console.log(response);
         })

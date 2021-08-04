@@ -7,28 +7,39 @@ const jwt = require('jsonwebtoken');
 const userSchema = mongoose.Schema({
     name: {
         type: String,
-        maxlength: 50
+        maxlength: 50,
+        trim: true,
     },
     email: {
         type: String,
         trim: true,
-        unique: 1
+        unique: true
     },
     password: {
         type: String,
         minlength: 5
     },
-  
-    role: {
-        type: Number,
-        default: 0
-    },
+    /*로그인 세션 확인용*/
     token: {
         type: String
     },
     tokenExp: {
         type: Number
-    }
+    },
+    /*superAdmin:0, 
+    모든 DB접근가능
+    선생님 : 1 , 학생 2 */
+    role: {
+        type: Number,
+        default: 1
+    },
+    /*선생님은 학급을 개설할 때마다 
+    학생은 학급에 참여할 때마다
+    --선생님이 학생 삭제할 수 있게*/
+    classes:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Class'
+    }]
 })
 
 

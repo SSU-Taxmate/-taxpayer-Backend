@@ -11,7 +11,6 @@ let auth = (req, res, next) => {
         //console.log('token: auth:',token,user)
         if (err) throw err;
         if (!user) return res.json({ isAuth: false, error: true })
-
         req.token = token;
         req.user = user;
         next();

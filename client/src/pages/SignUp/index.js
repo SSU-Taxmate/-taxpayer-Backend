@@ -141,6 +141,13 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.email}</div>
                           )}
                         </div>
+                        <div className='col-sm-6 mb-3 mb-sm-0'>
+                          <input 
+                          id="emailverify"
+                          placeholder="이메일 확인 코드"
+                          className="form-control form-control-user"
+                          type='verifycode'/>
+                        </div>
                         </div>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">

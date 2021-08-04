@@ -13,7 +13,7 @@ import EditLawDialog from "./sections/EditLawDialog";
 import DeleteLawDialog from "./sections/DeleteLawDialog";
 import CardCollapse from "../../../components/Cards/Collapse";
 import Viewer from "../../../components/Editor/Viewer";
-const moment = require("moment-timezone");
+import moment from 'moment-timezone'
 
 export default function Law() {
   const [laws, setlaws] = useState([]);

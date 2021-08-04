@@ -1,44 +1,39 @@
-const mongoose =require('mongoose')
-/*세금 설정 */
-const taxRateSchema=mongoose.Schema({
-    typename : {
-        type:String,
+const mongoose = require('mongoose')
+/*
+    Tax
+*/
+const taxSchema = mongoose.Schema({
+    typename: {
+        type: String,
     },
-    valtype:{
-        type:String,
+    valtype: {
+        type: String,
     },
-    value:{
-        type:Number
+    value: {
+        type: Number
+    }
+    , date: {
+        type: Date,
+        default: Date.now
     }
 })
-const setTaxSchema=mongoose.Schema({
-   setTax:[taxRateSchema]
-   ,date:{
-       type:Date,
-       default:Date.now
-   }
-})
-const SetTax = mongoose.model('SetTax', setTaxSchema)
-/* 학생 세금 */
-const taxSchema = mongoose.Schema({
-    /*TaxType_id:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'TaxType'
-   },*/
-    date:{
-        type:Date,
-        default:Date.now
-    },
-    typename:{
-        type:String,
-    },
-    money:{
-        type:Number,
-        default:false
-    },
-    
-})
-
 const Tax = mongoose.model('Tax', taxSchema)
+/*
+    ClassTax
+    : Class와 Tax를 연결짓는 Schema
+*/
+const classtaxSchema = mongoose.Schema({
+    classId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class'
+    },
+    taxId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tax'
+    }
+})
+const ClassTax = mongoose.model('ClassTax', classtaxSchema)
 
-module.exports = {Tax,SetTax }
+
+
+module.exports = { Tax, ClassTax }

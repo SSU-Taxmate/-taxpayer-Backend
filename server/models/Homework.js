@@ -1,5 +1,7 @@
 const mongoose =require('mongoose')
-
+/*
+    Homework
+*/
 const homeworkSchema = mongoose.Schema({
     name: {
         type: String,
@@ -32,5 +34,20 @@ const homeworkSchema = mongoose.Schema({
 })
 
 const Homework = mongoose.model('Homework', homeworkSchema)
+/*
+    ClassHomework
+    : Class와 Homework를 연결짓는 Schema
+*/
+const classhomeworkSchema = mongoose.Schema({
+    classId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class'
+    },
+    homeworkId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Homework'
+    }
+})
+const ClassHomework = mongoose.model('ClassHomework', classhomeworkSchema)
 
-module.exports = {Homework }
+module.exports = {Homework ,ClassHomework}

@@ -10,8 +10,8 @@ import ScrollToTop from '../../components/Scroll';
 class ClassMain extends Component {
   componentWillMount() {
     document.getElementById('body').className = 'page-top'
+  
   }
-
   render() {
     return (
       <div>
@@ -27,14 +27,13 @@ class ClassMain extends Component {
 
             {/* <!-- Main Content --> */}
             <div id="content">
-
+              
               {/* <!-- Topbar --> */}
               <Topbar />
               {/* <!-- End of Topbar --> */}
 
               {/* <!-- Begin Page Content --> */}
               <div className="container-fluid">
-
                 {/* <!-- Page Heading --> */}
 
                 <PageHeading title="클래스 Dashboard" />
