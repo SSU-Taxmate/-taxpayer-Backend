@@ -10,11 +10,14 @@ import MaterialTable from 'material-table';
 import { editLocal } from '../../../../components/Table/SetUp'
 import ManageDialog from './ManageDialog';
 import Error from '../../../../components/Error';
-const SettingHw = () => {
+import { useSelector } from "react-redux";
+
+export default function  SettingHw(){
     const [isLoading, setIsLoading] = useState(false)
     const [homework, sethomework] = useState([])
     const [isError, setIsError] = useState(false);
-
+    let classData = useSelector(state => state.classInfo.classData);
+    //console.log(classData)
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
     const handleClickOpen = (selectedData) => {
@@ -31,8 +34,9 @@ const SettingHw = () => {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get('/api/classes/:classId/homeworks');
-                sethomework(result.data.data);
+                const result = await axios.get('/api/homeworks',{params:{classId:classData.classId}});
+                console.log(result.data)
+                sethomework(result.data);
 
             } catch (error) {
                 setIsError(true);
@@ -43,7 +47,7 @@ const SettingHw = () => {
         };
 
         fetchData();
-    }, []);
+    }, [classData]);
     return (
         <div>
             {/* <!-- Page Wrapper --> */}
@@ -79,7 +83,6 @@ const SettingHw = () => {
                                                         columns={[
                                                             { title: "숙제이름", field: "name", type: 'string' },
                                                             { title: '자세한내용', field: 'detail', type: 'string' },
-                                                            { title: '최초생성날짜', field: 'date', type: 'date' },
                                                             { title: '만료일', field: "expDate", type: 'date' },
 
                                                             /*
@@ -105,7 +108,7 @@ const SettingHw = () => {
                                                                     setTimeout(() => {
                                                                         sethomework([...homework, newData]);
                                                                         //console.log('newdata!!!!!!!',newData.type)
-                                                                        axios.post('/api/classes/:classId/homeworks', newData)
+                                                                        axios.post('/api/homeworks', newData)
                                                                             .then(function (response) {
                                                                                 console.log(response);
                                                                             })
@@ -124,7 +127,7 @@ const SettingHw = () => {
                                                                         dataUpdate[index] = newData;
                                                                         sethomework([...dataUpdate]);
                                                                         console.log('새로운 데이터', newData)
-                                                                        axios.put('/api/classes/:classId/homeworks', newData)
+                                                                        axios.put('/api/homeworks', newData)
                                                                             .then(function (response) {
                                                                                 console.log(response);
                                                                             })
@@ -143,7 +146,7 @@ const SettingHw = () => {
                                                                         dataDelete.splice(index, 1);
                                                                         sethomework([...dataDelete]);
 
-                                                                        axios.delete('/api/classes/:classId/homeworks', { data: oldData })
+                                                                        axios.delete('/api/homeworks', { data: oldData })
                                                                             .then(function (response) {
                                                                                 console.log(response);
                                                                             })
@@ -191,4 +194,3 @@ const SettingHw = () => {
     )
 }
 
-export default SettingHw

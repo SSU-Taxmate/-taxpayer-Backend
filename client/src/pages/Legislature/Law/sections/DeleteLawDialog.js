@@ -16,7 +16,7 @@ function DeleteLawDialog(props) {
     };
     const handleSubmit = () => {
 
-        axios.delete('/api/classes/:classId/laws', { params: { _id: data._id } })
+        axios.delete('/api/laws', { params: { _id: data._id } })
         .then(function (response) {
           console.log(response);
         })

@@ -8,16 +8,20 @@ import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 import TradeSection from './sections/TradeSection'
 import StockList from './sections/StockList'
+import { useSelector } from "react-redux";
+
 export default function TradeStock() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [stocks, setstocks] = useState()
+  let classData = useSelector(state => state.classInfo.classData);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get('/api/classes/:classId/stocks');
+        const result = await axios.get('/api/stocks',{params:{classId:classData.classId}});
         setstocks(result.data)
 
       } catch (error) {
@@ -29,7 +33,7 @@ export default function TradeStock() {
     fetchData();
     return () => {
     }
-  }, [])
+  }, [classData])
   return (
     <div>
       {/* <!-- Page Wrapper --> */}

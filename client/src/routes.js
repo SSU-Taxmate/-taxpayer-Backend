@@ -92,44 +92,44 @@ const Routes = () => (
       <Route
         exact
         path="/classes/:classId/national-stats"
-        component={NationStats}
+        component={Auth(NationStats,true)}
       />
       <Route
         exact
         path="/classes/:classId/set-up/stats"
-        component={SettingHw}
+        component={Auth(SettingHw,true)}
       />
 
       <Route
         exact
         path="/classes/:classId/personal-stats"
-        component={MyStats}
+        component={Auth(MyStats,true)}
       />
 
       {/* ***************  사법부  ************** */}
       {/* 벌금 */}
-      <Route exact path="/classes/:classId/penalty" component={Penalty} />
+      <Route exact path="/classes/:classId/penalty" component={Auth(Penalty,true)} />
 
       {/*신용등급 */}
-      <Route exact path="/classes/:classId/credit" component={Credit} />
+      <Route exact path="/classes/:classId/credit" component={Auth(Credit,true)} />
 
       {/* 시장 */}
 
-      <Route exact path="/classes/:classId/market" component={Market} />
+      <Route exact path="/classes/:classId/market" component={Auth(Market,true)} />
       <Route
         exact
         path="/classes/:classId/market/marketproduct"
-        component={MarketProduct}
+        component={Auth(MarketProduct,true)}
       />
       <Route
         exact
         path="/classes/:classId/real_estate_setting"
-        component={EstateSetting}
+        component={Auth(EstateSetting,true)}
       />
 
       {/* 그 외 */}
-      <Route path="/charts" component={Charts} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/charts" component={Auth(Charts,true)} />
+      <Route path="/dashboard" component={Auth(Dashboard,true)} />
       <Route path="/charts" component={Charts} />
       <Route path="*" component={NotFound} />
     </Switch>

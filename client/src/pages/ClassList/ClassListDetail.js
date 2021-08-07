@@ -13,9 +13,7 @@ import { useDispatch } from 'react-redux';
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
 function ClassListDetail() {
-  const dispatch = useDispatch();
   const [classes, setclasses] = useState([]);
-  const [updateTime, setupdateTime] = useState("****-**-**");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   let user = useSelector(state => state.user);
@@ -27,6 +25,7 @@ function ClassListDetail() {
       try {
         const result = await axios.get("/api/classes", { params: { userId: user.userData._id, role: user.userData.role } });//
         setclasses(result.data);
+        console.log(result.data)
       } catch (error) {
         setIsError(true);
       }
@@ -50,6 +49,7 @@ function ClassListDetail() {
         : 
         (classes.map((info, i) => (
           <ClassCard
+            id={info._id}
             key={info._id}
             title={info.name}
             img={info.image}

@@ -7,13 +7,15 @@ import {
     REGISTER_USER ,
     SELECT_CLASS} from "./ActionTypes";
 
-/*selectClass - 아직 사용하지 않고 있음 */
+/*selectClass - ClassCard에서 사용함.*/
 export function selectClass (selectedClass){
+    //console.log('_actions/',selectedClass)
     return{
         type:SELECT_CLASS,
         payload:selectedClass
     }
 }
+
 export const clickMenuOpen = value => ({
     type: CLICK_OPEN_MENU,
     newValue: value

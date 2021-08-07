@@ -12,28 +12,16 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
     description: {/*하는일 */
         type: String,
         default: ''
+    },
+    classId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class'
     }
 })
 const Job = mongoose.model('Job', jobSchema)
 
-/*
-    ClassJob
-    : Class와 Job을 연결하는 Schema
- */
-const classjobSchema = mongoose.Schema({
-    classId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Class'
-    },
-    jobId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Job'
-    }
-})
-const ClassJob = mongoose.model('Job', classjobSchema)
-
 const jobPostingSchema = mongoose.Schema({/*해당 클래스의 채용공고 */
-    job: {/*직업설명*/
+    jobId: {/*직업설명*/
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Job'
     },
@@ -46,4 +34,4 @@ const jobPostingSchema = mongoose.Schema({/*해당 클래스의 채용공고 */
         default: 1
     }
 })
-module.exports = { Job ,ClassJob}
+module.exports = { Job}

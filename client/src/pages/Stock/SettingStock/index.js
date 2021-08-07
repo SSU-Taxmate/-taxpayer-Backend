@@ -24,7 +24,7 @@ export default function SettingStock() {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get('/api/classes/:classId/stocks');
+        const result = await axios.get('/api/stocks');
         setstocks(result.data)
 
       } catch (error) {
@@ -52,7 +52,7 @@ export default function SettingStock() {
   }
   const handleSubmit = (e) => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
-    axios.post('/api/classes/:classId/stocks',
+    axios.post('/api/stocks',
       {
         stockName: stockName,
         description: stockDescription,

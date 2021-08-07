@@ -23,7 +23,7 @@ export default function ProposalDialog() {
     const handleSubmit = (e) => {
         //e.preventDefault();
     
-        axios.post('/api/classes/:classId/lawproposal',{"title":title,"content":content})//,"issuedate":issuedate(자동으로 현재시간)
+        axios.post('/api/lawproposal',{"title":title,"content":content})//,"issuedate":issuedate(자동으로 현재시간)
         .then(function (response) {
             console.log(response);
         })

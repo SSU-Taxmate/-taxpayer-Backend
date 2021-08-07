@@ -3,37 +3,16 @@ const mongoose = require('mongoose')
     Tax
 */
 const taxSchema = mongoose.Schema({
-    typename: {
-        type: String,
+    taxlist:{
+        type:Array,
+        default: [0,0,0,0,0,0,0]//소득세,부동산세,자리세,전기세,인지세,부가가치세,증권거래세
     },
-    valtype: {
-        type: String,
-    },
-    value: {
-        type: Number
-    }
-    , date: {
-        type: Date,
-        default: Date.now
+    classId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Class',
+        required:true
     }
 })
 const Tax = mongoose.model('Tax', taxSchema)
-/*
-    ClassTax
-    : Class와 Tax를 연결짓는 Schema
-*/
-const classtaxSchema = mongoose.Schema({
-    classId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Class'
-    },
-    taxId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tax'
-    }
-})
-const ClassTax = mongoose.model('ClassTax', classtaxSchema)
 
-
-
-module.exports = { Tax, ClassTax }
+module.exports = { Tax }

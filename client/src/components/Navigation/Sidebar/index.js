@@ -38,7 +38,7 @@ class Sidebar extends Component {
           </a>
           <div id="collapse_class_setting" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div className="bg-white py-2 collapse-inner rounded">
-              <a className="collapse-item" href="/classes/:classId/set-up/student">학생관리</a>
+              <Link className="collapse-item" href="/classes/:classId/set-up/student">학생관리</Link>
               <Link className="collapse-item" to="/classes/:classId/set-up/class">학급관리</Link>
               <h6 className="collapse-header">학생</h6>
               <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산/직업</Link>
@@ -131,7 +131,7 @@ class Sidebar extends Component {
 
               <h6 className="collapse-header">선생님</h6>
               <Link className="collapse-item" to="/classes/:classId/national-stats">나라 통계</Link>
-              <a className="collapse-item" href="/classes/:classId/set-up/stats">숙제 관리</a>
+              <Link className="collapse-item" to="/classes/:classId/set-up/stats">숙제 관리</Link>
 
               <h6 className="collapse-header">학생</h6>
               <Link className="collapse-item" to="/classes/:classId/personal-stats">나의 통계</Link>
@@ -178,9 +178,10 @@ class Sidebar extends Component {
 
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
-          <a className="nav-link" href="/classes/:classId/penalty">
+          <Link className="nav-link" to="/classes/:classId/penalty">
             <i className="fas fa-gavel"></i>
-            <span>벌금</span></a>
+            <span>벌금</span>
+            </Link>
         </li>
 
         {/* <!-- Divider --> */}

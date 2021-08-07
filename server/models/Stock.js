@@ -12,6 +12,10 @@ const stockSchema = mongoose.Schema({
         type:String,
         default:''
     },
+    userDefined:{/*사용자가 만든 stock. 특정 클래스에서만 사용됨.*/
+        type:Boolean,
+        default:false
+    },
     prices:[{
         updateDate:{
             type:Date,
@@ -27,12 +31,11 @@ const stockSchema = mongoose.Schema({
             default:''
         }
     }]
-      
-})
+},{ timestamps: true })
 const Stock = mongoose.model('Stock', stockSchema)
 /*
     ClassStock
-    : Class와 Stock을 연결짓는 Schema
+    : Class와 Stock을 연결짓는 Schema - 다른 것은 몰라도 얘는 필요있음
 */
 const classstockSchema=mongoose.Schema({
     classId:{
