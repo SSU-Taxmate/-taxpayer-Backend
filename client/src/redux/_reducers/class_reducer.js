@@ -3,6 +3,7 @@ import{
     SELECT_CLASS
 } from '../_actions/ActionTypes'
 const initialState={
+    classId:''
 }
 export default function classInfo(state=initialState,action){
     //console.log('_reducers/class_reducer/classInfo',state,action)
