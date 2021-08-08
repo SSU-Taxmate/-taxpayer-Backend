@@ -60,7 +60,7 @@ router.post("/custom", async (req, res) => {
 
     // 2) Class-Stock 연관
     const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id });
-    const sclassstock = await newclass.save();
+    const sclassstock = await newclass.save({ session });
     console.log('class-stock', sclassstock);
 
     // 트랜젝션 커밋
@@ -94,17 +94,17 @@ router.put('/custom', (req, res) => {
   [정상] DIY stock 삭제&미사용 : ClassStock , Stock  {classId:, stockId: }
 */
 router.delete('/custom', async (req, res) => {
-  console.log('delete',req.body)
+  console.log('delete',req.query)
   const session = await startSession();
   try {
     // 트랜젝션 시작
     session.startTransaction();
     // 1) Class-Stock 연관 삭제
-    const delclasstock=await ClassStock.deleteOne({ classId: req.body.classId, stockId: req.body.stockId },{session:session});
+    const delclasstock=await ClassStock.deleteOne({ classId: req.query.classId, stockId: req.query.stockId },{session:session});
     //console.log('del: class-stock', delclasstock);
 
     // 2) Stock 삭제
-    const delstock=await Stock.deleteOne({_id:req.body.stockId},{session:session})
+    const delstock=await Stock.deleteOne({_id:req.query.stockId},{session:session})
     //console.log('del:stock', delstock);
 
     // 트랜젝션 커밋
