@@ -13,32 +13,28 @@ import { useDispatch } from "react-redux";
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
 function ClassListDetail() {
-  const dispatch = useDispatch();
   const [classes, setclasses] = useState([]);
-  const [updateTime, setupdateTime] = useState("****-**-**");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const handleCardClicked = (e) => {
-    console.log(e.target, "HNANANANNAN");
-  };
-  const user = useSelector((state) => state.user);
+  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get("/api/classes");
-        //console.log(result.data.classes)
-        setclasses(result.data.classes);
+        const result = await axios.get("/api/classes", {
+          params: { userId: user.userData._id, role: user.userData.role },
+        }); //
+        setclasses(result.data);
+        console.log(result.data);
       } catch (error) {
         setIsError(true);
       }
       setIsLoading(false);
     };
     fetchData();
-  }, []);
-
+  }, [user]);
   return (
     <div className="row">
       {/*<!--className 추가-->*/}
@@ -58,12 +54,11 @@ function ClassListDetail() {
       ) : (
         classes.map((info, i) => (
           <ClassCard
+            id={info._id}
             key={info._id}
             title={info.name}
             img={info.image}
             comment={info.comment}
-            onClick={handleCardClicked}
-            user={user.userData}
           ></ClassCard>
         ))
       )}
@@ -77,6 +72,7 @@ function FormDialog() {
   const [classname, setclassname] = useState("");
   const [classcontent, setclasscontent] = useState("");
   const [open, setOpen] = useState(false);
+  /* user값 받아오기 */
   let user = useSelector((state) => state.user);
 
   const handleClickOpen = () => {
@@ -105,7 +101,7 @@ function FormDialog() {
         image:
           "https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp",
         comment: classcontent,
-        teacher: user.userData._id,
+        teacherId: user.userData._id,
       })
       .then(function (response) {
         console.log(response);

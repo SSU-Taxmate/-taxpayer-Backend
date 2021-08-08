@@ -5,7 +5,8 @@ import{
 } from '../_actions/ActionTypes'
 
 export default function user(state={},action){
-    
+    //console.log('_reducers/user_reducer/user',state,action)
+
     switch (action.type) {
         case LOGIN_USER:
             return {...state, loginSuccess:action.payload}

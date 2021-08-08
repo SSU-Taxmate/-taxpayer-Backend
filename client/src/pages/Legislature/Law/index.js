@@ -14,20 +14,22 @@ import DeleteLawDialog from "./sections/DeleteLawDialog";
 import CardCollapse from "../../../components/Cards/Collapse";
 import Viewer from "../../../components/Editor/Viewer";
 import moment from 'moment-timezone'
+import { useSelector } from 'react-redux';
 
 export default function Law() {
   const [laws, setlaws] = useState([]);
   const [updateTime, setupdateTime] = useState("****-**-**");
   const [isLoading, setIsLoading] = useState(false);
   const [err, setIsError] = useState(false);
+  let classData = useSelector(state => state.classInfo.classData);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get("/api/classes/:classId/laws");
-        //console.log(result.data)
+        const result = await axios.get("/api/laws",{params:{classId:classData.classId}});
+        console.log(result.data)
         setlaws(result.data);
       } catch (error) {
         setIsError(true);
@@ -35,7 +37,7 @@ export default function Law() {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [classData]);
   const getDate = (date) => {
     const localtime = moment(date).tz("Asia/Seoul").format();
     let res =
@@ -81,7 +83,7 @@ export default function Law() {
                     <ListItem key={law._id}>
                       <div className="col-11">
                         <div style={{ textAlign: "right" }}>
-                          <sub>시행일 : {getDate(law.issuedate)}</sub>
+                          <sub>시행일 : {getDate(law.updatedAt)}</sub>
                         </div>
                         <CardCollapse
                           title={law.title}

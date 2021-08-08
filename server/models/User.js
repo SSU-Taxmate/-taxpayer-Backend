@@ -36,20 +36,14 @@ const userSchema = mongoose.Schema({
     /*선생님은 학급을 개설할 때마다 
     학생은 학급에 참여할 때마다
     --선생님이 학생 삭제할 수 있게*/
-    classes:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Class'
-    }]
 })
 
 
 userSchema.pre('save', function (next) {
     var user = this;
-    if (user.isModified('password')) { //비밀번호를 암호화 시킨다.
-       
+    if (user.isModified('password')) {
         bcrypt.genSalt(saltRounds, function (err, salt) {
             if (err) return next(err)
-
             bcrypt.hash(user.password, salt, function (err, hash) {
                 if (err) return next(err)
                 user.password = hash
@@ -63,8 +57,6 @@ userSchema.pre('save', function (next) {
 
 
 userSchema.methods.comparePassword = function (plainPassword, cb) {
-
-    //plainPassword 1234567    암호회된 비밀번호 $2b$10$l492vQ0M4s9YUBfwYkkaZOgWHExahjWC
     bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);

@@ -25,13 +25,13 @@ app.use('/api/users',require('./routes/users'));
 app.use('/api/classes',require('./routes/class'));
 
 /*주식 */
-app.use('/api/classes/:classId/stocks',require('./routes/stock'));
+app.use('/api/stocks',require('./routes/stock'));
 /*통계청 */
-app.use('/api/classes/:classId/homeworks',require('./routes/homework'))
+app.use('/api/homeworks',require('./routes/homework'))
 /* 국세청 */
-app.use('/api/classes/:classId/taxes',require('./routes/tax'))
+app.use('/api/taxes',require('./routes/tax'))
 /* 법 */
-app.use('/api/classes/:classId/laws',require('./routes/law'))
+app.use('/api/laws',require('./routes/law'))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/api/hello', (req, res) => {

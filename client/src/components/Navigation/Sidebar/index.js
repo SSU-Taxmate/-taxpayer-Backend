@@ -62,12 +62,12 @@ class Sidebar extends Component {
             data-parent="#accordionSidebar"
           >
             <div className="bg-white py-2 collapse-inner rounded">
-              <a
+              <Link
                 className="collapse-item"
-                href="/classes/:classId/set-up/student"
+                to="/classes/:classId/set-up/student"
               >
                 학생관리
-              </a>
+              </Link>
               <Link
                 className="collapse-item"
                 to="/classes/:classId/set-up/class"
@@ -263,12 +263,12 @@ class Sidebar extends Component {
               >
                 나라 통계
               </Link>
-              <a
+              <Link
                 className="collapse-item"
-                href="/classes/:classId/set-up/stats"
+                to="/classes/:classId/set-up/stats"
               >
                 숙제 관리
-              </a>
+              </Link>
 
               <h6 className="collapse-header">학생</h6>
               <Link
@@ -330,10 +330,10 @@ class Sidebar extends Component {
 
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
-          <a className="nav-link" href="/classes/:classId/penalty">
+          <Link className="nav-link" to="/classes/:classId/penalty">
             <i className="fas fa-gavel"></i>
             <span>벌금</span>
-          </a>
+          </Link>
         </li>
 
         {/* <!-- Divider --> */}
