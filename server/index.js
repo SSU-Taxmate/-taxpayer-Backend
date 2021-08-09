@@ -17,13 +17,14 @@ mongoose.connect(config.mongoURI, {
 
 app.use(cors())
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));//express [stackoverflow-25471856]
+app.use(bodyParser.json());//express
 app.use(cookieParser());
 
 app.use('/api/users',require('./routes/users'));
 app.use('/api/classes',require('./routes/class'));
-
+/* 직업 */
+app.use('/api/jobs',require('./routes/job'));
 /*주식 */
 app.use('/api/stocks',require('./routes/stock'));
 /*통계청 */

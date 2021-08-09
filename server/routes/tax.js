@@ -2,7 +2,7 @@
   : /api/taxes
 */
 const express = require('express');
-const { Tax, ClassTax } = require('../models/Tax');
+const { Tax } = require('../models/Tax');
 const router = express.Router();
 
 /*

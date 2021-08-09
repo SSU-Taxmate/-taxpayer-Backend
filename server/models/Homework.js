@@ -35,9 +35,9 @@ const Homework = mongoose.model('Homework', homeworkSchema)
     : Student와 Homework를 연결짓는 Schema
 */
 const grantedhomeworkSchema= mongoose.Schema({
-    studentId:{
+    studentId:{/*반드시 JoinedUser*/
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User'
+        ref: 'JoinedUser'
     },
     homeworkId:{
         type:mongoose.Schema.Types.ObjectId,

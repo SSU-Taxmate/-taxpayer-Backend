@@ -33,18 +33,24 @@ const classSchema = mongoose.Schema({
 const Class = mongoose.model('Class', classSchema)
 
 /*
-    JoinClass
+    JoinedUser(예전JoinClass)
     : Class와 Student를 연결짓는 Schema
 */
-const joinClassSchema = mongoose.Schema({
+const joineduserSchema = mongoose.Schema({
     classId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Class'
     },
-    studentId:{
+    userId:{//student
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
+    },
+    /*클래스에 속한 student가 갖는 고유 정보 */
+    jobId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Job'
+    },
+    
 })
-const JoinClass=mongoose.model('JoinClass',joinClassSchema);
-module.exports = { Class ,JoinClass}
+const JoinedUser=mongoose.model('JoinedUser',joineduserSchema);
+module.exports = { Class ,JoinedUser}

@@ -40,7 +40,7 @@ export default function SettingHw() {
                 for (let i=0;i<result.data.length;i++){
                     temp[i].id=temp[i]._id
                 }
-                console.log(temp)
+                //console.log(temp)
                 sethomework(result.data);
             } catch (error) {
                 setIsError(true);

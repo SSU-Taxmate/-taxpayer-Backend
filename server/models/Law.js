@@ -24,20 +24,4 @@ const lawSchema = mongoose.Schema({
 
 const Law = mongoose.model('Law', lawSchema)
 
-/*
-    ClassLaw
-    : Class와 Law를 연결짓는 Schema
-
-const classlawSchema = mongoose.Schema({
-    classId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Class'
-    },
-    lawId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Law'
-    }
-})
-const ClassLaw = mongoose.model('ClassLaw', classlawSchema)
-*/
 module.exports = {Law }

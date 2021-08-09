@@ -3,7 +3,8 @@
 */
 const express = require('express');
 const { startSession } = require('mongoose');
-const { Class, JoinClass } = require('../models/Class');
+const { ClassAccount } = require('../models/Bank/Account');
+const { Class, JoinedUser } = require('../models/Class');
 const { Tax } = require('../models/Tax');
 
 const router = express.Router();
@@ -26,7 +27,10 @@ router.post('/', async (req, res) => {
     //console.log('cTax',cTax)
     const taxres = await cTax.save({ session })
     //console.log(taxres)
-  
+    // 3) Class Account 생성
+    const cAccount=new ClassAccount({classId:cClass._id});
+    console.log(cAccount)
+    const accountres=await cAccount.save({session});
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 끝
@@ -55,9 +59,9 @@ router.get('/', (req, res) => {
     })
 
   }
-  else {//학생- JoinClass의 student가 일치하는 값  
+  else {//학생- JoinedUser의 userId가 일치하는 값  
     const a = async () => {
-      const userclass = await JoinClass.find({ studentId: req.query.userId }, 'classId')
+      const userclass = await JoinedUser.find({ userId: req.query.userId }, 'classId')
       var classIds = []
       for (let i = 0; i < userclass.length; i++) {
         classIds.push(userclass[i].classId)
@@ -75,7 +79,7 @@ router.get('/', (req, res) => {
 */
 router.put('/', (req, res) => {
   //console.log(req.body)
-  Class.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+  Class.updateOne({ _id: req.body._id }, { $set: req.body },(err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true
@@ -132,10 +136,10 @@ router.post('/join', async (req, res) => {
     // (1) class에서 entry code로 참가할 class를 찾는다.
     const classInfo = await Class.findOne({ entrycode: req.body.entrycode }).session(session)
     //console.log(classInfo)
-    // (2) JoinClass 스키마에 학생ID, classID를 넣어 학생을 등록시킨다.
-    const cjoinClass = new JoinClass({ studentId: req.body.studentId, classId: classInfo._id });
-    const savejoinclass = await cjoinClass.save({ session })
-    //console.log(savejoinclass)
+    // (2) JoinedUser 스키마에 학생ID, classID를 넣어 학생을 등록시킨다.
+    const cjoineduser = new JoinedUser({ userId: req.body.userId, classId: classInfo._id });
+    const savejoineduser = await cjoineduser.save({ session })
+    //console.log(savejoineduser)
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 트랜젝션 종료
@@ -151,13 +155,26 @@ router.post('/join', async (req, res) => {
   }
 })
 /*
-  [정상/프론트필요] JoinClass 학생 한명 삭제
+  class에 join한 User의 class내 ID
+  : 
+*/
+router.get('/join',(req,res)=>{
+  //console.log(req.query)
+  JoinedUser.findOne(req.query, function (err, joineduser) {
+    //console.log(joineduser)
+    const result = joineduser._id
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+})
+/*
+  [정상/프론트필요] JoinedUser 학생 한명 삭제
   : 잘못 들어온 학생 삭제 only teacher can
 */
 router.delete('/join',  (req, res) => {
-  // {classId:, studentId:}
-  console.log('/classes/join',req.query)
-  JoinClass.findOne(req.query).deleteOne(function (err) {
+  // {classId:, userId:}
+  //console.log('/classes/join',req.query)
+  JoinedUser.findOne(req.query).deleteOne(function (err) {
     if (err) return handleError(err);
     res.json({success:true})
   });
