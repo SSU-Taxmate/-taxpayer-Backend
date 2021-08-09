@@ -8,24 +8,26 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Error from "../../components/Error";
 import axios from "axios";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
 function ClassListDetail() {
   const [classes, setclasses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  let user = useSelector(state => state.user);
+  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get("/api/classes", { params: { userId: user.userData._id, role: user.userData.role } });//
+        const result = await axios.get("/api/classes", {
+          params: { userId: user.userData._id, role: user.userData.role },
+        }); //
         setclasses(result.data);
-        console.log(result.data)
+        console.log(result.data);
       } catch (error) {
         setIsError(true);
       }
@@ -38,16 +40,19 @@ function ClassListDetail() {
       {/*<!--className 추가-->*/}
       <div className="col-lg-3">
         <div className="card mb-4">
-          <div className="card-body">{<FormDialog />}</div>
+          <div className="card-body">
+            {user.userData &&
+              (user.userData.role == 0 ? <FormDialog /> : "hello")}
+          </div>
         </div>
       </div>
 
       {/* 데이터 만큼 */}
       {isError && <Error></Error>}
-      {isLoading ?
+      {isLoading ? (
         <div>로딩중</div>
-        : 
-        (classes.map((info, i) => (
+      ) : (
+        classes.map((info, i) => (
           <ClassCard
             id={info._id}
             key={info._id}
@@ -55,9 +60,8 @@ function ClassListDetail() {
             img={info.image}
             comment={info.comment}
           ></ClassCard>
-        )
-        ))}
-
+        ))
+      )}
     </div>
   );
 }
@@ -69,7 +73,7 @@ function FormDialog() {
   const [classcontent, setclasscontent] = useState("");
   const [open, setOpen] = useState(false);
   /* user값 받아오기 */
-  let user = useSelector(state => state.user);
+  let user = useSelector((state) => state.user);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,12 +95,14 @@ function FormDialog() {
     //e.preventDefault();
     //console.log('handleSubmit',user.userData._id)
     //데이터 저장
-    axios.post('/api/classes', {
-      name: classname,
-      image: 'https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp',
-      comment: classcontent,
-      teacherId: user.userData._id,
-    })
+    axios
+      .post("/api/classes", {
+        name: classname,
+        image:
+          "https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp",
+        comment: classcontent,
+        teacherId: user.userData._id,
+      })
       .then(function (response) {
         console.log(response);
       })
@@ -149,7 +155,7 @@ function FormDialog() {
             <Button onClick={handleClose} color="primary">
               취소
             </Button>
-            <Button type='submit' onClick={handleClose} color="primary">
+            <Button type="submit" onClick={handleClose} color="primary">
               저장
             </Button>
           </DialogActions>
