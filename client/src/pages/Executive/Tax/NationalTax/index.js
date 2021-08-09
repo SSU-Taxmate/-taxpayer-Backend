@@ -14,7 +14,7 @@ class NationalTax extends Component {
     return (
       <>
         <div id="wrapper">
-          <Sidebar />
+           
           <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
               <Topbar />

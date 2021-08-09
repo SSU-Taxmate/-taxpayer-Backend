@@ -12,7 +12,6 @@ function AccountStock() {
             <div id="wrapper">
 
                 {/* <!-- Sidebar --> */}
-                <Sidebar />
                 {/* <!-- End of Sidebar --> */}
 
                 {/* <!-- Content Wrapper --> */}

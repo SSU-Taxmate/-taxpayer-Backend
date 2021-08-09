@@ -16,7 +16,7 @@ function StudentSetting() {
         <div id="wrapper">
 
           {/* <!-- Sidebar --> */}
-          <Sidebar />
+           
           {/* <!-- End of Sidebar --> */}
 
           {/* <!-- Content Wrapper --> */}

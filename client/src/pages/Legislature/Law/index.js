@@ -52,7 +52,7 @@ export default function Law() {
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
         {/* <!-- Sidebar --> */}
-        <Sidebar />
+         
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}

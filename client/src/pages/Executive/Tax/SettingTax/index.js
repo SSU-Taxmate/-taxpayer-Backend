@@ -21,7 +21,7 @@ class SettingTax extends Component {
         <div id="wrapper">
 
           {/* <!-- Sidebar --> */}
-          <Sidebar />
+           
           {/* <!-- End of Sidebar --> */}
 
           {/* <!-- Content Wrapper --> */}
