@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
-import TableTheme from '../../../../components/Table/TableTheme'
 import axios from 'axios';
 import MaterialTable from 'material-table';
 import Error from '../../../../components/Error';
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [columns, setColumns] = useState([])
+
     const [data, setData] = useState([])
     const [isError, setIsError] = useState(false);
     const hw_pie_data = {
@@ -50,11 +50,11 @@ const NationStatsDetail = () => {
     return (
         <div className="col">
             <div className="card shadow mb-4">
-            {isError && <Error></Error>}
+                {isError && <Error></Error>}
 
                 {isLoading ?
                     <div>loading</div> : (
-                        <TableTheme>
+                        <>
                             <MaterialTable
                                 title="제출여부"
                                 columns={columns[0]}
@@ -67,7 +67,8 @@ const NationStatsDetail = () => {
                                     }
                                 }}
                             />
-                        </TableTheme>
+                         
+                        </>
                     )}
             </div>
             <CardBasic title='상황'>

@@ -3,7 +3,7 @@
 */
 const express = require('express');
 const { Homework, GrantedHomework } = require('../models/Homework');
-const { JoinClass } = require('../models/Class')
+const { JoinedUser } = require('../models/Class')
 const { startSession } = require('mongoose');
 const router = express.Router();
 
@@ -25,12 +25,12 @@ router.post('/', async (req, res) => {//{name:,date:,detail:,expDate,withinDeadl
     //console.log('reshomework',reshomework)
 
     // 2) GrantedHomework생성
-    // 2-1) 해당 Class에 속한 Student 찾기
-    const findstudent = await JoinClass.find({ classId: req.body.classId }, 'studentId')
+    // 2-1) JoinedUser에서 각 클래스에 속한 JoinedUser의 _id찾기
+    const findstudent = await JoinedUser.find({ classId: req.body.classId }, '_id')
     let granthw = []
     // 2-2) 그 학생들에게 grantedhw 부여하기
     for (let i = 0; i < findstudent.length; i++) {
-      granthw.push({ studentId: findstudent[i].studentId, homeworkId: chomework._id })
+      granthw.push({ studentId: findstudent[i]._id, homeworkId: chomework._id })
     }
     //console.log(granthw)
     const granted = await GrantedHomework.insertMany(granthw);
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {//{name:,date:,detail:,expDate,withinDeadl
    : [teacher/student] Class 내 Homework 자체 - {classId:}로 Homework에서 찾음
 */
 router.get('/', (req, res) => {
-  console.log(req.query)
+  //console.log(req.query)
   Homework.find(req.query, function (err, hw) {
     //console.log(hwtypes)
     const result = hw
@@ -111,7 +111,7 @@ router.delete('/', async (req, res) => {
 /*
   [정상] [student] Student의 수행 여부 가져오기
   1) {classId:}로 Homework에서 해당 클래스의 HomeworkId를 찾는다.
-  2) 그다음 {homeworkId, studentId: }로 GrantedHomework에서 찾는다. 
+  2) 그다음 {homeworkId, studentId:joinedUser의 _id }로 GrantedHomework에서 찾는다. 
 */
 router.get('/student', async (req, res) => {
   const session = await startSession();
@@ -121,7 +121,7 @@ router.get('/student', async (req, res) => {
     const ghw=await GrantedHomework.find({studentId:req.query.studentId})
     .populate({path:'homeworkId',match:{classId:req.query.classId}})
     
-    console.log('Class숙제와 student의 제출여부\n',ghw)
+    //console.log('Class숙제와 student의 제출여부\n',ghw)
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 끝
