@@ -155,6 +155,19 @@ router.post('/join', async (req, res) => {
   }
 })
 /*
+  class에 join한 User의 class내 ID
+  : 
+*/
+router.get('/join',(req,res)=>{
+  //console.log(req.query)
+  JoinedUser.findOne(req.query, function (err, joineduser) {
+    //console.log(joineduser)
+    const result = joineduser._id
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+})
+/*
   [정상/프론트필요] JoinedUser 학생 한명 삭제
   : 잘못 들어온 학생 삭제 only teacher can
 */

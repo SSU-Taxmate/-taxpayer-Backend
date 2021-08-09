@@ -5,7 +5,8 @@ import {
     LOGIN_USER,
     LOGOUT_USER,
     REGISTER_USER ,
-    SELECT_CLASS} from "./ActionTypes";
+    SELECT_CLASS,
+    SELECT_USER} from "./ActionTypes";
 
 /*selectClass - ClassCard에서 사용함.*/
 export function selectClass (selectedClass){
@@ -16,6 +17,17 @@ export function selectClass (selectedClass){
         payload:selectedClass
     }
 }
+export function selectUser(selectedUser){
+    //console.log(selectedUser)
+    const request=axios.get('/api/classes/join',{params:selectedUser})
+    .then(response=>response.data);
+    //console.log(request)
+    return {
+        type:SELECT_USER,
+        payload:request
+    }
+    /*axios.get의 return값을 넘겨줬는데 무슨일이야*/
+}
 
 export const clickMenuOpen = value => ({
     type: CLICK_OPEN_MENU,
@@ -25,7 +37,6 @@ export const clickMenuOpen = value => ({
 export function auth(){
     const request = axios.get('/api/users/auth')
     .then(response => response.data);
-
     return {
         type: AUTH_USER,
         payload: request
@@ -59,9 +70,10 @@ export function registerUser(dataToSubmit) {
 
 }
 export function logoutUser(){
+    console.log('_actions/logoutUser1')
     const request = axios.get('/api/users/logout')
-    .then(response => response.data);
-    
+    .then(response => response);
+
     return {
         type: LOGOUT_USER,
         payload: request

@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch ,useSelector} from "react-redux";
-import {selectClass} from '../../redux/_actions';
+import {selectClass,selectUser} from '../../redux/_actions';
 import ClassCodeModal from "../../components/Modal/ClassCodeModal";
 
 function ClassCard (props){
   const dispatch = useDispatch();
   let user = useSelector(state => state.user);
-
+  console.log(user)
     return (
       <div className="col-lg-3">
         {/*<!-- Dropdown Card Example -->*/}
@@ -15,7 +15,9 @@ function ClassCard (props){
           <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 className="m-0 font-weight-bold text-primary">
               <i className="fas fa-star"></i>
-              <Link to={`/classes/${props.id}`} onClick={()=>dispatch(selectClass({classId:props.id}))}>{props.title}</Link>
+              <Link to={`/classes/${props.id}`} 
+              onClick={()=>{dispatch(selectClass({classId:props.id}));dispatch(selectUser({classId:props.id,userId:user.userData._id}))}}>
+                {props.title}</Link>
             </h6>
             {/*<!--꿈나무반 card 시작-->*/}
             <div className="dropdown no-arrow">

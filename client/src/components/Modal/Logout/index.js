@@ -2,20 +2,34 @@ import React from 'react'
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { Dialog, DialogActions, DialogContent,DialogTitle } from '@material-ui/core';
-
+import {  useDispatch } from "react-redux";
+import {logoutUser} from '../../../redux/_actions'
 function LogoutModal(props) {
     const { onClose, open } = props;
-    console.log(props.open)
+    //console.log(props.open)
+    const dispatch = useDispatch()
+    
     const LogoutEvent = () => {
        // console.log('LogoutEvent')
-        axios.get('/api/users/logout').then(response => {
+       /*axios.get('/api/users/logout').then(response => {
+           //console.log(response)
+            if (response.status === 200) {
+                console.log(response)
+                props.history.push("/");
+            } else {
+                alert('Log Out Failed')
+            }
+        });
+         */
+        dispatch(logoutUser()).then(response => {
+            console.log('3',response)
             if (response.status === 200) {
                 //console.log(response)
                 props.history.push("/");
             } else {
                 alert('Log Out Failed')
             }
-        });
+        })
     }
     const handleClose = () => {
         onClose();

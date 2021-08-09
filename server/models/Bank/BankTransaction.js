@@ -7,9 +7,9 @@ const mongoose =require('mongoose')
 
 const banktransactionSchema = mongoose.Schema({
    accountId:{
-
-   },
-   transactionType:{/*예금, 출금*/
+    type:mongoose.Schema.Types.ObjectId,
+    },
+   transactionType:{/*입금:0, 출금:1*/
 
    },
    amount:{
