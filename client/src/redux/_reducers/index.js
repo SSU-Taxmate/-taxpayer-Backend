@@ -17,4 +17,3 @@ export const Reducers = persistReducer(persistConfig,combineReducers({
     classUser,
     menuState: MenuOpenReducer
 }));
-

@@ -1,18 +1,65 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import { bindActionCreators } from "redux";
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { clickMenuOpen } from '../../../redux/_actions';
+import { Link } from "react-router-dom";
 
-class Sidebar extends Component {
-  render() {
-    const { clickMenuOpen, toggled } = this.props;
-    return (
-      <ul className={toggled ? 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled' : 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'} id="accordionSidebar">
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: "auto",
+  },
+});
 
+export default function Sidebar(props) {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+  const { clickMenuOpen, toggled } = props;
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, true)}
+      onKeyDown={toggleDrawer(anchor, true)}
+    >
+      <ul
+        className={
+          toggled
+            ? "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
+            : "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        }
+        id="accordionSidebar"
+      >
         {/* <!-- Sidebar - Brand --> */}
-        <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/classes">
+        <Link
+          className="sidebar-brand d-flex align-items-center justify-content-center"
+          to="/classes"
+        >
           <div className="sidebar-brand-icon rotate-n-15">
             <i className="fas fa-piggy-bank"></i>
           </div>
@@ -26,23 +73,49 @@ class Sidebar extends Component {
         <li className="nav-item">
           <Link className="nav-link" to="/classes/:classId">
             <i className="fas fa-home"></i>
-            <span>학급 메인</span></Link>
+            <span>학급 메인</span>
+          </Link>
         </li>
 
         {/* <!-- Divider --> */}
         <hr className="sidebar-divider my-0" />
         <li className="nav-item">
-          <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_class_setting" aria-controls="collapseTwo">
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapse_class_setting"
+            aria-controls="collapseTwo"
+          >
             <i className="fas fa-fw fa-cog"></i>
             <span>클래스 설정</span>
           </a>
-          <div id="collapse_class_setting" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div
+            id="collapse_class_setting"
+            className="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/classes/:classId/set-up/student">학생관리</Link>
-              <Link className="collapse-item" to="/classes/:classId/set-up/class">학급관리</Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/set-up/student"
+              >
+                학생관리
+              </Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/set-up/class"
+              >
+                학급관리
+              </Link>
               <h6 className="collapse-header">학생</h6>
-              <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산/직업</Link>
-            
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/real_estate_setting"
+              >
+                부동산/직업
+              </Link>
             </div>
           </div>
         </li>
@@ -51,45 +124,103 @@ class Sidebar extends Component {
         <hr className="sidebar-divider my-0" />
         {/* <!-- Nav Item - Pages Collapse Menu --> */}
         <li className="nav-item">
-          <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_bank" aria-controls="collapseTwo">
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapse_bank"
+            aria-controls="collapseTwo"
+          >
             <i className="fas fa-university"></i>
             <span>은행</span>
           </a>
-          <div id="collapse_bank" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div
+            id="collapse_bank"
+            className="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
               <h6 className="collapse-header">중앙은행</h6>
-              <Link className="collapse-item" to="/bank_statics">통계</Link>
-              <Link className="collapse-item" to="/set-up/bank">설정</Link>
+              <Link className="collapse-item" to="/bank_statics">
+                통계
+              </Link>
+              <Link className="collapse-item" to="/set-up/bank">
+                설정
+              </Link>
               <h6 className="collapse-header">신용등급</h6>
-              <Link className="collapse-item" to="/classes/:classId/credit">신용등급</Link>
+              <Link className="collapse-item" to="/classes/:classId/credit">
+                신용등급
+              </Link>
             </div>
           </div>
-        
         </li>
         <li className="nav-item">
-          <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_stock" aria-controls="collapseTwo">
-          <i className="fas fa-hand-holding-usd"></i>
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapse_stock"
+            aria-controls="collapseTwo"
+          >
+            <i className="fas fa-hand-holding-usd"></i>
             <span>증권거래소</span>
           </a>
-          <div id="collapse_stock" className='collapse' aria-labelledby="collapseTwo" data-parent="#accordionSidebar">
+          <div
+            id="collapse_stock"
+            className="collapse"
+            aria-labelledby="collapseTwo"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
               <h6 className="collapse-header">증권거래소</h6>
-              <Link className="collapse-item" to="/classes/:classId/stock">호가창</Link>
-              <Link className="collapse-item" to="/classes/:classId/stock-account">내계좌</Link>
-              <Link className="collapse-item" to="/classes/:classId/set-up/stock">설정</Link>
+              <Link className="collapse-item" to="/classes/:classId/stock">
+                호가창
+              </Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/stock-account"
+              >
+                내계좌
+              </Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/set-up/stock"
+              >
+                설정
+              </Link>
             </div>
           </div>
         </li>
         {/* <!-- Nav Item - Utilities Collapse Menu --> */}
         <li className="nav-item">
-          <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_market" aria-expanded="true" aria-controls="collapseUtilities">
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapse_market"
+            aria-expanded="true"
+            aria-controls="collapseUtilities"
+          >
             <i className="fas fa-store"></i>
             <span>시장</span>
           </a>
-          <div id="collapse_market" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div
+            id="collapse_market"
+            className="collapse"
+            aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/classes/:classId/real_estate_setting">부동산</Link>
-              <Link className="collapse-item" to="/classes/:classId/market">매점</Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/real_estate_setting"
+              >
+                부동산
+              </Link>
+              <Link className="collapse-item" to="/classes/:classId/market">
+                매점
+              </Link>
             </div>
           </div>
         </li>
@@ -98,43 +229,89 @@ class Sidebar extends Component {
         <hr className="sidebar-divider" />
 
         {/* <!-- Heading --> */}
-        <div className="sidebar-heading">
-          행정부
-        </div>
+        <div className="sidebar-heading">행정부</div>
 
         {/* <!-- Nav Item - Pages Collapse Menu --> */}
         <li className="nav-item">
-          <a className='nav-link collapsed' href="#" data-toggle="collapse" data-target="#collapse_revenue" aria-controls="collapseTwo">
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapse_revenue"
+            aria-controls="collapseTwo"
+          >
             <i className="fas fa-coins"></i>
             <span>국세청</span>
           </a>
-          <div id="collapse_revenue" className='collapse' aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div
+            id="collapse_revenue"
+            className="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
-              <Link className="collapse-item" to="/classes/:classId/national-tax">나라 통계</Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/national-tax"
+              >
+                나라 통계
+              </Link>
               <h6 className="collapse-header">학생</h6>
-              <Link className="collapse-item" to="/classes/:classId/tax-invoice">나의 세금</Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/tax-invoice"
+              >
+                나의 세금
+              </Link>
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/classes/:classId/set-up/tax">세금 설정</Link>
-
+              <Link className="collapse-item" to="/classes/:classId/set-up/tax">
+                세금 설정
+              </Link>
             </div>
           </div>
         </li>
 
         {/* <!-- Nav Item - Utilities Collapse Menu --> */}
         <li className="nav-item">
-          <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStats" aria-expanded="true" aria-controls="collapseStats">
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseStats"
+            aria-expanded="true"
+            aria-controls="collapseStats"
+          >
             <i className="fas fa-chart-line"></i>
             <span>통계청</span>
           </a>
-          <div id="collapseStats" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div
+            id="collapseStats"
+            className="collapse"
+            aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
-
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/classes/:classId/national-stats">나라 통계</Link>
-              <Link className="collapse-item" to="/classes/:classId/set-up/stats">숙제 관리</Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/national-stats"
+              >
+                나라 통계
+              </Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/set-up/stats"
+              >
+                숙제 관리
+              </Link>
 
               <h6 className="collapse-header">학생</h6>
-              <Link className="collapse-item" to="/classes/:classId/personal-stats">나의 통계</Link>
+              <Link
+                className="collapse-item"
+                to="/classes/:classId/personal-stats"
+              >
+                나의 통계
+              </Link>
             </div>
           </div>
         </li>
@@ -143,22 +320,33 @@ class Sidebar extends Component {
         <hr className="sidebar-divider" />
 
         {/* <!-- Heading --> */}
-        <div className="sidebar-heading">
-          입법부
-        </div>
+        <div className="sidebar-heading">입법부</div>
 
         {/* <!-- Nav Item - Charts --> */}
-       
+
         <li className="nav-item">
-          <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaws" aria-expanded="true" aria-controls="collapseLaws">
+          <a
+            className="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseLaws"
+            aria-expanded="true"
+            aria-controls="collapseLaws"
+          >
             <i className="fas fas fa-balance-scale"></i>
             <span>법률</span>
           </a>
-          <div id="collapseLaws" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div
+            id="collapseLaws"
+            className="collapse"
+            aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar"
+          >
             <div className="bg-white py-2 collapse-inner rounded">
-
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/classes/:classId/law">법</Link>
+              <Link className="collapse-item" to="/classes/:classId/law">
+                법
+              </Link>
             </div>
           </div>
         </li>
@@ -166,22 +354,21 @@ class Sidebar extends Component {
         <li className="nav-item">
           <Link className="nav-link" to="/classes/:classId/lawmaking">
             <i className="fas fa-vote-yea"></i>
-            <span>국회</span></Link>
+            <span>국회</span>
+          </Link>
         </li>
         {/* <!-- Divider --> */}
         <hr className="sidebar-divider" />
 
         {/* <!-- Heading --> */}
-        <div className="sidebar-heading">
-          사법부
-        </div>
+        <div className="sidebar-heading">사법부</div>
 
         {/* <!-- Nav Item - Tables --> */}
         <li className="nav-item">
           <Link className="nav-link" to="/classes/:classId/penalty">
             <i className="fas fa-gavel"></i>
             <span>벌금</span>
-            </Link>
+          </Link>
         </li>
 
         {/* <!-- Divider --> */}
@@ -189,18 +376,33 @@ class Sidebar extends Component {
 
         {/* <!-- Sidebar Toggler (Sidebar) --> */}
         <div className="text-center d-none d-md-inline">
-          <button onClick={() => { clickMenuOpen() }} className="rounded-circle border-0" id="sidebarToggle"></button>
+          <button
+            onClick={() => {
+              clickMenuOpen();
+            }}
+            className="rounded-circle border-0"
+            id="sidebarToggle"
+          ></button>
         </div>
+      </ul>
+    </div>
+  );
+  const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({ clickMenuOpen }, dispatch);
 
-      </ul>)
-  }
+  const mapStateToProps = (store) => ({
+    toggled: store.menuState.menuOpen,
+  });
+  return (
+    <React.Fragment>
+      <Button onClick={toggleDrawer("left", true)}>{"left"}</Button>
+      <Drawer
+        anchor={"left"}
+        open={state["left"]}
+        onClose={toggleDrawer("left", false)}
+      >
+        {list("left")}
+      </Drawer>
+    </React.Fragment>
+  );
 }
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickMenuOpen }, dispatch);
-
-const mapStateToProps = store => ({
-  toggled: store.menuState.menuOpen
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
