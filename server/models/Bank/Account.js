@@ -1,7 +1,7 @@
 const mongoose =require('mongoose')
 /*
     Account
-    : Student 각각이 가지고 있는 Account 
+    : Student 각각이 가지고 있는 Account 1개
 */
 const accountSchema = mongoose.Schema({
     studentId:{/*반드시 JoinedUser*/
@@ -12,14 +12,10 @@ const accountSchema = mongoose.Schema({
         type:String,
         default:function(){return'학생 계좌'+this.studentId}
     },
-    productId:{//예금(deposit)상품
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'DepositProduct',
-    },
     currentBalance:{
         type:Number,
         default:0
-    },
+    }
 })
 const Account = mongoose.model('Account', accountSchema)
 
@@ -32,10 +28,6 @@ const classaccountSchema = mongoose.Schema({
     classId:{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Class'
-    },
-    name:{
-        type:String,
-        default:function(){return'클래스 계좌'+this.classId}
     },
     currentBalance:{
         type:Number,

@@ -33,6 +33,7 @@ function MyStatsDetail() {
             setIsLoading(true);
             try {
                 const result = await axios.get('/api/homeworks/student',{parmas:{studentId:'joinedUser._id'}});
+                console.log(result.data)
                 setData(result.data);
                 setColumns(result.data)
             } catch (error) {

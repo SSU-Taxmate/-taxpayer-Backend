@@ -10,6 +10,7 @@ import {
 /*selectClass - ClassCard에서 사용함.*/
 export function selectClass (selectedClass){
     //console.log('_actions/',selectedClass)
+   
     return{
         type:SELECT_CLASS,
         payload:selectedClass

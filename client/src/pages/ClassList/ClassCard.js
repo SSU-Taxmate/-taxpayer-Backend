@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import {selectClass} from '../../redux/_actions';
 import ClassCodeModal from "../../components/Modal/ClassCodeModal";
 
 function ClassCard (props){
   const dispatch = useDispatch();
+  let user = useSelector(state => state.user);
+
     return (
       <div className="col-lg-3">
         {/*<!-- Dropdown Card Example -->*/}

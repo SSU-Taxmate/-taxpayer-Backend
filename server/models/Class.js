@@ -50,10 +50,7 @@ const joineduserSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Job'
     },
-    bankId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Bank'
-    }
+    
 })
 const JoinedUser=mongoose.model('JoinedUser',joineduserSchema);
 module.exports = { Class ,JoinedUser}

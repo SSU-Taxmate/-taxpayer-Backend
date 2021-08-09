@@ -3,6 +3,7 @@
 */
 const express = require('express');
 const { startSession } = require('mongoose');
+const { ClassAccount } = require('../models/Bank/Account');
 const { Class, JoinedUser } = require('../models/Class');
 const { Tax } = require('../models/Tax');
 
@@ -26,7 +27,10 @@ router.post('/', async (req, res) => {
     //console.log('cTax',cTax)
     const taxres = await cTax.save({ session })
     //console.log(taxres)
-  
+    // 3) Class Account 생성
+    const cAccount=new ClassAccount({classId:cClass._id});
+    console.log(cAccount)
+    const accountres=await cAccount.save({session});
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 끝
@@ -75,7 +79,7 @@ router.get('/', (req, res) => {
 */
 router.put('/', (req, res) => {
   //console.log(req.body)
-  Class.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+  Class.updateOne({ _id: req.body._id }, { $set: req.body },(err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true
