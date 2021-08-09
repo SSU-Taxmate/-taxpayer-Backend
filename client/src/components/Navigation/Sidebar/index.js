@@ -1,17 +1,52 @@
-import React, { Component } from "react";
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import { bindActionCreators } from "redux";
+
 import { Link } from "react-router-dom";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { clickMenuOpen } from "../../../redux/_actions";
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: "auto",
+  },
+});
 
-import { Drawer } from "@material-ui/core";
+export default function Sidebar(props) {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+  const { clickMenuOpen, toggled } = props;
 
-class Sidebar extends Component {
-  render() {
-    const { clickMenuOpen, toggled } = this.props;
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
 
-    return (
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, true)}
+      onKeyDown={toggleDrawer(anchor, true)}
+    >
       <ul
         className={
           toggled
@@ -350,15 +385,24 @@ class Sidebar extends Component {
           ></button>
         </div>
       </ul>
-    );
-  }
+    </div>
+  );
+  const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({ clickMenuOpen }, dispatch);
+
+  const mapStateToProps = (store) => ({
+    toggled: store.menuState.menuOpen,
+  });
+  return (
+    <React.Fragment>
+      <Button onClick={toggleDrawer("left", true)}>{"left"}</Button>
+      <Drawer
+        anchor={"left"}
+        open={state["left"]}
+        onClose={toggleDrawer("left", false)}
+      >
+        {list("left")}
+      </Drawer>
+    </React.Fragment>
+  );
 }
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ clickMenuOpen }, dispatch);
-
-const mapStateToProps = (store) => ({
-  toggled: store.menuState.menuOpen,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
