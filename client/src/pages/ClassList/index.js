@@ -5,9 +5,9 @@ import Topbar from "../../components/Navigation/Topbar";
 import ScrollToTop from "../../components/Scroll";
 import PageHeading from "../../components/PageHeading";
 import ClassListDetail from "./ClassListDetail";
-import Footer from '../../components/Footer'
-class ClassList extends Component {
+import Footer from '../../components/Footer';
 
+class ClassList extends Component {
   render() {
     return (
       <div>

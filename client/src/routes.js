@@ -59,77 +59,77 @@ const Routes = () => (
       <Route
         exact
         path="/classes/:classId/set-up/student"
-        component={StudentSetting}
+        component={Auth(StudentSetting,true,true)}
       />
       <Route
         exact
         path="/classes/:classId/set-up/class"
-        component={ClassSetting}
+        component={Auth(ClassSetting,true,true)}
       />
 
       {/* ***************  경제  ************** */}
 
       {/*은행*/}
-      <Route exact path="/classes/:classId/bank" component={Bank} />
-      <Route exact path="/classes/:classId/bank/deposit" component={Deposit} />
+      <Route exact path="/classes/:classId/bank" component={Auth(Bank,true)} />
+      <Route exact path="/classes/:classId/bank/deposit" component={Auth(Deposit,true)} />
 
       {/* 증권 거래소 */}
-      <Route exact path="/classes/:classId/stock" component={TradeStock} />
-      <Route exact path="/classes/:classId/set-up/stock" component={SettingStock} />
-      <Route exact path='/classes/:classId/stock-account' component={AccountStock}/>
+      <Route exact path="/classes/:classId/stock" component={Auth(TradeStock,true)} />
+      <Route exact path="/classes/:classId/set-up/stock" component={Auth(SettingStock,true)}/>
+      <Route exact path='/classes/:classId/stock-account' component={Auth(AccountStock,true)}/>
       {/* ***************  행정부  ************** */}
       {/* 국세청 */}
-      <Route exact path="/classes/:classId/national-tax" component={NationalTax} />
-      <Route exact path="/classes/:classId/set-up/tax" component={SettingTax} />
-      <Route exact path="/classes/:classId/tax-invoice" component={MyTax} />
+      <Route exact path="/classes/:classId/national-tax" component={Auth(NationalTax,true)} />
+      <Route exact path="/classes/:classId/set-up/tax" component={Auth(SettingTax,true)} />
+      <Route exact path="/classes/:classId/tax-invoice" component={Auth(MyTax,true)} />
 
       {/*법*/}
-      <Route exact path="/classes/:classId/law" component={Law} />
-      <Route exact path="/classes/:classId/lawmaking" component={Congress} />
+      <Route exact path="/classes/:classId/law" component={Auth(Law,true)}/>
+      <Route exact path="/classes/:classId/lawmaking" component={Auth(Congress,true)}/>
 
       {/* 통계청 */}
 
       <Route
         exact
         path="/classes/:classId/national-stats"
-        component={NationStats}
+        component={Auth(NationStats,true)}
       />
       <Route
         exact
         path="/classes/:classId/set-up/stats"
-        component={SettingHw}
+        component={Auth(SettingHw,true)}
       />
 
       <Route
         exact
         path="/classes/:classId/personal-stats"
-        component={MyStats}
+        component={Auth(MyStats,true)}
       />
 
       {/* ***************  사법부  ************** */}
       {/* 벌금 */}
-      <Route exact path="/classes/:classId/penalty" component={Penalty} />
+      <Route exact path="/classes/:classId/penalty" component={Auth(Penalty,true)} />
 
       {/*신용등급 */}
-      <Route exact path="/classes/:classId/credit" component={Credit} />
+      <Route exact path="/classes/:classId/credit" component={Auth(Credit,true)} />
 
       {/* 시장 */}
 
-      <Route exact path="/classes/:classId/market" component={Market} />
+      <Route exact path="/classes/:classId/market" component={Auth(Market,true)} />
       <Route
         exact
         path="/classes/:classId/market/marketproduct"
-        component={MarketProduct}
+        component={Auth(MarketProduct,true)}
       />
       <Route
         exact
         path="/classes/:classId/real_estate_setting"
-        component={EstateSetting}
+        component={Auth(EstateSetting,true)}
       />
 
       {/* 그 외 */}
-      <Route path="/charts" component={Charts} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/charts" component={Auth(Charts,true)} />
+      <Route path="/dashboard" component={Auth(Dashboard,true)} />
       <Route path="/charts" component={Charts} />
       <Route path="*" component={NotFound} />
     </Switch>

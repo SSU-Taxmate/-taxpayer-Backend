@@ -102,7 +102,7 @@ export default function TransferList() {
   );
 
   return (
-    <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
+    <Grid container spacing={2} justifyContent="center" alignItems="center" className={classes.root}>
       
       <Grid item>
       <h6>사용 가능한 주식</h6>

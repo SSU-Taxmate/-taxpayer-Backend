@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 import Draft from '../../../../components/Editor';
-const moment=require('moment-timezone');
+import moment from 'moment-timezone'
 
 function EditLawDialog(props) {
     const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ function EditLawDialog(props) {
     const handleSubmit = (e) => {
         //e.preventDefault();
         
-        axios.put('/api/classes/:classId/laws', editedLaw)
+        axios.put('/api/laws', editedLaw)
             .then(function (response) {
                 console.log(response);
             })
@@ -36,7 +36,7 @@ function EditLawDialog(props) {
     
     const onChange = (content) => {
         //console.log(content)
-        setEditedLaw({"_id":editedLaw._id, "title": editedLaw.title, 'content': content ,"issuedate":getDate(new Date())});
+        setEditedLaw({"_id":editedLaw._id, "title": editedLaw.title, 'content': content });
     };
 
     return (
@@ -53,7 +53,7 @@ function EditLawDialog(props) {
                         <label className="mr-2 my-1" htmlFor={`${editedLaw.title}lawtitle`}>제목</label>
                         <div className="form-inline mb-3">
                             <input readOnly={true} type="text" className="form-control" id={`${editedLaw.title}lawtitle`} defaultValue={editedLaw.title}></input>
-                            <sub className="pl-3 mt-3">시행일 : {getDate(editedLaw.issuedate).split('T')[0]} {getDate(editedLaw.issuedate).split('T')[1].split('+')[0]}</sub>{/* */}
+                            <sub className="pl-3 mt-3">개정일 : {getDate(editedLaw.updatedAt).split('T')[0]} {getDate(editedLaw.updatedAt).split('T')[1].split('+')[0]}</sub>{/* */}
                         </div>
 
                         <label className="mr-2 my-1" htmlFor="lawcontent">내용</label>

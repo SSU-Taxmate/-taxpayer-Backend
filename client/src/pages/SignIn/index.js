@@ -62,7 +62,7 @@ function SignIn(props) {
                             email: values.email,
                             password: values.password
                           };
-                          //console.log(values)
+                          //console.log('login 원하는 user정보',dataToSubmit)
                           dispatch(loginUser(dataToSubmit))
                             .then(response => {
                               console.log(response)

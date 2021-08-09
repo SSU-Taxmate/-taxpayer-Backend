@@ -4,6 +4,8 @@ import CreditTable from "./CreditTable";
 import CreditStudentTable from "./CreditShow";
 import CardBasic from "../../components/Cards/Basic";
 import ChartPie from "../../components/Charts/Pie";
+
+import "../../styles/css/credit.css";
 function CreditDetail() {
   const credit_pie_data = {
     labels: [
@@ -43,14 +45,7 @@ function CreditDetail() {
           <div className="col col-sm-6">
             <CreditStudentTable></CreditStudentTable>
           </div>
-          <div
-            className="col col-sm-5"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: " space-around",
-            }}
-          >
+          <div className="col col-sm-5">
             <ChartPie
               title="신용등급 현황"
               id="신용등급 현황"

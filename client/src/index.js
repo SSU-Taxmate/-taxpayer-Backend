@@ -14,7 +14,13 @@ import './styles/scss/sb-admin-2.scss';
 import { Provider } from 'react-redux';
 import { Store } from './redux/store';
 
+
+import { PersistGate } from 'redux-persist/integration/react';
+import {persistStore}from 'redux-persist';
+
 ReactDOM.render(
     <Provider store={Store}>
+        <PersistGate loading={null} persistor={persistStore(Store)}>
         <App />
+        </PersistGate>
     </Provider>, document.getElementById('root'));

@@ -1,5 +1,7 @@
 const mongoose =require('mongoose')
-
+/*
+    Coupon
+*/
 const couponSchema = mongoose.Schema({
     issuedate:{
         type:Date,
@@ -18,5 +20,21 @@ const couponSchema = mongoose.Schema({
 })
 
 const Coupon = mongoose.model('Coupon', couponSchema)
+/*
+    ClassCoupon
+    : Class와 Coupon을 연결짓는 Schema
+*/
+const classcouponSchema = mongoose.Schema({
+    classId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class'
+    },
+    couponId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Coupon'
+    }
+})
 
-module.exports = {Coupon }
+const ClassCoupon = mongoose.model('ClassCoupon', classcouponSchema)
+
+module.exports = {Coupon ,ClassCoupon}

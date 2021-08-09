@@ -1,44 +1,18 @@
-const mongoose =require('mongoose')
-/*세금 설정 */
-const taxRateSchema=mongoose.Schema({
-    typename : {
-        type:String,
+const mongoose = require('mongoose')
+/*
+    Tax
+*/
+const taxSchema = mongoose.Schema({
+    taxlist:{
+        type:Array,
+        default: [0,0,0,0,0,0,0]//소득세,부동산세,자리세,전기세,인지세,부가가치세,증권거래세
     },
-    valtype:{
-        type:String,
-    },
-    value:{
-        type:Number
+    classId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Class',
+        required:true
     }
 })
-const setTaxSchema=mongoose.Schema({
-   setTax:[taxRateSchema]
-   ,date:{
-       type:Date,
-       default:Date.now
-   }
-})
-const SetTax = mongoose.model('SetTax', setTaxSchema)
-/* 학생 세금 */
-const taxSchema = mongoose.Schema({
-    /*TaxType_id:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'TaxType'
-   },*/
-    date:{
-        type:Date,
-        default:Date.now
-    },
-    typename:{
-        type:String,
-    },
-    money:{
-        type:Number,
-        default:false
-    },
-    
-})
-
 const Tax = mongoose.model('Tax', taxSchema)
 
-module.exports = {Tax,SetTax }
+module.exports = { Tax }

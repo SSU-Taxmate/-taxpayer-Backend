@@ -1,4 +1,4 @@
-/* auth 기능 */
+/* auth 기능 - client 측면에서*/
 import React, { useEffect } from 'react';
 import { auth } from '../../src/redux/_actions/index';
 import { useSelector, useDispatch } from "react-redux";
@@ -8,19 +8,19 @@ export default function (SpecificComponent, option, adminRoute = null) {
     //adminRoute - admin user만 들어가기 원하는 페이지 
 
     function AuthenticationCheck(props) {
-
+        
         let user = useSelector(state => state.user);
         const dispatch = useDispatch();
 
         useEffect(() => {
             dispatch(auth()).then(response => {
-                console.log('client/src/hoc/auth.js',response)
+                //console.log('client/src/hoc/auth.js',response)
                 if (!response.payload.isAuth) {
                     if (option) {
                         props.history.push('/')
                     }
                 } else {
-                    if (adminRoute && !response.payload.isAdmin) {
+                    if (adminRoute && !response.payload.isAdmin) {/*0이면 isAdmin:True,  */
                         props.history.push('/classes')
                     }
                     else {

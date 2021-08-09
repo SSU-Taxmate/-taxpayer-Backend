@@ -14,7 +14,6 @@ class SettingTax extends Component {
   }
 
   render() {
-    const data={data:['1','2','3','4','5'],useTax:true}
 
     return (
       <div>

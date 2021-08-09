@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 //Navigation
 import Sidebar from '../../components/Navigation/Sidebar';
 import Topbar from '../../components/Navigation/Topbar';
@@ -7,12 +6,10 @@ import Footer from '../../components/Footer'
 import PageHeading from '../../components/PageHeading';
 import ClassMainDetail from './ClassMainDetail';
 import ScrollToTop from '../../components/Scroll';
-class ClassMain extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
 
-  render() {
+
+function ClassMain () {
+
     return (
       <div>
         {/* <!-- Page Wrapper --> */}
@@ -27,14 +24,13 @@ class ClassMain extends Component {
 
             {/* <!-- Main Content --> */}
             <div id="content">
-
+              
               {/* <!-- Topbar --> */}
               <Topbar />
               {/* <!-- End of Topbar --> */}
 
               {/* <!-- Begin Page Content --> */}
               <div className="container-fluid">
-
                 {/* <!-- Page Heading --> */}
 
                 <PageHeading title="클래스 Dashboard" />
@@ -64,7 +60,7 @@ class ClassMain extends Component {
           <ScrollToTop/>
         </div>
     )
-  }
+ 
 }
 
 export default ClassMain;

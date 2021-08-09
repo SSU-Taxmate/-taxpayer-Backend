@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
-
+/*
+    Class
+*/
 const classSchema = mongoose.Schema({
     /*참가코드*/
     entrycode: {
-        type: Number,
+        type: String,
     },
     name: {
         type: String,
@@ -17,37 +19,32 @@ const classSchema = mongoose.Schema({
         type: String,
         default: ""
     },
-    year: {
+    createdAt: {
         type: Date,
+        default: Date.now
     },
-    teacher: {
+    teacherId: {/*owned*/
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required:true,
     },
-    students: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    settings: {/*클래스 세팅 정보*/
-        updatedate: {
-            type: Date,
-        },
-        SetTax_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'SetTax'
-        },
-        stocks: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Stock'
-        }],
-        jobs: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Job'
-        }]
-    }
 
 })
-
 const Class = mongoose.model('Class', classSchema)
 
-module.exports = { Class }
+/*
+    JoinClass
+    : Class와 Student를 연결짓는 Schema
+*/
+const joinClassSchema = mongoose.Schema({
+    classId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Class'
+    },
+    studentId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
+})
+const JoinClass=mongoose.model('JoinClass',joinClassSchema);
+module.exports = { Class ,JoinClass}

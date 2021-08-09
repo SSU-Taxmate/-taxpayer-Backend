@@ -7,6 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent'
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 
@@ -14,6 +15,7 @@ export default function AddLawDialog() {
     const [lawtitle,setlawtitle]=useState('')
     const [lawcontent, setlawcontent] = useState({})//{title:'',content:''}
     const [open, setOpen] = useState(false);
+    let classData = useSelector(state => state.classInfo.classData);
 
     const handleOpen = () => {
         setOpen(true);
@@ -24,7 +26,7 @@ export default function AddLawDialog() {
     const handleSubmit = (e) => {
         //e.preventDefault();
     
-        axios.post('/api/classes/:classId/laws',{"title":lawtitle,"content":lawcontent})//,"issuedate":issuedate(자동으로 현재시간)
+        axios.post(`/api/laws`,{"classId":classData.classId,"title":lawtitle,"content":lawcontent})
         .then(function (response) {
             console.log(response);
         })

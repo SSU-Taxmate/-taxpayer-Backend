@@ -1,44 +1,62 @@
+/* base URL
+  : /api/law
+*/
 const express = require('express');
 const { Law } = require('../models/Law');
 const router = express.Router();
-//create
-router.post('/', (req, res) => {
-  const laws=new Law(req.body);
-  //console.log(laws)
+//create - classlaw에도 저장을 해야 함.
+/*
+  [정상] Law 생성
+  : Law
+*/
+router.post('/',  (req, res) => {
+  //console.log('Law',req.body)
+  const laws = new Law(req.body);
   laws.save((err, doc) => {
+    if (err) return res.json({ success: false, err })
+    return res.status(200).json({success: true})
+  })
+})
+/*
+  [정상] Class별 Law 보여주기
+  : Law
+    - req.query {classId:}
+*/
+router.get('/', (req, res) => {
+  //console.log('/law',req.query)
+  Law.find(req.query,(err,classlaw)=>{
+    const result=classlaw
+    //console.log(result)
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+})
+/*
+  [정상] Law수정
+  : Law
+*/
+router.put('/', (req, res) => {
+  //console.log('update',req.body)
+  Law.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
-        success: true
-    });
-});
-  })
-//read
-router.get('/', (req, res) => {
-    Law.find({},function(err,law){
-    //console.log('read',law)
-    const result=law
-    if (err)return res.status(500).json({error: err});
-    res.json(result)
-  }) /**/
-  })
-//update
-router.put('/', (req, res) => {/*/:lawId 로 바꿔야 함 */
-  const ulaw=new Law(req.body);
-  //console.log('update',ulaw)
-  Law.updateOne({_id:ulaw._id},ulaw,(err,doc)=>{
-    if(err) return res.json({success:false,err});
-    return res.status(200).json({
-      success:true
+      success: true
     })
   })
 
 })
-//delete - 되기는 하지만, 권한을 확인하는 코드를 추가
-router.delete('/',(req,res)=>{
- Law.deleteOne(req.query, function (err) {
-    if (err) return handleError(err);
-    // deleted at most one tank document
-  });
+/*
+  [정상] Law 삭제 : deleteOne
+    - req.query {_id:}
+*/
+router.delete('/', (req, res) => {
+  console.log('/law',req.query)
+  Law.deleteOne(req.query,(err,doc)=>{
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true
+    })
+  })
 })
 
 module.exports = router;
