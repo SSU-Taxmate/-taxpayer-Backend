@@ -5,6 +5,7 @@ import{
     LOGOUT_USER
 } from '../_actions/ActionTypes'
 
+import storage from 'redux-persist/lib/storage';
 
 export default function user(state={},action){
     //console.log('_reducers/user_reducer/user',state,action)
@@ -17,9 +18,8 @@ export default function user(state={},action){
         case AUTH_USER:
             return {...state, userData:action.payload} /*user의 Data가 모두 들어있음 */
         case LOGOUT_USER:
-            //storage.removeItem('persist:root')
-            //logout후 axios로 전달받은 결과200을 잘 보내야 함
-            console.log('LOGOUTUSER2')
+            storage.removeItem('persist:root')
+            //console.log('LOGOUTUSER2',action.payload)
             return action.payload
         default:
             return state;

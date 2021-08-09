@@ -70,7 +70,7 @@ export function registerUser(dataToSubmit) {
 
 }
 export function logoutUser(){
-    console.log('_actions/logoutUser1')
+    console.log('_actions/logoutUser:LOGOUTUSER1')
     const request = axios.get('/api/users/logout')
     .then(response => response);
 
