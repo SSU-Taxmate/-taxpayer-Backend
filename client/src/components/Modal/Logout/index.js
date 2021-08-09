@@ -11,18 +11,9 @@ function LogoutModal(props) {
     
     const LogoutEvent = () => {
        // console.log('LogoutEvent')
-       /*axios.get('/api/users/logout').then(response => {
-           //console.log(response)
-            if (response.status === 200) {
-                console.log(response)
-                props.history.push("/");
-            } else {
-                alert('Log Out Failed')
-            }
-        });
-         */
         dispatch(logoutUser()).then(response => {
-            console.log('3',response)
+            //console.log('LOGOUTUSER3',response.payload)
+            response=response.payload
             if (response.status === 200) {
                 //console.log(response)
                 props.history.push("/");
