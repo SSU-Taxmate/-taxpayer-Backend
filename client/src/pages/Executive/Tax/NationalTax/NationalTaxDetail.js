@@ -18,7 +18,7 @@ const NationalTaxDetail = () => {
       setIsLoading(true);
 
       try {
-        const result = await axios.get('/api/tax/nation');
+        const result = await axios.get('/api/tax/nation');//가짜데이터
 
         setData(result.data['data']);
         setColumns(result.data['columns'])

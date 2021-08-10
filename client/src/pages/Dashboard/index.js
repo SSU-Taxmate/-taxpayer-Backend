@@ -11,11 +11,7 @@ import PageHeading from '../../components/PageHeading';
 import ScrollToTop from '../../components/Scroll'
 
 class Dashboard extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-    axios.get('/api/hello')
-    .then(res=>{console.log(res.data)})
-  }
+
 
   render() {
     return (

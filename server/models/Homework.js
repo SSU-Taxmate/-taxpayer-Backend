@@ -7,20 +7,12 @@ const homeworkSchema = mongoose.Schema({
         type: String,
         maxlength: 50
     },
-    date:{
-        type:Date,
-       // default:Date.now
-    },
     detail:{
         type:String,
     },
     expDate:{
         type: Date,
-        default:Date.now
-    },
-    withinDeadline:{//과제기간(true), 과제제출후(false)
-        type:Boolean,
-        default:true
+        default:() => new Date(+new Date() + 7*24*60*60*1000)
     },
     classId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -43,9 +35,13 @@ const grantedhomeworkSchema= mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref: 'Homework'
     },
-    submission:{//제출여부
+    submission:{//제출여부, true, false,
         type:Boolean,
-        default:false
+        default:null
+    },
+    withinDeadline:{//기한 내 제출,true,false,null
+        type:Boolean,
+        default:null
     },
     coupon_id:{
         type: mongoose.Schema.Types.ObjectId, 

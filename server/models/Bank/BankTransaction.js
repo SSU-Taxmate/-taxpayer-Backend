@@ -6,14 +6,22 @@
 const mongoose =require('mongoose')
 
 const banktransactionSchema = mongoose.Schema({
-   accountId:{
-    type:mongoose.Schema.Types.ObjectId,
+   accountId:{/*어떤 통장에서 */
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Account',
+        require:true
     },
-   transactionType:{/*입금:0, 출금:1*/
-
+   transactionType:{/*어떤 행동이 입금:0, 출금:1*/
+        type:Boolean,
+        require:true
    },
-   amount:{
-
+   amount:{/* 얼마나 */
+    type:Number,
+    require:true
+   },
+   createdAt:{/* 언제 */
+       type:Date,
+       default:Date.now
    }
 })
 const BankTransaction = mongoose.model('BankTransaction', banktransactionSchema)

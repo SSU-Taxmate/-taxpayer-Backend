@@ -9,10 +9,6 @@ import ScrollToTop from '../../../../components/Scroll';
 
 import SettingTaxDetail from './SettingTaxDetail'
 class SettingTax extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
-
   render() {
 
     return (

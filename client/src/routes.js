@@ -55,17 +55,9 @@ const Routes = () => (
       <Route exact path="/signup" component={Auth(SignUp, false)} />
       <Route exact path="/classes" component={Auth(ClassList,true)} />
       <Route exact path="/classes/:classId" component={Auth(ClassMain,true)} />
-      {/* 클래스 설정 - 선생님만이 들어갈 수 있음 */}
-      <Route
-        exact
-        path="/classes/:classId/set-up/student"
-        component={Auth(StudentSetting,true,true)}
-      />
-      <Route
-        exact
-        path="/classes/:classId/set-up/class"
-        component={Auth(ClassSetting,true,true)}
-      />
+      {/* 클래스 설정 - 선생님 */}
+      <Route exact path="/classes/:classId/set-up/student" component={Auth(StudentSetting,true,true)}/>
+      <Route exact path="/classes/:classId/set-up/class"component={Auth(ClassSetting,true,true)}/>
 
       {/* ***************  경제  ************** */}
 
@@ -75,12 +67,13 @@ const Routes = () => (
 
       {/* 증권 거래소 */}
       <Route exact path="/classes/:classId/stock" component={Auth(TradeStock,true)} />
-      <Route exact path="/classes/:classId/set-up/stock" component={Auth(SettingStock,true)}/>
-      <Route exact path='/classes/:classId/stock-account' component={Auth(AccountStock,true)}/>
+      <Route exact path='/classes/:classId/stock/account' component={Auth(AccountStock,true)}/>
+      <Route exact path="/classes/:classId/stock/manage" component={Auth(SettingStock,true,true)}/>
+
       {/* ***************  행정부  ************** */}
       {/* 국세청 */}
       <Route exact path="/classes/:classId/national-tax" component={Auth(NationalTax,true)} />
-      <Route exact path="/classes/:classId/set-up/tax" component={Auth(SettingTax,true)} />
+      <Route exact path="/classes/:classId/tax/manage" component={Auth(SettingTax,true,true)} />
       <Route exact path="/classes/:classId/tax-invoice" component={Auth(MyTax,true)} />
 
       {/*법*/}
@@ -89,22 +82,10 @@ const Routes = () => (
 
       {/* 통계청 */}
 
-      <Route
-        exact
-        path="/classes/:classId/national-stats"
-        component={Auth(NationStats,true)}
-      />
-      <Route
-        exact
-        path="/classes/:classId/set-up/stats"
-        component={Auth(SettingHw,true)}
-      />
+      <Route exact path="/classes/:classId/national-stats" component={Auth(NationStats,true,true)}/>
+      <Route exact path="/classes/:classId/stats/manage" component={Auth(SettingHw,true,true)}  />
 
-      <Route
-        exact
-        path="/classes/:classId/personal-stats"
-        component={Auth(MyStats,true)}
-      />
+      <Route exact path="/classes/:classId/personal-stats"  component={Auth(MyStats,true)} />
 
       {/* ***************  사법부  ************** */}
       {/* 벌금 */}
@@ -116,16 +97,8 @@ const Routes = () => (
       {/* 시장 */}
 
       <Route exact path="/classes/:classId/market" component={Auth(Market,true)} />
-      <Route
-        exact
-        path="/classes/:classId/market/marketproduct"
-        component={Auth(MarketProduct,true)}
-      />
-      <Route
-        exact
-        path="/classes/:classId/real_estate_setting"
-        component={Auth(EstateSetting,true)}
-      />
+      <Route exact  path="/classes/:classId/market/marketproduct" component={Auth(MarketProduct,true)}/>
+      <Route exact path="/classes/:classId/real_estate_setting"component={Auth(EstateSetting,true)}/>
 
       {/* 그 외 */}
       <Route path="/charts" component={Auth(Charts,true)} />

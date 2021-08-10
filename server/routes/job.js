@@ -45,7 +45,7 @@ router.put('/', (req, res) => {
 })
 /*
   [] Job 삭제
-  : Job
+  : JoinedUser에 저장되어 있는 JobId도 없어져야 함.
 */
 router.delete('/', (req, res) => {
     Job.deleteOne({_id:req.body._id},{},(err,doc)=>{

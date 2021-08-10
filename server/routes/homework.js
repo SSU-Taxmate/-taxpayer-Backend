@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {//{name:,date:,detail:,expDate,withinDeadl
 router.get('/', (req, res) => {
   //console.log(req.query)
   Homework.find(req.query, function (err, hw) {
-    //console.log(hwtypes)
+    //console.log(hw)
     const result = hw
     if (err) return res.status(500).json({ error: err });
     res.json(result)
@@ -82,7 +82,7 @@ router.put('/', (req, res) => {
   2) Homework에서 삭제
 */
 router.delete('/', async (req, res) => {
-  console.log('/homework', req.query)
+  //console.log('/homework', req.query)
   const session = await startSession();
   try {
     // 트랜젝션 시작
@@ -110,28 +110,29 @@ router.delete('/', async (req, res) => {
 
 /*
   [정상] [student] Student의 수행 여부 가져오기
-  1) {classId:}로 Homework에서 해당 클래스의 HomeworkId를 찾는다.
-  2) 그다음 {homeworkId, studentId:joinedUser의 _id }로 GrantedHomework에서 찾는다. 
+  {homeworkId, studentId:joinedUser의 _id }로 GrantedHomework에서 찾는다. 
 */
 router.get('/student', async (req, res) => {
-  const session = await startSession();
   try {
-    session.startTransaction();
-    
-    const ghw=await GrantedHomework.find({studentId:req.query.studentId})
-    .populate({path:'homeworkId',match:{classId:req.query.classId}})
-    
+    //console.log(req.query)
+    const ghw = await GrantedHomework.find(req.query)
+      .populate({ path: 'homeworkId', select: ['name', 'detail', 'expDate'] })
     //console.log('Class숙제와 student의 제출여부\n',ghw)
-    // 트랜젝션 커밋
-    await session.commitTransaction();
-    // 끝
-    session.endSession();
-    res.status(200).json({
-      success: true
+    let result;
+    result = ghw.map((v, i) => {
+      return {
+        homeworkId:v.homeworkId._id,
+        name: v.homeworkId.name,
+        detail: v.homeworkId.detail,
+        expDate: v.homeworkId.expDate,
+        submission: v.submission,
+        withinDeadline: v.withinDeadline,
+        coupon_id: v.coupon_id,
+      }
     })
+    //console.log(result)
+    res.json(result)
   } catch (err) {
-    await session.abortTransaction();
-    session.endSession();
     res.json({ success: false, err })
   }
 })

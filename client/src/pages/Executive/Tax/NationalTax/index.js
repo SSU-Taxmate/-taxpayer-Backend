@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
