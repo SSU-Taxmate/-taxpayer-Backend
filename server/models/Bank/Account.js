@@ -19,23 +19,7 @@ const accountSchema = mongoose.Schema({
 })
 const Account = mongoose.model('Account', accountSchema)
 
-/*
-    ClassAccount
-    : Class 각각이 가지고 있는 Account
-    Class 만들때 생성
-*/
-const classaccountSchema = mongoose.Schema({
-    classId:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Class'
-    },
-    currentBalance:{//보유세금
-        type:Number,
-        default:0
-    }
-})
 
-const ClassAccount = mongoose.model('ClassAccount', classaccountSchema)
 
-module.exports = {Account ,ClassAccount}
+module.exports = {Account}
 

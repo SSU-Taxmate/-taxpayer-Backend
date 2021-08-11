@@ -2,75 +2,19 @@
   : /api/bank
 */
 const express = require('express');
-const { Account, ClassAccount } = require('../models/Bank/Account');
-const { BankTransaction } = require('../models/Bank/BankTransaction');
 const { DepositProduct } = require('../models/Bank/DepositProduct');
 const { JoinDeposit } = require('../models/Bank/JoinDeposit');
 
 const router = express.Router();
-/*
-  ********** 거래 ***********
-  : 상품 구매, 월급(세금), 벌금,
-*/
-/*
-  거래내역확인
-*/
-router.get('/account/',(req,res)=>{
-  
-})
-
 
 /*
-  ********** 계좌 (학급) ***********
+  ============= 금융 상품 (공통) =============
 */
 /*
-  [정상] : 학급 계좌(예산) 보기
+  [정상] 클래스에 속한 예금 상품
   {classId:}
 */
-router.get('/account', (req, res) => {
-  ClassAccount.findOne(req.query,(err,doc)=>{
-    const result=doc
-    if (err) return res.status(500).json({ error: err });
-    res.json(result)
-  })
-})
-/*
-  ********** 계좌, 거래 내역(학생) ***********
-*/
-
-/*
-  [정상] : 자신의 계좌 보기
-  {studentId:}
-*/
-router.get('/student/account', (req, res) => {
-  Account.findOne(req.query,(err,doc)=>{
-    const result=doc
-    if (err) return res.status(500).json({ error: err });
-    res.json(result)
-  })
-})
-/*
-  [] : 계좌 거래 내역보기
-  {accountId:,startDate:,endDate:}<=studentId로 Account에서 찾을 수 있음
-  쿼리 이렇게 쓰는 건가요
-*/
-router.get('/student/account/transaction', (req, res) => {
-  BankTransaction.find(
-    {accountId:req.query.accountId,
-     $and:[{createdAt:{$gte:req.query.startDate}},{createdAt:{$gte:req.query.endDate}}]},(err,doc)=>{
-    const result=doc
-    if (err) return res.status(500).json({ error: err });
-    res.json(result)
-  })
-})
-/*
-  ********** 금융 상품 관련(공통) ***********
-*/
-/*
-  [정상] 클래스에 속한 예금 상품 보여줘요
-  {classId:}
-*/
-router.get('/deposit', (req, res) => {
+router.get('/deposits', (req, res) => {
   DepositProduct.find(req.query,(err,doc)=>{
     const result=doc;
     if (err) return res.status(500).json({ error: err });
@@ -79,13 +23,13 @@ router.get('/deposit', (req, res) => {
 })
 
 /*
-  ********** 금융 상품 관련(선생님) ***********
+  ************ 금융 상품 관리 (선생님) *************
 */
 /*
   [정상] 예금 상품 추가
   classId 정보도 추가
 */
-router.post('/deposit', async (req, res) => {
+router.post('/deposits',  (req, res) => {
   const cdepositproduct=new DepositProduct(req.body)
   cdepositproduct.save((err,doc)=>{
     if(err)return res.json({success:false,err})
@@ -96,7 +40,7 @@ router.post('/deposit', async (req, res) => {
 /*
   [정상] 예금 상품 수정
 */
-router.put('/deposit', (req, res) => {
+router.put('/deposits', (req, res) => {
   DepositProduct.updateOne(req.body,(err,body)=>{
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
@@ -106,10 +50,16 @@ router.put('/deposit', (req, res) => {
 })
 /*
   [] 예금 상품 삭제 
-  : JoinDeposit에서 삭제 해야 함
+  : JoinDeposit에서도 삭제 해야 함.
+    JoinDeposit에 이 예금 상품에 가입중인 사람이 있다면, (isClosed:false)
+    이 예금 상품은 삭제하지 못한다.
+    혹은
+    바로 강제 해지를 시킨후, 사용자에게 돌아간다.
 */
-router.delete('/deposit', async (req, res) => {
-  DepositProduct.deleteOne(req.query,(err,doc)=>{
+router.delete('/deposits/:id',  (req, res) => {
+  console.log(req.params.id)
+  const depositId=req.params.id
+  DepositProduct.deleteOne({_id:depositId},(err,doc)=>{
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true
@@ -117,38 +67,34 @@ router.delete('/deposit', async (req, res) => {
   })
 })
 
+/*
+  ************ 금융 상품 가입/해지(학생) *************
+*/
 
 /*
-  ********** 금융 상품 관련(학생) ***********
+  [정상] : 상품 가입
+  productId = req.params.id
+  {studentId:,assets:,isClosed:}
 */
-/*
-  [정상] : 상품 가입{accountId:,productId:,assets:,isClosed:}
-*/
-router.post('/student/deposit', async (req, res) => {
-  const cjoindeposit=new JoinDeposit(req.body)
+router.post('/deposits/:id/join', async (req, res) => {
+  const productId=req.params.id
+  console.log(req.params.id,req.body)
+  const cjoindeposit=new JoinDeposit({...req.body,productId:productId})
   cjoindeposit.save((err,doc)=>{
     if (err) return res.status(500).json({ error: err });
     res.status(200).json({ success: true })
   })
 })
+
 /*
-  [절반정상-보내는 형식 최적화] : 가입한 상품 보여주세요 {studentId:}
-  isClosed : false인 것만!
-*/
-router.get('/student/deposit', (req, res) => {
-  JoinDeposit.find({studentId:req.query.studentId,isClosed:false},["productId","assets","createdAt"])
-  .populate("productId").exec((err,data)=>{
-    const result=data
-    //console.log("get:/student/deposit",result)
-    if (err) return res.status(500).json({ error: err });
-    res.json(result)
-  })
-})
-/*
-  [] : 상품 해지. isClosed:true, cloasedAt: 현재시점
+  [] : 상품 해지 요청. isClosed:true, cloasedAt: 현재시점
   put으로 이력을 남긴다면
+  req.body.closedAt:"",req.body.isClosed:true
+
+    GET /students/:id/deposit 으로 JoinDeposit의 _id정보 알기 때문에
 */
-router.put('/student/deposit', (req, res) => {
+router.put('/deposits/join', (req, res) => {
+
   JoinDeposit.updateOne(req.body,(err,doc)=>{
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
@@ -157,10 +103,17 @@ router.put('/student/deposit', (req, res) => {
   })
 })
 /*
-  [] : 해지
+  [] : 상품 해지 완료
+  GET /students/:id/deposit 으로 JoinDeposit의 _id정보 알기 때문에
 */
-router.delete('/student/deposit', async (req, res) => {
+router.delete('/deposits/join',  (req, res) => {
+  const productId=req.params.id
 
 })
+/*
+  ********** 거래 ***********
+  : 상품 구매, 월급(세금), 벌금,
+*/
+
 
 module.exports = router;

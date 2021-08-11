@@ -1,11 +1,11 @@
 /*
-    BankTransaction 
+    AccountHistory 
     : 은행 거래 데이터
 */
 
 const mongoose =require('mongoose')
 
-const banktransactionSchema = mongoose.Schema({
+const accounthistorySchema = mongoose.Schema({
    accountId:{/*어떤 통장에서 */
         type:mongoose.Schema.Types.ObjectId,
         ref:'Account',
@@ -19,12 +19,12 @@ const banktransactionSchema = mongoose.Schema({
     type:Number,
     require:true
    },
-   createdAt:{/* 언제 */
+   date:{/* 언제 */
        type:Date,
        default:Date.now
    }
 })
-const BankTransaction = mongoose.model('BankTransaction', banktransactionSchema)
+const AccountHistory = mongoose.model('AccountHistory', accounthistorySchema)
 
-module.exports = {BankTransaction}
+module.exports = {AccountHistory}
 

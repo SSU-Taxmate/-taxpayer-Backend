@@ -26,7 +26,7 @@ const joindepositSchema = mongoose.Schema({
         type:Number,
         require:true
     },
-    //가입일 - 항상 해지시점과 비교해서 rate 구하기
+    //가입일 - 항상 해지시점과 비교해서 interestRate 구하기
     createdAt:{
         type:Date,
         default:Date.now

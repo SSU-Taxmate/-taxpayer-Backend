@@ -17,9 +17,9 @@ export function selectClass (selectedClass){
         payload:selectedClass
     }
 }
-export function selectUser(selectedUser){
-    //console.log(selectedUser)
-    const request=axios.get('/api/classes/join',{params:selectedUser})
+export function selectUser(selected){
+    //console.log(selected)
+    const request=axios.get(`/api/classes/${selected.classId}/join`,{params:{userId:selected.userId}})
     .then(response=>response.data);
     //console.log(request)
     return {

@@ -19,7 +19,7 @@ const depositproductSchema = mongoose.Schema({
         type:String,
         default:''
     },
-    rate:{/*기본 이율(%) : 최소 가입 기간을 지켰을 때*/
+    interestRate:{/*기본 이율(%) : 최소 가입 기간을 지켰을 때*/
         type:Number,
         default:0,
     },
@@ -36,7 +36,7 @@ const depositproductSchema = mongoose.Schema({
         require:true
     },
     rateBasedDuration:[{/*기간 별 이율-최소 가입기간==최대가입기간=>해당없음*/
-        rate:{
+        interestRate:{
             type:Number,
             require:true
         },

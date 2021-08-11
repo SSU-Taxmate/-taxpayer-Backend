@@ -22,7 +22,10 @@ app.use(bodyParser.json());//express
 app.use(cookieParser());
 
 app.use('/api/users',require('./routes/users'));
+/*클래스*/
 app.use('/api/classes',require('./routes/class'));
+/*학생-class에 속함*/
+app.use('/api/students',require('./routes/student'))
 /*은행 */
 app.use('/api/bank',require('./routes/bank'))
 /* 직업 */
@@ -33,6 +36,7 @@ app.use('/api/stocks',require('./routes/stock'));
 app.use('/api/homeworks',require('./routes/homework'))
 /* 국세청 */
 app.use('/api/taxes',require('./routes/tax'))
+app.use('/api/budget',require('./routes/budget'))
 /* 법 */
 app.use('/api/laws',require('./routes/law'))
 app.get('/', (req, res) => res.send('Hello World!'))

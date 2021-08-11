@@ -34,7 +34,7 @@ const Class = mongoose.model('Class', classSchema)
 
 /*
     JoinedUser(예전JoinClass)
-    : Class와 Student를 연결짓는 Schema
+    : Class와 Student를 연결하는 Schema
 */
 const joineduserSchema = mongoose.Schema({
     classId:{
@@ -50,7 +50,9 @@ const joineduserSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Job'
     },
-    
+    /*신용등급- creditRating*/
+    /*account - JoinedUser._id로 Account에서 찾기*/
+
 })
 const JoinedUser=mongoose.model('JoinedUser',joineduserSchema);
 module.exports = { Class ,JoinedUser}

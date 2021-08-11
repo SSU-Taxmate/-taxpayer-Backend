@@ -1,5 +1,5 @@
 /* base URL
-  : /api/law
+  : /api/laws
 */
 const express = require('express');
 const { Law } = require('../models/Law');
@@ -18,7 +18,7 @@ router.post('/',  (req, res) => {
   })
 })
 /*
-  [정상] Class별 Law 보여주기
+  [정상] Class별 Law 모두 보여주기
   : Law
     - req.query {classId:}
 */
@@ -47,11 +47,11 @@ router.put('/', (req, res) => {
 })
 /*
   [정상] Law 삭제 : deleteOne
-    - req.query {_id:}
 */
-router.delete('/', (req, res) => {
-  console.log('/law',req.query)
-  Law.deleteOne(req.query,(err,doc)=>{
+router.delete('/:id', (req, res) => {
+  //console.log(req.params.id)
+  const lawId=req.params.id
+  Law.deleteOne({_id:lawId},(err,doc)=>{
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true

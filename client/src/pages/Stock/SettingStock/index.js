@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 import axios from 'axios'
 import TransferList from './sections/TransferList'
+import { useSelector } from "react-redux";
+
 export default function SettingStock() {
   const [stockName, setstockName] = useState('')
   const [stockDescription, setstockDescription] = useState('')
@@ -15,6 +16,7 @@ export default function SettingStock() {
   const [isLoading, setIsLoading] = useState(false)
   const [stocks, setstocks] = useState()
   const [selectedValue, setSelectedValue] = useState()
+  let classData = useSelector(state => state.classInfo.classData);
 
   const handleAddrTypeChange = (e) => {
     setSelectedValue(e.target.value)
@@ -24,7 +26,8 @@ export default function SettingStock() {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get('/api/stocks');
+        const result = await axios.get('/api/stocks/custom',{params:{classId:classData.classId}});//모든 stock 가져와야함+ 
+        console.log(result.data)
         setstocks(result.data)
 
       } catch (error) {
@@ -36,7 +39,7 @@ export default function SettingStock() {
     fetchData();
     return () => {
     }
-  }, [])
+  }, [classData])
   const handleStockName = (e) => {
     //e.preventDefault()
     setstockName(e.target.value)
