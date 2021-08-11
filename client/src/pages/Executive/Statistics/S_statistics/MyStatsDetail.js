@@ -4,6 +4,9 @@ import CardBasic from '../../../../components/Cards/Basic'
 import DefaultTable from '../../../../components/Table/Default';
 import ChartPie from './../../../../components/Charts/Pie'
 import Error from '../../../../components/Error';
+import { useSelector } from "react-redux";
+import { DataGrid } from '@material-ui/data-grid';
+
 function MyStatsDetail() {
     const hw_pie_data = {
         labels: [
@@ -23,27 +26,58 @@ function MyStatsDetail() {
         }],
 
     };
+    const makeData=(data)=>{
+        let c1=[0,0,0]
+        let c2=[0,0,0]
+        data.map((v,i)=>{
+            console.log(v)
+            if(v.submission==true){
+                c1[0]+=1
+            }else if(v.submission==false){
+                c1[1]+=1
+            }else{
+                c1[2]+=1
+            }
+            if(v.withinDeadline==true){
+                c2[0]+=1
+            }else if(v.withinDeadline==false){
+                c2[1]+=1
+            }else{
+                c2[2]+=1
+            }
+        })
+      return c1,c2
+    }
     const [isLoading, setIsLoading] = useState(false)
-    const [columns, setColumns] = useState([])
-    const [data, setData] = useState([])
     const [isError, setIsError] = useState(false);
+    const [data, setData] = useState([])
+    const columns=[
+        {field:'name',headerName:'숙제명',width:150},
+        {field:'detail',headerName:'설명',width:150},
+        {field:'submission',headerName:'제출여부',width:150},
+        {field:'withinDeadline',headerName:'기한내제출여부',width:150},
+        {field:'coupon_id',headerName:'면제여부',width:150},
+    ]
+    let joinedUser = useSelector(state => state.classUser);
+    //console.log(joinedUser.classUser)
     useEffect(() => {
         const fetchData = async () => {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get('/api/homeworks/student',{parmas:{studentId:'joinedUser._id'}});
-                console.log(result.data)
+                const result = await axios.get('/api/homeworks/student',{params:{studentId:joinedUser.classUser}});
+                console.log('MyStatsDetail',result.data)
+                result.data.map((v,i)=>{
+                    v['id']=i
+                })
                 setData(result.data);
-                setColumns(result.data)
             } catch (error) {
                 setIsError(true);
             }
             setIsLoading(false);
         };
         fetchData();
-        console.log(data)
-    }, []);
+    }, [joinedUser.classUser]);
     return (
         <div >
             <div className="card shadow mb-4">
@@ -51,84 +85,23 @@ function MyStatsDetail() {
 
                 {isLoading ?
                     <div>loading</div> : (
-                        <DefaultTable title='새로운 과제'
-                            columns={columns[0]}
-                            data={data[0]} />)
+                        <div style={{ height: 400, width: '100%' }}>
+                        <DataGrid
+                            rows={data}
+                            columns={columns}
+                            pageSize={5}
+                            disableSelectionOnClick
+                        />
+                    </div>)
                 }
             </div>
-            <CardBasic title='과제현황'>
-                <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />
-
+            <CardBasic title='과제현황' className='row'>
+                <ChartPie className='col-6' title='제출/미제출' id='학급과제현황' data={hw_pie_data} />
+                <ChartPie className='col-6'title='기간내제출' id='학급과제현황' data={hw_pie_data} />
                 <div>전체 N회 중 i번 숙제를 미제출하였고, j번 늦게 제출하였습니다.</div>
 
             </CardBasic>
-            <div className="card shadow mb-4">
-                {isLoading ?
-                    <div>loading</div> : (
-                        <DefaultTable title="날짜 내용 제출여부 면제여부"
-                            columns={columns[1]}
-                            data={data[1]}
-                        />)}
-            </div>
-            <div className="table-responsive">
-                <table className="table table-bordered dataTable " id="S_dataTable" width="50%" cellSpacing="0"
-                    role="grid" aria-describedby="dataTable_info" >
-                    <thead>
-                        <tr role="row" className="text-center text-primary">
-                            <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
-                                aria-label="Name: activate to sort column descending" aria-sort="ascending"
-                            >날짜</th>
-                            <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
-                                aria-label="Age: activate to sort column ascending" >내용
-                            </th>
-                            <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
-                                aria-label="Age: activate to sort column ascending" >제출여부
-                            </th>
-
-                            <th className="sorting" tabIndex="0" aria-controls="S_dataTable" rowSpan="1" colSpan="1"
-                                aria-label="Age: activate to sort column ascending" >면제여부
-                            </th>
-
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr role="row" className="odd">
-                            <td className="sorting_1">20.03.08</td>
-                            <td>일기</td>
-                            <td>O</td>
-                            <td>쿠폰사용</td>
-
-                        </tr>
-                        <tr role="row" className="even">
-                            <td className="sorting_1">20.03.12</td>
-                            <td>일기</td>
-
-                            <td>O</td>
-                            <td>33</td>
-                        </tr>
-                        <tr role="row" className="odd">
-                            <td className="sorting_1">20.03.11</td>
-                            <td>일기</td>
-                            <td>O</td>
-                            <td>33</td>
-                        </tr>
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>날짜</th>
-                            <th>내용</th>
-                            <th>제출여부</th>
-                            <th>면제여부</th>
-                        </tr>
-                    </tfoot>
-                </table>
-
-            </div>
-
-
+      
         </div>
 
     )

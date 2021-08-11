@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CardBasic from '../../../../components/Cards/Basic'
 import ChartPie from './../../../../components/Charts/Pie'
 import axios from 'axios';
-import MaterialTable from 'material-table';
+import { DataGrid } from '@material-ui/data-grid';
 import Error from '../../../../components/Error';
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -35,9 +35,9 @@ const NationStatsDetail = () => {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get('/api/stats/nation');
-                setData(result.data['data']);
-                setColumns(result.data['columns'])
+                const result = await axios.get('/api/stats/nation');//가짜데이터
+                //setData(result.data['data']);
+                //setColumns(result.data['columns'])
             } catch (error) {
                 setIsError(true);
 
@@ -55,18 +55,16 @@ const NationStatsDetail = () => {
                 {isLoading ?
                     <div>loading</div> : (
                         <>
-                            <MaterialTable
-                                title="제출여부"
-                                columns={columns[0]}
-                                data={data[0]}
-                                options={{
-                                    sorting: true, filtering: true, exportButton: true,
-                                    grouping: true,
-                                    headerStyle: {
-                                        whiteSpace: 'nowrap'
-                                    }
-                                }}
-                            />
+                            
+                               <div style={{ height: 400, width: '100%' }}>
+                                                    <DataGrid
+                                                        rows={data}
+                                                        columns={columns}
+                                                        pageSize={5}
+                                                        checkboxSelection
+                                                        disableSelectionOnClick
+                                                    />
+                                                </div>
                          
                         </>
                     )}

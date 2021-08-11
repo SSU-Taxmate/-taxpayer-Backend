@@ -58,7 +58,7 @@ export default function SettingHw() {
             <div id="wrapper">
 
                 {/* <!-- Sidebar --> */}
-                <Sidebar />
+                 
                 {/* <!-- End of Sidebar --> */}
 
                 {/* <!-- Content Wrapper --> */}

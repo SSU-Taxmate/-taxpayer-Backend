@@ -48,7 +48,6 @@ const [modalIsOpen, setIsOpen] = React.useState(false);
         <div id="wrapper">
 
             {/* <!-- Sidebar --> */}
-            <Sidebar />
             {/* <!-- End of Sidebar --> */}
 
             {/* <!-- Content Wrapper --> */}

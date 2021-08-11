@@ -8,9 +8,9 @@ const accountSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'JoinedUser'
     },
-    name:{
+    alias:{/*별칭 지정*/
         type:String,
-        default:function(){return'학생 계좌'+this.studentId}
+        default:''
     },
     currentBalance:{
         type:Number,
@@ -29,7 +29,7 @@ const classaccountSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Class'
     },
-    currentBalance:{
+    currentBalance:{//보유세금
         type:Number,
         default:0
     }

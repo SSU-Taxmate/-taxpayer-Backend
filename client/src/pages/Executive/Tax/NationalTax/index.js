@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 //Navigation
-import Sidebar from '../../../../components/Navigation/Sidebar'
 import Topbar from '../../../../components/Navigation/Topbar';
 import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
@@ -14,7 +13,7 @@ class NationalTax extends Component {
     return (
       <>
         <div id="wrapper">
-          <Sidebar />
+           
           <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
               <Topbar />

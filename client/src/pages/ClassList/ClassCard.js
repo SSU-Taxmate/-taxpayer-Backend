@@ -16,7 +16,10 @@ function ClassCard (props){
             <h6 className="m-0 font-weight-bold text-primary">
               <i className="fas fa-star"></i>
               <Link to={`/classes/${props.id}`} 
-              onClick={()=>{dispatch(selectClass({classId:props.id}));dispatch(selectUser({classId:props.id,userId:user.userData._id}))}}>
+              onClick={()=>{
+                dispatch(selectClass({classId:props.id}));
+                if(user.userData.role==1){dispatch(selectUser({classId:props.id,userId:user.userData._id}))}}
+              }>
                 {props.title}</Link>
             </h6>
             {/*<!--꿈나무반 card 시작-->*/}

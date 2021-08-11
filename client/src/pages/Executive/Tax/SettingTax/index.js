@@ -9,10 +9,6 @@ import ScrollToTop from '../../../../components/Scroll';
 
 import SettingTaxDetail from './SettingTaxDetail'
 class SettingTax extends Component {
-  componentWillMount() {
-    document.getElementById('body').className = 'page-top'
-  }
-
   render() {
 
     return (
@@ -21,7 +17,7 @@ class SettingTax extends Component {
         <div id="wrapper">
 
           {/* <!-- Sidebar --> */}
-          <Sidebar />
+           
           {/* <!-- End of Sidebar --> */}
 
           {/* <!-- Content Wrapper --> */}

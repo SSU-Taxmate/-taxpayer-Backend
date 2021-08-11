@@ -16,9 +16,9 @@ function PenaltyDetail() {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get('/api/stats/nation');
-                setData(result.data['data']);
-                setColumns(result.data['columns'])
+                const result = await axios.get('');
+                setData();
+                setColumns()
             } catch (error) {
                 setIsError(true);
 
