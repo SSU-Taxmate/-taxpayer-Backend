@@ -8,7 +8,7 @@ const mongoose =require('mongoose')
 const joindepositSchema = mongoose.Schema({
     productId:{/*어떤 상품을*/
         type: mongoose.Schema.Types.ObjectId, 
-        ref:'DepositProduct',
+        ref:'Deposit',
         require:true
     },
     studentId:{/*어떤 학생이 가입하였는가*/
@@ -22,7 +22,7 @@ const joindepositSchema = mongoose.Schema({
         ref:'Account',
         require:true
     },*/
-    assets:{/*얼마나 예금하였는가*/
+    amount:{/*얼마나 예금하였는가*/
         type:Number,
         require:true
     },

@@ -1,18 +1,18 @@
 /*
-    AccountHistory 
+    AccountTransaction 
     : 은행 거래 데이터
 */
 
 const mongoose =require('mongoose')
 
-const accounthistorySchema = mongoose.Schema({
+const AccountTransactionSchema = mongoose.Schema({
    accountId:{/*어떤 통장에서 */
         type:mongoose.Schema.Types.ObjectId,
         ref:'Account',
         require:true
     },
-   transactionType:{/*어떤 행동이 입금:0, 출금:1*/
-        type:Boolean,
+   transactionType:{/*어떤 행동 - 입금(1) 출금(0)*/
+        type:Number,
         require:true
    },
    amount:{/* 얼마나 */
@@ -22,9 +22,12 @@ const accounthistorySchema = mongoose.Schema({
    date:{/* 언제 */
        type:Date,
        default:Date.now
+   },
+   memo:{/* 간단한 메모 */
+       type:String
    }
 })
-const AccountHistory = mongoose.model('AccountHistory', accounthistorySchema)
+const AccountTransaction = mongoose.model('AccountTransaction', AccountTransactionSchema)
 
-module.exports = {AccountHistory}
+module.exports = {AccountTransaction}
 

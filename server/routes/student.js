@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const { Account } = require('../models/Bank/Account');
-const { AccountHistory } = require('../models/Bank/AccountHistory');
+const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { JoinedUser } = require('../models/Class');
 const { GrantedHomework } = require('../models/Homework');
 const { JoinDeposit } = require('../models/Bank/JoinDeposit');
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     클래스 내 학생의 account 에 대한 모든 정보 
 */
 router.get('/account', (req, res) => {
-
+//req.query.classId, req.query.studentId
 })
 /*
   ====================== 계좌 정보, 거래 내역
@@ -45,20 +45,20 @@ router.get('/:id/account', (req, res) => {
     })
 })
 /*
-  [테스트필요] : 학생 자신의 계좌 거래 내역보기
+  [정상] : 학생 자신의 계좌 거래 내역보기
   {accountId:,startDate:,endDate:} <=studentId로 Account에서 찾을 수 있음
 */
 router.get('/:id/account/history', async (req, res) => {
     try {
         //console.log("studentId:",req.params.id,req.query)
-        const studentId = req.params.id
-        const account = Account.findOne({ studentId: studentId })
-        const accounthistory = await AccountHistory.find(
+        const account = await Account.findOne({ studentId: req.params.id })
+        //console.log(account)
+        const accounttrans = await AccountTransaction.find(
             {
-                accountId: account.accountId,
-                $and: [{ date: { $gte: req.query.startDate } }, { date: { $gte: req.query.endDate } }]
+                accountId: account._id,
+               // $and: [{ date: { $gte: req.query.startDate } }, { date: { $gte: req.query.endDate } }]
             })
-        const result = accounthistory
+        const result = accounttrans
         //console.log(result)
         res.json(result)
     } catch (err) {

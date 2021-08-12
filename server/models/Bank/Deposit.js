@@ -1,15 +1,16 @@
 /*
-    DepositProduct 
+    Deposit
     - Class에 속함
     : 예금 상품 종류
 */
 
 const mongoose =require('mongoose')
 
-const depositproductSchema = mongoose.Schema({
+const depositSchema = mongoose.Schema({
     classId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Class"
+        ref:"Class",
+        require:true
     },
     name:{/*예금 상품 이름*/
         type:String,
@@ -44,9 +45,13 @@ const depositproductSchema = mongoose.Schema({
             type:Number,
             require:true
         }
-    }]
+    }],
+    joinPossible:{/*신규가입가능여부*/
+        type:Boolean,
+        default:true,
+    }
 })
-const DepositProduct = mongoose.model('DepositProduct', depositproductSchema)
+const Deposit = mongoose.model('Deposit', depositSchema)
 
-module.exports = {DepositProduct}
+module.exports = {Deposit}
 

@@ -2,6 +2,7 @@
     Budget
     : Class 각각이 가지고 있는 Budget Account
     Class 만들때 생성O
+    => 국채는 어떻게 관리하지?
 */
 const mongoose = require('mongoose')
 
