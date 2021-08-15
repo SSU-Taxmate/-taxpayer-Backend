@@ -28,7 +28,7 @@ export default function SettingStock() {
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
 
-        {/* <!-- Sidebar --> */}
+         
 
         {/* <!-- End of Sidebar --> */}
 

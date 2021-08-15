@@ -10,25 +10,43 @@ const { GrantedHomework } = require('../models/Homework');
 const { JoinDeposit } = require('../models/Bank/JoinDeposit');
 
 /*
-  클래스 내 학생에 대한 모든 정보 
+  [완료] 클래스 내 학생에 대한 모든 정보 
   query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
 */
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     console.log("classId:", req.query)
-    JoinedUser.find(req.query).exec( (err, doc) => {
-        console.log(doc)
-        const result = doc
-        if (err) return res.status(500).json({ error: err });
+
+    try {
+        // console.log("studentId:",req.params.id,req.query)
+        const students = await JoinedUser.find(req.query, ["userId", "alias", "jobId"])
+            .populate('userId', 'email name alias jobId').populate('jobId').exec()
+        //console.log(students)
+        let result = await Promise.all(
+            students.map(async (v, i) => {
+                const account = await Account.findOne({ 'studentId': v._id })
+                return {
+                    'name': v.userId.name, 'email': v.userId.email,
+                    'alias': v.alias, 'job': v.jobId, 'balance': account.currentBalance
+                }
+            })
+        )
         res.json(result)
-    })
+    } catch (err) {
+        res.status(500).json({ success: false, error: err });
+    }
+
+
     //위의 결과로 creditRating, account Rating ....
 })
 /* 
     클래스 내 학생의 account 에 대한 모든 정보 
 */
 router.get('/account', (req, res) => {
-//req.query.classId, req.query.studentId
+    //req.query.classId, req.query.studentId
 })
+
+
+
 /*
   ====================== 계좌 정보, 거래 내역
 */
@@ -50,42 +68,42 @@ router.get('/:id/account', (req, res) => {
 */
 router.get('/:id/account/history', async (req, res) => {
     try {
-        //console.log("studentId:",req.params.id,req.query)
+        // console.log("studentId:",req.params.id,req.query)
         const account = await Account.findOne({ studentId: req.params.id })
         //console.log(account)
         const accounttrans = await AccountTransaction.find(
             {
                 accountId: account._id,
-               // $and: [{ date: { $gte: req.query.startDate } }, { date: { $gte: req.query.endDate } }]
+                date: { $gte: req.query.startDate, $lt: req.query.endDate }
             })
         const result = accounttrans
         //console.log(result)
         res.json(result)
     } catch (err) {
         res.status(500).json({ success: false, error: err });
-    }
+    }//
+
 })
 
 
 /*
-  ====================== 가입한 금융 상품 확인
+  ====================== 가입한 금융 상품
 */
 /*
   [정상] : 가입한 상품 보여주세요 {studentId:}
   isClosed : false인 것만!
 */
 router.get('/:id/deposit', (req, res) => {
-    console.log("studentId:", req.params.id)
+    //console.log("studentId:", req.params.id)
     const studentId = req.params.id
-    JoinDeposit.find({ studentId: studentId, isClosed: false }, ["productId", "assets", "date"])
+    JoinDeposit.findOne({ studentId: studentId, isClosed: false }, ["productId", "amount", "createdAt"])
         .populate("productId").exec((err, data) => {
             const result = data
-            console.log("get:/students/deposit",result)
+            //console.log("get:/students/deposit",result)
             if (err) return res.status(500).json({ error: err });
             res.json(result)
         })
 })
-
 
 
 /*

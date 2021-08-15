@@ -23,7 +23,7 @@ function ChooseStockPanel() {
             setIsLoading(false);
         };
         fetchData();
-    }, [])
+    }, [classData])
     return (
         <div>
             <h6>기본 제공 +클래스 주식</h6>

@@ -13,7 +13,7 @@ class ClassList extends Component {
       <div>
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
-          {/* <!-- Sidebar --> */}
+           
           {/* <!-- End of Sidebar --> */}
 
           {/* <!-- Content Wrapper --> */}

@@ -59,8 +59,7 @@ function SignUp(props) {
                       let dataToSubmit = {
                         email: values.email,
                         password: values.password,
-                        firstName: values.name,
-                        lastName: values.lastname,
+                        name: values.name,
                         entryCode: values.entryCode
                       };
 

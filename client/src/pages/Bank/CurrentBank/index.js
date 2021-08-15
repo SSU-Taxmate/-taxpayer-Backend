@@ -1,7 +1,6 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
-import LogoutModal from '../../../components/Modal/Logout'
 import ScrollToTop from '../../../components/Scroll';
 import Account from '../BankComponents/Account';
 import Deposit from '../BankComponents/Deposit';
@@ -10,124 +9,95 @@ import axios from 'axios'
 import { useSelector } from "react-redux";
 
 
-const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
+function Bank() {
 
- 
-
-    
-function Bank () {
-
-const [modalIsOpen, setIsOpen] = React.useState(false);
-const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  let joinedUser = useSelector(state => state.classUser);
+  const [userAccount, setUserAccount] = useState({})
+  const joinedUser = useSelector(state => state.classUser);
+  const user = useSelector(state => state.user);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        const result = await axios.get(`/api/students/${joinedUser.classUser}/account`);
+        console.log("/api/students/:id/account", result.data);
+        setUserAccount(result.data)
+        
 
-  function openModal() {
-    setIsOpen(true);
-  }
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [])
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
+  return (
 
-  function closeModal(props) {
-    setIsOpen(false);
-  }
-useEffect(() => {
-  const fetchData = async () => {
-    setIsError(false);
-    setIsLoading(true);
-    try {
-      const result = await axios.get(`/api/students/${joinedUser.classUser}/account`);
-      console.log("/api/students/:id/account",result.data);
-    } catch (error) {
-      setIsError(true);
-    }
-    setIsLoading(false);
-  };
-  fetchData();
-}, [])
+    <div>
+      {/* <!-- Page Wrapper --> */}
+      <div id="wrapper">
 
-  return(
+         
+        {/* <!-- End of Sidebar --> */}
 
-        <div>
-        {/* <!-- Page Wrapper --> */}
-        <div id="wrapper">
+        {/* <!-- Content Wrapper --> */}
+        <div id="content-wrapper" className="d-flex flex-column">
 
-            {/* <!-- Sidebar --> */}
-            {/* <!-- End of Sidebar --> */}
+          {/* <!-- Main Content --> */}
+          <div id="content">
 
-            {/* <!-- Content Wrapper --> */}
-            <div id="content-wrapper" className="d-flex flex-column">
+            {/* <!-- Topbar --> */}
+            <Topbar />
+            {/* <!-- End of Topbar --> */}
 
-                {/* <!-- Main Content --> */}
-                <div id="content">
+            {/* <!-- Begin Page Content --> */}
+            <div className="container-fluid">
 
-                    {/* <!-- Topbar --> */}
-                    <Topbar />
-                    {/* <!-- End of Topbar --> */}
+              {/* <!-- Page Heading --> */}
 
-                    {/* <!-- Begin Page Content --> */}
-                    <div className="container-fluid">
+              <div className="row">
+                <div className="col-lg-6 justify-content-center">
+                  {user.userData && (userAccount &&
+                    <Account
+                      user={user.userData.name}
+                      balance={userAccount.currentBalance} />
+                  )}
+                  <Deposit/>
 
-                        {/* <!-- Page Heading --> */}
-
-                        <div className="row">
-                            <div className="col-lg-6 justify-content-center">
-                            <Account
-                            user="홍길동"
-                            balance="10000"/>
-    
-                            <Deposit 
-                            balance="10000"
-                            interest="0.1"/>
-
-                            <DepositAdd/>
-                            </div>
-                    
-                    <div className="col-lg-6 justify-content-center py-3">
-                        <div className="account-card shadow justify-content-center bg-white">
-                <div className="text-center">
-
-
-            </div>
-            </div> 
-
-           
-</div>
-        </div>
-
-                        {/* <!-- Content Row --> */}
-                    </div>
-                    {/* <!-- /.container-fluid --> */}
-
+                  <DepositAdd />
                 </div>
-                {/* <!-- End of Main Content --> */}
 
-                {/* <!-- Footer --> */}
-                <Footer></Footer>
-                {/* <!-- End of Footer --> */}
+                <div className="col-lg-6 justify-content-center py-3">
+                  <div className="account-card shadow justify-content-center bg-white">
+                    <div className="text-center">
+                    </div>
+                  </div>
+                </div>
+              </div>
 
+              {/* <!-- Content Row --> */}
             </div>
-            {/* <!-- End of Content Wrapper --> */}
+            {/* <!-- /.container-fluid --> */}
+
+          </div>
+          {/* <!-- End of Main Content --> */}
+
+          {/* <!-- Footer --> */}
+          <Footer></Footer>
+          {/* <!-- End of Footer --> */}
 
         </div>
-        {/* <!-- End of Page Wrapper --> */}
+        {/* <!-- End of Content Wrapper --> */}
 
-        {/* <!-- Scroll to Top Button--> */}
-        <ScrollToTop/>
-        <LogoutModal/>
+      </div>
+      {/* <!-- End of Page Wrapper --> */}
 
-        </div>
+      {/* <!-- Scroll to Top Button--> */}
+      <ScrollToTop />
+    </div>
 
 
 
@@ -139,4 +109,4 @@ useEffect(() => {
 
 }
 
-    export default Bank;
+export default Bank;

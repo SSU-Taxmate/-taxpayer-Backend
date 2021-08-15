@@ -28,24 +28,10 @@ const depositSchema = mongoose.Schema({
         type:Number,
         default:0
     },
-    minduration:{/* 최소 가입 기간(day)- 이전에는 원금만 받고, 이후는 가입금액*rate */
+    minDuration:{/* 최소 가입 기간(day)- 이전에는 원금만 받고, 이후는 가입금액*rate */
         type:Number,
         require:true
     },
-    maxduration:{/*최대 가입 기간(day)*/
-        type:Number,
-        require:true
-    },
-    rateBasedDuration:[{/*기간 별 이율-최소 가입기간==최대가입기간=>해당없음*/
-        interestRate:{
-            type:Number,
-            require:true
-        },
-        duration:{/*최소 가입 기간 이후 ~ 최대 가입 기간 이전 (**일 이상)*/
-            type:Number,
-            require:true
-        }
-    }],
     joinPossible:{/*신규가입가능여부*/
         type:Boolean,
         default:true,
