@@ -79,23 +79,23 @@ function DetailStockDialog(props) {
                     </div>
 
                     <div className='row'>
-                            <label htmlFor={`${selectedValue.stockName}date`}>날짜</label>
-                            < select
-                                id={`${selectedValue.stockName}date`}
-                                onChange={e => handleDateChange(e)}
-                                className="form-control" >
-                                <option key='default' value='default'>선택해주세요</option>
-                                {
-                                    selectedValue.prices.map((detail, i) => <option key={detail._id} value={detail.hint}>{detail.updateDate.split('T')[0]}</option>)
-                                }
-                            </select >
-                            <label htmlFor={`${selectedValue.stockName}hint`}>뉴스 </label>
-                            <textarea readOnly type="text"
-                                defaultValue={selectedHint === 'default' ? "" : selectedHint}
-                                className="form-control" id={`${selectedValue.stockName}hint`}
-                                style={{ backgroundColor: "transparent" }}>
-                            </textarea>
-                    
+                        <label htmlFor={`${selectedValue.stockName}date`}>날짜</label>
+                        < select
+                            id={`${selectedValue.stockName}date`}
+                            onChange={e => handleDateChange(e)}
+                            className="form-control" >
+                            <option value="" disabled selected>선택해주세요</option>
+                            {
+                                selectedValue.prices.map((detail, i) => <option key={detail._id} value={detail.hint}>{detail.updateDate.split('T')[0]}</option>)
+                            }
+                        </select >
+                        <label htmlFor={`${selectedValue.stockName}hint`}>뉴스 </label>
+                        <textarea readOnly type="text"
+                            defaultValue={selectedHint === 'default' ? "" : selectedHint}
+                            className="form-control" id={`${selectedValue.stockName}hint`}
+                            style={{ backgroundColor: "transparent" }}>
+                        </textarea>
+
                     </div>
 
                 </DialogContent>

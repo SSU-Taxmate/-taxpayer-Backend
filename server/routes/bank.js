@@ -74,9 +74,7 @@ router.delete('/deposits/:id', async (req, res) => {
     const delDeposit = await Deposit.deleteOne({ _id: depositId }, { session })
     console.log(delDeposit)
 
-    // 트랜젝션 커밋
     await session.commitTransaction();
-    // 끝
     session.endSession();
     res.status(200).json({
       success: true
@@ -135,7 +133,6 @@ router.post('/deposits/:id/join', async (req, res) => {
           const transferA = new AccountTransaction({ accountId: account._id, transactionType: 0, amount: amount })
           await transferA.save({ session })
 
-          // 트랜젝션 커밋
           await session.commitTransaction();
           session.endSession();
           res.status(200).json({
@@ -189,9 +186,7 @@ router.delete('/deposits/join', async (req, res) => {
     //JoinDeposit의 closedAt : 현재시각 isClosed:true 로 설정한다.
 
 
-    // 트랜젝션 커밋
     await session.commitTransaction();
-    // 끝
     session.endSession();
     res.status(200).json({
       success: true
@@ -238,9 +233,7 @@ router.post('/transfer', async (req, res) => {
       const transferB = new AccountTransaction({ accountId: receiver, transactionType: 1, amount: amount })
       await transferB.save({ session })
 
-      // 트랜젝션 커밋
       await session.commitTransaction();
-      // 끝
       session.endSession();
       res.status(200).json({
         success: true

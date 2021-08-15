@@ -157,9 +157,7 @@ router.delete('/custom', async (req, res) => {
     const delstock = await Stock.deleteOne({ _id: req.query.stockId }, { session: session })
     //console.log('del:stock', delstock);
 
-    // 트랜젝션 커밋
     await session.commitTransaction();
-    // 끝
     session.endSession();
     res.status(200).json({
       success: true
