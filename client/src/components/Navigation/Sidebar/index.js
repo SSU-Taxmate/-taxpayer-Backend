@@ -9,11 +9,12 @@ import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
+  list: {},
   fullList: {
     width: "auto",
+  },
+  paper: {
+    overflowY: "visible",
   },
 });
 
@@ -400,6 +401,7 @@ export default function Sidebar(props) {
         anchor={"left"}
         open={state["left"]}
         onClose={toggleDrawer("left", false)}
+        className={classes.paper}
       >
         {list("left")}
       </Drawer>
