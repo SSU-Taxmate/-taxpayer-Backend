@@ -75,7 +75,7 @@ router.delete("/use", (req, res) => {
   : Stock, ClassStock body-{stockInfo:{userDefined:true필수},classId:}필수
 */
 router.post("/custom", async (req, res) => {
-  //console.log('create', req.body)
+ // console.log('create', req.body)
   const session = await startSession();
   try {
     // 트랜젝션 시작
@@ -83,12 +83,12 @@ router.post("/custom", async (req, res) => {
     // 1) Stock 생성
     const newstock = new Stock(req.body.stockInfo);
     const savestock = await newstock.save({ session });
-    console.log('savestock', savestock);
+    //console.log('savestock', savestock);
 
     // 2) Class-Stock 연관
-    const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id });
+    const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id,userDefined:true });
     const sclassstock = await newclass.save({ session });
-    console.log('class-stock', sclassstock);
+    //console.log('class-stock', sclassstock);
 
     // 트랜젝션 커밋
     await session.commitTransaction();
@@ -110,6 +110,7 @@ router.post("/custom", async (req, res) => {
     Stock에서 위의 결과를 이용해서 userDefined가 false인 것을 찾는다.
 */
 router.get("/custom", async (req, res) => {
+  //console.log(req.query)
   try {
     const allusestock = await ClassStock.find(req.query)
     let stockIds = []
@@ -131,13 +132,14 @@ router.get("/custom", async (req, res) => {
 */
 router.put('/custom', (req, res) => {
   //console.log('update',req.body)
-  Stock.updateOne({ _id: req.body._id }, { $set: req.body.description, $push: { prices: req.body.price } }, (err, doc) => {
+ 
+  Stock.updateOne({ _id: req.body._id }, { $push: { prices: {hint:req.body.description,value:req.body.price} } }, (err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true
     })
   })
-
+  
 })
 /*
   [정상] DIY stock 삭제&미사용 : ClassStock , Stock  { stockId: }

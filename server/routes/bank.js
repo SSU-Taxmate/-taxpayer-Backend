@@ -52,10 +52,11 @@ router.put('/deposits', (req, res) => {
   })
 })
 /*
-  [] 예금 상품 삭제 
+  [] 예금 상품 삭제 :id이용.
   : JoinDeposit에서도 삭제 해야 함.
-    JoinDeposit에 이 예금 상품에 가입중인 사람이 있다면, (isClosed:false)
-    joinPossible 만 true로??!!
+    1) JoinDeposit에 이 예금 상품({productId:req.params.id})에 가입중인 사람이 있다면, (isClosed:false)
+    Deposit의 joinPossible 만 true로(나중에 JoinDeposit을 productId로 aggregate해서 isClosed:false가 없다면, 서버에서 알아서 주기적으로 삭제)
+    2) JoinDeposit에 가입 중인 사람(isClosed:false)이 없다면, 바로 즉시 2-1)JoinDeposit에서 {productId:req.params.id}로 삭제 2-2)Deposit에서 {_id:req.params.id}로 삭제
 */
 router.delete('/deposits/:id', async (req, res) => {
   console.log(req.params.id)
