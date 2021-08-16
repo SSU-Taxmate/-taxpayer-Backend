@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Sidebar from '../../../components/Navigation/Sidebar'
+import React, { useEffect,useState } from 'react';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import LogoutModal from '../../../components/Modal/Logout'
@@ -7,6 +6,8 @@ import ScrollToTop from '../../../components/Scroll';
 import Account from '../BankComponents/Account';
 import Deposit from '../BankComponents/Deposit';
 import DepositAdd from '../DepositAdd';
+import axios from 'axios'
+import { useSelector } from "react-redux";
 
 
 const customStyles = {
@@ -26,7 +27,9 @@ const customStyles = {
 function Bank () {
 
 const [modalIsOpen, setIsOpen] = React.useState(false);
-
+const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  let joinedUser = useSelector(state => state.classUser);
 
   function openModal() {
     setIsOpen(true);
@@ -39,7 +42,20 @@ const [modalIsOpen, setIsOpen] = React.useState(false);
   function closeModal(props) {
     setIsOpen(false);
   }
-
+useEffect(() => {
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
+    try {
+      const result = await axios.get(`/api/students/${joinedUser.classUser}/account`);
+      console.log("/api/students/:id/account",result.data);
+    } catch (error) {
+      setIsError(true);
+    }
+    setIsLoading(false);
+  };
+  fetchData();
+}, [])
 
   return(
 

@@ -8,11 +8,7 @@ function TradeSection(props) {
 
     const hadleStockChange = (e) => {
         e.preventDefault()
-        if (e.target.value === 'default') {
-            setSelectedValue()
-        } else {
-            setSelectedValue(stocks[stocks.findIndex(i => i._id == e.target.value)])
-        }
+        setSelectedValue(stocks[stocks.findIndex(i => i._id == e.target.value)])
         // setData(testdata[stock[e.target.value]])
     }//(setStock[e.target.value])
     const adjustData = (data) => {
@@ -54,7 +50,7 @@ function TradeSection(props) {
                     < select
                         className="form-control"
                         onChange={e => hadleStockChange(e)}>
-                        <option key='default' value='default'>선택해주세요</option>
+                        <option value="" disabled selected>선택해주세요</option>
                         {
                             stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)
                         }
@@ -89,11 +85,11 @@ function TradeSection(props) {
                         <>
                             <TradeDialog title='매수' color='danger'
                                 quantity={quantity}
-                                data={{'stockId':selectedValue._id,'stockName':selectedValue.stockName,'price':selectedValue.prices[selectedValue.prices.length-1].value}} 
+                                data={{ 'stockId': selectedValue._id, 'stockName': selectedValue.stockName, 'price': selectedValue.prices[selectedValue.prices.length - 1].value }}
                             />
-                            <TradeDialog title='매도' 
-                            data={{'stockId':selectedValue._id,'stockName':selectedValue.stockName,'price':selectedValue.prices[selectedValue.prices.length-1].value}} 
-                            quantity={quantity} color='primary' />
+                            <TradeDialog title='매도'
+                                data={{ 'stockId': selectedValue._id, 'stockName': selectedValue.stockName, 'price': selectedValue.prices[selectedValue.prices.length - 1].value }}
+                                quantity={quantity} color='primary' />
                         </>
                     }
                 </div>

@@ -81,16 +81,17 @@ router.put('/', (req, res) => {
   1) GrantedHomework에서 homeworkId같은 것 삭제
   2) Homework에서 삭제
 */
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   //console.log('/homework', req.query)
+  const homeworkId=req.params.id
   const session = await startSession();
   try {
     // 트랜젝션 시작
     session.startTransaction();
-
-    const ghw = await GrantedHomework.deleteMany({ homeworkId: req.query._id }, { session: session })
+    
+    const ghw = await GrantedHomework.deleteMany({ homeworkId:homeworkId }, { session: session })
     //console.log(ghw)
-    const reshw = await Homework.deleteOne({ _id: req.query._id }, { session: session })
+    const reshw = await Homework.deleteOne({ _id: homeworkId }, { session: session })
     //console.log(reshw)
 
     // 트랜젝션 커밋
@@ -108,33 +109,5 @@ router.delete('/', async (req, res) => {
 
 })
 
-/*
-  [정상] [student] Student의 수행 여부 가져오기
-  {homeworkId, studentId:joinedUser의 _id }로 GrantedHomework에서 찾는다. 
-*/
-router.get('/student', async (req, res) => {
-  try {
-    //console.log(req.query)
-    const ghw = await GrantedHomework.find(req.query)
-      .populate({ path: 'homeworkId', select: ['name', 'detail', 'expDate'] })
-    //console.log('Class숙제와 student의 제출여부\n',ghw)
-    let result;
-    result = ghw.map((v, i) => {
-      return {
-        homeworkId:v.homeworkId._id,
-        name: v.homeworkId.name,
-        detail: v.homeworkId.detail,
-        expDate: v.homeworkId.expDate,
-        submission: v.submission,
-        withinDeadline: v.withinDeadline,
-        coupon_id: v.coupon_id,
-      }
-    })
-    //console.log(result)
-    res.json(result)
-  } catch (err) {
-    res.json({ success: false, err })
-  }
-})
 
 module.exports = router;
