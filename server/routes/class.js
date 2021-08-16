@@ -3,7 +3,7 @@
 */
 const express = require('express');
 const { startSession } = require('mongoose');
-const { ClassAccount } = require('../models/Bank/Account');
+const { ClassAccount, Account } = require('../models/Bank/Account');
 const { Class, JoinedUser } = require('../models/Class');
 const { Tax } = require('../models/Tax');
 
@@ -139,7 +139,11 @@ router.post('/join', async (req, res) => {
     // (2) JoinedUser 스키마에 학생ID, classID를 넣어 학생을 등록시킨다.
     const cjoineduser = new JoinedUser({ userId: req.body.userId, classId: classInfo._id });
     const savejoineduser = await cjoineduser.save({ session })
-    //console.log(savejoineduser)
+    //console.log('SAVE JOINED USER',savejoineduser)
+    // (3) 기본 계좌 개설.
+    const caccount=new Account({studentId:cjoineduser._id})
+    //console.log('create Account',caccount)
+    const saveaccount=await caccount.save({session})
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 트랜젝션 종료
@@ -156,7 +160,7 @@ router.post('/join', async (req, res) => {
 })
 /*
   class에 join한 User의 class내 ID
-  : 
+  : redux에 저장하기 위해서 사용
 */
 router.get('/join',(req,res)=>{
   //console.log(req.query)

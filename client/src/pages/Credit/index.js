@@ -19,7 +19,7 @@ class Credit extends Component {
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
           {/* <!-- Sidebar --> */}
-          <Sidebar />
+           
           {/* <!-- End of Sidebar --> */}
 
           {/* <!-- Content Wrapper --> */}

@@ -7,7 +7,7 @@ import List from "@material-ui/core/List";
 import { bindActionCreators } from "redux";
 
 import { Link } from "react-router-dom";
-
+import MenuIcon from '@material-ui/icons/Menu';
 const useStyles = makeStyles({
   list: {
     // width: 250,
@@ -148,8 +148,11 @@ export default function Sidebar(props) {
               <Link className="collapse-item" to="/bank_statics">
                 통계
               </Link>
-              <Link className="collapse-item" to="/set-up/bank">
+              <Link className="collapse-item" to="/classes/:classId/bank/manage">
                 설정
+              </Link>
+              <Link className="collapse-item" to="/classes/:classId/bank">
+                내계좌
               </Link>
               <h6 className="collapse-header">신용등급</h6>
               <Link className="collapse-item" to="/classes/:classId/credit">
@@ -182,13 +185,13 @@ export default function Sidebar(props) {
               </Link>
               <Link
                 className="collapse-item"
-                to="/classes/:classId/stock-account"
+                to="/classes/:classId/stock/account"
               >
                 내계좌
               </Link>
               <Link
                 className="collapse-item"
-                to="/classes/:classId/set-up/stock"
+                to="/classes/:classId/stock/manage"
               >
                 설정
               </Link>
@@ -267,7 +270,7 @@ export default function Sidebar(props) {
                 나의 세금
               </Link>
               <h6 className="collapse-header">선생님</h6>
-              <Link className="collapse-item" to="/classes/:classId/set-up/tax">
+              <Link className="collapse-item" to="/classes/:classId/tax/manage">
                 세금 설정
               </Link>
             </div>
@@ -303,7 +306,7 @@ export default function Sidebar(props) {
               </Link>
               <Link
                 className="collapse-item"
-                to="/classes/:classId/set-up/stats"
+                to="/classes/:classId/stats/manage"
               >
                 숙제 관리
               </Link>
@@ -398,7 +401,7 @@ export default function Sidebar(props) {
   });
   return (
     <React.Fragment>
-      <Button onClick={toggleDrawer("left", true)}>{"left"}</Button>
+      <Button onClick={toggleDrawer("left", true)}><MenuIcon/></Button>
       <Drawer
         anchor={"left"}
         open={state["left"]}

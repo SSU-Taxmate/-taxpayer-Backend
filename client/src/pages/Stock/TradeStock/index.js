@@ -40,7 +40,7 @@ export default function TradeStock() {
       <div id="wrapper">
 
         {/* <!-- Sidebar --> */}
-        <Sidebar />
+         
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
