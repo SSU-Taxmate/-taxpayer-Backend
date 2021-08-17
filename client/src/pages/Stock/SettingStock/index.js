@@ -1,72 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import Sidebar from '../../../components/Navigation/Sidebar';
+import React from 'react'
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
-import ScrollToTop from '../../../components/Scroll'
-import axios from 'axios'
-import TransferList from './sections/TransferList'
+
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import TabPanel from './sections/TabPanel'
+import AddValuePanel from './sections/AddValuePanel';
+import AddStockPanel from './sections/AddStockPanel';
+import { Box } from '@material-ui/core';
+
 export default function SettingStock() {
-  const [stockName, setstockName] = useState('')
-  const [stockDescription, setstockDescription] = useState('')
-  const [stockInit, setstockInit] = useState(0)
+  const [value, setValue] = React.useState(0);
 
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
-  const [stocks, setstocks] = useState()
-  const [selectedValue, setSelectedValue] = useState()
-
-  const handleAddrTypeChange = (e) => {
-    setSelectedValue(e.target.value)
-  }
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        const result = await axios.get('/api/stocks');
-        setstocks(result.data)
-
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
     };
-    fetchData();
-    return () => {
-    }
-  }, [])
-  const handleStockName = (e) => {
-    //e.preventDefault()
-    setstockName(e.target.value)
-  }
-  const handleStockData=(e)=>{
-
-  }
-  const handleStockDetail = (e) => {
-    setstockDescription(e.target.value)
-  }
-  const handleStockInit = (e) => {
-    setstockInit(Number(e.target.value))
-  }
-  const handleSubmit = (e) => {
-    const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
-    axios.post('/api/stocks',
-      {
-        stockName: stockName,
-        description: stockDescription,
-        prices: [{ updateDate: now, value: stockInit }]
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-  const onhandledailydata=(e)=>{
-    e.preventDefaultValue()
   }
   return (
     <div>
@@ -74,14 +30,14 @@ export default function SettingStock() {
       <div id="wrapper">
 
         {/* <!-- Sidebar --> */}
-         
+
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
         <div id="content-wrapper" className="d-flex flex-column">
 
           {/* <!-- Main Content --> */}
-          <div id="content">
+          <div id="content" style={{'minHeight':'85vh'}}>
 
             {/* <!-- Topbar --> */}
             <Topbar />
@@ -95,76 +51,24 @@ export default function SettingStock() {
               <PageHeading title="주식설정" />
 
               {/* <!-- Content Row --> */}
-              <div className='row'>
-                <div className="col-sm-6 border-right">
-                  <h5>선택 추가</h5>
-                  <TransferList />
-
-                </div>
-                <div className="col-sm-6">
-                  <h5>직접 추가</h5>
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-group row">
-                      <label htmlFor="inputstockname" className="col-sm-2 col-form-label">주식명</label>
-                      <div className="col-sm-10">
-                        <input type="text" className="form-control" id="inputstockname" placeholder="주식명" onChange={handleStockName} />
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label htmlFor="inputstockinfo" className="col-sm-2 col-form-label">주식설명</label>
-                      <div className="col-sm-10">
-                        <textarea className="form-control" id="inputstockinfo" placeholder="주식설명" onChange={handleStockDetail} rows="3" />
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label htmlFor="inputstockinit" className="col-sm-2 col-form-label">초기값</label>
-                      <div className="col-sm-10">
-                        <input type="number" className="form-control" id="inputstockinit" placeholder="초기값" onChange={handleStockInit} />
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <div className="col">
-                        <div>추가 버튼 클릭시 사용가능한 주식에 추가됨
-                        </div>
-                        <div>
-                          사용 가능한 주식은 받아오는 데이터 + 직접 생성한 주식
-                        </div>
-                        <hr />
-                        <button type="submit" className="btn btn-primary float-right">추가</button>
-                      </div>
-                    </div>
-                  </form>
-                  <div>값 입력</div>
-
-                  <h5 className='border-top pt-3'>오늘의 뉴스 입력</h5>
-                  <div className='col'>
-                    <form onSubmit={onhandledailydata}>
-                      {stocks ?
-                        < select
-                          className="form-control"
-                          onChange={e => handleAddrTypeChange(e)}>
-                          {
-                            stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)
-                          }
-                        </select >
-                        : <select className="form-control"></select>
-                      }
-                      <input type="number" className="form-control" id="dailyvalue" placeholder="오늘의 주가"
-                        onChange={handleStockData} />
-                      <label htmlFor="inputnews" className="col-sm-2 col-form-label">한 줄 뉴스</label>
-                      <div className="col-sm-10">
-                        <textarea className="form-control" id="inputnews" rows='3' placeholder="뉴스" />
-                      </div>
-                      <div className="form-group row float-right pr-2">
-                        <button type="submit" className="btn btn-primary">입력</button>
-                      </div>
-                    </form>
-                  </div>
-
-                </div>
+              <div>
+                <Box position="static">
+                  <Tabs value={value} onChange={handleChange} aria-label="주식설정" centered>
+                    <Tab label="매일 값 입력" {...a11yProps(0)} />
+                    <Tab label="주식 추가" {...a11yProps(1)} />
+                    <Tab label="클래스 이용 주식 설정" {...a11yProps(2)} />
+                  </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                  <AddValuePanel/>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <AddStockPanel/>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                  Item Three
+                </TabPanel>
               </div>
-
-
             </div>
             {/* <!-- /.container-fluid --> */}
 
@@ -182,7 +86,6 @@ export default function SettingStock() {
       {/* <!-- End of Page Wrapper --> */}
 
       {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
     </div>
 
   )

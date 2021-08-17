@@ -3,9 +3,10 @@
 */
 const express = require('express');
 const { startSession } = require('mongoose');
-const { ClassAccount, Account } = require('../models/Bank/Account');
+const { Account } = require('../models/Bank/Account');
+const {Budget}=require('../models/Tax/Budget');
 const { Class, JoinedUser } = require('../models/Class');
-const { Tax } = require('../models/Tax');
+const { Tax } = require('../models/Tax/Tax');
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ router.post('/', async (req, res) => {
     const taxres = await cTax.save({ session })
     //console.log(taxres)
     // 3) Class Account 생성
-    const cAccount=new ClassAccount({classId:cClass._id});
+    const cAccount=new Budget({classId:cClass._id});
     console.log(cAccount)
     const accountres=await cAccount.save({session});
     // 트랜젝션 커밋
@@ -46,7 +47,7 @@ router.post('/', async (req, res) => {
 })
 
 /*
-  [정상] class 불러오기
+  [정상] classes 불러오기
   : 선생님, 학생 (role)에 따라 찾아야할 위치가 다르다.
     - req.query{userId:} _학생or선생님
 */
@@ -93,8 +94,10 @@ router.put('/', (req, res) => {
     (2) ClassId - Class 삭제
     - req.query{classId:}
 */
-router.delete('/', async (req, res) => {/*role확인*/
-  //console.log('/classes',req.body._id or req.query) classId필수
+router.delete('/:id', async (req, res) => {/*role확인*/
+  //classId필수
+  console.log(req.params.id)
+  const classId=req.params.id
   const session = await startSession();
   try {
     // 트랜젝션 시작
@@ -103,7 +106,7 @@ router.delete('/', async (req, res) => {/*role확인*/
     //(2) stock에서 StockId 확인 및 Stock에서 삭제
     //(3) homework
     //(final) classId에 해당하는 Class 삭제
-    await Class.find({ _id: req.body._id }).deleteOne().session({session})
+    await Class.find({ _id: classId}).deleteOne().session({session})
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 트랜젝션 종료
@@ -117,7 +120,6 @@ router.delete('/', async (req, res) => {/*role확인*/
     session.endSession();
     res.json({ success: false, err });
   }
-  Class.find({ _id: req.body._id }).deleteOne().exec()
   //ClassTax  deleteMany()
 
 })
@@ -159,12 +161,14 @@ router.post('/join', async (req, res) => {
   }
 })
 /*
-  class에 join한 User의 class내 ID
+  [정상]class에 join한 User의 class내 ID
   : redux에 저장하기 위해서 사용
 */
-router.get('/join',(req,res)=>{
-  //console.log(req.query)
-  JoinedUser.findOne(req.query, function (err, joineduser) {
+router.get('/:id/join',(req,res)=>{
+  //console.log(req.params.id,req.query)
+  const classId=req.params.id
+  const userId=req.query.userId
+  JoinedUser.findOne({classId:classId,userId:userId}, function (err, joineduser) {
     //console.log(joineduser)
     const result = joineduser._id
     if (err) return res.status(500).json({ error: err });
@@ -172,13 +176,17 @@ router.get('/join',(req,res)=>{
   })
 })
 /*
-  [정상/프론트필요] JoinedUser 학생 한명 삭제
-  : 잘못 들어온 학생 삭제 only teacher can
+  [] JoinedUser 학생 한명 삭제
+  학생의 클래스 탈퇴
+  클래스에 속한 학생의 모든 정보를 삭제해야 함
 */
-router.delete('/join',  (req, res) => {
+router.delete('/:id/join',  (req, res) => {
   // {classId:, userId:}
-  //console.log('/classes/join',req.query)
-  JoinedUser.findOne(req.query).deleteOne(function (err) {
+  console.log(req.params.id,req.query.userId)
+  const classId=req.params.id
+  const userId=req.query.userId
+
+  JoinedUser.findOne({classId:classId,userId:userId}).deleteOne(function (err) {
     if (err) return handleError(err);
     res.json({success:true})
   });

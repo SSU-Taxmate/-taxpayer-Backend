@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import Sidebar from '../../../components/Navigation/Sidebar';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import Error from '../../../components/Error'
@@ -21,7 +20,7 @@ export default function TradeStock() {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get('/api/stocks',{params:{classId:classData.classId}});
+        const result = await axios.get('/api/stocks/use',{params:{classId:classData.classId}});//클래스에서 사용하는 stock가져와야함
         setstocks(result.data)
 
       } catch (error) {
@@ -66,9 +65,6 @@ export default function TradeStock() {
               {isError && <Error></Error>}
               {isLoading ? <div>로딩중</div> :
                 <StockList data={stocks} />}
-
-
-          
               <h4 className='pt-2'>주식 매도 매수 창</h4>
               <div className="card shadow py-2">
                 <TradeSection stocks={stocks}></TradeSection>
