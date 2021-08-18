@@ -169,7 +169,7 @@ router.post('/deposits/:id/join', async (req, res) => {
   }
 })
 /*
-  [완료] : 학생의 상품 해지 완료
+  [정상] : 학생의 상품 해지 완료
   GET /students/:id/deposit 으로 JoinDeposit의 _id 알고 있음.
   Deposit._id : deposits 이율 정보 알기 위해서 필요
 */

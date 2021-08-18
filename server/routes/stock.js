@@ -144,6 +144,7 @@ router.put('/custom', (req, res) => {
 /*
   [정상] DIY stock 삭제&미사용 : ClassStock , Stock  { stockId: }
   - classId필요없음 custom이므로 이 Stock은 클래스 한 곳에만 종속적
+  주식을 보유중인 학생이 있다면, 
 */
 router.delete('/custom', async (req, res) => {
   console.log('delete', req.query)

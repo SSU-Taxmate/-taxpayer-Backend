@@ -26,7 +26,7 @@ function ChooseStockPanel() {
     }, [classData])
     return (
         <div>
-            <h6>기본 제공 +클래스 주식</h6>
+            <h6>클래스 주식</h6>
             {isLoading ?
                 <div>loading</div> :
                 stocks.map((stock, i) =>
