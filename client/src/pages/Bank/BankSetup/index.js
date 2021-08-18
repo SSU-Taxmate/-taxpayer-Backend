@@ -1,26 +1,18 @@
-import React ,{useState}from 'react'
-//Navigation
-import Sidebar from '../../../components/Navigation/Sidebar';
+import React from 'react';
 import Topbar from '../../../components/Navigation/Topbar';
-import PageHeading from '../../../components/PageHeading';
-import ScrollToTop from '../../../components/Scroll';
 import Footer from '../../../components/Footer'
-import ProposalDialog from './ProposalDialog'
-function Congress() {
-    const [title, settitle] = useState()
-    const [content, setcontent] = useState()
-
-    const onChange = (content) => {
-        setcontent(content)
-    };
+import ScrollToTop from '../../../components/Scroll';
+import PageHeading from '../../../components/PageHeading';
+import MangeDeposits from './MangeDeposits'
+import ManageCredit from './ManageCredit';
+function BankSetup() {
 
     return (
         <div>
             {/* <!-- Page Wrapper --> */}
             <div id="wrapper">
 
-                 
-                 
+                
                 {/* <!-- End of Sidebar --> */}
 
                 {/* <!-- Content Wrapper --> */}
@@ -37,11 +29,15 @@ function Congress() {
                         <div className="container-fluid">
 
                             {/* <!-- Page Heading --> */}
-
-                            <PageHeading title="국회(입법)"></PageHeading>
-                            <h3>제안리스트</h3>
+                            <PageHeading title={'은행 설정'} />
+                            {/*예금 상품 관리*/}
+                            <h5>예금 상품 관리</h5>
+                            <MangeDeposits/>
+                            
+                            {/*신용등급 설정*/}
+                            <h5>신용 등급 설정</h5>
+                            <ManageCredit/>
                             {/* <!-- Content Row --> */}
-                            <ProposalDialog/>
                         </div>
                         {/* <!-- /.container-fluid --> */}
 
@@ -59,11 +55,9 @@ function Congress() {
             {/* <!-- End of Page Wrapper --> */}
 
             {/* <!-- Scroll to Top Button--> */}
-
             <ScrollToTop />
         </div>
-
     )
 }
 
-export default Congress
+export default BankSetup

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, Icon } from '@material-ui/core';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent'
 import ChartLine from '../../../../components/Charts/Line'
@@ -83,8 +82,10 @@ function DetailStockDialog(props) {
                         < select
                             id={`${selectedValue.stockName}date`}
                             onChange={e => handleDateChange(e)}
-                            className="form-control" >
-                            <option value="" disabled selected>선택해주세요</option>
+                            className="form-control"
+                            defaultValue="default"
+                            >
+                            <option value="default" disabled>선택해주세요</option>
                             {
                                 selectedValue.prices.map((detail, i) => <option key={detail._id} value={detail.hint}>{detail.updateDate.split('T')[0]}</option>)
                             }

@@ -5,7 +5,6 @@ import Footer from '../../../../components/Footer'
 import PageHeading from '../../../../components/PageHeading';
 import ScrollToTop from '../../../../components/Scroll';
 
-import ManageDialog from './ManageDialog';
 import Error from '../../../../components/Error';
 import { useSelector } from "react-redux";
 import { DataGrid } from '@material-ui/data-grid';
@@ -56,7 +55,7 @@ export default function SettingHw() {
             {/* <!-- Page Wrapper --> */}
             <div id="wrapper">
 
-                {/* <!-- Sidebar --> */}
+                 
                  
                 {/* <!-- End of Sidebar --> */}
 

@@ -31,6 +31,8 @@ const joindepositSchema = mongoose.Schema({
         type:Date,
         default:Date.now
     },
+    //가입기간
+    
     //해지 시점
     closedAt:{
         type:Date
