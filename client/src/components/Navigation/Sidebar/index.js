@@ -10,10 +10,13 @@ import { Link } from "react-router-dom";
 import MenuIcon from '@material-ui/icons/Menu';
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    // width: 250,
   },
   fullList: {
     width: "auto",
+  },
+  paper: {
+    overflowY: "visible !important",
   },
 });
 
@@ -403,6 +406,7 @@ export default function Sidebar(props) {
         anchor={"left"}
         open={state["left"]}
         onClose={toggleDrawer("left", false)}
+        classes={{ paper: classes.paper }}
       >
         {list("left")}
       </Drawer>
