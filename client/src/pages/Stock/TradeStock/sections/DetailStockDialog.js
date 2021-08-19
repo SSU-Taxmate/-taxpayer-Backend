@@ -6,7 +6,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent'
 import ChartLine from '../../../../components/Charts/Line'
 import TextField from '@material-ui/core/TextField';
-
 import SelectDate from './SelectDate';
 
 function DetailStockDialog({selectedValue}) {
