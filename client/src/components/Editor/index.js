@@ -108,7 +108,7 @@ export default class Draft extends Component {
             spellCheck={true}
           />
         </div>
-        <div>{JSON.stringify(convertToRaw(editorState.getCurrentContent()))}</div>
+        {/*<div>{JSON.stringify(convertToRaw(editorState.getCurrentContent()))}</div>*/}
       </div>
     );
   }

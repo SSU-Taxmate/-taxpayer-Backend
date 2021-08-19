@@ -6,25 +6,22 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent'
 import ChartLine from '../../../../components/Charts/Line'
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 
-function DetailStockDialog(props) {
+import SelectDate from './SelectDate';
+
+function DetailStockDialog({selectedValue}) {
     //console.log('DetailStockDialog', props)
-    const { selectedValue } = props;
     const [open, setOpen] = useState(false);
 
-    const [selectedHint, setSelected] = useState('')
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
-    const handleDateChange = (e) => {
-        setSelected(e.target.value)
-    }
+    /*  */
+   
+
     const adjustData = (data) => {
         return {
             labels: data.map((n, i) => { return n['updateDate'].split('T')[0] }),
@@ -59,26 +56,12 @@ function DetailStockDialog(props) {
                 <DialogContent className='mb-4'>
                     <div className='row'>
                         <div className='col-11'>
-                            {selectedValue &&
-                                <ChartLine id={`${selectedValue.stockName} 주가`} title={`${selectedValue.stockName} 주가 그래프`}
-                                    data={adjustData(selectedValue.prices)} />
-                            }
-                        </div>
-                        <div className='col-1'>
-                            <div className='float-right'>
-                                <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label className="btn btn-sm btn-outline-primary active">
-                                        <input type="radio" name="options" id="Week" autoComplete="off" defaultChecked />
-                                        Week
-                                    </label>
-                                    <label className="btn btn-sm btn-outline-primary">
-                                        <input type="radio" name="options" id="Month" autoComplete="off" />
-                                        Month
-                                    </label>
-                                </div>
-                            </div>
+                            <ChartLine id={`${selectedValue.stockName} 주가`} title={`${selectedValue.stockName} 주가 그래프`}
+                                data={adjustData(selectedValue.prices)} />
+
                         </div>
                     </div>
+
                     <div className='row'>
                         <TextField
                             className='col-md-6'
@@ -91,35 +74,9 @@ function DetailStockDialog(props) {
                                 readOnly: true,
                             }}
                         />
-                   
-                            <FormControl variant="outlined" className='col-md-2'>
-                                <InputLabel htmlFor="select-date">날짜</InputLabel>
-                                <Select
-                                    defaultValue=""
-                                    native
-                                    onChange={handleDateChange}
-                                    inputProps={{
-                                        id: 'select-date'
-                                    }}
-                                >
-                                    <option aria-label="선택해주세요" value="" />
-                                    {
-                                        selectedValue.prices.map((detail, i) =>
-                                            <option key={detail._id} value={detail.hint}>
-                                                {detail.updateDate.split('T')[0]}
-                                            </option>)
-                                    }
-                                </Select>
-                            </FormControl>
 
-                            <TextField
-                             className='col-md-4'
-                                label='뉴스'
-                                value={selectedHint === 'default' ? "" : selectedHint}
-                                id={`${selectedValue.stockName}hint`}
-                                variant="outlined"
-                            />
-                        
+                        <SelectDate selectedValue={selectedValue}/>
+
 
                     </div>
 
@@ -128,7 +85,7 @@ function DetailStockDialog(props) {
         </>
     );
 }
-export default DetailStockDialog;
+export default React.memo(DetailStockDialog);
 DetailStockDialog.propTypes = {
     selectedValue: PropTypes.object.isRequired,
 };

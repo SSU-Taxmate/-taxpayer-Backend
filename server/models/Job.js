@@ -14,7 +14,8 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type: String,
         default: ''
     },
-    period:{/*고용기간 endDate*/
+    /*고용기간 endDate*/
+    period:{
         type:Date,
         default:() => new Date(+new Date() + 7*24*60*60*1000)
     },
