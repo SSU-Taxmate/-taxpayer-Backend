@@ -1,66 +1,57 @@
-import React from 'react';
+import React from "react";
 //Navigation
-import Sidebar from '../../components/Navigation/Sidebar';
-import Topbar from '../../components/Navigation/Topbar';
-import Footer from '../../components/Footer'
-import PageHeading from '../../components/PageHeading';
-import ClassMainDetail from './ClassMainDetail';
-import ScrollToTop from '../../components/Scroll';
+import Sidebar from "../../components/Navigation/Sidebar";
+import Topbar from "../../components/Navigation/Topbar";
+import Footer from "../../components/Footer";
+import PageHeading from "../../components/PageHeading";
+import ClassMainDetail from "./ClassMainDetail";
+import ScrollToTop from "../../components/Scroll";
 
+function ClassMain() {
+  return (
+    <div>
+      {/* <!-- Page Wrapper --> */}
+      <div id="wrapper">
+        {/* <!-- Sidebar --> */}
 
-function ClassMain () {
+        {/* <!-- End of Sidebar --> */}
 
-    return (
-      <div>
-        {/* <!-- Page Wrapper --> */}
-        <div id="wrapper">
+        {/* <!-- Content Wrapper --> */}
+        <div id="content-wrapper" className="d-flex flex-column">
+          {/* <!-- Main Content --> */}
+          <div id="content">
+            {/* <!-- Topbar --> */}
+            <Topbar />
+            {/* <!-- End of Topbar --> */}
 
-           
-           
-          {/* <!-- End of Sidebar --> */}
+            {/* <!-- Begin Page Content --> */}
+            <div className="container-fluid">
+              {/* <!-- Page Heading --> */}
 
-          {/* <!-- Content Wrapper --> */}
-          <div id="content-wrapper" className="d-flex flex-column">
+              <PageHeading title="클래스 Dashboard" />
 
-            {/* <!-- Main Content --> */}
-            <div id="content">
-              
-              {/* <!-- Topbar --> */}
-              <Topbar />
-              {/* <!-- End of Topbar --> */}
+              {/* <!-- Content Row --> */}
 
-              {/* <!-- Begin Page Content --> */}
-              <div className="container-fluid">
-                {/* <!-- Page Heading --> */}
-
-                <PageHeading title="클래스 Dashboard" />
-
-                {/* <!-- Content Row --> */}
-                
-                <ClassMainDetail/>
-
-              </div>
-              {/* <!-- /.container-fluid --> */}
+              <ClassMainDetail />
 
             </div>
-            {/* <!-- End of Main Content --> */}
-
-            {/* <!-- Footer --> */}
-           <Footer/>
-            {/* <!-- End of Footer --> */}
-
+            {/* <!-- /.container-fluid --> */}
           </div>
-          {/* <!-- End of Content Wrapper --> */}
+          {/* <!-- End of Main Content --> */}
 
+          {/* <!-- Footer --> */}
+          <Footer />
+          {/* <!-- End of Footer --> */}
         </div>
-        {/* <!-- End of Page Wrapper --> */}
+        {/* <!-- End of Content Wrapper --> */}
+      </div>
+      {/* <!-- End of Page Wrapper --> */}
 
-        {/* <!-- Scroll to Top Button--> */}
-          {/* <!-- Scroll to Top Button--> */}
-          <ScrollToTop/>
-        </div>
-    )
- 
+      {/* <!-- Scroll to Top Button--> */}
+      {/* <!-- Scroll to Top Button--> */}
+      <ScrollToTop />
+    </div>
+  );
 }
 
 export default ClassMain;
