@@ -140,6 +140,9 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.email}</div>
                           )}
                         </div>
+                        <button type="button" class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
+                        </div>
+                        <div className="form-group row">
                         <div className='col-sm-6 mb-3 mb-sm-0'>
                           <input 
                           id="emailverify"
@@ -179,7 +182,7 @@ function SignUp(props) {
                             )}
                           </div>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <input
                             id="entryCode"
                             placeholder="참가코드"
@@ -192,7 +195,7 @@ function SignUp(props) {
                           {errors.entryCode && touched.entryCode && (
                             <div className="input-feedback">{errors.entryCode}</div>
                           )}
-                        </div>
+                        </div> */}
                         <button onClick={handleSubmit} disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button>
 
                         <hr />
