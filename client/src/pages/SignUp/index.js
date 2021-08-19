@@ -90,7 +90,7 @@ function SignUp(props) {
                       handleReset,
                     } = props;
                     return (
-                      <form className="user">
+                      <form className="user" onSubmit={handleSubmit}>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
@@ -140,7 +140,7 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.email}</div>
                           )}
                         </div>
-                        <button type="button" class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
+                        <button onClick={this.sendEmail} class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
                         </div>
                         <div className="form-group row">
                         <div className='col-sm-6 mb-3 mb-sm-0'>
@@ -196,8 +196,8 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.entryCode}</div>
                           )}
                         </div> */}
-                        <button onClick={handleSubmit} disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button>
-
+                        <button disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button>
+                        {/* <button onClick={handleSubmit} disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button> */}
                         <hr />
                         <Link to="/classes" className="btn btn-google btn-user btn-block">
                           <i className="fab fa-google fa-fw"></i> Google로 회원 가입하기

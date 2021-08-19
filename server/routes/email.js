@@ -17,6 +17,12 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
     const confirmpassword = req.body.confirmpassword;
     const entryCode = req.body.entryCode;
 
+
+    router.get('/dotenv', function(req, res, next) {
+        // DB_NAME 출력
+        res.send(process.env.DB_NAME);
+    });
+
     console.log(req.body);
     console.log('넘어온 이메일:' + req.body.email);
 
@@ -42,7 +48,7 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
         let transporter = nodemailer.createTransport({
             service: 'Naver',
             // host: 'smtp.gmail.com', //호스트의 경우는 
-            port: 587,
+            port: 465, //네이버에서 확인가능함.
             secure: true, // true for 465, false for other ports
             auth: {
                 user: process.env.NODEMAILER_USER, //메일 서버의 계정.
@@ -75,6 +81,39 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
         // return res.status(403).send('error 설명 메시지');
     }
 });
+
+class Signup_page extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '', // 입력받은 email state값
+
+        }
+        this.sendEmail = this.sendEmail.bind(this);
+
+    }
+
+
+    sendEmail(e) {
+        e.preventDefault();
+        console.log(this.state.email);
+        const data = { //현재의 email state값을 data객체로 감쌌다
+            email: this.state.email
+        }
+
+        fetch('http://localhost:3000/sendEmail', { //sendEmail 라우터로 보내버리기
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            })
+            .then(res => res.json())
+            .then(json => {
+
+            })
+
+    }
+}
 
 
 
