@@ -9,10 +9,10 @@ const budgethistorySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Budget'
     },
-    transactionType: [{/*어떤 행동 세입:0, 세출:1, 벌금:2 | level2 */
+    transactionType: {/*어떤 행동 세입:0, 세출:1, 벌금:2 | level2 */
         type: Number,
         require: true
-    }],
+    },
     amount: {/* 얼마나 */
         type: Number,
         require: true

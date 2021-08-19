@@ -50,11 +50,11 @@ const joineduserSchema = mongoose.Schema({
         default:''
     },
     /*클래스에 속한 student가 갖는 고유 정보 */
-    jobId:{
+    jobId:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Job',
         default:null
-    },
+    }],
     /*신용등급- creditRating*/
     /*account - JoinedUser._id로 Account에서 찾기*/
 
