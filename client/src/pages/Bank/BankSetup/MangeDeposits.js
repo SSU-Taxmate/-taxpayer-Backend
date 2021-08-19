@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import Error from '../../../components/Error';
 import Loading from '../../../components/Loading';
-import { Alert, AlertTitle } from '@material-ui/lab';
 
 import AddDepositDialog from './AddDepositDialog';
 
@@ -47,9 +46,9 @@ function MangeDeposits() {
                         <div className='row p-2'>
                             <div className='col-md-6'>
                                 <div className='mb-2'>
-                                    <p style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <span className="text-primary h4">{v.name}</span>
-                                        <span >가입가능 {v.joinPossible ? "O" : "X"}</span>
+                                    <p style={{ display: 'flex', justifyContent: 'space-between', alignItems:'center' }}>
+                                        <span className="text-primary" style={{fontSize: '5vw'}}>{v.name}</span>
+                                        <span style={{fontSize: '3vw'}}>가입가능 {v.joinPossible ? "O" : "X"}</span>
                                     </p>
                                 </div>
                                 <div className="row-4"> {v.description}</div>

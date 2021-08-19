@@ -43,7 +43,7 @@ const grantedhomeworkSchema= mongoose.Schema({
         type:Boolean,
         default:null
     },
-    coupon_id:{
+    couponId:{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Coupon',
         default: null

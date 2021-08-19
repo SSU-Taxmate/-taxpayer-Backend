@@ -20,7 +20,7 @@ export default function TradeStock() {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get('/api/stocks/use',{params:{classId:classData.classId}});//클래스에서 사용하는 stock가져와야함
+        const result = await axios.get('/api/stocks/use', { params: { classId: classData.classId } });//클래스에서 사용하는 stock가져와야함
         setstocks(result.data)
 
       } catch (error) {
@@ -38,8 +38,8 @@ export default function TradeStock() {
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
 
-         
-         
+
+
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
@@ -67,7 +67,9 @@ export default function TradeStock() {
                 <StockList data={stocks} />}
               <h4 className='pt-2'>주식 매도 매수 창</h4>
               <div className="card shadow py-2">
-                <TradeSection stocks={stocks}></TradeSection>
+                {isError && <Error></Error>}
+                {isLoading ? <div>로딩중</div> :
+                  <TradeSection stocks={stocks} />}
               </div>
 
 

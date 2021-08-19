@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DetailStockDialog from './DetailStockDialog';
 
 const iconSet = [{ icon: "caret-up", color: 'red' }, { icon: "caret-down", color: 'blue' }]
