@@ -29,9 +29,10 @@ router.post('/', async (req, res) => {
     const taxres = await cTax.save({ session })
     //console.log(taxres)
     // 3) Class Account 생성
-    const cAccount=new Budget({classId:cClass._id});
-    console.log(cAccount)
-    const accountres=await cAccount.save({session});
+    const budget=new Budget({classId:cClass._id});
+    //console.log(budget)
+    const accountres=await budget.save({session});
+    //console.log(accountres)
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 끝

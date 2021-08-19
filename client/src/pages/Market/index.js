@@ -19,7 +19,7 @@ class Market extends Component {
         {/* <!-- Page Wrapper --> */}
         <div id="wrapper">
 
-          {/* <!-- Sidebar --> */}
+           
            
           {/* <!-- End of Sidebar --> */}
 

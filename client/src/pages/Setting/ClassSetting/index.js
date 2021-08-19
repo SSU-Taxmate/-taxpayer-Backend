@@ -73,13 +73,13 @@ function ClassSetting() {
     };
     fetchData();
 
-  }, []);
+  }, [classData]);
   return (
     <>
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
 
-        {/* <!-- Sidebar --> */}
+         
          
         {/* <!-- End of Sidebar --> */}
 

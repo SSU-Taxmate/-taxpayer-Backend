@@ -3,13 +3,12 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from './sections/TabPanel'
 import AddValuePanel from './sections/AddValuePanel';
 import AddStockPanel from './sections/AddStockPanel';
+import ChooseStockPanel from './sections/ChooseStockPanel';
 import { Box } from '@material-ui/core';
 
 export default function SettingStock() {
@@ -29,7 +28,7 @@ export default function SettingStock() {
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
 
-        {/* <!-- Sidebar --> */}
+         
 
         {/* <!-- End of Sidebar --> */}
 
@@ -66,7 +65,7 @@ export default function SettingStock() {
                   <AddStockPanel/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  Item Three
+                  <ChooseStockPanel/>
                 </TabPanel>
               </div>
             </div>

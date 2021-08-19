@@ -33,6 +33,7 @@ function ClassMain() {
               {/* <!-- Content Row --> */}
 
               <ClassMainDetail />
+
             </div>
             {/* <!-- /.container-fluid --> */}
           </div>

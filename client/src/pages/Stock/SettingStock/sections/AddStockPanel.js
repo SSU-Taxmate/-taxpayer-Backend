@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useSelector } from "react-redux";
 
 function AddStockPanel() {
     const [stockName, setstockName] = useState('')
     const [stockDescription, setstockDescription] = useState('')
     const [stockInit, setstockInit] = useState(0)
+    const [stockHint,setstockHint]=useState("")
+    let classData = useSelector(state => state.classInfo.classData);
 
-    const [stocks, setstocks] = useState()
     const handleStockName = (e) => {
-        //e.preventDefault()
         setstockName(e.target.value)
     }
 
@@ -18,13 +19,19 @@ function AddStockPanel() {
     const handleStockInit = (e) => {
         setstockInit(Number(e.target.value))
     }
+    const handleStockHint=(e)=>{
+        setstockHint(e.target.value)
+    }
     const handleSubmit = (e) => {
-        const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
-        axios.post('/api/stocks',
-            {
+        e.preventDefault();
+        const now = new Date().now
+        axios.post('/api/stocks/custom',
+            {stockInfo:{
                 stockName: stockName,
                 description: stockDescription,
-                prices: [{ updateDate: now, value: stockInit }]
+                prices: [{ updateDate: now, value: stockInit ,hint:stockHint}]
+            },
+            classId:classData.classId
             })
             .then(function (response) {
                 console.log(response);
@@ -58,13 +65,13 @@ function AddStockPanel() {
                         </div>
                     </div>
                     <div className="form-group row">
+                        <label htmlFor="inputhint" className="col-sm-2 col-form-label">힌트</label>
+                        <div className="col-sm-10">
+                            <input type="text" className="form-control" id="inputhint" placeholder="힌트" onChange={handleStockHint} />
+                        </div>
+                    </div>
+                    <div className="form-group row">
                         <div className="col">
-                            <div>추가 버튼 클릭시 사용가능한 주식에 추가됨
-                            </div>
-                            <div>
-                                사용 가능한 주식은 받아오는 데이터 + 직접 생성한 주식
-                            </div>
-                            <hr />
                             <button type="submit" className="btn btn-primary float-right">추가</button>
                         </div>
                     </div>
