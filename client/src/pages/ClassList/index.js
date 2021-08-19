@@ -5,7 +5,8 @@ import Topbar from "../../components/Navigation/Topbar";
 import ScrollToTop from "../../components/Scroll";
 import PageHeading from "../../components/PageHeading";
 import ClassListDetail from "./ClassListDetail";
-import Footer from '../../components/Footer';
+import Footer from "../../components/Footer";
+import MainHeader from "../../components/Navigation/MainHeader";
 
 class ClassList extends Component {
   render() {
@@ -21,7 +22,7 @@ class ClassList extends Component {
             {/* <!-- Main Content --> */}
             <div id="content">
               {/* <!-- Topbar --> */}
-              <Topbar />
+              <Topbar name="classList"></Topbar>
               {/* <!-- End of Topbar --> */}
 
               {/* <!-- Begin Page Content --> */}
@@ -38,7 +39,7 @@ class ClassList extends Component {
             {/* <!-- End of Main Content --> */}
 
             {/* <!-- Footer --> */}
-            <Footer/>
+            <Footer />
             {/* <!-- End of Footer --> */}
           </div>
           {/* <!-- End of Content Wrapper --> */}
