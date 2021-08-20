@@ -47,9 +47,9 @@ function TradeSection(props) {
                         id="trade-select"
                         className="form-control"
                         onChange={e => hadleStockChange(e)}
-                        defaultValue="default"
+                        defaultValue=""
                     >
-                        <option value="default" disabled selected>선택해주세요</option>
+                        <option value="" disabled>선택해주세요</option>
                         {
                             stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)
                         }
