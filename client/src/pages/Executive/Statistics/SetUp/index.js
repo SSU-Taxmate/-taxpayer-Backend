@@ -8,6 +8,7 @@ import ScrollToTop from '../../../../components/Scroll';
 import Error from '../../../../components/Error';
 import { useSelector } from "react-redux";
 import { DataGrid } from '@material-ui/data-grid';
+import Loading from '../../../../components/Loading';
 
 export default function SettingHw() {
     const [isLoading, setIsLoading] = useState(false)
@@ -78,7 +79,7 @@ export default function SettingHw() {
                                     {/*columns은 기본으로 줘야할듯 */}
                                     {isError && <Error></Error>}
                                     {isLoading ?
-                                        <div>loading</div> : (
+                                        <Loading/> : (
                                             <>
                                                 <div style={{ height: 400, width: '100%' }}>
                                                     <DataGrid

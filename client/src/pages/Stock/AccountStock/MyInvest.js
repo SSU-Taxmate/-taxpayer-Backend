@@ -10,7 +10,7 @@ export default function MyInvest(props) {
                         <div className="h5 font-weight-bold text-gray-800">TIGER 탄소효율그린뉴딜</div>
                     </div>
                     <div className='col-4'>
-                        <TradeDialog title='매도' color='primary'
+                        <TradeDialog type='매도' color='primary'
                             quantity={0}
                             data={{}}
                         />

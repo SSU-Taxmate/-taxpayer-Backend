@@ -6,9 +6,7 @@ function TradeSection(props) {
     const [selectedValue, setSelectedValue] = useState()
     const hadleStockChange = (e) => {
         e.preventDefault()
-        console.log('sP', e.target.value)
         setSelectedValue(stocks[stocks.findIndex(i => i._id == e.target.value)])
-        // setData(testdata[stock[e.target.value]])
     }//(setStock[e.target.value])
     const adjustData = (data) => {
         return {
@@ -34,9 +32,7 @@ function TradeSection(props) {
 
     return (
         <div className='row'>
-            {console.log('tradesection')}
             <div className="col-sm-6 m-2">
-
                 {selectedValue &&
                     <ChartLine id='stock' title={selectedValue.stockName} data={adjustData(selectedValue.prices)} />
                 }

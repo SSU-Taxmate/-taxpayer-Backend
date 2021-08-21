@@ -31,7 +31,7 @@ function InputAmount(props) {
 
             <div className='row-sm-* mt-2'>
 
-                <TradeDialog title='매수' color='danger'
+                <TradeDialog type='매수' color='danger'
                     quantity={quantity}
                     data={{ 'stockId': selectedValue._id, 'stockName': selectedValue.stockName, 'price': selectedValue.prices[selectedValue.prices.length - 1].value }}
                 />

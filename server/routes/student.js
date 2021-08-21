@@ -75,7 +75,7 @@ router.get('/:id/account/history', async (req, res) => {
             {
                 accountId: account._id,
                 date: { $gte: req.query.startDate, $lt: req.query.endDate }
-            })
+            }).sort({date: -1})
         const result = accounttrans
         //console.log(result)
         res.json(result)

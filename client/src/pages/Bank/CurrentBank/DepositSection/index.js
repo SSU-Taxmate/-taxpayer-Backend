@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import axios from 'axios';
-function Deposit() {
+import DepositAdd from '../JoinDepositModal';
+import DepositCloseModal from '../DepositCloseModal';
+function Deposit({balance}) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [userdeposit, setuserdeposit] = useState();
   const joinedUser = useSelector(state => state.classUser);
- 
+  console.log('balance',balance)
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
@@ -15,6 +17,7 @@ function Deposit() {
         const result = await axios.get(`/api/students/${joinedUser.classUser}/deposit`);
         //console.log("/api/students/:id/deposit", result.data);
         setuserdeposit(result.data)
+        console.log(result.data)
 
       } catch (error) {
         setIsError(true);
@@ -24,27 +27,28 @@ function Deposit() {
     fetchData();
   }, [])
   const calculate = (type) => {
-    if(type==='만기'){
-      return (userdeposit.productId.interestRate+100)*userdeposit.amount/100
-    }else{
+    if (type === '만기') {
+      return (userdeposit.productId.interestRate + 100) * userdeposit.amount / 100
+    } else {
       const today = new Date()
       const create = new Date(userdeposit.createdAt)
       const diff = Math.round((today.getTime() - create.getTime()) / (1000 * 3600 * 24))//가입기간
-      if (diff>=userdeposit.productId.minDuration){
-        return (userdeposit.productId.interestRate+100)*userdeposit.amount/100
-      }else{
+      if (diff >= userdeposit.productId.minDuration) {
+        return (userdeposit.productId.interestRate + 100) * userdeposit.amount / 100
+      } else {
         return userdeposit.amount
       }
     }
   }
-  const onhandleclick=()=>{
+  const onhandleclick = (e) => {
+    e.preventDefault();
     axios.delete(`/api/bank/deposits/${userdeposit.productId._id}/join/${userdeposit._id}`)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
   if (userdeposit) {
     //console.log(userdeposit)
@@ -64,8 +68,8 @@ function Deposit() {
               <div className="text-center" > 만기시: $ {calculate('만기')} </div>
               <div className="text-center py-3" > 지금 해지시: $ {calculate('지금')} </div>
               <div className="d-flex justify-content-center">
-                <button className="p-2 btn btn-primary"
-                  onClick={onhandleclick}> 해지하기 </button>
+
+              <DepositCloseModal onhandleclick={onhandleclick}/>
               </div>
             </div>
           </div>
@@ -74,7 +78,16 @@ function Deposit() {
 
     )
   } else {
-    return <div className="account-card shadow justify-content-center col-md-12 bg-white"style={{ textAlign: 'center' }}>새로운 예금 상품에 가입하세요</div>
+
+    return <>
+      <div className="row py-3 justify-content-center">
+        <div className="account-card shadow justify-content-center col-md-12 bg-white "style={{ textAlign: 'center' }}>
+          새로운 예금 상품에 가입하세요
+        </div>
+      </div>
+      <DepositAdd balance={balance} />
+    </>
+
   }
 
 }

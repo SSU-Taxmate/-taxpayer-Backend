@@ -15,6 +15,7 @@ import CardCollapse from "../../../components/Cards/Collapse";
 import Viewer from "../../../components/Editor/Viewer";
 import moment from 'moment-timezone'
 import { useSelector } from 'react-redux';
+import Loading from "../../../components/Loading";
 
 export default function Law() {
   const [laws, setlaws] = useState([]);
@@ -75,7 +76,7 @@ export default function Law() {
               <List>
                 {/* <!-- Content Row --> */}
                 {isLoading ? (
-                  <div>Loading</div>
+                  <Loading/>
                 ) : laws.length == 0 ? (
                   <div>법 추가 부탁</div>
                 ) : (

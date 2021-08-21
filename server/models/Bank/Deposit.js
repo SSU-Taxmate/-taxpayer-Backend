@@ -24,9 +24,9 @@ const depositSchema = mongoose.Schema({
         type:Number,
         default:0,
     },
-    minAmount:{/* 최소 가입 금액 */
+    minAmount:{/* 최소 가입 금액 - 이상 */
         type:Number,
-        default:0
+        default:1
     },
     minDuration:{/* 최소 가입 기간(day)- 이전에는 원금만 받고, 이후는 가입금액*rate */
         type:Number,

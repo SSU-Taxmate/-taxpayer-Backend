@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import ScrollToTop from '../../../components/Scroll';
-import Account from '../BankComponents/Account';
-import Deposit from '../BankComponents/Deposit';
-import DepositAdd from '../DepositAdd';
+import Account from './AccountSection';
+import Deposit from './DepositSection';
 import axios from 'axios'
 import { useSelector } from "react-redux";
 
 
 function Bank() {
-
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [userAccount, setUserAccount] = useState({})
@@ -24,7 +22,7 @@ function Bank() {
         const result = await axios.get(`/api/students/${joinedUser.classUser}/account`);
         console.log("/api/students/:id/account", result.data);
         setUserAccount(result.data)
-        
+
 
       } catch (error) {
         setIsError(true);
@@ -40,7 +38,7 @@ function Bank() {
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
 
-         
+
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
@@ -61,15 +59,15 @@ function Bank() {
               <div className="row">
                 <div className="col-lg-6 justify-content-center">
                   {user.userData && (userAccount &&
+                  <>
                     <Account
                       user={user.userData.name}
                       balance={userAccount.currentBalance} />
+                  </>
                   )}
-                  <Deposit/>
+                                        <Deposit balance={userAccount.currentBalance} />
 
-                  <DepositAdd />
                 </div>
-
                 <div className="col-lg-6 justify-content-center py-3">
                   <div className="account-card shadow justify-content-center bg-white">
                     <div className="text-center">
