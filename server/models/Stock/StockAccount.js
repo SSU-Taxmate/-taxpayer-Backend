@@ -16,23 +16,22 @@ const stockaccountSchema = mongoose.Schema({
         },
         quantity: {// 총 보유 주식 수
             type: Number,
-            require: true
         },
         allPayAmount: {//이 주식에 투자한 총 금액 : SUM(price*quantity*(100+taxRate)/100)
             type: Number,
-            require: true
         },
     }]
 }, { timestamps: true })
 const StockAccount = mongoose.model('StockAccount', stockaccountSchema)
 module.exports = { StockAccount }
 // <매수>
+// 은행 잔고 확인
 // 1) holdingStocks에 stockId가 있다면
 //      qunatity+=StockOrderHistory.quantity
-//      allPayAmount+=StockOrderHistory.PayAmount
+//      allPayAmount+=StockOrderHistory.payAmount
 // 2) 없다면
 //      quantity=StockOrderHistory.quantity
-//      allPayAmount=StockOrderHistory.PayAmount
+//      allPayAmount=StockOrderHistory.payAmount
 
 // <매도>
 // qunatity-=매도수량

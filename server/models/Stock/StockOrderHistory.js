@@ -25,7 +25,7 @@ const stockorderhistorySchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    payAmount: {// price*quantity*(100+taxRate)/100
+    payAmount: {// price*quantity
         type: Number,
         require: true
     },

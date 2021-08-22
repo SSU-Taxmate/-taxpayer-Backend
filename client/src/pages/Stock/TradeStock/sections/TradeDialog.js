@@ -15,7 +15,7 @@ function TradeDialog(props) {
         e.preventDefault();
         //console.log('trade complete')
         if(type==='매수'){
-            axios.post('/api/stocks/')
+            axios.post('/api/stocks/orders',{params:{orderType:'매수'}})
             .then(function (response) {
                 console.log(response);
             })
@@ -24,11 +24,10 @@ function TradeDialog(props) {
             });
         
         }else if (type==='매도'){
-
+            axios.post('/api/stocks/orders',{params:{orderType:'매도'}})
         }else{
             return '잘못된 type입니다'
         }
-       
     }
     return (
         <div>

@@ -16,15 +16,20 @@ const joineduserSchema = mongoose.Schema({
         type:String,
         default:''
     },
-    /*클래스에 속한 student가 갖는 고유 정보 */
+/*
+    클래스에 속한 student가 갖는 고유 정보 
+*/
     jobId:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Job',
         default:null
     }],
-    /*신용등급- creditRating*/
+    /*creditRating - */
     /*account - JoinedUser._id로 Account에서 찾기*/
-
+    
+    /* holdingStocks 
+    - JoinedUser._id로 StockAacount에서 찾기*/
+   
 })
 const JoinedUser=mongoose.model('JoinedUser',joineduserSchema);
 module.exports = { JoinedUser}

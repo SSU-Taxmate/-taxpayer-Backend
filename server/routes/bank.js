@@ -237,8 +237,6 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
     session.endSession();
     res.json({ success: false, err })
   }
-
-
 })
 
 
