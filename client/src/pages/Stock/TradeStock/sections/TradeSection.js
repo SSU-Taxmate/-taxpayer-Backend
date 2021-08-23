@@ -7,7 +7,7 @@ function TradeSection(props) {
     const hadleStockChange = (e) => {
         e.preventDefault()
         setSelectedValue(stocks[stocks.findIndex(i => i._id == e.target.value)])
-    }//(setStock[e.target.value])
+    }
     const adjustData = (data) => {
         return {
             labels: data.map((n, i) => { return n['updateDate'].split('T')[0] }),
@@ -43,8 +43,7 @@ function TradeSection(props) {
                         id="trade-select"
                         className="form-control"
                         onChange={e => hadleStockChange(e)}
-                        defaultValue=""
-                    >
+                        defaultValue="">
                         <option value="" disabled>선택해주세요</option>
                         {
                             stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)

@@ -38,7 +38,7 @@ export default function Law() {
       setIsLoading(false);
     };
     fetchData();
-  }, [classData]);
+  }, [classData.classId]);
   const getDate = (date) => {
     const localtime = moment(date).tz("Asia/Seoul").format();
     let res =

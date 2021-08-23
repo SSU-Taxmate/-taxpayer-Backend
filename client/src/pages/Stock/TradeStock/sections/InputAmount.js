@@ -1,9 +1,9 @@
 import React,{useState} from 'react'
-import TradeDialog from './TradeDialog';
+import BuyDialog from './BuyDialog';
 
 function InputAmount(props) {
     const selectedValue=props.selectedValue;
-    const [quantity, setquantity] = useState(0)
+    const [quantity, setquantity] = useState(1)
     //console.log(selectedValue)
     const handleQuantity = (e) => {
         e.preventDefault()
@@ -17,7 +17,7 @@ function InputAmount(props) {
                     <input type="number" readOnly className="form-control" id="tradeValue" placeholder="현재가" min="0" max="100" step="1" value={selectedValue ? selectedValue['prices'][selectedValue['prices'].length - 1].value : ''} />
                     <div className="input-group-append"><span className="input-group-text outline-none">X</span></div>
 
-                    <input type="number" onChange={handleQuantity} className="form-control" id="tradeQuantity" placeholder="'판매/구입' 할" min="0" max="100" step="1" />
+                    <input type="number" onChange={handleQuantity} className="form-control" id="tradeQuantity" placeholder="'판매/구입' 할" min="1" max="100" step="1" />
                     <div className="input-group-append"><span className="input-group-text">주</span></div>
                 </div>
             </div>
@@ -30,12 +30,10 @@ function InputAmount(props) {
             </div>
 
             <div className='row-sm-* mt-2'>
-
-                <TradeDialog type='매수' color='danger'
+                <BuyDialog type='매수' color='danger'
                     quantity={quantity}
                     data={{ 'stockId': selectedValue._id, 'stockName': selectedValue.stockName, 'price': selectedValue.prices[selectedValue.prices.length - 1].value }}
                 />
-
             </div>
         </>
     )

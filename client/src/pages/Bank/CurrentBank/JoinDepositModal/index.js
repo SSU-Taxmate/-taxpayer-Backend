@@ -11,7 +11,6 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import Snackbar from '@material-ui/core/Snackbar';
 
 const steps = [FirstStep, SecondStep, ConfirmStep]
 const label = ['예금상품 선택하기', '저축할 금액 입력', '계약서 확인 및 제출'];
@@ -104,8 +103,6 @@ function DepositAdd({ balance }) {
   //sucess
   return (
     <>
-    
-
       <div className="row py-3 justify-content-center">
         <div className="account-card shadow justify-content-center col-md-12 bg-white">
           <div className="text-center" onClick={handleClickOpen}>
@@ -166,8 +163,6 @@ function DepositAdd({ balance }) {
                 </div>
               </div>
             )}
-
-
 
           </>
         </DialogContent>

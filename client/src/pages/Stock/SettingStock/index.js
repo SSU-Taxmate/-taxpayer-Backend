@@ -28,10 +28,6 @@ export default function SettingStock() {
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
 
-         
-
-        {/* <!-- End of Sidebar --> */}
-
         {/* <!-- Content Wrapper --> */}
         <div id="content-wrapper" className="d-flex flex-column">
 

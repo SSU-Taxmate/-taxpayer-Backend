@@ -30,7 +30,7 @@ function Bank() {
       setIsLoading(false);
     };
     fetchData();
-  }, [])
+  }, [joinedUser.classUser])
 
   return (
 

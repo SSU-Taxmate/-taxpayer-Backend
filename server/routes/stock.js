@@ -40,7 +40,7 @@ router.post("/use", (req, res) => {
 router.get("/use", async (req, res) => {
   try {
     const classstock = await ClassStock.find(req.query, "stockId")
-    console.log(req.query, classstock)
+    //console.log(req.query, classstock)
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
@@ -159,11 +159,11 @@ router.delete('/custom', async (req, res) => {
     session.startTransaction();
     // 1) Class-Stock 연관 삭제 - classId필요없음
     const delclasstock = await ClassStock.deleteOne({ stockId: req.query.stockId }, { session: session });
-    //console.log('del: class-stock', delclasstock);
+    console.log('del: class-stock', delclasstock);
 
     // 2) Stock 삭제
-    const delstock = await Stock.deleteOne({ _id: req.query.stockId }, { session: session })
-    //console.log('del:stock', delstock);
+    const delstock = await Stock.deleteOne({ _id: req.query.stockId ,userDefined:true}, { session: session })
+    console.log('del:stock', delstock);
 
     await session.commitTransaction();
     session.endSession();
@@ -192,7 +192,6 @@ router.post("/", (req, res) => {
   })
 })
 
-
 /*
   [90%완료] 주식 주문
   : 학생의 Stock 매수/매도 req.params orderType로 구분
@@ -200,7 +199,7 @@ router.post("/", (req, res) => {
  */
 router.post('/:id/orders', async (req, res) => {
   const stockId = req.params.id //어떤 stock을
-  const orderType = req.query.orderType//매수,매도
+  const orderType = req.body.orderType//매수,매도
   const studentId = req.body.studentId //누가
   const quantity = req.body.quantity //얼만큼
   const currentPrice = req.body.currentPrice//현재가
@@ -274,7 +273,7 @@ router.post('/:id/orders', async (req, res) => {
       console.log('매도')
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-      console.log(stockaccount.holdingStocks[index].quantity)
+      //console.log(stockaccount.holdingStocks[index].quantity)
       if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {
         //매도
         const minusStock = await StockAccount.updateOne({ studentId: studentId },
@@ -312,4 +311,5 @@ router.post('/:id/orders', async (req, res) => {
     res.json({ success: false, err })
   }
 })
+
 module.exports = router;

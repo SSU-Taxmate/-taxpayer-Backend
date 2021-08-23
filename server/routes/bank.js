@@ -33,7 +33,7 @@ router.get('/deposits', (req, res) => {
   classId 정보도 추가
 */
 router.post('/deposits', (req, res) => {
-  //console.log('/api/bank/deposits', req.body)
+  console.log('/api/bank/deposits', req.body)
   const cDeposit = new Deposit(req.body)
   cDeposit.save((err, doc) => {
     if (err) return res.json({ success: false, err })

@@ -8,24 +8,23 @@ function Deposit({balance}) {
   const [isError, setIsError] = useState(false);
   const [userdeposit, setuserdeposit] = useState();
   const joinedUser = useSelector(state => state.classUser);
-  console.log('balance',balance)
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        const result = await axios.get(`/api/students/${joinedUser.classUser}/deposit`);
-        //console.log("/api/students/:id/deposit", result.data);
-        setuserdeposit(result.data)
-        console.log(result.data)
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
+    try {
+      const result = await axios.get(`/api/students/${joinedUser.classUser}/deposit`);
+      //console.log("/api/students/:id/deposit", result.data);
+      setuserdeposit(result.data)
+      console.log(result.data)
 
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    };
+    } catch (error) {
+      setIsError(true);
+    }
+    setIsLoading(false);
+  };
+  useEffect(() => {
     fetchData();
-  }, [])
+  }, [joinedUser.classUser])
   const calculate = (type) => {
     if (type === '만기') {
       return (userdeposit.productId.interestRate + 100) * userdeposit.amount / 100
@@ -44,6 +43,7 @@ function Deposit({balance}) {
     e.preventDefault();
     axios.delete(`/api/bank/deposits/${userdeposit.productId._id}/join/${userdeposit._id}`)
       .then(function (response) {
+        fetchData();
         console.log(response);
       })
       .catch(function (error) {
