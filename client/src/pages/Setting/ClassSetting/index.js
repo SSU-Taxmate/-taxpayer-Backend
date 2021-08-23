@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { DataGrid } from '@material-ui/data-grid';
 import { Button } from '@material-ui/core';
 import { GridToolbarContainer, GridToolbarDensitySelector } from '@material-ui/data-grid';
+import Loading from '../../../components/Loading';
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
@@ -102,7 +103,7 @@ function ClassSetting() {
 
               {/* <!-- Content Row --> */}
               {isLoading ?
-                <div>loading</div> : (
+                <Loading/> : (
                   <>
                     {/* */}
                     <h2>직업 모집 공고 설정(선생님)</h2>

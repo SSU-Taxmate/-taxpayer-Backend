@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import CardDefault from '../../../../components/Cards/Default';
 import { useSelector } from "react-redux";
+import Loading from '../../../../components/Loading';
+import DeleteStockDialog from './DeleteStockDialog';
 
 function ChooseStockPanel() {
     const [isLoading, setIsLoading] = useState(false);
@@ -23,16 +25,19 @@ function ChooseStockPanel() {
             setIsLoading(false);
         };
         fetchData();
-    }, [classData])
+    }, [classData.classId])
     return (
         <div>
             <h6>클래스 주식</h6>
             {isLoading ?
-                <div>loading</div> :
+                <Loading/> :
                 stocks.map((stock, i) =>
+                <div key={i}>
                     <CardDefault key={i} title={stock.stockName}>
                         {stock.description}
-                    </CardDefault>)
+                    </CardDefault>
+                    <DeleteStockDialog stockId={stock._id}/>
+                </div>)
 
             }
             

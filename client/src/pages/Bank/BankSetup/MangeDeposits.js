@@ -41,41 +41,43 @@ function MangeDeposits() {
         <div className='col'>
             <AddDepositDialog />
             {deposits.map((v, i) =>
-                <div key={i} className='row'>
-                    <div className='col-11 p-2 mb-3' style={{ backgroundColor: '#ffffff', border: 1 }}>
-                        <div className='row p-2'>
-                            <div className='col-md-6'>
-                                <div className='mb-2'>
-                                    <p style={{ display: 'flex', justifyContent: 'space-between', alignItems:'center' }}>
-                                        <span className="text-primary" style={{fontSize: '5vw'}}>{v.name}</span>
-                                        <span style={{fontSize: '3vw'}}>가입가능 {v.joinPossible ? "O" : "X"}</span>
-                                    </p>
+                {
+                    return <div key={i} className='row'>
+                        <div className='col-11 p-2 mb-3' style={{ backgroundColor: '#ffffff', border: 1 }}>
+                            <div className='row p-2'>
+                                <div className='col-md-6'>
+                                    <div className='mb-2'>
+                                        <p style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <span className="text-primary" style={{ fontSize: '5vw' }}>{v.name}</span>
+                                            <span style={{ fontSize: '3vw' }}>가입가능 {v.joinPossible ? "O" : "X"}</span>
+                                        </p>
+                                    </div>
+                                    <div className="row-4"> {v.description}</div>
                                 </div>
-                                <div className="row-4"> {v.description}</div>
-                            </div>
-                            <div className='col-md-4'>
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item list-inline" style={{ display: 'flex', "justifyContent": 'space-between' }}>
-                                        <div style={{ display: 'inline' }}>이율</div>
-                                        <div style={{ display: 'inline' }}>{v.interestRate}</div>
-                                    </li>
-                                    <li className="list-group-item" style={{ display: 'flex', "justifyContent": 'space-between' }}>
-                                        <div style={{ display: 'inline' }}>최소가입금액</div>
-                                        <div style={{ display: 'inline' }}>{v.minAmount}</div>
-                                    </li>
-                                    <li className="list-group-item" style={{ display: 'flex', "justifyContent": 'space-between' }}>
-                                        <div style={{ display: 'inline' }}>최소 가입기간</div>
-                                        <div style={{ display: 'inline' }}>{v.minDuration}</div>
-                                    </li>
+                                <div className='col-md-4'>
+                                    <ul className="list-group list-group-flush">
+                                        <li className="list-group-item list-inline" style={{ display: 'flex', "justifyContent": 'space-between' }}>
+                                            <div style={{ display: 'inline' }}>이율</div>
+                                            <div style={{ display: 'inline' }}>{v.interestRate}</div>
+                                        </li>
+                                        <li className="list-group-item" style={{ display: 'flex', "justifyContent": 'space-between' }}>
+                                            <div style={{ display: 'inline' }}>최소가입금액</div>
+                                            <div style={{ display: 'inline' }}>{v.minAmount}</div>
+                                        </li>
+                                        <li className="list-group-item" style={{ display: 'flex', "justifyContent": 'space-between' }}>
+                                            <div style={{ display: 'inline' }}>최소 가입기간</div>
+                                            <div style={{ display: 'inline' }}>{v.minDuration}</div>
+                                        </li>
 
-                                </ul>
-                            </div>
-                            <div className='col-md-2 text-right' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                <button id={v._id} onClick={onhandleClick} className='btn btn-outline-primary mb-3' >-</button>
+                                    </ul>
+                                </div>
+                                <div className='col-md-2 text-right' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <button id={v._id} onClick={onhandleClick} className='btn btn-outline-primary mb-3'>-</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>;
+                }
             )}
         </div>
 
