@@ -4,11 +4,11 @@ import Chart from "chart.js";
 Chart.defaults.global.defaultFontFamily = "Nunito";
 Chart.defaults.global.defaultFontColor = "#858796";
 
-export default function ChartPie(props) {
+function ChartPie(props) {
   //class로 바꾸었을 때는? 몇번이나..?
   const chartRef = React.createRef();
   useEffect(() => {
-    //console.log('useEffect-ChartPie',props.data)
+    console.log('useEffect-ChartPie',props.data)
 
     const myChartRef = chartRef.current.getContext("2d");
     var pieChart;
@@ -34,3 +34,4 @@ export default function ChartPie(props) {
     </div>
   );
 }
+export default ChartPie

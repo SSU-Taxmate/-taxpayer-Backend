@@ -18,7 +18,7 @@ function ClassCard(props) {
               to={`/classes/${props.id}`}
               onClick={() => {
                 dispatch(selectClass({ classId: props.id }));
-                if (user.userData.role == 1) {
+                if (user.userData.role === 1) {
                   dispatch(
                     selectUser({ classId: props.id, userId: user.userData._id })
                   );

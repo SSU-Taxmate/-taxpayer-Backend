@@ -40,7 +40,7 @@ function AddDepositDialog() {
             });
     };
     const onChange = useCallback(
-        ({target:{name,value}}) => setdata(prevdata => ({ ...prevdata, [name]:value }), [])
+        ({target:{name,value}}) => setdata(prevdata => ({ ...prevdata, [name]:value })), []
       );
    
     const nameField = React.useMemo(

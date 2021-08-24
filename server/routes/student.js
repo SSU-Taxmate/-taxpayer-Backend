@@ -107,10 +107,40 @@ router.get('/:id/account/history', async (req, res) => {
         res.json(result)
     } catch (err) {
         res.status(500).json({ success: false, error: err });
-    }//
+    }
 
 })
 
+/*
+    [생각]자신 계좌의 통계정보 확인
+    : 입/출금
+*/
+router.get('/:id/account/statistics', async(req, res) => {
+    try {
+        const studentId=req.params.id
+         console.log("studentId:",req.params.id,req.query)
+        const account = await Account.findOne({ studentId: studentId })
+        //console.log(account)
+        const accounttrans = await AccountTransaction.aggregate([
+            {$match:{
+                "accountId":account._id,    
+                "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+            }},
+            {$group:
+                {
+                    _id:'$memo',
+                    count:{$sum:1},
+                    sum:{$sum:'$amount'}    
+                }
+            }
+            ])
+        const result = accounttrans
+        console.log(result)
+        res.json(result)
+    } catch (err) {
+        res.status(500).json({ success: false, error: err });
+    }
+})
 
 /*
   ====================== 가입한 금융 상품

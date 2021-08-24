@@ -107,7 +107,7 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -123,7 +123,7 @@ export default function Sidebar(props) {
                       </Link>{" "}
                     </>
                   ) : null}
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <h6 className="collapse-header">학생</h6>
                       <Link
@@ -161,14 +161,14 @@ export default function Sidebar(props) {
               >
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">중앙은행</h6>
-                  {user.userData.role == 1 /*학생의 경우 */ ? (
+                  {user.userData.role === 1 /*학생의 경우 */ ? (
                     <>
                       <Link className="collapse-item" to="/bank_statics">
                         통계
                       </Link>{" "}
                     </>
                   ) : null}
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -178,7 +178,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 1 /*학생의 경우 */ ? (
+                  {user.userData.role === 1 /*학생의 경우 */ ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -188,7 +188,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 0 /*학생의 경우 */ ? (
+                  {user.userData.role === 0 /*학생의 경우 */ ? (
                     <>
                       <h6 className="collapse-header">신용등급</h6>
                       <Link
@@ -224,7 +224,7 @@ export default function Sidebar(props) {
                   <Link className="collapse-item" to="/classes/:classId/stock">
                     호가창
                   </Link>
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -234,7 +234,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -311,7 +311,7 @@ export default function Sidebar(props) {
                   >
                     나라 통계
                   </Link>
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <h6 className="collapse-header">학생</h6>
                       <Link
@@ -322,7 +322,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <h6 className="collapse-header">선생님</h6>
                       <Link
@@ -357,7 +357,7 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <h6 className="collapse-header">선생님</h6>
                       <Link
@@ -374,7 +374,7 @@ export default function Sidebar(props) {
                       </Link>{" "}
                     </>
                   ) : null}
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <h6 className="collapse-header">학생</h6>
                       <Link

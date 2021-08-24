@@ -16,7 +16,7 @@ function DeleteStockDialog({stockId}) {
     const handleSubmit = (e) => {
        e.preventDefault();
         //console.log('submit')
-        axios.delete(`/api/stocks/custom`,{params:{stockId:stockId}})
+        axios.delete(`/api/stocks/${stockId}`)
         .then(function (response) {
           console.log(response);
         })

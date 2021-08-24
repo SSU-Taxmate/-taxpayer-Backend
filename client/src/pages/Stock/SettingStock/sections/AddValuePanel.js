@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector } from "react-redux";
 import axios from 'axios'
-
+import moment from 'moment';
 function AddValuePanel() {
   const [customStocks, setcustomStocks] = useState([])//custom 주식
   const [selectedValue, setSelectedValue] = useState()//선택한 주식
@@ -15,7 +15,7 @@ function AddValuePanel() {
   const onSubmit = (e) => {
     e.preventDefault()
     console.log('선택한 stock', data, 'setSelectedValue')
-    axios.put('/api/stocks/custom', { ...data, _id: selectedValue })
+    axios.put('/api/stocks', { ...data, _id: selectedValue })
       .then(function (response) {
         console.log(response);
       })
@@ -25,7 +25,7 @@ function AddValuePanel() {
   }
 
   const onChange = useCallback(
-    ({ target: { name, value } }) => setdata(prevdata => ({ ...prevdata, [name]: value }), [])
+    ({ target: { name, value } }) => setdata(prevdata => ({ ...prevdata, [name]: value })), []
   );
 
   const handleSelected = (e) => {
@@ -38,7 +38,7 @@ function AddValuePanel() {
       setIsLoading(true);
       try {
         //custom 주식만 가져오기
-        const result = await axios.get('/api/stocks/custom', { params: { classId: classData.classId } });
+        const result = await axios.get('/api/stocks', { params: { classId: classData.classId } });
         console.log(result.data)
         setcustomStocks(result.data)
 
@@ -52,6 +52,12 @@ function AddValuePanel() {
     return () => {
     }
   }, [classData.classId])
+  const dateField = React.useMemo(
+    () => (
+        <input name='updateDate' defaultValue={data.updateDate}
+          min={moment().add(1, 'd').format('YYYY-MM-DD')}
+          type='date' onChange={onChange} style={{ marginRight: '3px' }}></input>
+    ), [data.updateDate])
   const todayValueField = React.useMemo(
     () => (
       <input type="number" className="form-control" name="price" placeholder="오늘의 주가"
@@ -87,6 +93,9 @@ function AddValuePanel() {
             <label htmlFor="price" >주가</label>
             <div className='col' id='inputstock'>
               {todayValueField}
+            </div>
+            <div className='col-*' id='inputDate'>
+              {dateField}
             </div>
           </div>
           <label htmlFor="description" className="col-sm-2 col-form-label">한 줄 뉴스</label>

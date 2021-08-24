@@ -6,7 +6,6 @@ import ScrollToTop from "../../components/Scroll";
 import PageHeading from "../../components/PageHeading";
 import ClassListDetail from "./ClassListDetail";
 import Footer from "../../components/Footer";
-import MainHeader from "../../components/Navigation/MainHeader";
 
 class ClassList extends Component {
   render() {
