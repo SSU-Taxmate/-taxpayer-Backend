@@ -1,9 +1,10 @@
 import React from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Loading() {
     return (
-        <div>
-            로딩중
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',minHeight:"20vh"}}>
+            <CircularProgress />
         </div>
     )
 }

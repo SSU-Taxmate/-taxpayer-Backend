@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState ,useCallback} from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,7 +9,13 @@ import { useSelector } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 
 function AddDepositDialog() {
-    const [data, setdata] = useState({})
+    const [data, setdata] = useState({
+        name:'',
+        description:'',
+        interestRate:0,
+        minAmount:0,
+        minDuration:0
+    })
     const [open, setOpen] = useState(false);
     let classData = useSelector(state => state.classInfo.classData);
 
@@ -21,8 +26,7 @@ function AddDepositDialog() {
         setOpen(false);
     };
     const handleSubmit = (e) => {
-        //e.preventDefault();
-        console.log('submit!')
+        e.preventDefault();
         const res = {
             classId: classData.classId,
             ...data
@@ -35,15 +39,15 @@ function AddDepositDialog() {
                 console.log(error);
             });
     };
-    const onChange = (e) => {
-        console.log(data)
-        setdata({ ...data, [e.target.id]: e.target.value })
-    }
+    const onChange = useCallback(
+        ({target:{name,value}}) => setdata(prevdata => ({ ...prevdata, [name]:value }), [])
+      );
+   
     const nameField = React.useMemo(
         () => (
             <TextField
                 className="col m-1"
-                id="name"
+                name="name"
                 label="상품명"
                 variant="outlined"
                 size="small"
@@ -54,7 +58,7 @@ function AddDepositDialog() {
         () => (
             <TextField
                 className="col m-1"
-                id="description"
+                name="description"
                 label="내용"
                 multiline
                 rows={2}
@@ -67,7 +71,7 @@ function AddDepositDialog() {
         () => (
             <TextField
                 className="col m-1"
-                id="interestRate"
+                name="interestRate"
                 label="만기시 이율(%)"
                 variant="outlined"
                 size="small"
@@ -79,7 +83,7 @@ function AddDepositDialog() {
         () => (
             <TextField
                 className="col m-1"
-                id="minAmount"
+                name="minAmount"
                 label="최소 가입 금액"
                 variant="outlined"
                 size="small"
@@ -91,12 +95,11 @@ function AddDepositDialog() {
         () => (
             <TextField
                 className="col m-1"
-                id="minDuration"
+                name="minDuration"
                 label="최소 가입 기간(일)"
                 variant="outlined"
                 size="small"
                 onChange={onChange}
-
             />
         ),[]
     )

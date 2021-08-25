@@ -8,6 +8,7 @@ import ScrollToTop from '../../../components/Scroll'
 import TradeSection from './sections/TradeSection'
 import StockList from './sections/StockList'
 import { useSelector } from "react-redux";
+import Loading from '../../../components/Loading';
 
 export default function TradeStock() {
   const [isError, setIsError] = useState(false);
@@ -63,12 +64,12 @@ export default function TradeStock() {
               <h4 className='pt-2'>오늘의 주식</h4>
               {/*{[{ title: 'A엔터', stockId: 'id1', currentValue: 100 }, { title: 'gold', stockId: 'id9', '현재가': 150 }]}  */}
               {isError && <Error></Error>}
-              {isLoading ? <div>로딩중</div> :
+              {isLoading ? <Loading/> :
                 <StockList data={stocks} />}
               <h4 className='pt-2'>주식 매도 매수 창</h4>
-              <div className="card shadow py-2">
+              <div className="card shadow py-2" style={{minHeight:'30vh'}}>
                 {isError && <Error></Error>}
-                {isLoading ? <div>로딩중</div> :
+                {isLoading ? <Loading/> :
                   <TradeSection stocks={stocks} />}
               </div>
 
