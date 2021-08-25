@@ -39,8 +39,11 @@ app.use('/api/taxes',require('./routes/tax'))
 app.use('/api/budget',require('./routes/budget'))
 /* 법 */
 app.use('/api/laws',require('./routes/law'))
-app.get('/', (req, res) => res.send('Hello World!'))
+/* cron */
+//app.use('/api/batch',require('./routes/batch'))
 
+
+app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/api/tax/nation', (req, res) => {
   res.json({
     "data": [

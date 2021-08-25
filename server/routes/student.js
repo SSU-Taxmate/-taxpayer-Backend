@@ -60,7 +60,7 @@ router.get('/job', async (req, res) => {
     }
 })
 /* 
-   [완료] 클래스 내 학생의 job 삭제
+   [완료] 클래스 내 한 학생의 job 삭제
 */
 router.delete('/:id/jobs/:jobId', (req, res) => {
     const studentId=req.params.id
@@ -73,6 +73,7 @@ router.delete('/:id/jobs/:jobId', (req, res) => {
         })
     })
 })
+
 /*
   ====================== 계좌 정보, 거래 내역
 */

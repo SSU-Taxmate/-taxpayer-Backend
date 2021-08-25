@@ -6,7 +6,7 @@ import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
 import axios from 'axios'
 import { useSelector } from "react-redux";
-
+import Loading from '../../../components/Loading'
 
 
 import { DataGrid, GridToolbarFilterButton } from '@material-ui/data-grid';
@@ -211,7 +211,6 @@ function ClassSetting() {
 
 
         }
-
 
        
 
