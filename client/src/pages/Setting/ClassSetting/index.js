@@ -247,7 +247,7 @@ function ClassSetting() {
 
               {/* <!-- Content Row --> */}
               {isLoading ?
-                <Loading/> : (
+          <div>      Loading </div>: (
                   <>
                     {/* */}
                     <JobTable
