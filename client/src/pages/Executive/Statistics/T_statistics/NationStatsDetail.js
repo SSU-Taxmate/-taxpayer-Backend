@@ -4,6 +4,7 @@ import ChartPie from './../../../../components/Charts/Pie'
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import Error from '../../../../components/Error';
+import Loading from '../../../../components/Loading'
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [columns, setColumns] = useState([])
@@ -51,21 +52,19 @@ const NationStatsDetail = () => {
         <div className="col">
             <div className="card shadow mb-4">
                 {isError && <Error></Error>}
-
                 {isLoading ?
-                    <div>loading</div> : (
+                    <Loading /> : (
                         <>
-                            
-                               <div style={{ height: 400, width: '100%' }}>
-                                                    <DataGrid
-                                                        rows={data}
-                                                        columns={columns}
-                                                        pageSize={5}
-                                                        checkboxSelection
-                                                        disableSelectionOnClick
-                                                    />
-                                                </div>
-                         
+                            <div style={{ height: 400, width: '100%' }}>
+                                <DataGrid
+                                    rows={data}
+                                    columns={columns}
+                                    pageSize={5}
+                                    checkboxSelection
+                                    disableSelectionOnClick
+                                />
+                            </div>
+
                         </>
                     )}
             </div>

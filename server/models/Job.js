@@ -42,21 +42,4 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
     }
 },{timestamps:true})
 const Job = mongoose.model('Job', jobSchema)
-/*해당 클래스의 채용공고
-const jobPostingSchema = mongoose.Schema({
-    jobId: {//직업설명
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Job'
-    },
-    qualification: {//자격요건
-        type: String,
-        default: ''
-    },
-    recruitment: {//모집 인원
-        type: Number,
-        default: 1
-    }
-})
-const PostedJob = mongoose.model('PostedJob', jobPostingSchema)
- */
 module.exports = { Job}

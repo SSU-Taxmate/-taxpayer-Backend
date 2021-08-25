@@ -4,6 +4,7 @@ import Popover from '../../../../components/Popover';
 import axios from 'axios'
 import InputTax from './sections/InputTax';
 import { useSelector} from "react-redux";
+import Loading from '../../../../components/Loading';
 
 function SettingTaxDetail() {
   const [isLoading, setIsLoading] = useState(false)
@@ -53,7 +54,7 @@ function SettingTaxDetail() {
   return (
     <>
       {isLoading ?
-        <div>loading</div> :
+        <Loading/> :
         <CardBasic title='세금 설정 현황'>
           <form className="ml-1" onSubmit={handleSetupTax}>
 
