@@ -4,16 +4,10 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
+
 import axios from 'axios'
 import { useSelector } from "react-redux";
-
-
-
-import { DataGrid, GridToolbarFilterButton } from '@material-ui/data-grid';
 import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
-
-import { withStyles, makeStyles,lighten } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
 
 
 import JobTable from './component/JobTable';
@@ -38,27 +32,27 @@ function ClassSetting() {
   let classData = useSelector(state => state.classInfo.classData);
   let user = useSelector((state) => state.user);
 
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
 
+    try {
+      const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
+      let temp = []
+      for (let i = 0; i < result.data.length; i++) {
+        temp.push({ ...result.data[i], id: result.data[i]._id })
+      }
+      setData(temp)
+    } catch (error) {
+      setIsError(true);
+
+    }
+    setIsLoading(false);
+
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-
-      try {
-        const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
-        let temp = []
-        for (let i = 0; i < result.data.length; i++) {
-          temp.push({ ...result.data[i], id: result.data[i]._id })
-        }
-        setData(temp)
-      } catch (error) {
-        setIsError(true);
-
-      }
-      setIsLoading(false);
-
-    };
+    
     fetchData();
 
   }, []);
@@ -148,13 +142,8 @@ function ClassSetting() {
         }
 
 
-         
-
-
 
         //job CRUD
-
-        
 
         const jobAdd= (input) => {
  
@@ -175,7 +164,8 @@ function ClassSetting() {
               console.log(error);
             });
 
-            jobRead();
+            fetchData();
+
         };
 
 
@@ -206,8 +196,7 @@ function ClassSetting() {
               console.log(error);
             });
 
-            jobRead();
-            console.log("updateData",data);
+            fetchData();
 
 
         }
@@ -228,33 +217,6 @@ function ClassSetting() {
 
         console.log("selection",select)
       }
-
-      function jobRead(){
-
-        const fetchData = async () => {
-          setIsError(false);
-          setIsLoading(true);
-    
-          try {
-            const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
-            let temp = []
-            for (let i = 0; i < result.data.length; i++) {
-              temp.push({ ...result.data[i], id: result.data[i]._id })
-            }
-            setData(temp)
-          } catch (error) {
-            setIsError(true);
-    
-          }
-          setIsLoading(false);
-    
-        };
-        fetchData();
-
-        console.log("re read data",data)
-
-      }
-
 
 
   return (
@@ -285,7 +247,7 @@ function ClassSetting() {
 
               {/* <!-- Content Row --> */}
               {isLoading ?
-                <Loading/> : (
+          <div>      Loading </div>: (
                   <>
                     {/* */}
                     <JobTable
