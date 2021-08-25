@@ -16,7 +16,6 @@ import Credit from "./pages/Credit";
 
 /*은행 */
 import Bank from "./pages/Bank/CurrentBank";
-import Deposit from "./pages/Bank/Deposit";
 import BankSetup from './pages/Bank/BankSetup'
 /* 마켓 */
 
@@ -63,7 +62,6 @@ const Routes = () => (
 
       {/*은행*/}
       <Route exact path="/classes/:classId/bank" component={Auth(Bank,true)} />
-      <Route exact path="/classes/:classId/bank/deposit" component={Auth(Deposit,true)} />
       <Route exact path = "/classes/:classId/bank/manage" component={Auth(BankSetup,true,true)}/>
       
       {/* 증권 거래소 */}

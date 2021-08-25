@@ -7,6 +7,7 @@ import DefaultTable from '../../../../components/Table/Default';
 import TableTheme from '../../../../components/Table/TableTheme';
 import MaterialTable from 'material-table';
 import Error from '../../../../components/Error';
+import Loading from '../../../../components/Loading';
 const NationalTaxDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [columns, setColumns] = useState([])
@@ -208,7 +209,7 @@ const NationalTaxDetail = () => {
       <CardCollapse title='국채 발행 내역' area_id='nationaldebt'>
         {isError && <div>something went wrong</div>}
         {isLoading ?
-          <div>loading</div> : (
+          <Loading/> : (
             <DefaultTable
               title="국채 발행 내역"
               columns={columns[0]}
@@ -226,7 +227,7 @@ const NationalTaxDetail = () => {
       <CardCollapse title='세입 항목별 세부 내역' area_id='revenue_detail'>
       {isError && <Error></Error>}
         {isLoading ?
-          <div>loading</div> : (
+          <Loading/> : (
             <TableTheme>
               <MaterialTable
                 title="세입 항목별 세부 내역"
@@ -246,7 +247,7 @@ const NationalTaxDetail = () => {
       {/*<!--세출 항목별 세부 내역 시작-->*/}
       <CardCollapse title='세출 항목별 세부 내역' area_id='expenditure_detail'>
         {isLoading ?
-          <div>loading</div> : (
+          <Loading/> : (
             <TableTheme>
               <MaterialTable
                 title="세출 항목별 세부 내역"

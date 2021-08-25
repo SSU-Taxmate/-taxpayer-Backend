@@ -3,6 +3,7 @@ import CardBasic from "../../../components/Cards/Basic"
 import TableTheme from "../../../components/Table/TableTheme"
 import axios from 'axios';
 import Error from "../../../components/Error";
+import Loading from "../../../components/Loading";
 
 function PenaltyDetail() {
 
@@ -120,7 +121,7 @@ function PenaltyDetail() {
     <CardBasic >
     {isError && <Error></Error>}
         {isLoading ?
-                    <div>loading</div> : (
+                    <Loading/> : (
                         <TableTheme
                             title="제출여부"
                             columns={columns[0]}

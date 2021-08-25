@@ -7,9 +7,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Error from "../../components/Error";
+import Loading from '../../components/Loading'
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
 function ClassListDetail() {
@@ -50,7 +50,7 @@ function ClassListDetail() {
       {/* 데이터 만큼 */}
       {isError && <Error></Error>}
       {isLoading ? (
-        <div>로딩중</div>
+        <Loading/>
       ) : (
         classes.map((info, i) => (
           <ClassCard
