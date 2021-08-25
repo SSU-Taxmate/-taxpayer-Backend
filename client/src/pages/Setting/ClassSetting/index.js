@@ -4,17 +4,13 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
+
 import axios from 'axios'
 import { useSelector } from "react-redux";
 import Loading from '../../../components/Loading'
 
 
 import { DataGrid, GridToolbarFilterButton } from '@material-ui/data-grid';
-import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
-
-import { withStyles, makeStyles,lighten } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
-
 
 import JobTable from './component/JobTable';
 import JobDetailModal from './component/JobDetailModal';
@@ -38,27 +34,27 @@ function ClassSetting() {
   let classData = useSelector(state => state.classInfo.classData);
   let user = useSelector((state) => state.user);
 
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
 
+    try {
+      const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
+      let temp = []
+      for (let i = 0; i < result.data.length; i++) {
+        temp.push({ ...result.data[i], id: result.data[i]._id })
+      }
+      setData(temp)
+    } catch (error) {
+      setIsError(true);
+
+    }
+    setIsLoading(false);
+
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
 
-      try {
-        const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
-        let temp = []
-        for (let i = 0; i < result.data.length; i++) {
-          temp.push({ ...result.data[i], id: result.data[i]._id })
-        }
-        setData(temp)
-      } catch (error) {
-        setIsError(true);
-
-      }
-      setIsLoading(false);
-
-    };
     fetchData();
 
   }, []);
@@ -72,188 +68,157 @@ function ClassSetting() {
 
   const jobcolumns = [
     { field: 'name', headerName: '직업명', flex: 3, minWidth: 120, },
-    { field: 'salary', headerName: '월급', flex: 2, minWidth: 105,  },
-    { field: 'recruitment', headerName: '모집인원', flex:2, minWidth:135 },
-    { field: 'joinPossible', headerName: '지원가능',type:"boolean", flex:2, minWidth:135},
+    { field: 'salary', headerName: '월급', flex: 2, minWidth: 105, },
+    { field: 'recruitment', headerName: '모집인원', flex: 2, minWidth: 135 },
+    { field: 'joinPossible', headerName: '지원가능', type: "boolean", flex: 2, minWidth: 135 },
 
   ]
 
-    //student job date grid 
+  //student job date grid 
   const jobstudentcolumns = [
     { field: 'name', headerName: '직업명', flex: 1, minWidth: 120, },
-    { field: 'salary', headerName: '월급', flex: 1, minWidth: 105,  },
-    { field: 'recruitment', headerName: '모집인원', flex:1, minWidth:135 },
-    {field: 'applyed', headerName: '지원하기', width: 150,
+    { field: 'salary', headerName: '월급', flex: 1, minWidth: 105, },
+    { field: 'recruitment', headerName: '모집인원', flex: 1, minWidth: 135 },
+    {
+      field: 'applyed', headerName: '지원하기', width: 150,
       renderCell: (params) => (<Button variant='contained' onClick={showapplicant}>신청서작성</Button>)
     }]
 
 
-    //job modal handle
+  //job modal handle
 
-    //job modal data
-    const [modalRow,setModalRow]=useState([]);
+  //job modal data
+  const [modalRow, setModalRow] = useState([]);
 
-    //job detail modal: 선생님과 학생들이 job에 대한 상세정보를 조회하는 모달
-    const [jobDetailIsOpen, setjobDetailOpen] = useState(false);
+  //job detail modal: 선생님과 학생들이 job에 대한 상세정보를 조회하는 모달
+  const [jobDetailIsOpen, setjobDetailOpen] = useState(false);
 
-    const jobDetailModalOpen=()=>{
-      setjobDetailOpen(true);
+  const jobDetailModalOpen = () => {
+    setjobDetailOpen(true);
 
-      };
-    
-      const jobDetailModalClose = () => {
-        setjobDetailOpen(false);
-      };
+  };
 
-
-      //job 삭제
-      const [jobDeleteIsOpen, setjobDeleteOpen] = useState(false);
-
-    const jobDeleteModalOpen=()=>{
-      
-      jobEditModalClose();
-      jobDetailModalClose();
-
-      setjobDeleteOpen(true);
-
-      };
-    
-      const jobDeleteModalClose = () => {
-        setjobDeleteOpen(false);
-      };
-
-    
-      //apply student List
+  const jobDetailModalClose = () => {
+    setjobDetailOpen(false);
+  };
 
 
+  //job 삭제
+  const [jobDeleteIsOpen, setjobDeleteOpen] = useState(false);
 
-    //job edit modal: 선생님의 job에 대한 정보를 수정할 수 있는 곳
+  const jobDeleteModalOpen = () => {
 
-      const [jobEditIsOpen, setjobEditOpen] = useState(false);
+    jobEditModalClose();
+    jobDetailModalClose();
 
+    setjobDeleteOpen(true);
 
-      const jobEditModalOpen=()=>{
-        setjobEditOpen(true);  
-        };
-      
-        const jobEditModalClose = () => {
-          setjobEditOpen(false);
-        };
+  };
 
-        function jobAddModalOpen(){
-
-          setModalRow([]);
-          jobEditModalOpen();
-
-        }
+  const jobDeleteModalClose = () => {
+    setjobDeleteOpen(false);
+  };
 
 
-         
+  //apply student List
 
 
 
-        //job CRUD
+  //job edit modal: 선생님의 job에 대한 정보를 수정할 수 있는 곳
 
-        
-
-        const jobAdd= (input) => {
- 
-          const { name, salary,recruitment,whatdo,} = input; // 비구조화 할당을 통해 값 추출
-
-          axios
-            .post("/api/jobs", {
-
-              name, salary,recruitment,whatdo, 
-              joinPossible:true,
-              classId: classData.classId,
-
-            })
-            .then(response=>{
-              console.log(response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
-            jobRead();
-        };
+  const [jobEditIsOpen, setjobEditOpen] = useState(false);
 
 
-        function jobEdit(){
+  const jobEditModalOpen = () => {
+    setjobEditOpen(true);
+  };
 
-          jobEditModalOpen();
-          jobDetailModalClose();
- 
-        }
+  const jobEditModalClose = () => {
+    setjobEditOpen(false);
+  };
 
+  function jobAddModalOpen() {
 
-        const jobUpdate=(input)=>{
-          const { name, salary,recruitment,whatdo,joinPossible,} = input; // 비구조화 할당을 통해 값 추출
-            
-          axios
-            .put("/api/jobs", {
+    setModalRow([]);
+    jobEditModalOpen();
 
-              name, salary,recruitment,whatdo,joinPossible,
-              classId: classData.classId,
-              _id:modalRow.id,
-
-            })
-            .then(response=>{
-              console.log(response);
-              
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
-            jobRead();
-            console.log("updateData",data);
+  }
 
 
-        }
 
-       
+  //job CRUD
 
-        //
-   
-      function jobSelected(params){
-        
-        setModalRow(params.row)
-        setjobDetailOpen(true)
+  const jobAdd = (input) => {
 
-      }
+    const { name, salary, recruitment, whatdo, } = input; // 비구조화 할당을 통해 값 추출
 
-      function selectionHandle(select){
+    axios
+      .post("/api/jobs", {
 
-        console.log("selection",select)
-      }
+        name, salary, recruitment, whatdo,
+        joinPossible: true,
+        classId: classData.classId,
 
-      function jobRead(){
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-        const fetchData = async () => {
-          setIsError(false);
-          setIsLoading(true);
-    
-          try {
-            const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
-            let temp = []
-            for (let i = 0; i < result.data.length; i++) {
-              temp.push({ ...result.data[i], id: result.data[i]._id })
-            }
-            setData(temp)
-          } catch (error) {
-            setIsError(true);
-    
-          }
-          setIsLoading(false);
-    
-        };
-        fetchData();
+    fetchData();
 
-        console.log("re read data",data)
+  };
 
-      }
 
+  function jobEdit() {
+
+    jobEditModalOpen();
+    jobDetailModalClose();
+
+  }
+
+
+  const jobUpdate = (input) => {
+    const { name, salary, recruitment, whatdo, joinPossible, } = input; // 비구조화 할당을 통해 값 추출
+
+    axios
+      .put("/api/jobs", {
+
+        name, salary, recruitment, whatdo, joinPossible,
+        classId: classData.classId,
+        _id: modalRow.id,
+
+      })
+      .then(response => {
+        console.log(response);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    fetchData();
+
+
+  }
+
+
+
+  //
+
+  function jobSelected(params) {
+
+    setModalRow(params.row)
+    setjobDetailOpen(true)
+
+  }
+
+  function selectionHandle(select) {
+
+    console.log("selection", select)
+  }
 
 
   return (
@@ -262,7 +227,7 @@ function ClassSetting() {
       <div id="wrapper">
 
         {/* <!-- Sidebar --> */}
-         
+
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
@@ -284,46 +249,44 @@ function ClassSetting() {
 
               {/* <!-- Content Row --> */}
               {isLoading ?
-                <Loading/> : (
+                <Loading /> : (
                   <>
-                    {/* */}
                     <JobTable
+                      columns={jobcolumns}
+                      data={data}
+                      jobSelected={jobSelected}
+                      jobAddModalOpen={jobAddModalOpen}
+                      selectionHandle={(select) => selectionHandle(select)}
 
-                    columns={jobcolumns}
-                    data={data}
-                    jobSelected={jobSelected}     
-                    jobAddModalOpen={jobAddModalOpen} 
-                    selectionHandle={(select)=>selectionHandle(select)}
-                  
-                  />
+                    />
                   </>
                 )}
 
-                <JobDetailModal
+              <JobDetailModal
 
                 row={modalRow}
-                open={jobDetailIsOpen}                
+                open={jobDetailIsOpen}
                 close={jobDetailModalClose}
                 jobEditModalOpen={jobEditModalOpen}
-                jobJoinPossibleChange={(input)=>jobUpdate(input)}
+                jobJoinPossibleChange={(input) => jobUpdate(input)}
                 jobDeleteModalOpen={jobDeleteModalOpen}
 
-                />
+              />
 
-                <JobEditModal
+              <JobEditModal
 
-                  row={modalRow}
-                  open={jobEditIsOpen}                
-                  close={jobEditModalClose}
-                  jobUpdate={(input)=>jobUpdate(input)}
-                />
+                row={modalRow}
+                open={jobEditIsOpen}
+                close={jobEditModalClose}
+                jobUpdate={(input) => jobUpdate(input)}
+              />
 
-                <JobDeleteModal
-                  open={jobDeleteIsOpen}                
-                  close={jobDeleteModalClose}
-                  row={modalRow}
+              <JobDeleteModal
+                open={jobDeleteIsOpen}
+                close={jobDeleteModalClose}
+                row={modalRow}
 
-                />
+              />
 
 
 
