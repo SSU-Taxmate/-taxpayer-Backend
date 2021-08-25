@@ -11,7 +11,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div className=" bg-gradient-primary">
+      <div className=" bg-gradient bg-primary">
         <MainHeader></MainHeader>
         <section className="hero-wrap" style={{ height: 500 }}>
           <div className="container justify-content-center" id="mainContainer">
@@ -20,7 +20,7 @@ class Main extends Component {
               style={{ height: 500, display: "flex", alignItems: "center" }}
             >
               <div className="col text-center">
-                <span style={{ fontSize: "5vw" }}>TAXMATE</span>
+                <span style={{ fontSize: "3vw" }}>TAXMATE</span>
                 <h4 className="mb-5">가장 간단한 경제를 만나보세요.</h4>
                 <p>
                   <a
@@ -31,10 +31,7 @@ class Main extends Component {
                     <i className="fas fa-sign-in-alt"></i> Sign Up
                   </a>
                 </p>
-                <img
-                  id="main-img"
-                  src={require("../../assets/img/main-top.png")}
-                ></img>
+                
               </div>
             </div>
           </div>
