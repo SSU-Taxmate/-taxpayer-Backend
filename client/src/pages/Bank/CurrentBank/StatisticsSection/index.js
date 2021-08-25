@@ -9,6 +9,7 @@ function Statistics() {
         <div className="col-lg-6 justify-content-center py-3">
             <div className="account-card shadow justify-content-center bg-white">
                 <ByType />
+                <hr/>
                 <ByDate />
             </div>
         </div>

@@ -27,7 +27,7 @@ function ByType() {
                     params: {
                         startDate: startdate,
                         endDate: moment(enddate).add(1, 'd').format('YYYY-MM-DD'),
-                        type:'bytype'
+                        type: 'bytype'
                     }
                 })
             console.log("/api/students/:id/statistics", result.data);
@@ -58,7 +58,7 @@ function ByType() {
     const bank_pie_data = [{
         labels: datalabel,
         datasets: [{
-            label: '입/출금 내역',
+            label: '',//입/출금 내역
             data: sumdata,
             backgroundColor: [
                 'rgb(75, 192, 192)',
@@ -81,7 +81,8 @@ function ByType() {
         ), [datalabel, sumdata]);
     return (
         <>
-            <div style={{ textAlign: 'right' }}>
+            <div style={{ textAlign: 'center', marginBottom: '5px' }}>
+                <h5>입/출금 내역</h5>
                 <input id='startDate' defaultValue={startdate}
                     max={moment().format('YYYY-MM-DD')}
                     type='date' onChange={handlestartdate} style={{ marginRight: '3px' }}></input>

@@ -26,13 +26,66 @@ router.get('/', async (req, res) => {
     //console.log(stock)
     let result = await Promise.all(
       stock.map(async (v, i) => {
-          v.prices= await v.prices.filter(price=>price.updateDate<new Date());
-          return v
-        })
-      )
+        v.prices = await v.prices.filter(price => price.updateDate < new Date());
+        return v
+      })
+    )
 
     res.json(result)
   } catch (err) {
+    res.status(500).json({ error: err });
+  }
+})
+/*
+  [정상] Class에서 사용하는 Stock 에 대한 통계정보
+*/
+router.get('/statistics', async (req, res) => {
+  //console.log(req.query)
+  const classId=req.query.classId
+    const startDate=req.query.startDate
+    const endDate=req.query.endDate
+  try {
+    
+
+    const classstock = await ClassStock.find({classId:classId}, "stockId")
+    let stocks = []
+    for (let i = 0; i < classstock.length; i++) {
+      stocks.push(classstock[i].stockId)
+    }
+    //클래스내 stockId
+    const buyhistory = await StockOrderHistory.aggregate([
+      {
+        $match: {
+          'stockId': { $in: stocks },
+          "createdAt": { $gte: new Date(startDate), $lt: new Date(endDate) }
+        }
+      },
+      {
+        $group:
+        {
+          _id: '$stockId',
+          count: { $sum: 1 },
+          allquantity: { $sum: '$quantity' },
+          allpayAmount:{$sum:'$payAmount'}
+        }
+      }, 
+      /* */
+      {
+        $lookup: {
+          from: "stocks",
+          localField : "_id",
+          foreignField : "_id",
+          as: 'stock'
+        }
+      },
+      {
+        $unwind: '$stock',
+      },
+    ])
+    //console.log(buyhistory)
+    res.json(buyhistory)
+  } catch (err) {
+    console.log(err)
     res.status(500).json({ error: err });
   }
 })
@@ -95,7 +148,7 @@ router.post("/", async (req, res) => {
 */
 router.put('/', (req, res) => {
   //console.log('update',req.body)
-  Stock.updateOne({ _id: req.body._id }, { $push: { prices: { hint: req.body.description, value: req.body.price ,updateDate:req.body.updateDate} } }, (err, doc) => {
+  Stock.updateOne({ _id: req.body._id }, { $push: { prices: { hint: req.body.description, value: req.body.price, updateDate: req.body.updateDate } } }, (err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true
@@ -109,7 +162,7 @@ router.put('/', (req, res) => {
 */
 router.delete('/:id', async (req, res) => {
   //console.log('delete', req.params)
-  const stockId=req.params.id
+  const stockId = req.params.id
   const session = await startSession();
   try {
     // 트랜젝션 시작
@@ -147,7 +200,7 @@ router.post('/:id/orders', async (req, res) => {
   const studentId = req.body.studentId //누가
   const quantity = req.body.quantity //얼만큼
   const currentPrice = req.body.currentPrice//현재가
- // console.log(stockId, orderType, studentId, quantity)
+  // console.log(stockId, orderType, studentId, quantity)
   const session = await startSession();
 
   try {
@@ -224,19 +277,19 @@ router.post('/:id/orders', async (req, res) => {
           {
             $inc: {
               [`holdingStocks.${index}.quantity`]: - quantity,
-              [`holdingStocks.${index}.allPayAmount`]: - currentPrice*quantity
+              [`holdingStocks.${index}.allPayAmount`]: - currentPrice * quantity
             }
           }
           , { session })
         //은행 (입금)
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice*quantity } }, { session })
+        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
         // 은행 거래 데이터 추가
         const transfer = new AccountTransaction({
           accountId: account._id,
           transactionType: 1,
-          amount: currentPrice*quantity,
+          amount: currentPrice * quantity,
           memo: '주식매도',
-          afterbalance: account.currentBalance + currentPrice*quantity
+          afterbalance: account.currentBalance + currentPrice * quantity
         })
         await transfer.save({ session })
         //console.log(transfer)

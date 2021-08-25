@@ -8,9 +8,8 @@ import ScrollToTop from '../../../components/Scroll'
 import axios from 'axios'
 import { useSelector } from "react-redux";
 import Loading from '../../../components/Loading'
+import { Button } from '@material-ui/core';
 
-
-import { DataGrid, GridToolbarFilterButton } from '@material-ui/data-grid';
 
 import JobTable from './component/JobTable';
 import JobDetailModal from './component/JobDetailModal';

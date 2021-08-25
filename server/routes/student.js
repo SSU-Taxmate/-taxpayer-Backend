@@ -117,7 +117,7 @@ router.get('/:id/account/history', async (req, res) => {
     : 입/출금
 */
 router.get('/:id/account/statistics', async (req, res) => {
-    console.log("studentId:", req.params.id, req.query)
+    //console.log("studentId:", req.params.id, req.query)
     try {
         const studentId = req.params.id
         const account = await Account.findOne({ studentId: studentId })
@@ -142,22 +142,40 @@ router.get('/:id/account/statistics', async (req, res) => {
             ])
             result = bytype
         } else {
-            const bydate = await AccountTransaction.aggregate([
+            //나중에 한번에 groupby할 수 있는 방법 찾기
+            const bydatein = await AccountTransaction.aggregate([
                 {
                     $match: {
                         "accountId": account._id,
+                        'transactionType':0,
                         "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
                     },
 
                 },
                 {
                     $group: {
-                        _id: { $dayOfWeek: "$date" },//월단위 {$substr:['$date',5,2]}
+                        _id: { $dayOfWeek: "$date"},//월단위 {$substr:['$date',5,2]}
                         sum: { $sum: '$amount' }
                     }
                 }
             ])
-            result = bydate
+            const bydateout = await AccountTransaction.aggregate([
+                {
+                    $match: {
+                        "accountId": account._id,
+                        'transactionType':1,
+                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                    },
+
+                },
+                {
+                    $group: {
+                        _id: { $dayOfWeek: "$date"},//월단위 {$substr:['$date',5,2]}
+                        sum: { $sum: '$amount' }
+                    }
+                }
+            ])
+            result = {bydatein,bydateout}
         }
         res.json(result)
     } catch (err) {

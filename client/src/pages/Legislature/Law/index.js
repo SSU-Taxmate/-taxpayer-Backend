@@ -23,13 +23,14 @@ export default function Law() {
   const [isLoading, setIsLoading] = useState(false);
   const [err, setIsError] = useState(false);
   let classData = useSelector(state => state.classInfo.classData);
+  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get("/api/laws",{params:{classId:classData.classId}});
+        const result = await axios.get("/api/laws", { params: { classId: classData.classId } });
         console.log(result.data)
         setlaws(result.data);
       } catch (error) {
@@ -52,8 +53,8 @@ export default function Law() {
     <div>
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
-         
-         
+
+
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
@@ -68,15 +69,15 @@ export default function Law() {
             <div className="container-fluid">
               {/* <!-- Page Heading --> */}
               <PageHeading title="법">
-                <PreviewDialog laws={laws} />
+              {user.userData && user.userData.role === 0 ? <PreviewDialog laws={laws} />:<></>}
               </PageHeading>
-
-              <AddLawDialog />
+              {user.userData && user.userData.role === 0 ?
+                <AddLawDialog /> :null }
 
               <List>
                 {/* <!-- Content Row --> */}
                 {isLoading ? (
-                  <Loading/>
+                  <Loading />
                 ) : laws.length == 0 ? (
                   <div>법 추가 부탁</div>
                 ) : (
@@ -94,10 +95,11 @@ export default function Law() {
                           <Viewer content={law.content} />
                         </CardCollapse>
                       </div>
-                      <div className="col-1">
+                      {user.userData && user.userData.role === 0 ?
+                        <div className="col-1">
                         <EditLawDialog data={law} />
                         <DeleteLawDialog data={law} />
-                      </div>
+                      </div> : null}
                     </ListItem>
                   ))
                 )}

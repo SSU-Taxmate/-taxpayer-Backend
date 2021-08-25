@@ -7,9 +7,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ClassMain from "./pages/ClassMain";
 import NotFound from "./pages/NotFound";
-import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList";
-import Dashboard from "./pages/Dashboard";
 
 /*신용등급*/
 import Credit from "./pages/Credit";
@@ -100,9 +98,6 @@ const Routes = () => (
       <Route exact path="/classes/:classId/real_estate_setting"component={Auth(EstateSetting,true)}/>
 
       {/* 그 외 */}
-      <Route path="/charts" component={Auth(Charts,true)} />
-      <Route path="/dashboard" component={Auth(Dashboard,true)} />
-      <Route path="/charts" component={Charts} />
       <Route path="*" component={NotFound} />
     </Switch>
   </BrowserRouter>

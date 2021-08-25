@@ -3,9 +3,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import { bindActionCreators } from "redux";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -29,7 +27,7 @@ export default function Sidebar(props) {
     bottom: false,
     right: false,
   });
-  const { clickMenuOpen, toggled } = props;
+  const { toggled } = props;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -447,28 +445,13 @@ export default function Sidebar(props) {
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider d-none d-md-block" />
 
-            {/* <!-- Sidebar Toggler (Sidebar) --> */}
-            <div className="text-center d-none d-md-inline">
-              <button
-                onClick={() => {
-                  clickMenuOpen();
-                }}
-                className="rounded-circle border-0"
-                id="sidebarToggle"
-              ></button>
-            </div>
           </div>
         )}
       </ul>
     </div>
   );
 
-  const mapDispatchToProps = (dispatch) =>
-    bindActionCreators({ clickMenuOpen }, dispatch);
 
-  const mapStateToProps = (store) => ({
-    toggled: store.menuState.menuOpen,
-  });
   return (
     <React.Fragment>
       <Button onClick={toggleDrawer("left", true)}>

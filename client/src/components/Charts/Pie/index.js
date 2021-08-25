@@ -27,7 +27,7 @@ function ChartPie(props) {
   }, [props.data]);
   return (
     <div className="chart-area">
-      <div className="h4">{props.title}</div>
+      <div className="h6">{props.title}</div>
       <div className="chart-pie">
         <canvas id={`${props.id}`} ref={chartRef}></canvas>
       </div>
