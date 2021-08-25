@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector } from "react-redux";
 import axios from 'axios'
-import moment from 'moment';
+import moment from 'moment-timezone';
 function AddValuePanel() {
   const [customStocks, setcustomStocks] = useState([])//custom 주식
   const [selectedValue, setSelectedValue] = useState()//선택한 주식

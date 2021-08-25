@@ -13,7 +13,7 @@ import Loading from '../../../components/Loading';
 export default function TradeStock() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
-  const [stocks, setstocks] = useState()
+  const [stocks, setstocks] = useState([])
   let classData = useSelector(state => state.classInfo.classData);
 
   useEffect(() => {
@@ -28,12 +28,11 @@ export default function TradeStock() {
         setIsError(true);
       }
       setIsLoading(false);
-
     };
     fetchData();
     return () => {
     }
-  }, [classData])
+  }, [classData.classId])
   return (
     <div>
       {/* <!-- Page Wrapper --> */}
@@ -62,14 +61,14 @@ export default function TradeStock() {
 
               {/* <!-- Content Row --> */}
               <h4 className='pt-2'>오늘의 주식</h4>
-              {/*{[{ title: 'A엔터', stockId: 'id1', currentValue: 100 }, { title: 'gold', stockId: 'id9', '현재가': 150 }]}  */}
+              
               {isError && <Error></Error>}
-              {isLoading ? <Loading/> :
-                <StockList data={stocks} />}
+              {isLoading ? <Loading /> :
+                  <StockList data={stocks} /> }
               <h4 className='pt-2'>주식 매수 창</h4>
-              <div className="card shadow py-2" style={{minHeight:'30vh'}}>
+              <div className="card shadow py-2" style={{ minHeight: '30vh' }}>
                 {isError && <Error></Error>}
-                {isLoading ? <Loading/> :
+                {isLoading ? <Loading /> :
                   <TradeSection stocks={stocks} />}
               </div>
 

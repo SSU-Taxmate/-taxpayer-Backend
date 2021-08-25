@@ -18,6 +18,7 @@ const router = express.Router();
   {classId:}
 */
 router.get('/deposits', (req, res) => {
+  //console.log('deposits/',req.query)
   Deposit.find(req.query, (err, doc) => {
     const result = doc;
     if (err) return res.status(500).json({ error: err });
@@ -123,16 +124,16 @@ router.post('/deposits/:id/join', async (req, res) => {
     // 트랜젝션 시작
     session.startTransaction();
     //1) 가입 가능 여부 check
-    const joinpossible = await Deposit.findOne({ _id: productId, joinPossible: true })//결과 존재==가입가능하다
+    const joinpossible = await Deposit.findOne({ _id: productId, joinPossible: true }).exec({session})//결과 존재==가입가능하다
     //console.log(joinpossible)
     if (joinpossible) {
       //2) 중복 가입인지 check
-      const accountexists = await JoinDeposit.findOne({ studentId: studentId, isClosed: false })
-      //console.log(!accountexists)
+      const accountexists = await JoinDeposit.findOne({ studentId: studentId, isClosed: false }).exec({session})
+      //console.log(accountexists)
       if (!accountexists) {//중복 가입이 아니라면,
         //3) 선택한 상품에 비용 지불
         //3-1) 지불 가능한지 check
-        const account = await Account.findOne({ studentId: studentId }).session(session)
+        const account = await Account.findOne({ studentId: studentId }).exec(session)
         //console.log('가입 계좌',account)
         if (account.currentBalance >= amount) {//지불가능하다면,
           //3-1) 계좌에서는 출금.
