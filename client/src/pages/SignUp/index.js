@@ -140,7 +140,8 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.email}</div>
                           )}
                         </div>
-                        <button onClick={this.sendEmail} class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
+                        <button class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
+                        {/* <button onClick={this.sendEmail} class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button> */}
                         </div>
                         <div className="form-group row">
                         <div className='col-sm-6 mb-3 mb-sm-0'>
