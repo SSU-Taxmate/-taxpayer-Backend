@@ -30,7 +30,8 @@ const stockSchema = mongoose.Schema({
             type:String,
             default:''
         }
-    }]
+    }],
+  
 },{ timestamps: true })
 const Stock = mongoose.model('Stock', stockSchema)
 /*

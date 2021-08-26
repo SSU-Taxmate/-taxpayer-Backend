@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState ,useCallback} from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,7 +9,13 @@ import { useSelector } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 
 function AddDepositDialog() {
-    const [data, setdata] = useState({})
+    const [data, setdata] = useState({
+        name:'',
+        description:'',
+        interestRate:0,
+        minAmount:0,
+        minDuration:0
+    })
     const [open, setOpen] = useState(false);
     let classData = useSelector(state => state.classInfo.classData);
 
@@ -21,13 +26,12 @@ function AddDepositDialog() {
         setOpen(false);
     };
     const handleSubmit = (e) => {
-        //e.preventDefault();
-        console.log('submit!')
-        const res={
-            classId:classData.classId,
+        e.preventDefault();
+        const res = {
+            classId: classData.classId,
             ...data
         }
-        axios.post(`/api/bank/deposits`,res)
+        axios.post(`/api/bank/deposits`, res)
             .then(function (response) {
                 console.log(response);
             })
@@ -35,64 +39,82 @@ function AddDepositDialog() {
                 console.log(error);
             });
     };
-    const onChange=(e)=>{
-        console.log(data)
-        setdata({...data,[e.target.id]:e.target.value})
-    }
+    const onChange = useCallback(
+        ({target:{name,value}}) => setdata(prevdata => ({ ...prevdata, [name]:value })), []
+      );
+   
+    const nameField = React.useMemo(
+        () => (
+            <TextField
+                className="col m-1"
+                name="name"
+                label="상품명"
+                variant="outlined"
+                size="small"
+                onChange={onChange}
+            />
+        ), []);
+    const descriptionField = React.useMemo(
+        () => (
+            <TextField
+                className="col m-1"
+                name="description"
+                label="내용"
+                multiline
+                rows={2}
+                variant="outlined"
+                size="small"
+                onChange={onChange}
+            />
+        ), []);
+    const rateField = React.useMemo(
+        () => (
+            <TextField
+                className="col m-1"
+                name="interestRate"
+                label="만기시 이율(%)"
+                variant="outlined"
+                size="small"
+                onChange={onChange}
+            />
+        ), []
+    )
+    const minAmountField = React.useMemo(
+        () => (
+            <TextField
+                className="col m-1"
+                name="minAmount"
+                label="최소 가입 금액"
+                variant="outlined"
+                size="small"
+                onChange={onChange} />
+
+        ), []
+    )
+    const minDurationField = React.useMemo(
+        () => (
+            <TextField
+                className="col m-1"
+                name="minDuration"
+                label="최소 가입 기간(일)"
+                variant="outlined"
+                size="small"
+                onChange={onChange}
+            />
+        ),[]
+    )
     return (
         <div>
-            <button onClick={handleOpen} className='btn btn-outline-primary mb-3' style={{ width: '87%' }}>+</button>
+            <button onClick={handleOpen} className='col-12 btn btn-outline-primary mb-3'>+</button>
             <Dialog aria-labelledby="depositAdd" open={open}>
                 <DialogTitle id="depositAdd">예금 상품 추가</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>
-                        <TextField
-                            className="col m-1"
-                            id="name"
-                            label="상품명"
-                            variant="outlined"
-                            size="small"
-                            onChange={onChange}
-                        />
-                        <TextField
-                            className="col m-1"
-                            id="description"
-                            label="내용"
-                            multiline
-                            rows={2}
-                            variant="outlined"
-                            size="small"
-                            onChange={onChange}
-
-                        />
-                        <TextField
-                            className="col m-1"
-                            id="interestRate"
-                            label="만기시 이율(%)"
-                            variant="outlined"
-                            size="small"
-                            onChange={onChange}
-
-                        />
-                        <TextField
-                            className="col m-1"
-                            id="minAmount"
-                            label="최소 가입 금액"
-                            variant="outlined"
-                            size="small"
-                            onChange={onChange}
-
-                        />
-                      <TextField
-                            className="col m-1"
-                            id="minDuration"
-                            label="최소 가입 기간(일)"
-                            variant="outlined"
-                            size="small"
-                            onChange={onChange}
-
-                        />
-
+                        {nameField}
+                        {descriptionField}
+                        {rateField}
+                        {minAmountField}
+                        {minDurationField}
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" onClick={handleClose} type="submit">추가</Button>

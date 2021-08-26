@@ -18,6 +18,7 @@ const router = express.Router();
   {classId:}
 */
 router.get('/deposits', (req, res) => {
+  //console.log('deposits/',req.query)
   Deposit.find(req.query, (err, doc) => {
     const result = doc;
     if (err) return res.status(500).json({ error: err });
@@ -60,7 +61,7 @@ router.put('/deposits', (req, res) => {
     2) JoinDeposit에 가입 중인 사람(isClosed:false)이 없다면, 바로 즉시 2-1)JoinDeposit에서 {productId:req.params.id}로 삭제 2-2)Deposit에서 {_id:req.params.id}로 삭제
 */
 router.delete('/deposits/:id', async (req, res) => {
-  console.log('/api/bank/deposits/:id', req.params.id)
+  //console.log('/api/bank/deposits/:id', req.params.id)
   const depositId = req.params.id
 
   const session = await startSession();
@@ -69,15 +70,15 @@ router.delete('/deposits/:id', async (req, res) => {
     session.startTransaction();
     //joinPossible true로 하고 나중에 
     const notclosed = await JoinDeposit.countDocuments({ productId: depositId, isClosed: false }).exec({ session })
-    console.log(notclosed)
+    //console.log(notclosed)
 
     if (notclosed <= 0) {//예금 상품에 가입 중인 사람이 없다면
       // 삭제 가능
       const delJoinDeposit = await JoinDeposit.deleteOne({ productId: depositId }, { session })
-      console.log(delJoinDeposit)
+      //console.log(delJoinDeposit)
 
       const delDeposit = await Deposit.deleteOne({ _id: depositId }, { session })
-      console.log(delDeposit)
+      //console.log(delDeposit)
       await session.commitTransaction();
       session.endSession();
       res.status(200).json({
@@ -123,21 +124,21 @@ router.post('/deposits/:id/join', async (req, res) => {
     // 트랜젝션 시작
     session.startTransaction();
     //1) 가입 가능 여부 check
-    const joinpossible = await Deposit.findOne({ _id: productId, joinPossible: true })//결과 존재==가입가능하다
+    const joinpossible = await Deposit.findOne({ _id: productId, joinPossible: true }).exec({session})//결과 존재==가입가능하다
     //console.log(joinpossible)
     if (joinpossible) {
       //2) 중복 가입인지 check
-      const accountexists = await JoinDeposit.findOne({ studentId: studentId, isClosed: false })
-      //console.log(!accountexists)
+      const accountexists = await JoinDeposit.findOne({ studentId: studentId, isClosed: false }).exec({session})
+      //console.log(accountexists)
       if (!accountexists) {//중복 가입이 아니라면,
         //3) 선택한 상품에 비용 지불
         //3-1) 지불 가능한지 check
-        const account = await Account.findOne({ studentId: studentId })
+        const account = await Account.findOne({ studentId: studentId }).exec(session)
         //console.log('가입 계좌',account)
         if (account.currentBalance >= amount) {//지불가능하다면,
           //3-1) 계좌에서는 출금.
           const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- amount) } }, { session })
-          //console.log(minus)
+          //console.log(account.currentBalance)
 
           //4) 상품 가입 완료
           const cjoindeposit = new JoinDeposit({ ...req.body, productId: productId })
@@ -145,7 +146,13 @@ router.post('/deposits/:id/join', async (req, res) => {
           //console.log(joinin)
 
           //5) 계좌 거래 내역에 출금으로 추가
-          const transferA = new AccountTransaction({ accountId: account._id, transactionType: 0, amount: amount, memo: '예금상품가입' })
+          const transferA = new AccountTransaction({
+             accountId: account._id, 
+             transactionType: 0, 
+             amount: amount, 
+             memo: '예금상품가입',
+             afterbalance:account.currentBalance-amount})
+          //console.log(transferA)
           await transferA.save({ session })
 
           await session.commitTransaction();
@@ -169,7 +176,7 @@ router.post('/deposits/:id/join', async (req, res) => {
   }
 })
 /*
-  [완료] : 학생의 상품 해지 완료
+  [정상] : 학생의 상품 해지 완료
   GET /students/:id/deposit 으로 JoinDeposit의 _id 알고 있음.
   Deposit._id : deposits 이율 정보 알기 위해서 필요
 */
@@ -213,7 +220,12 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
     // 4) AccountTransaction 입금 기록
     // 4-1) AccountId 찾기
     //console.log(account._id)
-    const transferB = new AccountTransaction({ accountId: account._id, transactionType: 1, amount: newamount, memo: "예금상품해지" })
+    const transferB = new AccountTransaction({ 
+      accountId: account._id, 
+      transactionType: 1, 
+      amount: newamount, 
+      afterbalance:account.currentBalance+newamount,
+      memo: "예금상품해지" })
     await transferB.save({ session })
 
     await session.commitTransaction();
@@ -226,8 +238,6 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
     session.endSession();
     res.json({ success: false, err })
   }
-
-
 })
 
 
@@ -250,13 +260,18 @@ router.post('/transfer', async (req, res) => {
     session.startTransaction();
     // 1) 출금 계좌 from
     // 1-1) 출금 계좌 확인
-    const balance = await Account.findOne({ _id: sender }, "currentBalance")
-    console.log(balance, amount)
+    const balance = await Account.findOne({ _id: sender }, "currentBalance").exec({session})
+    //console.log(balance, amount)
     if (balance.currentBalance >= amount) {
       //1-2) 출금
       const minus = await Account.updateOne({ _id: sender }, { $inc: { currentBalance: (- amount) } }, { session })
       // 1-3) 출금 기록
-      const transferA = new AccountTransaction({ accountId: sender, transactionType: 0, amount: amount, memo: '계좌이체' })
+      const transferA = new AccountTransaction({ 
+        accountId: sender, 
+        transactionType: 0, 
+        amount: amount, 
+        afterbalance:balance.currentBalance-amount,
+        memo: '계좌이체' })
       await transferA.save({ session })
 
       // 2) 입금 계좌 to
@@ -264,7 +279,13 @@ router.post('/transfer', async (req, res) => {
       const plus = await Account.updateOne({ _id: receiver }, { $inc: { currentBalance: amount } }, { session })
 
       // 2-2) 입금 기록 
-      const transferB = new AccountTransaction({ accountId: receiver, transactionType: 1, amount: amount })
+      const transferB = new AccountTransaction({ 
+        accountId: receiver,
+        transactionType: 1,
+        amount: amount,
+        afterbalance:balance.currentBalance+amount,
+        memo:'계좌이체'
+      })
       await transferB.save({ session })
 
       await session.commitTransaction();

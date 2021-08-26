@@ -4,7 +4,7 @@
 const express = require('express');
 const { Job } = require('../models/Job');
 const router = express.Router();
-const { JoinedUser } = require('../models/Class');
+const { JoinedUser } = require('../models/JoinedUser');
 const { startSession } = require('mongoose');
 /*
   [정상] Job 생성
@@ -49,15 +49,15 @@ router.put('/', (req, res) => {
   : JoinedUser에 저장되어 있는 JobId도 없어져야 함.
 */
 router.delete('/:id', async (req, res) => {
-  //console.log(req.params.id)
+  console.log(req.params.id)
   const session = await startSession();
   try {
     session.startTransaction();
     const jobId = req.params.id;
-    const res1=await JoinedUser.updateMany({ jobId: jobId }, { $set: { jobId: null } },{session})
-    //console.log(res1)
-    const res2=Job.deleteOne({ _id: jobId }, {session})
-    //console.log(res2)
+    const res1=await JoinedUser.updateMany({},{$pull:{jobId:jobId}}).exec({session})
+    console.log(res1)
+    const res2=await Job.deleteOne({ _id: jobId }).exec({session})
+    console.log(res2)
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 트랜젝션 종료

@@ -3,9 +3,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import { bindActionCreators } from "redux";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -29,7 +27,7 @@ export default function Sidebar(props) {
     bottom: false,
     right: false,
   });
-  const { clickMenuOpen, toggled } = props;
+  const { toggled } = props;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -107,7 +105,7 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -123,7 +121,7 @@ export default function Sidebar(props) {
                       </Link>{" "}
                     </>
                   ) : null}
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <h6 className="collapse-header">학생</h6>
                       <Link
@@ -161,14 +159,14 @@ export default function Sidebar(props) {
               >
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">중앙은행</h6>
-                  {user.userData.role == 1 /*학생의 경우 */ ? (
+                  {user.userData.role === 1 /*학생의 경우 */ ? (
                     <>
                       <Link className="collapse-item" to="/bank_statics">
                         통계
                       </Link>{" "}
                     </>
                   ) : null}
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -178,7 +176,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 1 /*학생의 경우 */ ? (
+                  {user.userData.role === 1 /*학생의 경우 */ ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -188,7 +186,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 0 /*학생의 경우 */ ? (
+                  {user.userData.role === 0 /*학생의 경우 */ ? (
                     <>
                       <h6 className="collapse-header">신용등급</h6>
                       <Link
@@ -224,7 +222,7 @@ export default function Sidebar(props) {
                   <Link className="collapse-item" to="/classes/:classId/stock">
                     호가창
                   </Link>
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -234,7 +232,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -311,7 +309,7 @@ export default function Sidebar(props) {
                   >
                     나라 통계
                   </Link>
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <h6 className="collapse-header">학생</h6>
                       <Link
@@ -322,7 +320,7 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <h6 className="collapse-header">선생님</h6>
                       <Link
@@ -357,7 +355,7 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  {user.userData.role == 0 ? (
+                  {user.userData.role === 0 ? (
                     <>
                       <h6 className="collapse-header">선생님</h6>
                       <Link
@@ -374,7 +372,7 @@ export default function Sidebar(props) {
                       </Link>{" "}
                     </>
                   ) : null}
-                  {user.userData.role == 1 ? (
+                  {user.userData.role === 1 ? (
                     <>
                       <h6 className="collapse-header">학생</h6>
                       <Link
@@ -447,28 +445,13 @@ export default function Sidebar(props) {
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider d-none d-md-block" />
 
-            {/* <!-- Sidebar Toggler (Sidebar) --> */}
-            <div className="text-center d-none d-md-inline">
-              <button
-                onClick={() => {
-                  clickMenuOpen();
-                }}
-                className="rounded-circle border-0"
-                id="sidebarToggle"
-              ></button>
-            </div>
           </div>
         )}
       </ul>
     </div>
   );
 
-  const mapDispatchToProps = (dispatch) =>
-    bindActionCreators({ clickMenuOpen }, dispatch);
 
-  const mapStateToProps = (store) => ({
-    toggled: store.menuState.menuOpen,
-  });
   return (
     <React.Fragment>
       <Button onClick={toggleDrawer("left", true)}>

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import $ from "jquery";
 import ClipboardJS from "clipboard";
+import ShareIcon from '@material-ui/icons/Share';
+
 export default class ClassCodeModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      icon: this.props.icon ? this.props.icon : "fas fa-smile",
     };
   }
   componentDidMount() {
@@ -22,7 +23,8 @@ export default class ClassCodeModal extends Component {
           data-toggle="modal"
           data-target={`#${this.state.id}Modal`}
         >
-          <i className={this.state.icon}></i>
+      {/*    <i className={this.state.icon}></i>*/}
+      <ShareIcon />
         </a>
         <div
           className="modal fade"
@@ -56,14 +58,13 @@ export default class ClassCodeModal extends Component {
                     className="form-control"
                     placeholder="Invite Code"
                   />
-                  <button
-                    type="button"
+                  <div
                     className="btn btn-info btn-clipboard"
                     data-clipboard-action="copy"
                     data-clipboard-target="#CopyCode"
                   >
                     Copy
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>

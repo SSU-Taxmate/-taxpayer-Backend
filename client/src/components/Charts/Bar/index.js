@@ -19,15 +19,15 @@ export default function ChartBar(props) {
                 layout: {
                     padding: {
                         left: 10,
-                        right: 25,
-                        top: 25,
+                        right: 10,
+                        top: 20,
                         bottom: 0
                     }
                 },
                 scales: {
                     xAxes: [{
                         time: {
-                            unit: 'month'
+                            unit: 'week'
                         },
                         gridLines: {
                             display: false,
