@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "name": "taxpayer",
     "version": "1.0.0",
     "description": "---------------------\r The repository for tax pay simulation for children",
@@ -21,61 +20,17 @@
     },
     "homepage": "https://github.com/SSU-PaceMaker/taxpayer#readme",
     "dependencies": {
-        "@types/dotenv": "^8.2.0",
         "bcrypt": "^5.0.1",
         "body-parser": "^1.19.0",
         "concurrently": "^6.0.2",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
-        "dotenv": "^10.0.0",
         "express": "^4.17.1",
-        "file": "^0.2.2",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.12.5",
-        "multer": "^1.4.2",
-        "node": "^14.17.3",
-        "node-sass": "^4.14.1",
-        "nodemailer": "^6.6.3",
-        "passport": "^0.4.1",
-        "react-native-image-picker": "^2.3.4",
-        "upload": "^1.1.1"
+        "node-schedule": "^2.0.0",
+        "nodemailer": "^6.6.3"
     },
     "devDependencies": {},
     "keywords": []
-=======
-  "name": "taxpayer",
-  "version": "1.0.0",
-  "description": "---------------------\r The repository for tax pay simulation for children",
-  "main": "index.js",
-  "scripts": {
-    "start": "node server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "nodemon server/index.js",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\" "
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SSU-PaceMaker/taxpayer.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SSU-PaceMaker/taxpayer/issues"
-  },
-  "homepage": "https://github.com/SSU-PaceMaker/taxpayer#readme",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "body-parser": "^1.19.0",
-    "concurrently": "^6.0.2",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.5",
-    "node-schedule": "^2.0.0",
-    "nodemailer": "^6.6.3"
-  },
-  "devDependencies": {},
-  "keywords": []
->>>>>>> dd4e5d03ffd62650160e21e2d414ab31601b6d1a
 }
