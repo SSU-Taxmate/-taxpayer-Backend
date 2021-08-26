@@ -20,9 +20,9 @@ function SettingTaxDetail() {
 
       try {
         const result = await axios.get('/api/taxes',{params:{classId:classData.classId}});
-        console.log(result.data)
+        //console.log(result.data)
         if (result.data){
-          console.log(result.data)
+          //console.log(result.data)
           settaxId(result.data._id)
           setData(result.data.taxlist)
         }

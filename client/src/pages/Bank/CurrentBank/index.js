@@ -21,10 +21,8 @@ function Bank() {
       setIsLoading(true);
       try {
         const result = await axios.get(`/api/students/${joinedUser.classUser}/account`);
-        console.log("/api/students/:id/account", result.data);
+        //console.log("/api/students/:id/account", result.data);
         setUserAccount(result.data)
-
-
       } catch (error) {
         setIsError(true);
       }

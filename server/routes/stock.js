@@ -40,13 +40,11 @@ router.get('/', async (req, res) => {
   [정상] Class에서 사용하는 Stock 에 대한 통계정보
 */
 router.get('/statistics', async (req, res) => {
-  //console.log(req.query)
+  console.log(req.query)
   const classId=req.query.classId
     const startDate=req.query.startDate
     const endDate=req.query.endDate
   try {
-    
-
     const classstock = await ClassStock.find({classId:classId}, "stockId")
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
@@ -69,7 +67,6 @@ router.get('/statistics', async (req, res) => {
           allpayAmount:{$sum:'$payAmount'}
         }
       }, 
-      /* */
       {
         $lookup: {
           from: "stocks",
@@ -81,8 +78,12 @@ router.get('/statistics', async (req, res) => {
       {
         $unwind: '$stock',
       },
+      /*{
+        $project:{count:1,allquantity:1,allpayAmount:1,'stock.stockName':1}
+      }*/
+
     ])
-    //console.log(buyhistory)
+    //console.log('>>>>>>>>>>>',buyhistory)
     res.json(buyhistory)
   } catch (err) {
     console.log(err)

@@ -9,8 +9,8 @@ import TradeSection from './sections/TradeSection'
 import StockList from './sections/StockList'
 import { useSelector } from "react-redux";
 import Loading from '../../../components/Loading';
-import ByStock from './sections/ByStock';
-
+import InfoBalance from './sections/InfoBalance';
+import BuyStockStat from './sections/BuyStockStat';
 export default function TradeStock() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -64,10 +64,13 @@ export default function TradeStock() {
               <h4 className='pt-2'>오늘의 주식</h4>
               {isError && <Error></Error>}
               {isLoading ? <Loading /> :
-                  <StockList data={stocks} /> }
-              <h4 className='pt-2'>지난주 매수 통계</h4>
-              <ByStock/>
-              
+                <StockList data={stocks} />}
+              <h4 className='pt-2'>지난주 통계</h4>
+              <div className="account-card shadow bg-white"
+                style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", 'textAlign': 'center' }}>
+                <BuyStockStat/>
+                <InfoBalance />
+              </div>
               <h4 className='pt-2'>주식 매수 창</h4>
               <div className="account-card shadow bg-white" style={{ minHeight: '30vh' }}>
                 {isError && <Error></Error>}
