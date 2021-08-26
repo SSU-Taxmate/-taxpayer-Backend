@@ -29,15 +29,14 @@ function TradeSection(props) {
         }
     }
 
-
     return (
-        <div className='row'>
-            <div className="col-sm-6 m-2">
+        <div className='row' style={{flexDirection:'row',justifyContent:'space-around'}}>
+            <div className="col-sm-6">
                 {selectedValue &&
                     <ChartLine id='stock' title={selectedValue.stockName} data={adjustData(selectedValue.prices)} />
                 }
             </div>
-            <div className="col-sm-5 m-2">
+            <div className="col-sm-5">
                 {stocks ?
                     < select
                         id="trade-select"

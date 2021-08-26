@@ -1,39 +1,41 @@
 // Area Chart
 .chart-area {
   position: relative;
-  height: 15rem;
+  height: 13rem;
   width: 100%;
+  margin-bottom: 3rem;
   @include media-breakpoint-up(md) {
-    height: 20rem;
+    height: 18rem;
+    margin-bottom:0rem
   }
 }
 
 // Bar Chart
 .chart-bar {
   position: relative;
-  height: 15rem;
+  height: 13rem;
   width: 100%;
   @include media-breakpoint-up(md) {
-    height: calc(20rem - 43px);
+    height: calc(18rem - 43px);
   }
 }
 
 // Pie Chart
 .chart-pie {
   position: relative;
-  height: 15rem;
+  height: 13rem;
   width: 100%;
   @include media-breakpoint-up(md) {
-    height: calc(20rem - 43px) !important;
+    height: calc(18rem - 43px) !important;
   }
 }
 // Line Chart
 .chart-line {
   position: relative;
-  height: 15rem;
+  height: 13rem;
   width: 100%;
   @include media-breakpoint-up(md) {
-    height: calc(20rem - 43px) !important;
+    height: calc(18rem - 43px) !important;
   }
 }
 
