@@ -58,14 +58,13 @@ export default class ClassCodeModal extends Component {
                     className="form-control"
                     placeholder="Invite Code"
                   />
-                  <button
-                    type="button"
+                  <div
                     className="btn btn-info btn-clipboard"
                     data-clipboard-action="copy"
                     data-clipboard-target="#CopyCode"
                   >
                     Copy
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>

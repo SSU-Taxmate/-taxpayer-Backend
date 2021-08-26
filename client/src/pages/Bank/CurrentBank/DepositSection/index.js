@@ -53,7 +53,7 @@ function Deposit({balance}) {
   if (userdeposit) {
     //console.log(userdeposit)
     return (
-
+      
       <div className="row justify-content-center">
         <div className="account-card shadow justify-content-center col-md-12 bg-white">
           <div className="d-flex justify-content-between collapsed"

@@ -14,7 +14,7 @@ function FirstStep({ data, handleChange ,seterrmsg}) {
     setIsError(false);
     setIsLoading(true);
     try {
-      const result = await axios.get('/api/bank/deposits', { classId: classData.classId })
+      const result = await axios.get('/api/bank/deposits', {params:{ classId: classData.classId ,joinPossible:true}})
       setdeposits(result.data)
       //console.log(result.data)
     } catch (error) {

@@ -2,13 +2,9 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Transfer from '../../BankComponents/Transfer'
 import { useSelector } from "react-redux";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+
 import moment from 'moment-timezone';
-import { TableFooter, TablePagination } from '@material-ui/core';
+import {Table,TableBody,TableCell, TableHead, TableRow,TableFooter, TablePagination } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -55,7 +51,7 @@ function Account(props) {
         setIsLoading(true);
         try {
             const result = await axios.get(`/api/students/${joinedUser.classUser}/account/history`, { params: { startDate: startdate, endDate: moment(enddate).add(1, 'd').format('YYYY-MM-DD') } })
-            console.log("/api/students/:id/account/history", result.data);
+            //console.log("/api/students/:id/account/history", result.data);
             const temp = result.data
             const res = []
             for (let i = 0; i < temp.length; i++) {
@@ -132,7 +128,7 @@ function Account(props) {
                                         ).map((row, i) => (
                                             <TableRow key={i}>
                                                 <TableCell>{row.date}</TableCell>
-                                                <TableCell component="th" scope="row">
+                                                <TableCell >
                                                     {row.transactionType}
                                                 </TableCell>
                                                 <TableCell align="right">{row.amount}</TableCell>
@@ -146,7 +142,6 @@ function Account(props) {
                                         <TableRow>
                                             <TablePagination
                                                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                                colSpan={3}
                                                 count={history.length}
                                                 rowsPerPage={rowsPerPage}
                                                 page={page}

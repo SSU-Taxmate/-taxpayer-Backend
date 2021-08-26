@@ -11,13 +11,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
@@ -40,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
- 
+
 }));
 
 
@@ -54,52 +49,46 @@ function ClassCard(props) {
   return (
 
     <div className="m-4">
-    <Card className={classes.root} >
-    <Link
-              to={`/classes/${props.id}`}
-              color="inherit"
-              onClick={() => {
-                dispatch(selectClass({ classId: props.id }));
-                if (user.userData.role == 1) {
-                  dispatch(
-                    selectUser({ classId: props.id, userId: user.userData._id })
-                  );
-                }
-              }}
-            >
-      <CardHeader
-        title= {props.title}
-        subheader="September 14, 2016"
-      /></Link>
-      <CardMedia
-        className={classes.media}
-        image={props.img}
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {props.comment}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-        <ClassCodeModal
-              id={`${props.title}displaycode`}
-            ></ClassCodeModal>
+      <Card className={classes.root} >
+        <Link
+          to={`/classes/${props.id}`}
+          color="inherit"
+          onClick={() => {
+            dispatch(selectClass({ classId: props.id }));
+            if (user.userData.role === 1) {
+              dispatch(
+                selectUser({ classId: props.id, userId: user.userData._id })
+              );
+            }
+          }}
+        >
+          <CardHeader
+            title={props.title}
+            subheader="September 14, 2016"
+          /></Link>
+        <CardMedia
+          className={classes.media}
+          image={props.img}
+          title="Paella dish"
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {props.comment}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label="share">
+            <ClassCodeModal id={`${props.title}displaycode`}></ClassCodeModal>
+          </IconButton>
+          <IconButton aria-label="delete" style={{ marginLeft: 'auto' }}>
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
 
-        </IconButton>
-        <IconButton aria-label="delete" style={{marginLeft:'auto'}}>
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>
-  
-    </Card>
+      </Card>
 
     </div>
-  
+
   );
 }
 

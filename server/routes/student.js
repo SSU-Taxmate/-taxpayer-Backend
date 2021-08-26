@@ -20,7 +20,6 @@ router.get('/', async (req, res) => {
         // console.log("studentId:",req.params.id,req.query)
         const students = await JoinedUser.find(req.query, ["userId", "alias", "jobId"])
             .populate('userId', 'email name alias jobId').populate('jobId').exec()
-        //console.log(students)
         let result = await Promise.all(
             students.map(async (v, i) => {
                 const account = await Account.findOne({ 'studentId': v._id })
@@ -45,13 +44,13 @@ router.get('/job', async (req, res) => {
     //console.log("classId:", req.query)
     try {
         // console.log("studentId:",req.params.id,req.query)
-        const students = await JoinedUser.find(req.query, ["userId","jobId"])
+        const students = await JoinedUser.find(req.query, ["userId", "jobId"])
             .populate('userId').populate('jobId').exec()
         console.log(students)
         let result = await Promise.all(
             students.map(async (v, i) => {
                 return {
-                    'studentId':v.userId._id,'name': v.userId.name,'job': v.jobId
+                    'studentId': v.userId._id, 'name': v.userId.name, 'job': v.jobId
                 }
             })
         )
@@ -61,19 +60,20 @@ router.get('/job', async (req, res) => {
     }
 })
 /* 
-   [완료] 클래스 내 학생의 job 삭제
+   [완료] 클래스 내 한 학생의 job 삭제
 */
 router.delete('/:id/jobs/:jobId', (req, res) => {
-    const studentId=req.params.id
-    const jobId=req.params.jobId
+    const studentId = req.params.id
+    const jobId = req.params.jobId
     //console.log(studentId,jobId)
-    JoinedUser.updateOne({_id:studentId},{$pull:{jobId:jobId}}, (err, doc) => {
+    JoinedUser.updateOne({ _id: studentId }, { $pull: { jobId: jobId } }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
-          success: true
+            success: true
         })
     })
 })
+
 /*
   ====================== 계좌 정보, 거래 내역
 */
@@ -108,10 +108,80 @@ router.get('/:id/account/history', async (req, res) => {
         res.json(result)
     } catch (err) {
         res.status(500).json({ success: false, error: err });
-    }//
+    }
 
 })
 
+/*
+    [생각]자신 계좌의 통계정보 확인
+    : 입/출금
+*/
+router.get('/:id/account/statistics', async (req, res) => {
+    //console.log("studentId:", req.params.id, req.query)
+    try {
+        const studentId = req.params.id
+        const account = await Account.findOne({ studentId: studentId })
+        //console.log(account)
+        let result;
+        if (req.query.type === 'bytype') {
+            const bytype = await AccountTransaction.aggregate([
+                {
+                    $match: {
+                        "accountId": account._id,
+                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                    }
+                },
+                {
+                    $group:
+                    {
+                        _id: '$memo',
+                        count: { $sum: 1 },
+                        sum: { $sum: '$amount' }
+                    }
+                }
+            ])
+            result = bytype
+        } else {
+            //나중에 한번에 groupby할 수 있는 방법 찾기
+            const bydatein = await AccountTransaction.aggregate([
+                {
+                    $match: {
+                        "accountId": account._id,
+                        'transactionType':0,
+                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                    },
+
+                },
+                {
+                    $group: {
+                        _id: { $dayOfWeek: "$date"},//월단위 {$substr:['$date',5,2]}
+                        sum: { $sum: '$amount' }
+                    }
+                }
+            ])
+            const bydateout = await AccountTransaction.aggregate([
+                {
+                    $match: {
+                        "accountId": account._id,
+                        'transactionType':1,
+                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                    },
+
+                },
+                {
+                    $group: {
+                        _id: { $dayOfWeek: "$date"},//월단위 {$substr:['$date',5,2]}
+                        sum: { $sum: '$amount' }
+                    }
+                }
+            ])
+            result = {bydatein,bydateout}
+        }
+        res.json(result)
+    } catch (err) {
+        res.status(500).json({ success: false, error: err });
+    }
+})
 
 /*
   ====================== 가입한 금융 상품

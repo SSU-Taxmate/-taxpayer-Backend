@@ -6,6 +6,7 @@ import Account from './AccountSection';
 import Deposit from './DepositSection';
 import axios from 'axios'
 import { useSelector } from "react-redux";
+import Statistics from './StatisticsSection';
 
 
 function Bank() {
@@ -65,15 +66,11 @@ function Bank() {
                       balance={userAccount.currentBalance} />
                   </>
                   )}
-                                        <Deposit balance={userAccount.currentBalance} />
+                  <Deposit balance={userAccount.currentBalance} />
 
                 </div>
-                <div className="col-lg-6 justify-content-center py-3">
-                  <div className="account-card shadow justify-content-center bg-white">
-                    <div className="text-center">
-                    </div>
-                  </div>
-                </div>
+                {/*Bank Statistics */}
+                <Statistics/>
               </div>
 
               {/* <!-- Content Row --> */}

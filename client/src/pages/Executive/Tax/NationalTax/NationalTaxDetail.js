@@ -207,7 +207,7 @@ const NationalTaxDetail = () => {
 
       {/*<!--국채 발행 내역 시작-->*/}
       <CardCollapse title='국채 발행 내역' area_id='nationaldebt'>
-        {isError && <div>something went wrong</div>}
+        {isError && <Error/>}
         {isLoading ?
           <Loading/> : (
             <DefaultTable
