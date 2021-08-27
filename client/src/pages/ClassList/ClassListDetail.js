@@ -7,14 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Error from "../../components/Error";
-import Loading from '../../components/Loading'
+import Loading from "../../components/Loading";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
-
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
 
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
@@ -45,20 +44,27 @@ function ClassListDetail() {
     <div className="row">
       {/*<!--className 추가-->*/}
       <div className="col-lg-3">
-        <div className="row justify-content-center align-items-center" style={{height:450}}>
-        <div className="card m-40">
-          <div className="card-body">
-            {user.userData &&
-              (user.userData.role == 0 ? <FormDialog /> : "hello")}
+        <div
+          className="row justify-content-center align-items-center"
+          style={{ height: 450 }}
+        >
+          <div className="card m-40">
+            <div className="card-body">
+              {user.userData &&
+                (user.userData.role == 0 ? (
+                  <FormDialog />
+                ) : (
+                  "새로운 국가 시민권 얻기"
+                ))}
+            </div>
           </div>
-        </div>
         </div>
       </div>
 
       {/* 데이터 만큼 */}
       {isError && <Error></Error>}
       {isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
         classes.map((info, i) => (
           <ClassCard
@@ -121,8 +127,8 @@ function FormDialog() {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen} >
-        <AddIcon  fontSize="large"/>
+      <IconButton onClick={handleClickOpen}>
+        <AddIcon fontSize="large" />
       </IconButton>
       <Dialog
         open={open}
