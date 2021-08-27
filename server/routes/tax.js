@@ -10,7 +10,7 @@ const router = express.Router();
 */
 router.put('/', (req, res) => {
   //console.log('routes:/set-up',req.body)
-  Tax.updateOne({ _id: req.body._id },{ $set: req.body} , (err, doc) => {
+  Tax.updateOne({ _id: req.body._id },{ $set:{ taxlist:req.body.taxlist}} , (err, doc) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
   //console.log('routes:tax',req.query)
   Tax.findOne(req.query).exec((err,tax) => {
     const result = tax
-    console.log(tax.taxId)
+    console.log(tax)
     if (err) return res.status(500).json({ error: err });
     res.json(result)
   }) 

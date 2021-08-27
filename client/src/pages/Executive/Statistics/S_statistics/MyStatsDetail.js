@@ -66,7 +66,7 @@ function MyStatsDetail() {
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/students/${joinedUser.classUser}/homeworks`);
-                console.log('MyStatsDetail',result.data)
+                //console.log('MyStatsDetail',result.data)
                 result.data.map((v,i)=>{
                     v['id']=i
                 })

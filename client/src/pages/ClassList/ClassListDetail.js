@@ -19,7 +19,7 @@ import IconButton from '@material-ui/core/IconButton';
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
 function ClassListDetail() {
-  const [classes, setclasses] = useState([]);
+  const [classes, setclasses] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   let user = useSelector((state) => state.user);
@@ -60,7 +60,7 @@ function ClassListDetail() {
       {isLoading ? (
         <Loading/>
       ) : (
-        classes.map((info, i) => (
+        classes&&classes.map((info, i) => (
           <ClassCard
             id={info._id}
             key={info._id}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Transfer from '../../BankComponents/Transfer'
+import Transfer from './TransferSection'
 import { useSelector } from "react-redux";
 
 import moment from 'moment-timezone';
