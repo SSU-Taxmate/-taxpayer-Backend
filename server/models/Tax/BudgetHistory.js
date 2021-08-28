@@ -1,15 +1,15 @@
 /*
     BudgetHistory
-    :  Budget History내역
+    :  Budget History내역 - 한달마다 업데이트
 */
 const mongoose = require('mongoose')
 
 const budgethistorySchema = mongoose.Schema({
-    budgetId: {
+    classId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Budget'
+        ref: 'Class'
     },
-    transactionType: {/*어떤 행동 세입:0, 세출:1, 벌금:2 | level2 */
+    transType: {/*어떤 행동 세입:0, 세출:1, 국채발행:2| level2 */
         type: Number,
         require: true
     },
@@ -17,9 +17,13 @@ const budgethistorySchema = mongoose.Schema({
         type: Number,
         require: true
     },
-    date: {/* 언제 */
+    date: {/* 언제-월별 */
         type: Date,
         default: Date.now
+    },
+    memo:{/*벌금(세입일부), 소득세, 부동산세, 자리세, 부가가치세, 인지세, 증권거래세, 문화비, 교육비, 환경미화비*/
+        type:String,
+        default:''
     }
 })
 const BudgetHistory = mongoose.model('BudgetHistory', budgethistorySchema)

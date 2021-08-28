@@ -1,31 +1,28 @@
 import React from 'react'
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
-function InputTax(props) {
-  //console.log('inputtax',props.value)                step="5"
+function InputTax({ title, value, name, readOnly, onChange, unit }) {
+  //console.log('inputtax', value)                step="5"
 
-    return (
-        <>
-         <label htmlFor={`${props.title}`}>{props.title}</label>
-            <div className="input-group mb-3">
-              <input
-                defaultValue={props.value}
-                type="number"
-                className="form-control"
-                id={`${props.id}`}
-                placeholder={props.title.split(':')[0]}
-                min="0"
-                max="100"
-                readOnly={props.readOnly}
-                onChange={props.onChange}
-              />
-              <div className="input-group-append">
-                <span className="input-group-text" id="percent11"
-                >{props.unit}
-                </span>
-              </div>
-            </div>   
-        </>
-    )
+  return (
+  
+      <TextField
+        id={`tax-${title}`}
+        label={title}
+        type="number"
+        variant="outlined"
+        defaultValue={value}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">{unit}</InputAdornment>,
+          inputProps: { min: 0, max: 100 },
+          readOnly:readOnly
+        }}
+        name={name}
+        onChange={onChange}
+      />
+
+  )
 }
 
 export default InputTax

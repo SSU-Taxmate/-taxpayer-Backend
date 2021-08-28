@@ -239,7 +239,7 @@ router.get('/:id/homeworks', async (req, res) => {
     : ByStudentStock이 이거 사용중
 */
 router.get('/:id/stocks', async (req, res) => {
-    console.log(req.params)
+    //console.log(req.params)
     const studentId = req.params.id;
 
     try {

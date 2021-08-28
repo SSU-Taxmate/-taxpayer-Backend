@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
     Job
 */
 const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
+    classId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class'
+    },
     name: {/*직업명 */
         type: String,
         unique:true
@@ -27,10 +31,6 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
     recruitment: {/*모집 인원*/
         type: Number,
         default: 1
-    },
-    classId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Class'
     },
     ondelete:{/*삭제 예정 직업*/
         type:Boolean,
