@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Component } from "react";
-
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -8,8 +6,7 @@ import NumberFormat from "react-number-format";
 import { Button } from "@material-ui/core";
 import "../../../../styles/css/transfer.css";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
-import { connect } from 'react-redux';
+import { useSelector} from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,9 +76,8 @@ function Transfer(props){
     setAmount(e.target.value);
   }
 
- const handleSubmit=(e) =>{
-  e.preventDefault();
-   
+  const handleSubmit=(e) =>{
+  
     const data={
       classId: classData.classId,
       lawReason,
@@ -155,121 +151,5 @@ function Transfer(props){
   </div>
   )
 }
-
-
-
-// class Transfer extends Component {
-  
-//   constructor(props) {
-//     super(props);
-//     this.state={
-//       lawReason:null,
-//       studentId:null,
-//       amount:'',
-//     }
-//    this.lawhandleChange = this.lawhandleChange.bind(this);
-//    this.studenthandleChange = this.studenthandleChange.bind(this);
-//    this.AmounthandleChange = this.AmounthandleChange.bind(this);
-//    this.handleSubmit= this.handleSubmit.bind(this);
-//   }
-//   componentDidMount() {
-//     console.log('Component did mount.');
-//   }
-
-//   studenthandleChange= (e,values)=>{
-//     e.preventDefault();
-//     this.setState({studentId:values});
-//   } 
-
-//   lawhandleChange= (e,values)=>{
-//     e.preventDefault();
-//     this.setState({lawReason:values});
-//   }
-
-
-//   AmounthandleChange(e){
-//     this.setState({amount:e.target.value});
-//   }
-
-
-//   handleSubmit(e) {
-//     e.preventDefault();
-//       const data={
-//         classId: classData.classId,
-//         lawReason:this.state.lawReason,
-//         Amount : this.state.amount,
-//         Studnent :this.state.studentId,
-//       }
-//       axios.post(`/api/fine/`,data)
-//       .then(function (response) {
-//         console.log(response);
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//         console.log('testing fine error');
-//       });
-      
-    
-//   }
-//   render() {
-//     return (
-//       <div className="col-lg-8 justify-content-center">
-//         <form onSubmit={this.handleSubmit}>
-//           <Autocomplete
-//             className="py-3"
-//             style={{ useStyles }}
-//             options={this.props.laws}
-//             variant="outlined"
-//             getOptionLabel={(option) => option.title}
-//             required
-//             name="Law"
-//             onChange={this.lawhandleChange}
-//             renderInput={(params) => (
-//               <TextField {...params} label="법률" variant="outlined" />
-//             )}
-      
-//           />
-
-//           <Autocomplete
-//             className="py-3"
-//             style={{ useStyles }}
-//             options={this.props.users}
-//             variant="outlined"
-//             onChange={this.studenthandleChange}
-//             getOptionLabel={(option) => option.name}
-//             required
-            
-//             renderInput={(params) => (
-//               <TextField {...params} label="받는사람 이름" variant="outlined" name="Student"/>
-//             )}
-//           />
-
-//           <div className="row justify-content-center">
-//             <div className="row m-4 input_fine justify-content-center align-items-center">
-//               <TextField
-//                 className="bg-white"
-//                 style={{ inputStyles }}
-//                 required
-//                 variant="outlined"
-//                 onChange={this.AmounthandleChange}
-//                 defaultValue="0"
-//                 name="Amount"
-//                 InputProps={{
-//                   inputComponent: NumberFormatCustom,
-//                 }}
-//               />
-//             </div>
-//           </div>
-
-//           <div className="d-flex justify-content-center py-3">
-//             <Button color="primary" type="submit">
-//               부과하기
-//             </Button>
-//           </div>
-//         </form>
-//       </div>
-//     );
-//   }
-// }
 
 export default Transfer;
