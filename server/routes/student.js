@@ -10,6 +10,7 @@ const { GrantedHomework } = require('../models/Homework');
 const { JoinDeposit } = require('../models/Bank/JoinDeposit');
 const { StockAccount } = require('../models/Stock/StockAccount');
 const { Stock } = require('../models/Stock/Stock');
+const{Tax}=require('../models/Tax/Tax')
 /*
   [완료] 클래스 내 학생에 대한 모든 정보 - 학생 관리 테이블
   query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
@@ -142,7 +143,6 @@ router.get('/:id/account/statistics', async (req, res) => {
             ])
             result = bytype
         } else {
-            //나중에 한번에 groupby할 수 있는 방법 찾기
             const bydatein = await AccountTransaction.aggregate([
                 {
                     $match: {
@@ -241,8 +241,12 @@ router.get('/:id/homeworks', async (req, res) => {
 router.get('/:id/stocks', async (req, res) => {
     //console.log(req.params)
     const studentId = req.params.id;
+    const classId=req.query.classId;
 
     try {
+        const tax=await Tax.findOne({classId:classId})
+        const stocktax=tax.taxlist.stock//stock에 붙는 tax
+
         const userStocks = await StockAccount.findOne({ studentId: studentId })
         const holdingStocks = userStocks.holdingStocks
         let result = await Promise.all(
@@ -250,8 +254,10 @@ router.get('/:id/stocks', async (req, res) => {
                 const stock = await Stock.findOne({ '_id': v.stockId })
                 return {
                     stockId: v.stockId,
-                    quantity: v.quantity,
-                    allPayAmount: v.allPayAmount,
+                    quantity: v.quantity,//잔고
+                    allPayAmount: v.allPayAmount,//매입가
+                    evaluated : Math.round(v.quantity*stock.prices[stock.prices.length - 1].value*(100-stocktax)/100),//평가금액:잔고*현재가*(100-세금)/100
+                    gainNloss:Math.round(v.quantity*stock.prices[stock.prices.length - 1].value*(100-stocktax)/100)-v.allPayAmount,//평가손익
                     stockName: stock.stockName,
                     currentPrice: stock.prices[stock.prices.length - 1].value//현재가
                 }
@@ -269,20 +275,23 @@ router.get('/:id/stocks', async (req, res) => {
 router.get('/:id/stocks/statistics',async (req, res) => {
     //console.log(req.params)
     const studentId = req.params.id;
-
+    const classId=req.query.classId;
     try {
+        const tax=await Tax.findOne({classId:classId})
+        const stocktax=tax.taxlist.stock//stock에 붙는 tax
+        //console.log(stocktax)
         const userStocks = await StockAccount.findOne({ studentId: studentId })
         const holdingStocks = userStocks.holdingStocks
         //console.log('userStocks>>>\n',userStocks)
+        
         let first = await Promise.all(
             holdingStocks.map(async (v, i) => {
                 const stock = await Stock.findOne({ '_id': v.stockId })
                 return {
                     stockId:v._id,
                     PayAmount:v.allPayAmount,//총매입
-                    evaluated:stock.prices[stock.prices.length - 1].value*v.quantity,//총평가
-                    //평가손익
-                    evaluatedIncome:stock.prices[stock.prices.length - 1].value*v.quantity-v.allPayAmount
+                    evaluated:Math.round(stock.prices[stock.prices.length - 1].value*v.quantity*(100-stocktax)/100),//총 평가금액:현재가*잔고*(100-세금)/100
+                    evaluatedIncome:Math.round(stock.prices[stock.prices.length - 1].value*v.quantity*(100-stocktax)/100)-v.allPayAmount//총 평가손익:총평가금액-총매입
                 }
             })
         )

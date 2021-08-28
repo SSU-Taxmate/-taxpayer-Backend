@@ -8,6 +8,8 @@ const { StockAccount } = require('../models/Stock/StockAccount');
 const { StockOrderHistory } = require('../models/Stock/StockOrderHistory');
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
+const { Tax } = require('../models/Tax/Tax');
+const { Budget } = require('../models/Tax/Budget');
 
 const router = express.Router();
 /*
@@ -40,7 +42,7 @@ router.get('/', async (req, res) => {
   [정상] Class에서 사용하는 Stock 에 대한 통계정보
 */
 router.get('/statistics', async (req, res) => {
-  console.log(req.query)
+  //console.log(req.query)
   const classId = req.query.classId
   const startDate = req.query.startDate
   const endDate = req.query.endDate
@@ -78,10 +80,6 @@ router.get('/statistics', async (req, res) => {
       {
         $unwind: '$stock',
       },
-      /*{
-        $project:{count:1,allquantity:1,allpayAmount:1,'stock.stockName':1}
-      }*/
-
     ])
     //console.log('>>>>>>>>>>>',buyhistory)
     res.json(buyhistory)
@@ -193,7 +191,7 @@ router.delete('/:id', async (req, res) => {
 /*
   [90%완료] 주식 주문
   : 학생의 Stock 매수/매도 req.params orderType로 구분
-  매도 - tax 아직 안함
+  매도: classId 추가로 필요
  */
 router.post('/:id/orders', async (req, res) => {
   const stockId = req.params.id //어떤 stock을
@@ -269,11 +267,12 @@ router.post('/:id/orders', async (req, res) => {
 
     } else {
       console.log('매도')
+      const classId = req.body.classId
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
       //console.log(stockaccount.holdingStocks[index].quantity)
-      
-      if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {
+
+      if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {//매도수량 확인
         //매도
         const minusStock = await StockAccount.updateOne({ studentId: studentId },
           {
@@ -282,15 +281,17 @@ router.post('/:id/orders', async (req, res) => {
               [`holdingStocks.${index}.allPayAmount`]: - currentPrice * quantity
             }
           }
-          , { session })
+          , { session })//
         const pullStock = await StockAccount.updateOne({ studentId: studentId },
           {
-            $pull:{
-              holdingStocks:{quantity:0}//수량없는 경우
+            $pull: {
+              holdingStocks: { quantity: 0 }//수량없는 경우
             }
-          },{session})
+          }, { session })
+
         //은행 (입금)
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
+        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
+
         // 은행 거래 데이터 추가
         const transfer = new AccountTransaction({
           accountId: account._id,
@@ -301,6 +302,28 @@ router.post('/:id/orders', async (req, res) => {
         })
         await transfer.save({ session })
         //console.log(transfer)
+
+        // 세금 부과
+        const tax = await Tax.findOne({ classId: classId }).exec({ session })
+        const stocktax = tax.taxlist.stock
+        const tax2user = Math.round(stocktax * currentPrice * quantity / 100)
+        //console.log(tax2user)
+        //은행 (출금)
+        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: - tax2user } }, { session })
+        //은행 거래 데이터 추가
+        const account2=await Account.findOne({_id:account._id}).exec({session})
+        const transfer2 = new AccountTransaction({
+          accountId:account._id,
+          transactionType:0,
+          amount:tax2user,
+          memo: '증권거래세',
+          afterbalance:account2.currentBalance-tax2user
+        })
+        await transfer2.save({session})
+        // 국세청 세금에 추가
+        await Budget.updateOne({ classId: classId },
+          { $inc: { 'balance.stock': tax2user } }).exec({ session })
+    
       } else {
         throw '주문 수량이 매도 가능 수량보다 많습니다.'
       }

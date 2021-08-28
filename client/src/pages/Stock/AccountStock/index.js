@@ -15,6 +15,7 @@ function AccountStock() {
     const [isError, setIsError] = useState(false);
     const joinedUser = useSelector(state => state.classUser);
     const user = useSelector((state) => state.user);
+    let classData = useSelector(state => state.classInfo.classData);
 
     const [stocks, setstocks] = useState([])
 
@@ -22,7 +23,7 @@ function AccountStock() {
         setIsError(false);
         setIsLoading(true);
         try {
-            const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`)
+            const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`,{params:{classId:classData.classId}})
             setstocks(result.data)
             console.log(result.data)//Alert로 사용자에게 보여주기
         } catch (error) {
@@ -32,7 +33,7 @@ function AccountStock() {
     };
     useEffect(() => {
         fetchData();
-    }, [joinedUser.classUser])
+    }, [joinedUser.classUser,classData.classId])
 
     return (
         <div>

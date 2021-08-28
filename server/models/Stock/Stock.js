@@ -31,6 +31,15 @@ const stockSchema = mongoose.Schema({
             default:''
         }
     }],
+    ondelete:{/*상장 폐지 예정 Stock*/
+        type:Boolean,
+        default:false
+    },
+    ondeleteDay:{/*상장 폐지 예정 날짜 - 15일*/
+        type:Date,
+        unique:true,
+        default:() => new Date(+new Date() + 15*24*60*60*1000)
+    }
   
 },{ timestamps: true })
 const Stock = mongoose.model('Stock', stockSchema)
