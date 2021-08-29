@@ -43,7 +43,6 @@ export default function MyInvest({ data }) {
                         </tr>
                     </tbody>
                 </table>
-
             </div>
         </div>
     )

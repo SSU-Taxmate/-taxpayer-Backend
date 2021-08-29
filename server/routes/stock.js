@@ -105,6 +105,7 @@ router.get('/manage', async (req, res) => {
     const stock = await Stock.find({ _id: { $in: stocks } })
     res.json(stock)
 
+    res.json(result)
   } catch (err) {
     res.status(500).json({ error: err });
   }
