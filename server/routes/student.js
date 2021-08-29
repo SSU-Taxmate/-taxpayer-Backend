@@ -95,14 +95,16 @@ router.get('/:id/account', (req, res) => {
   {accountId:,startDate:,endDate:} <=studentId로 Account에서 찾을 수 있음
 */
 router.get('/:id/account/history', async (req, res) => {
+    const startDate=req.query.startDate
+    const endDate=req.query.endDate
     try {
-        // console.log("studentId:",req.params.id,req.query)
+        //console.log("studentId:",startDate,endDate, new Date(endDate))
         const account = await Account.findOne({ studentId: req.params.id })
         //console.log(account)
         const accounttrans = await AccountTransaction.find(
             {
                 accountId: account._id,
-                date: { $gte: req.query.startDate, $lt: req.query.endDate }
+                date: { $gte: startDate, $lte: endDate }
             }).sort({ date: -1 })
         const result = accounttrans
         //console.log(result)
@@ -114,22 +116,25 @@ router.get('/:id/account/history', async (req, res) => {
 })
 
 /*
-    [생각]자신 계좌의 통계정보 확인
+    [*요일별]자신 계좌의 통계정보 확인
     : 입/출금
 */
 router.get('/:id/account/statistics', async (req, res) => {
-    //console.log("studentId:", req.params.id, req.query)
+    const startDate=req.query.startDate
+    const endDate=req.query.endDate
+    const stats=req.query.type
+    //console.log('>',stats,startDate,endDate)
     try {
         const studentId = req.params.id
         const account = await Account.findOne({ studentId: studentId })
         //console.log(account)
         let result;
-        if (req.query.type === 'bytype') {
+        if (stats === 'bytype') {
             const bytype = await AccountTransaction.aggregate([
                 {
                     $match: {
                         "accountId": account._id,
-                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                        "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
                     }
                 },
                 {
@@ -148,13 +153,13 @@ router.get('/:id/account/statistics', async (req, res) => {
                     $match: {
                         "accountId": account._id,
                         'transactionType':0,
-                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                        "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
                     },
 
                 },
                 {
                     $group: {
-                        _id: { $dayOfWeek: "$date"},//월단위 {$substr:['$date',5,2]}
+                        _id: { $dayOfWeek: {date:"$date",timezone:'Asia/Seoul'}},//월단위 {$substr:['$date',5,2]}
                         sum: { $sum: '$amount' }
                     }
                 }
@@ -164,13 +169,13 @@ router.get('/:id/account/statistics', async (req, res) => {
                     $match: {
                         "accountId": account._id,
                         'transactionType':1,
-                        "date": { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate) }
+                        "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
                     },
 
                 },
                 {
                     $group: {
-                        _id: { $dayOfWeek: "$date"},//월단위 {$substr:['$date',5,2]}
+                        _id: { $dayOfWeek: {date:"$date",timezone:'Asia/Seoul'}},//월단위 {$substr:['$date',5,2]}
                         sum: { $sum: '$amount' }
                     }
                 }
@@ -235,14 +240,14 @@ router.get('/:id/homeworks', async (req, res) => {
 })
 
 /*
-    student가 구매한 모든 stock 보여주기
+    [정상]student가 구매한 모든 stock 보여주기
     : ByStudentStock이 이거 사용중
 */
 router.get('/:id/stocks', async (req, res) => {
     //console.log(req.params)
     const studentId = req.params.id;
     const classId=req.query.classId;
-
+    
     try {
         const tax=await Tax.findOne({classId:classId})
         const stocktax=tax.taxlist.stock//stock에 붙는 tax
@@ -252,14 +257,20 @@ router.get('/:id/stocks', async (req, res) => {
         let result = await Promise.all(
             holdingStocks.map(async (v, i) => {
                 const stock = await Stock.findOne({ '_id': v.stockId })
+                const now=new Date()
+                //console.log('날짜확인!',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
+                const isSameDate=(v)=> v.updateDate>=new Date(now.getFullYear(),now.getMonth(), now.getDate())
+                const index=stock.prices.findIndex(isSameDate)
+                console.log(index)
+
                 return {
                     stockId: v.stockId,
                     quantity: v.quantity,//잔고
                     allPayAmount: v.allPayAmount,//매입가
-                    evaluated : Math.round(v.quantity*stock.prices[stock.prices.length - 1].value*(100-stocktax)/100),//평가금액:잔고*현재가*(100-세금)/100
-                    gainNloss:Math.round(v.quantity*stock.prices[stock.prices.length - 1].value*(100-stocktax)/100)-v.allPayAmount,//평가손익
+                    evaluated : Math.round(v.quantity*stock.prices[index].value*(100-stocktax)/100),//평가금액:잔고*현재가*(100-세금)/100
+                    gainNloss:Math.round(v.quantity*stock.prices[index].value*(100-stocktax)/100)-v.allPayAmount,//평가손익
                     stockName: stock.stockName,
-                    currentPrice: stock.prices[stock.prices.length - 1].value//현재가
+                    currentPrice: stock.prices[index].value//현재가
                 }
             })
         )

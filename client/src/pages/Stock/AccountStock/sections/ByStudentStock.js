@@ -17,13 +17,11 @@ function ByStudentStock() {
     const fetchData = async () => {
         setIsError(false);
         setIsLoading(true);
-        try {//class내 주식에 대한 통계정보
+        try {//학생이 구매한 대한 통계정보
             const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`,
                 {
                     params: {
                         classId: classData.classId,
-                        startDate: moment().subtract(1, 'weeks').startOf('isoWeek').format('YYYY-MM-DD'),//지난주 월~
-                        endDate: moment().subtract(1, 'weeks').endOf('isoWeek').add(1, 'd').format('YYYY-MM-DD')//일
                     }
                 })
             console.log(result.data)

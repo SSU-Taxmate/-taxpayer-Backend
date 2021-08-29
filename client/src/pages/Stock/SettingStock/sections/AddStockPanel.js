@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from "react-redux";
+import moment from 'moment-timezone';
 
 function AddStockPanel() {
     const [stockName, setstockName] = useState('')
@@ -24,12 +25,14 @@ function AddStockPanel() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        const now = new Date().now
+        const now = moment().format('YYYY-MM-DD')
+        //console.log(now,moment(now).tz('Asia/Seoul').utc().format())
+        //console.log(moment().tz('Asia/Seoul').startOf('day').utc().format())
         axios.post('/api/stocks',
             {stockInfo:{
                 stockName: stockName,
                 description: stockDescription,
-                prices: [{ updateDate: now, value: stockInit ,hint:stockHint}]
+                prices: [{ updateDate: moment().tz('Asia/Seoul').startOf('day').utc().format(), value: stockInit ,hint:stockHint}],
             },
             classId:classData.classId
             })

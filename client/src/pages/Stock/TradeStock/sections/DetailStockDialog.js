@@ -7,9 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent'
 import ChartLine from '../../../../components/Charts/Line'
 import TextField from '@material-ui/core/TextField';
 import SelectDate from './SelectDate';
+import moment from 'moment-timezone';
 
 function DetailStockDialog({selectedValue}) {
-    //console.log('DetailStockDialog', props)
+    console.log('DetailStockDialog', selectedValue)
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -23,7 +24,7 @@ function DetailStockDialog({selectedValue}) {
 
     const adjustData = (data) => {
         return {
-            labels: data.map((n, i) => { return n['updateDate'].split('T')[0] }),
+            labels: data.map((n, i) => { return moment(n['updateDate']).tz('Asia/Seoul').format('YYYY-MM-DD')}),
             datasets: [{
                 label: '주가',
                 lineTension: 0.3,
@@ -74,8 +75,11 @@ function DetailStockDialog({selectedValue}) {
                             }}
                         />
 
-                        <SelectDate selectedValue={selectedValue}/>
+                        <div>{selectedValue.ondelete?'상장 폐지 예정':''}</div>
 
+                    </div>
+                    <div className='row mt-3'>
+                    <SelectDate selectedValue={selectedValue}/>
 
                     </div>
 

@@ -13,51 +13,55 @@ const { Budget } = require('../models/Tax/Budget');
 
 const router = express.Router();
 /*
-  [정상] Class에서 사용하는 Stock GET : 오늘 날짜까지만, prices 정보 가져오기
+  [*정상] Class에서 사용하는 Stock GET : 오늘 날짜까지만, prices 정보 가져오기
+  : < new Date() 대신에 현재 날짜가 같은 거로 비교해야 함.
 */
 router.get('/', async (req, res) => {
   try {
     const classstock = await ClassStock.find(req.query, "stockId")
-    //console.log(req.query, classstock)
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
     }
     //console.log(stocks)
     const stock = await Stock.find({ _id: { $in: stocks } })
-    //console.log(stock)
+    const now=new Date()
+    
+    //console.log('기존:',new Date().toISOString(),'원하는 모양',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
     let result = await Promise.all(
       stock.map(async (v, i) => {
-        v.prices = await v.prices.filter(price => price.updateDate < new Date());
+        v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.getFullYear(),now.getMonth(), now.getDate()));
         return v
       })
     )
-
+    //console.log(result)
     res.json(result)
   } catch (err) {
     res.status(500).json({ error: err });
   }
 })
 /*
-  [정상] Class에서 사용하는 Stock 에 대한 통계정보
+  [*정상] Class에서 사용하는 Stock 에 대한 통계정보
 */
 router.get('/statistics', async (req, res) => {
-  //console.log(req.query)
   const classId = req.query.classId
   const startDate = req.query.startDate
   const endDate = req.query.endDate
+  
+  console.log('/api/stocks/statistics',classId,startDate,new Date(startDate),endDate)
   try {
     const classstock = await ClassStock.find({ classId: classId }, "stockId")
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
     }
+
     //클래스내 stockId
     const buyhistory = await StockOrderHistory.aggregate([
       {
         $match: {
           'stockId': { $in: stocks },
-          "createdAt": { $gte: new Date(startDate), $lt: new Date(endDate) }
+          "createdAt": { $gte: new Date(startDate), $lte: new Date(endDate)}
         }
       },
       {
@@ -81,7 +85,6 @@ router.get('/statistics', async (req, res) => {
         $unwind: '$stock',
       },
     ])
-    //console.log('>>>>>>>>>>>',buyhistory)
     res.json(buyhistory)
   } catch (err) {
     console.log(err)
@@ -109,23 +112,24 @@ router.get('/manage', async (req, res) => {
 })
 /*
   [정상] stock 생성&사용 
-  : Stock, ClassStock body-{stockInfo:{userDefined:true필수},classId:}필수
+  : Stock, ClassStock body-{stockInfo:,classId:}필수
 */
 router.post("/", async (req, res) => {
-  // console.log('create', req.body)
+  //console.log('create', req.body.stockInfo)
   const session = await startSession();
   try {
     // 트랜젝션 시작
     session.startTransaction();
     // 1) Stock 생성
     const newstock = new Stock(req.body.stockInfo);
-    const savestock = await newstock.save({ session });
-    //console.log('savestock', savestock);
+
+    await newstock.save({ session });
+    //console.log("savestock",newstock);
 
     // 2) Class-Stock 연관
-    const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id, userDefined: true });
-    const sclassstock = await newclass.save({ session });
-    //console.log('class-stock', sclassstock);
+    const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id });
+    await newclass.save({ session });
+    //console.log('class-stock', newclass);
 
     // 트랜젝션 커밋
     await session.commitTransaction();
@@ -143,16 +147,26 @@ router.post("/", async (req, res) => {
 });
 
 /*
-   [정상] DIY stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
+   [정상] stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
 */
 router.put('/', (req, res) => {
   //console.log('update',req.body)
-  Stock.updateOne({ _id: req.body._id }, { $push: { prices: { hint: req.body.description, value: req.body.price, updateDate: req.body.updateDate } } }, (err, doc) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true
+  Stock.updateOne({ _id: req.body._id },
+    {
+      $push: {
+        prices:
+        {
+          hint: req.body.description,
+          value: req.body.price,
+          updateDate: req.body.updateDate
+        }
+      }
+    }, (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true
+      })
     })
-  })
 
 })
 /*
@@ -166,19 +180,36 @@ router.delete('/:id', async (req, res) => {
   try {
     // 트랜젝션 시작
     session.startTransaction();
-    // 1) Class-Stock 연관 삭제 - classId필요없음
-    const delclasstock = await ClassStock.deleteOne({ stockId: stockId }, { session: session });
-    //console.log('del: class-stock', delclasstock);
+    // Stock.ondelete = true
+    const notclosed = await StockAccount.countDocuments({ 'holdingStocks.stockId': stockId }).exec({ session })
+    //console.log(notclosed)
 
-    // 2) Stock 삭제
-    const delstock = await Stock.deleteOne({ _id: stockId }, { session: session })
-    //console.log('del:stock', delstock);
+    if (notclosed <= 0) {//보유중인 사람이 없다면
+      // 1) Class-Stock 연관 삭제 - classId필요없음
+      const delclasstock = await ClassStock.deleteOne({ stockId: stockId }, { session: session });
+      //console.log('del: class-stock', delclasstock);
 
-    await session.commitTransaction();
-    session.endSession();
-    res.status(200).json({
-      success: true
-    })
+      // 2) Stock 삭제
+      const delstock = await Stock.deleteOne({ _id: stockId }, { session: session })
+      //console.log('del:stock', delstock);
+
+      await session.commitTransaction();
+      session.endSession();
+      res.status(200).json({
+        success: true,
+        message: '성공적으로 상장 폐지가 되었습니다.'
+      })
+    } else {//보유중인 사람이 있다면
+      //1) 상장폐지 신청
+      const ondelete = await Stock.updateOne({ _id: stockId }, { $set: { ondelete: true, ondeleteDay: new Date(+new Date() + 15 * 24 * 60 * 60 * 1000) } }).exec({ session })
+
+      await session.commitTransaction();
+      session.endSession();
+      res.status(200).json({
+        success: true,
+        message: '상장 폐지 신청이 완료되었습니다. 15일 뒤에 삭제됩니다.'
+      })
+    }
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
@@ -199,13 +230,13 @@ router.post('/:id/orders', async (req, res) => {
   const studentId = req.body.studentId //누가
   const quantity = req.body.quantity //얼만큼
   const currentPrice = req.body.currentPrice//현재가
-  // console.log(stockId, orderType, studentId, quantity)
+  //console.log(stockId, currentPrice, orderType, studentId, quantity)
   const session = await startSession();
 
   try {
     session.startTransaction();// 트랜젝션 시작
-    const account = await Account.findOne({ studentId: studentId }).session(session)
-
+    const account = await Account.findOne({ studentId: studentId }).exec({session})
+    console.log('account1',account)
     if (orderType === '매수') {
       console.log('매수')
       // 1) 은행 잔고 확인
@@ -218,7 +249,7 @@ router.post('/:id/orders', async (req, res) => {
           currentPrice: currentPrice,
           payAmount: currentPrice * quantity  //currentPrice&Tax에서 얻은 Stock필요
         })
-        history.save({ session })
+        await history.save({ session })
         //console.log(history)
 
         // 3) 은행 처리
@@ -289,10 +320,10 @@ router.post('/:id/orders', async (req, res) => {
             }
           }, { session })
 
-        //은행 (입금)
+        // 1. 은행 (입금)
         const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
-
-        // 은행 거래 데이터 추가
+        
+        // 은행 거래 데이터 추가(입금)
         const transfer = new AccountTransaction({
           accountId: account._id,
           transactionType: 1,
@@ -303,27 +334,30 @@ router.post('/:id/orders', async (req, res) => {
         await transfer.save({ session })
         //console.log(transfer)
 
-        // 세금 부과
+        // 2. 세금 계산
         const tax = await Tax.findOne({ classId: classId }).exec({ session })
         const stocktax = tax.taxlist.stock
         const tax2user = Math.round(stocktax * currentPrice * quantity / 100)
-        //console.log(tax2user)
+        //console.log(tax2user)        
+
         //은행 (출금)
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: - tax2user } }, { session })
-        //은행 거래 데이터 추가
-        const account2=await Account.findOne({_id:account._id}).exec({session})
-        const transfer2 = new AccountTransaction({
-          accountId:account._id,
-          transactionType:0,
-          amount:tax2user,
-          memo: '증권거래세',
-          afterbalance:account2.currentBalance-tax2user
-        })
-        await transfer2.save({session})
+        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }, { session })
+        //은행 거래 데이터 추가(출금)
+         const account2 = await Account.findOne({ _id: account._id }).exec({ session })
+         //console.log('account2',account,account2)
+         const transfer2 = new AccountTransaction({
+           accountId: account2._id,
+           transactionType: 0,
+           amount: tax2user,
+           memo: '증권거래세',
+           afterbalance: account2.currentBalance
+         })
+         await transfer2.save({ session })
+        
         // 국세청 세금에 추가
         await Budget.updateOne({ classId: classId },
           { $inc: { 'balance.stock': tax2user } }).exec({ session })
-    
+
       } else {
         throw '주문 수량이 매도 가능 수량보다 많습니다.'
       }

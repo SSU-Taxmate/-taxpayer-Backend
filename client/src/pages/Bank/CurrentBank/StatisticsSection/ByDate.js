@@ -24,8 +24,8 @@ function ByDate() {
                 {
                     params: {
                         type: 'bydate',
-                        startDate: moment().subtract(1, 'weeks').startOf('isoWeek').format('YYYY-MM-DD'),//지난주 월~
-                        endDate: moment().subtract(1, 'weeks').endOf('isoWeek').add(1, 'd').format('YYYY-MM-DD')//일
+                        startDate: moment().tz('Asia/Seoul').subtract(1, 'weeks').startOf('isoWeek').utc().format(),//지난주 월~
+                        endDate: moment().tz('Asia/Seoul').subtract(1, 'weeks').endOf('isoWeek').utc().format()//일
                     }
                 })
             let temp = [0, 0, 0, 0, 0, 0, 0]
