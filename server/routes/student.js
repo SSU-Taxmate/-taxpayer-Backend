@@ -236,8 +236,10 @@ router.get('/:id/homeworks', async (req, res) => {
 
 /*
     student가 구매한 모든 stock 보여주기
+    : ByStudentStock이 이거 사용중
 */
 router.get('/:id/stocks', async (req, res) => {
+    //console.log(req.params)
     const studentId = req.params.id;
 
     try {
@@ -246,7 +248,6 @@ router.get('/:id/stocks', async (req, res) => {
         let result = await Promise.all(
             holdingStocks.map(async (v, i) => {
                 const stock = await Stock.findOne({ '_id': v.stockId })
-                //console.log(stock.prices[stock.prices.length-1].value)
                 return {
                     stockId: v.stockId,
                     quantity: v.quantity,
@@ -256,11 +257,51 @@ router.get('/:id/stocks', async (req, res) => {
                 }
             })
         )
-        //console.log(result)
+        //console.log('result',result)
         res.json(result)
     } catch (err) {
         res.json({ success: false, err })
     }
 })
+/*
+    [완성]stuent 가 구매한 stock들에 대한 통계정보
+*/
+router.get('/:id/stocks/statistics',async (req, res) => {
+    //console.log(req.params)
+    const studentId = req.params.id;
 
+    try {
+        const userStocks = await StockAccount.findOne({ studentId: studentId })
+        const holdingStocks = userStocks.holdingStocks
+        //console.log('userStocks>>>\n',userStocks)
+        let first = await Promise.all(
+            holdingStocks.map(async (v, i) => {
+                const stock = await Stock.findOne({ '_id': v.stockId })
+                return {
+                    stockId:v._id,
+                    PayAmount:v.allPayAmount,//총매입
+                    evaluated:stock.prices[stock.prices.length - 1].value*v.quantity,//총평가
+                    //평가손익
+                    evaluatedIncome:stock.prices[stock.prices.length - 1].value*v.quantity-v.allPayAmount
+                }
+            })
+        )
+        let allPayAmount=await first.reduce((v,c)=>v+c.PayAmount,0)
+        let allEvaluated=await first.reduce((v,c)=>v+c.evaluated,0)
+        let evaluatedIncome=allEvaluated-allPayAmount
+        let evaluatedProfit=await Math.round(evaluatedIncome/allPayAmount*100)/100
+        //console.log(first,allPayAmount,allEvaluated,evaluatedIncome,evaluatedProfit)
+        /*
+        {
+            allPay:,//총매입 - allPayAmount 다 더하기
+            allEvaluated:,//총평가 //currentPrice*quantity를 다더하기
+            evaluatedIncome:,평가손익 총평가-총매입
+            evaluatedProfit:,평가수익률//(총평가-총매입)/총매입*100
+        }
+        */
+        res.json({allPay:allPayAmount,allEvaluated,evaluatedIncome,evaluatedProfit})
+    } catch (err) {
+        res.json({ success: false, err })
+    }
+})
 module.exports = router;

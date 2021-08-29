@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 /*
-    JoinedUser(예전JoinClass)
+    JoinedUser (예전JoinClass)
     : Class와 Student를 연결하는 Schema
 */
 const joineduserSchema = mongoose.Schema({

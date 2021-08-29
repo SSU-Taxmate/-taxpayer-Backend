@@ -17,11 +17,10 @@ export default function MyInvest({ data }) {
                         </Link>
                     </div>
                     <div className='col-4'>
-                        {data&&<SellDialog type='매도' color='primary' quantity={1} data={data}/>}
+                        <SellDialog type='매도' color='primary' quantity={1} data={data}/>
                     </div>
-
                 </div>
-
+                
                 <table className='border-0 m-3'>
                     <tbody>
                         <tr>

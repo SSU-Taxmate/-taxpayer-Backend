@@ -93,7 +93,9 @@ function ByType() {
             </div>
             {isError && <Error></Error>}
             {isLoading ?
-                <Loading /> : pieChartField}
+                <Loading /> : (
+                    sumdata&&datalabel&&
+                    pieChartField)}
         </>
     )
 }

@@ -9,19 +9,22 @@ import axios from 'axios';
 import Error from '../../../components/Error';
 import Loading from '../../../components/Loading'
 import MyInvest from './sections/MyInvest'
-
+import ByStudentStock from './sections/ByStudentStock';
 function AccountStock() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const joinedUser = useSelector(state => state.classUser);
+    const user = useSelector((state) => state.user);
+
     const [stocks, setstocks] = useState([])
+
     const fetchData = async () => {
         setIsError(false);
         setIsLoading(true);
         try {
             const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`)
             setstocks(result.data)
-            // console.log(result.data)//Alert로 사용자에게 보여주기
+            console.log(result.data)//Alert로 사용자에게 보여주기
         } catch (error) {
             setIsError(true);
         }
@@ -29,7 +32,7 @@ function AccountStock() {
     };
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [joinedUser.classUser])
 
     return (
         <div>
@@ -53,22 +56,24 @@ function AccountStock() {
                             {/* <!-- Page Heading --> */}
 
                             <PageHeading title="투자 현황" />
-
                             {/* <!-- Content Row --> */}
-                            <h4 className='pt-2'>내 투자 현황</h4>
-                            <InvestStatus data={stocks}/>
-
-                            <h4 className='pt-2'>내 보유 주식</h4>
+                            {user.userData&&
+                            <h4 className='pt-2'>{user.userData.name}님의 투자 현황</h4>}
+                            <div style={{display:'flex',justifyContent:'space-evenly'}}className="account-card shadow bg-white"> 
+                                <InvestStatus data={stocks} />
+                                <ByStudentStock/>
+                            </div>
+                            <h4 className='pt-2'>보유 주식</h4>
                             {isError && <Error></Error>}
-                            {isLoading ? <Loading /> : 
-                            <div className='row flex-row flex-nowrap overflow-auto'>
-                                {stocks.map((item, i) => (
-                                    <MyInvest
-                                        key={i}
-                                        data={item}
-                                    />
-                                ))}
-                            </div>}
+                            {isLoading ? <Loading /> :
+                                <div className='row flex-row flex-nowrap overflow-auto'>
+                                    {stocks.map((item, i) => (
+                                        <MyInvest
+                                            key={i}
+                                            data={item}
+                                        />
+                                    ))}
+                                </div>}
 
                         </div>
                         {/* <!-- /.container-fluid --> */}

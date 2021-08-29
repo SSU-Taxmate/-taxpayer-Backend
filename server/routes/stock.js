@@ -40,14 +40,12 @@ router.get('/', async (req, res) => {
   [정상] Class에서 사용하는 Stock 에 대한 통계정보
 */
 router.get('/statistics', async (req, res) => {
-  //console.log(req.query)
-  const classId=req.query.classId
-    const startDate=req.query.startDate
-    const endDate=req.query.endDate
+  console.log(req.query)
+  const classId = req.query.classId
+  const startDate = req.query.startDate
+  const endDate = req.query.endDate
   try {
-    
-
-    const classstock = await ClassStock.find({classId:classId}, "stockId")
+    const classstock = await ClassStock.find({ classId: classId }, "stockId")
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
@@ -66,23 +64,26 @@ router.get('/statistics', async (req, res) => {
           _id: '$stockId',
           count: { $sum: 1 },
           allquantity: { $sum: '$quantity' },
-          allpayAmount:{$sum:'$payAmount'}
+          allpayAmount: { $sum: '$payAmount' }
         }
-      }, 
-      /* */
+      },
       {
         $lookup: {
           from: "stocks",
-          localField : "_id",
-          foreignField : "_id",
+          localField: "_id",
+          foreignField: "_id",
           as: 'stock'
         }
       },
       {
         $unwind: '$stock',
       },
+      /*{
+        $project:{count:1,allquantity:1,allpayAmount:1,'stock.stockName':1}
+      }*/
+
     ])
-    //console.log(buyhistory)
+    //console.log('>>>>>>>>>>>',buyhistory)
     res.json(buyhistory)
   } catch (err) {
     console.log(err)
@@ -104,6 +105,7 @@ router.get('/manage', async (req, res) => {
     const stock = await Stock.find({ _id: { $in: stocks } })
     res.json(stock)
 
+    res.json(result)
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -271,6 +273,7 @@ router.post('/:id/orders', async (req, res) => {
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
       //console.log(stockaccount.holdingStocks[index].quantity)
+      
       if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {
         //매도
         const minusStock = await StockAccount.updateOne({ studentId: studentId },
@@ -281,6 +284,12 @@ router.post('/:id/orders', async (req, res) => {
             }
           }
           , { session })
+        const pullStock = await StockAccount.updateOne({ studentId: studentId },
+          {
+            $pull:{
+              holdingStocks:{quantity:0}//수량없는 경우
+            }
+          },{session})
         //은행 (입금)
         const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
         // 은행 거래 데이터 추가
