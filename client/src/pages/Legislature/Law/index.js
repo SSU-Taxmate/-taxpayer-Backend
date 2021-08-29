@@ -15,6 +15,7 @@ import CardCollapse from "../../../components/Cards/Collapse";
 import Viewer from "../../../components/Editor/Viewer";
 import moment from 'moment-timezone'
 import { useSelector } from 'react-redux';
+import Loading from "../../../components/Loading";
 
 export default function Law() {
   const [laws, setlaws] = useState([]);
@@ -22,13 +23,14 @@ export default function Law() {
   const [isLoading, setIsLoading] = useState(false);
   const [err, setIsError] = useState(false);
   let classData = useSelector(state => state.classInfo.classData);
+  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get("/api/laws",{params:{classId:classData.classId}});
+        const result = await axios.get("/api/laws", { params: { classId: classData.classId } });
         console.log(result.data)
         setlaws(result.data);
       } catch (error) {
@@ -37,7 +39,7 @@ export default function Law() {
       setIsLoading(false);
     };
     fetchData();
-  }, [classData]);
+  }, [classData.classId]);
   const getDate = (date) => {
     const localtime = moment(date).tz("Asia/Seoul").format();
     let res =
@@ -51,8 +53,8 @@ export default function Law() {
     <div>
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
-         
-         
+
+
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
@@ -67,15 +69,15 @@ export default function Law() {
             <div className="container-fluid">
               {/* <!-- Page Heading --> */}
               <PageHeading title="법">
-                <PreviewDialog laws={laws} />
+              {user.userData && user.userData.role === 0 ? <PreviewDialog laws={laws} />:<></>}
               </PageHeading>
-
-              <AddLawDialog />
+              {user.userData && user.userData.role === 0 ?
+                <AddLawDialog /> :null }
 
               <List>
                 {/* <!-- Content Row --> */}
                 {isLoading ? (
-                  <div>Loading</div>
+                  <Loading />
                 ) : laws.length == 0 ? (
                   <div>법 추가 부탁</div>
                 ) : (
@@ -93,10 +95,11 @@ export default function Law() {
                           <Viewer content={law.content} />
                         </CardCollapse>
                       </div>
-                      <div className="col-1">
+                      {user.userData && user.userData.role === 0 ?
+                        <div className="col-1">
                         <EditLawDialog data={law} />
                         <DeleteLawDialog data={law} />
-                      </div>
+                      </div> : null}
                     </ListItem>
                   ))
                 )}

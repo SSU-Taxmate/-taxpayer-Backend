@@ -49,7 +49,7 @@ router.put('/', (req, res) => {
   [정상] Law 삭제 : deleteOne
 */
 router.delete('/:id', (req, res) => {
-  //console.log(req.params.id)
+  console.log(req.params.id)
   const lawId=req.params.id
   Law.deleteOne({_id:lawId},(err,doc)=>{
     if (err) return res.json({ success: false, err });

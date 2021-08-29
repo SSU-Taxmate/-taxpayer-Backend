@@ -7,16 +7,13 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ClassMain from "./pages/ClassMain";
 import NotFound from "./pages/NotFound";
-import Charts from "./pages/Charts";
 import ClassList from "./pages/ClassList";
-import Dashboard from "./pages/Dashboard";
 
 /*신용등급*/
 import Credit from "./pages/Credit";
 
 /*은행 */
 import Bank from "./pages/Bank/CurrentBank";
-import Deposit from "./pages/Bank/Deposit";
 import BankSetup from './pages/Bank/BankSetup'
 /* 마켓 */
 
@@ -63,7 +60,6 @@ const Routes = () => (
 
       {/*은행*/}
       <Route exact path="/classes/:classId/bank" component={Auth(Bank,true)} />
-      <Route exact path="/classes/:classId/bank/deposit" component={Auth(Deposit,true)} />
       <Route exact path = "/classes/:classId/bank/manage" component={Auth(BankSetup,true,true)}/>
       
       {/* 증권 거래소 */}
@@ -102,9 +98,6 @@ const Routes = () => (
       <Route exact path="/classes/:classId/real_estate_setting"component={Auth(EstateSetting,true)}/>
 
       {/* 그 외 */}
-      <Route path="/charts" component={Auth(Charts,true)} />
-      <Route path="/dashboard" component={Auth(Dashboard,true)} />
-      <Route path="/charts" component={Charts} />
       <Route path="*" component={NotFound} />
     </Switch>
   </BrowserRouter>

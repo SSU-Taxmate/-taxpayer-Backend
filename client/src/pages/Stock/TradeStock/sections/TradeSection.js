@@ -6,13 +6,11 @@ function TradeSection(props) {
     const [selectedValue, setSelectedValue] = useState()
     const hadleStockChange = (e) => {
         e.preventDefault()
-        console.log('sP', e.target.value)
-        setSelectedValue(stocks[stocks.findIndex(i => i._id == e.target.value)])
-        // setData(testdata[stock[e.target.value]])
-    }//(setStock[e.target.value])
+        setSelectedValue(stocks[stocks.findIndex(i => i._id === e.target.value)])
+    }
     const adjustData = (data) => {
         return {
-            labels: data.map((n, i) => { return n['updateDate'].split('T')[0] }),
+            labels: data.map((n) => { return n['updateDate'].split('T')[0] }),
             datasets: [{
                 label: '주가',
                 lineTension: 0.3,
@@ -26,7 +24,7 @@ function TradeSection(props) {
                 pointHoverBorderColor: "rgba(78, 115, 223, 1)",
                 pointHitRadius: 10,
                 pointBorderWidth: 2,
-                data: data.map((n, i) => { return n['value'] })
+                data: data.map((n) => { return n['value'] })
             }]
         }
     }
@@ -34,9 +32,7 @@ function TradeSection(props) {
 
     return (
         <div className='row'>
-            {console.log('tradesection')}
             <div className="col-sm-6 m-2">
-
                 {selectedValue &&
                     <ChartLine id='stock' title={selectedValue.stockName} data={adjustData(selectedValue.prices)} />
                 }
@@ -47,11 +43,10 @@ function TradeSection(props) {
                         id="trade-select"
                         className="form-control"
                         onChange={e => hadleStockChange(e)}
-                        defaultValue="default"
-                    >
-                        <option value="default" disabled selected>선택해주세요</option>
+                        defaultValue="">
+                        <option value="" disabled>선택해주세요</option>
                         {
-                            stocks.map((stock, i) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)
+                            stocks.map((stock) => <option key={stock._id} value={stock._id}>{stock.stockName}</option>)
                         }
                     </select >
                     :

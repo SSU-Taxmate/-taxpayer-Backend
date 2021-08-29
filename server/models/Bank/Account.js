@@ -12,7 +12,7 @@ const accountSchema = mongoose.Schema({
         type:String,
         default:''
     },
-    currentBalance:{
+    currentBalance:{/*afterbalance*/
         type:Number,
         default:0
     },

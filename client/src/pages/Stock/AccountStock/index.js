@@ -1,16 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import SingleLineMyInvest from './SingleLineMyInvest'
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
+import { useSelector } from "react-redux";
+import InvestStatus from './sections/InvestStatus'
+import axios from 'axios';
+import Error from '../../../components/Error';
+import Loading from '../../../components/Loading'
+import MyInvest from './sections/MyInvest'
+
 function AccountStock() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const joinedUser = useSelector(state => state.classUser);
+    const [stocks, setstocks] = useState([])
+    const fetchData = async () => {
+        setIsError(false);
+        setIsLoading(true);
+        try {
+            const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`)
+            setstocks(result.data)
+            // console.log(result.data)//Alert로 사용자에게 보여주기
+        } catch (error) {
+            setIsError(true);
+        }
+        setIsLoading(false);
+    };
+    useEffect(() => {
+        fetchData();
+    }, [])
+
     return (
         <div>
             {/* <!-- Page Wrapper --> */}
             <div id="wrapper">
-
-                 
                 {/* <!-- End of Sidebar --> */}
 
                 {/* <!-- Content Wrapper --> */}
@@ -32,27 +56,19 @@ function AccountStock() {
 
                             {/* <!-- Content Row --> */}
                             <h4 className='pt-2'>내 투자 현황</h4>
-                            <div className="card shadow py-1 col-lg-4">
-                                <table className='m-3'>
-                                    <tbody>
-                                        <tr>
-                                            <td>투자 가능 금액</td>
-                                            <td>1000원</td>
-                                        </tr>
-                                        <tr>
-                                            <td>손익</td>
-                                            <td>1000원</td>
-                                        </tr>
-                                        <tr>
-                                            <td>수익률</td>
-                                            <td>1.26%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <InvestStatus data={stocks}/>
 
                             <h4 className='pt-2'>내 보유 주식</h4>
-                            <SingleLineMyInvest data={'mydata'}/>
+                            {isError && <Error></Error>}
+                            {isLoading ? <Loading /> : 
+                            <div className='row flex-row flex-nowrap overflow-auto'>
+                                {stocks.map((item, i) => (
+                                    <MyInvest
+                                        key={i}
+                                        data={item}
+                                    />
+                                ))}
+                            </div>}
 
                         </div>
                         {/* <!-- /.container-fluid --> */}
@@ -73,7 +89,7 @@ function AccountStock() {
             {/* <!-- Scroll to Top Button--> */}
             <ScrollToTop />
         </div>)
-        
+
 }
 
 export default AccountStock

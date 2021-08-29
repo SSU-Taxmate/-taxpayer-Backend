@@ -25,7 +25,7 @@ function AddStockPanel() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const now = new Date().now
-        axios.post('/api/stocks/custom',
+        axios.post('/api/stocks',
             {stockInfo:{
                 stockName: stockName,
                 description: stockDescription,

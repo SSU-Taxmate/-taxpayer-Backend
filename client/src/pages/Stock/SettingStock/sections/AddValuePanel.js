@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector } from "react-redux";
 import axios from 'axios'
-
+import moment from 'moment-timezone';
 function AddValuePanel() {
   const [customStocks, setcustomStocks] = useState([])//custom 주식
   const [selectedValue, setSelectedValue] = useState()//선택한 주식
-  const [dailyvalue, setdailyvalue] = useState();
-  const [dailynews, setdailynews] = useState();
+
+  const [data, setdata] = useState({ price: 0, description: '' })
 
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -14,8 +14,8 @@ function AddValuePanel() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('선택한 stock', selectedValue, dailyvalue, dailynews, 'setSelectedValue')
-    axios.put('/api/stocks/custom',{_id:selectedValue,description:dailynews,price:dailyvalue})
+    console.log('선택한 stock', data, 'setSelectedValue')
+    axios.put('/api/stocks', { ...data, _id: selectedValue })
       .then(function (response) {
         console.log(response);
       })
@@ -23,13 +23,12 @@ function AddValuePanel() {
         console.log(error);
       });
   }
-  const handleDailyValue = (e) => {
-    setdailyvalue(e.target.value)
-  }
-  const handleDailyNews = (e) => {
-    setdailynews(e.target.value)
-  }
-  const handleAddrTypeChange = (e) => {
+
+  const onChange = useCallback(
+    ({ target: { name, value } }) => setdata(prevdata => ({ ...prevdata, [name]: value })), []
+  );
+
+  const handleSelected = (e) => {
     setSelectedValue(e.target.value)
   }
 
@@ -39,7 +38,7 @@ function AddValuePanel() {
       setIsLoading(true);
       try {
         //custom 주식만 가져오기
-        const result = await axios.get('/api/stocks/custom', { params: { classId: classData.classId } });
+        const result = await axios.get('/api/stocks', { params: { classId: classData.classId } });
         console.log(result.data)
         setcustomStocks(result.data)
 
@@ -52,8 +51,23 @@ function AddValuePanel() {
     fetchData();
     return () => {
     }
-  }, [classData])
-
+  }, [classData.classId])
+  const dateField = React.useMemo(
+    () => (
+        <input name='updateDate' defaultValue={data.updateDate}
+          min={moment().add(1, 'd').format('YYYY-MM-DD')}
+          type='date' onChange={onChange} style={{ marginRight: '3px' }}></input>
+    ), [data.updateDate])
+  const todayValueField = React.useMemo(
+    () => (
+      <input type="number" className="form-control" name="price" placeholder="오늘의 주가"
+        value={data.price} onChange={onChange} />
+    ), [data.price])
+  const todayNewsField = React.useMemo(
+    () => (
+      <textarea className="form-control" name="description" rows='3' placeholder="뉴스"
+        value={data.description} onChange={onChange} />
+    ), [data.description])
   return (
     <div>
 
@@ -65,7 +79,7 @@ function AddValuePanel() {
               {customStocks ?
                 < select
                   className="form-control"
-                  onChange={e => handleAddrTypeChange(e)}
+                  onChange={e => handleSelected(e)}
                   defaultValue="default"
                 >
                   <option value="default" disabled>선택해주세요</option>
@@ -76,15 +90,16 @@ function AddValuePanel() {
                 : <select className="form-control"></select>
               }
             </div>
-            <label htmlFor="inputstock" >주가</label>
+            <label htmlFor="price" >주가</label>
             <div className='col' id='inputstock'>
-              <input type="number" className="form-control" id="dailyvalue" placeholder="오늘의 주가"
-                onChange={handleDailyValue} />
+              {todayValueField}
+            </div>
+            <div className='col-*' id='inputDate'>
+              {dateField}
             </div>
           </div>
-          <label htmlFor="inputnews" className="col-sm-2 col-form-label">한 줄 뉴스</label>
-          <textarea className="form-control" id="inputnews" rows='3' placeholder="뉴스"
-            onChange={handleDailyNews} />
+          <label htmlFor="description" className="col-sm-2 col-form-label">한 줄 뉴스</label>
+          {todayNewsField}
           <div className="form-group row float-right pr-2">
             <button type="submit" className="btn btn-primary">입력</button>
           </div>

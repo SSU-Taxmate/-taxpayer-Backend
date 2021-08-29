@@ -15,15 +15,19 @@ const AccountTransactionSchema = mongoose.Schema({
         type:Number,
         require:true
    },
-   amount:{/* 얼마나 */
+   amount:{/* 거래 금액 */
     type:Number,
     require:true
    },
-   date:{/* 언제 */
+   afterbalance:{/*거래 후 잔액 */
+    type:Number,
+    require:true
+   },
+   date:{/* 거래 시간 */
        type:Date,
        default:Date.now
    },
-   memo:{/* 간단한 메모 */
+   memo:{/* 거래 내용 */
        type:String
    }
 })
