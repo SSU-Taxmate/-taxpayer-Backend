@@ -48,7 +48,7 @@ router.get('/statistics', async (req, res) => {
   const startDate = req.query.startDate
   const endDate = req.query.endDate
   
-  console.log('/api/stocks/statistics',classId,startDate,new Date(startDate),endDate)
+  //console.log('/api/stocks/statistics',classId,startDate,new Date(startDate),endDate)
   try {
     const classstock = await ClassStock.find({ classId: classId }, "stockId")
     let stocks = []

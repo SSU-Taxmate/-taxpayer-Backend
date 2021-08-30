@@ -47,7 +47,7 @@ router.get('/job', async (req, res) => {
         // console.log("studentId:",req.params.id,req.query)
         const students = await JoinedUser.find(req.query, ["userId", "jobId"])
             .populate('userId').populate('jobId').exec()
-        console.log(students)
+        //console.log(students)
         let result = await Promise.all(
             students.map(async (v, i) => {
                 return {
@@ -116,7 +116,7 @@ router.get('/:id/account/history', async (req, res) => {
 })
 
 /*
-    [*요일별]자신 계좌의 통계정보 확인
+    [*정상]자신 계좌의 통계정보 확인
     : 입/출금
 */
 router.get('/:id/account/statistics', async (req, res) => {
@@ -261,7 +261,7 @@ router.get('/:id/stocks', async (req, res) => {
                 //console.log('날짜확인!',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
                 const isSameDate=(v)=> v.updateDate>=new Date(now.getFullYear(),now.getMonth(), now.getDate())
                 const index=stock.prices.findIndex(isSameDate)
-                console.log(index)
+                //console.log(index)
 
                 return {
                     stockId: v.stockId,
@@ -281,7 +281,7 @@ router.get('/:id/stocks', async (req, res) => {
     }
 })
 /*
-    [완성]stuent 가 구매한 stock들에 대한 통계정보
+    [정상]stuent 가 구매한 stock들에 대한 통계정보
 */
 router.get('/:id/stocks/statistics',async (req, res) => {
     //console.log(req.params)
@@ -298,11 +298,15 @@ router.get('/:id/stocks/statistics',async (req, res) => {
         let first = await Promise.all(
             holdingStocks.map(async (v, i) => {
                 const stock = await Stock.findOne({ '_id': v.stockId })
+                const now=new Date()
+                const isSameDate=(v)=> v.updateDate>=new Date(now.getFullYear(),now.getMonth(), now.getDate())
+                const index=stock.prices.findIndex(isSameDate)
+
                 return {
                     stockId:v._id,
                     PayAmount:v.allPayAmount,//총매입
-                    evaluated:Math.round(stock.prices[stock.prices.length - 1].value*v.quantity*(100-stocktax)/100),//총 평가금액:현재가*잔고*(100-세금)/100
-                    evaluatedIncome:Math.round(stock.prices[stock.prices.length - 1].value*v.quantity*(100-stocktax)/100)-v.allPayAmount//총 평가손익:총평가금액-총매입
+                    evaluated:Math.round(stock.prices[index].value*v.quantity*(100-stocktax)/100),//총 평가금액:현재가*잔고*(100-세금)/100
+                    evaluatedIncome:Math.round(stock.prices[index].value*v.quantity*(100-stocktax)/100)-v.allPayAmount//총 평가손익:총평가금액-총매입
                 }
             })
         )
