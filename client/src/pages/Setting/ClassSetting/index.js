@@ -31,7 +31,6 @@ function ClassSetting() {
     //modal 띄워서 axios요청 보냄
   }
   let classData = useSelector(state => state.classInfo.classData);
-  let user = useSelector((state) => state.user);
 
   const fetchData = async () => {
     setIsError(false);
@@ -147,59 +146,12 @@ function ClassSetting() {
 
   //job CRUD
 
-  const jobAdd = (input) => {
-
-    const { name, salary, recruitment, whatdo, } = input; // 비구조화 할당을 통해 값 추출
-
-    axios
-      .post("/api/jobs", {
-
-        name, salary, recruitment, whatdo,
-        joinPossible: true,
-        classId: classData.classId,
-
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    fetchData();
-
-  };
 
 
   function jobEdit() {
 
     jobEditModalOpen();
     jobDetailModalClose();
-
-  }
-
-
-  const jobUpdate = (input) => {
-    const { name, salary, recruitment, whatdo, joinPossible, } = input; // 비구조화 할당을 통해 값 추출
-
-    axios
-      .put("/api/jobs", {
-
-        name, salary, recruitment, whatdo, joinPossible,
-        classId: classData.classId,
-        _id: modalRow.id,
-
-      })
-      .then(response => {
-        console.log(response);
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    fetchData();
-
 
   }
 

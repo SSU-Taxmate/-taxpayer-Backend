@@ -54,8 +54,31 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const jobAdd = (input) => {
+
+  const { name, salary, recruitment, whatdo, } = input; // 비구조화 할당을 통해 값 추출
+
+  axios
+    .post("/api/jobs", {
+
+      name, salary, recruitment, whatdo,
+      joinPossible: true,
+      classId: classData.classId,
+
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+};
+
 
 function JobEditModal(props) {
+
   const classes = useStyles();
   const [inputs, setInputs] = useState(props.row)
   let classData = useSelector(state => state.classInfo.classData);
@@ -75,33 +98,35 @@ function JobEditModal(props) {
     });
 
   };
-  const jobAdd = (inputs) => {
-    console.log(inputs)
-    axios.post('/api/jobs', inputs)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+ 
   const jobUpdate = () => {
     if (props.row.id === undefined)
       jobAdd({...inputs,classId:classData.classId})
 
     else
-      props.jobUpdate(inputs)
+      {
+
+        const { name, salary, recruitment, whatdo, joinPossible, } = inputs; // 비구조화 할당을 통해 값 추출
+
+        axios
+          .put("/api/jobs", {
+      
+            name, salary, recruitment, whatdo, joinPossible,
+            classId: classData.classId,
+            _id: props.row.id,
+      
+          })
+          .then(response => {
+            console.log(response);
+      
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
 
     modalClose()
   }
-
-  const jobJoinPossibleChange = () => {
-
-    props.jobJoinPossibleChange({ joinPossible: !props.row.joinPossible })
-    modalClose();
-
-  }
-
 
   return (
 

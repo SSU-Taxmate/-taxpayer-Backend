@@ -44,19 +44,11 @@ function ClassListDetail() {
     <div className="row">
       {/*<!--className 추가-->*/}
       <div className="col-lg-3">
-        <div
-          className="row justify-content-center align-items-center"
-          style={{ height: 450 }}
-        >
-          <div className="card m-40">
-            <div className="card-body">
-              {user.userData &&
-                (user.userData.role == 0 ? (
-                  <FormDialog />
-                ) : (
-                  "새로운 국가 시민권 얻기"
-                ))}
-            </div>
+        <div className="row justify-content-center align-items-center" style={{height:450}}>
+        <div className="card m-40">
+          <div className="card-body">
+            {user.userData &&
+              (user.userData.role == 0 ? <FormDialog /> : "hello")}
           </div>
         </div>
         </div>
@@ -65,7 +57,7 @@ function ClassListDetail() {
       {/* 데이터 만큼 */}
       {isError && <Error></Error>}
       {isLoading ? (
-        <Loading />
+        <Loading/>
       ) : (
         classes&&classes.map((info, i) => (
           <ClassCard
@@ -128,8 +120,8 @@ function FormDialog() {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>
-        <AddIcon fontSize="large" />
+      <IconButton onClick={handleClickOpen} >
+        <AddIcon  fontSize="large"/>
       </IconButton>
       <Dialog
         open={open}
