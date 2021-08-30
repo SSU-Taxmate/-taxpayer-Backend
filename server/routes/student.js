@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
             students.map(async (v, i) => {
                 const account = await Account.findOne({ 'studentId': v._id })
                 return {
-                    '_id':v.userId._id,
+                    'studentId':v._id, //user
                     'name': v.userId.name, 'email': v.userId.email,
                     'alias': v.alias, 'job': v.jobId, 'balance': account.currentBalance
                 }
