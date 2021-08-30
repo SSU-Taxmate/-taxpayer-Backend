@@ -4,6 +4,8 @@ import Dialog from '@material-ui/core/Dialog';
 import { useSelector } from "react-redux";
 import IconButton from '@material-ui/core/IconButton';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'; import axios from 'axios';
+import moment from 'moment-timezone';
+
 function AddStockDialog({ stockId }) {
     const [stockName, setstockName] = useState('')
     const [stockDescription, setstockDescription] = useState('')
@@ -34,7 +36,8 @@ function AddStockDialog({ stockId }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        const now = new Date().now
+        const now = moment().tz('Asia/Seoul')
+        console.log(now)
         axios.post('/api/stocks',
             {
                 stockInfo: {

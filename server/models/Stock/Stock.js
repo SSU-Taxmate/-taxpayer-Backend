@@ -5,32 +5,33 @@ const mongoose =require('mongoose')
 const stockSchema = mongoose.Schema({
     stockName:{
         type:String,
-        unique:true,
         required:true,
     },
     description:{
         type:String,
         default:''
     },
-    userDefined:{/*사용자가 만든 stock. 특정 클래스에서만 사용됨.*/
-        type:Boolean,
-        default:false
-    },
     prices:[{
         updateDate:{
             type:Date,
-            unique:true,
             default:Date.now
         },
         value:{
             type:Number,
-            required:true
         },
         hint:{
             type:String,
             default:''
         }
     }],
+    ondelete:{/*상장 폐지 예정 Stock*/
+        type:Boolean,
+        default:false
+    },
+    ondeleteDay:{/*상장 폐지 예정 날짜 - 15일*/
+        type:Date,
+        default:new Date(9999,12,29)
+    }
   
 },{ timestamps: true })
 const Stock = mongoose.model('Stock', stockSchema)

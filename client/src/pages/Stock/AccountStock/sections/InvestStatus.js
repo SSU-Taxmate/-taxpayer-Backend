@@ -8,7 +8,8 @@ function InvestStatus() {
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [data, setdata] = useState()    
-    const joinedUser = useSelector(state => state.classUser);
+    let joinedUser = useSelector(state => state.classUser);
+    let classData = useSelector(state => state.classInfo.classData);
 
     //console.log(data)//로그인 한 사람의 sum[currentPrice, allPayAmount] 
 
@@ -16,7 +17,7 @@ function InvestStatus() {
         setIsError(false);
         setIsLoading(true);
         try {
-            const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks/statistics`)
+            const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks/statistics`,{params:{classId:classData.classId}})
             setdata(result.data)
             console.log(result.data)
         } catch (error) {

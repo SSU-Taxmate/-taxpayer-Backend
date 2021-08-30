@@ -27,13 +27,13 @@ function Deposit({balance}) {
   }, [joinedUser.classUser])
   const calculate = (type) => {
     if (type === '만기') {
-      return (userdeposit.productId.interestRate + 100) * userdeposit.amount / 100
+      return Math.round((userdeposit.productId.interestRate + 100) * userdeposit.amount / 100)
     } else {
       const today = new Date()
       const create = new Date(userdeposit.createdAt)
       const diff = Math.round((today.getTime() - create.getTime()) / (1000 * 3600 * 24))//가입기간
       if (diff >= userdeposit.productId.minDuration) {
-        return (userdeposit.productId.interestRate + 100) * userdeposit.amount / 100
+        return Math.round((userdeposit.productId.interestRate + 100) * userdeposit.amount / 100)
       } else {
         return userdeposit.amount
       }

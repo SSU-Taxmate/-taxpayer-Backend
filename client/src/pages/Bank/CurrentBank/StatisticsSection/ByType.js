@@ -16,8 +16,8 @@ function ByType() {
     const [sumdata, setsumdata] = useState();
 
     const joinedUser = useSelector(state => state.classUser);
-    const [startdate, setstartdate] = useState(moment().subtract(7, 'd').format('YYYY-MM-DD'));//7일전내역까지
-    const [enddate, setenddate] = useState(moment().format('YYYY-MM-DD'));//현재날짜
+    const [startdate, setstartdate] = useState(moment().tz('Asia/Seoul').subtract(7, 'd').format('YYYY-MM-DD'));//7일전내역까지
+    const [enddate, setenddate] = useState(moment().tz('Asia/Seoul').format('YYYY-MM-DD'));//현재날짜
     const fetchData = async () => {
         setIsError(false);
         setIsLoading(true);
@@ -25,12 +25,12 @@ function ByType() {
             const result = await axios.get(`/api/students/${joinedUser.classUser}/account/statistics`,
                 {
                     params: {
-                        startDate: startdate,
-                        endDate: moment(enddate).add(1, 'd').format('YYYY-MM-DD'),
+                        startDate: moment(startdate).tz('Asia/Seoul').startOf('day').utc().format(),
+                        endDate: moment(enddate).tz('Asia/Seoul').endOf('day').utc().format(),
                         type: 'bytype'
                     }
                 })
-            console.log("/api/students/:id/statistics", result.data);
+            //console.log("/api/students/:id/statistics", result.data);
 
             setdata(result.data)
             setsumdata(result.data.map((v, i) => v.sum))
@@ -84,10 +84,10 @@ function ByType() {
             <div style={{ textAlign: 'center', marginBottom: '5px' }}>
                 <h5>입/출금 내역</h5>
                 <input id='startDate' defaultValue={startdate}
-                    max={moment().format('YYYY-MM-DD')}
+                    max={moment().tz('Asia/Seoul').format('YYYY-MM-DD')}
                     type='date' onChange={handlestartdate} style={{ marginRight: '3px' }}></input>
                 <input id='endDate' defaultValue={enddate}
-                    min={startdate} max={moment().format('YYYY-MM-DD')}
+                    min={startdate} max={moment().tz('Asia/Seoul').format('YYYY-MM-DD')}
                     type='date' onChange={handleenddate} style={{ marginRight: '3px' }}></input>
                 <button onClick={onhandleclick}>조회하기</button>
             </div>
