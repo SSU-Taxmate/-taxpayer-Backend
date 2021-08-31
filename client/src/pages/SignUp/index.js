@@ -26,7 +26,7 @@ function SignUp(props) {
                   <h1 className="h4 text-gray-900 mb-4">계정 생성</h1>
                 </div>
                 <Formik
-                  initialValues={{
+                  initialValues={{ //내가 보내줘야되는 값들의 초깃값.
                     email: '',
                     name: '',
                     sId: '',
@@ -34,14 +34,14 @@ function SignUp(props) {
                     confirmPassword: '',
                     entryCode: ''
                   }}
-                  validationSchema={Yup.object().shape({
+                  validationSchema={Yup.object().shape({ //만약 입력하지 않았다면.
                     name: Yup.string()
                       .required('이름을 입력해주세요'),
                     sId: Yup.string()
                       .required('번호를 입력해주세요'),
 
                     email: Yup.string()
-                      .email('유효하지 않은 이메일입니다')
+                      .email('유효하지 않은 이메일입니다') //yup.XX 는 타입을 검증하는 함수.
                       .required('이메일을 입력해주세요'),
                     password: Yup.string()
                       .min(6, '비밀번호는 최소 6자 이상이어야 합니다.')
@@ -51,7 +51,7 @@ function SignUp(props) {
                       .required('Confirm Password is required'),
                     entryCode: Yup.string()
                       .required('선생님이 알려준 entryCode를 입력하세요'),
-                  })}
+                  })} //여기까지 initialvalue.
                   onSubmit={(values, {setSubmitting }) => {
                     //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
@@ -61,7 +61,7 @@ function SignUp(props) {
                         password: values.password,
                         name: values.name,
                         entryCode: values.entryCode
-                      };
+                      }; //보낼 데이터에 대해서 저장.
 
                       dispatch(registerUser(dataToSubmit)).then(response => {
                         if (response.payload.success) {
@@ -140,7 +140,7 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.email}</div>
                           )}
                         </div>
-                        <button class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
+                        <button className="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
                         {/* <button onClick={this.sendEmail} class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button> */}
                         </div>
                         <div className="form-group row">
@@ -228,5 +228,7 @@ function SignUp(props) {
   )
 
 }
+
+
 
 export default withRouter(SignUp);

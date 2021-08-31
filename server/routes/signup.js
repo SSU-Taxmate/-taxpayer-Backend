@@ -77,13 +77,13 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
 
         //프로필 이미지
 
-        // const user = await User.create({
-        //     email: email,
-        //     name: name,
-        //     password: hash,
-        //     birth: birth,
-        //     promotion: promotion,
-        // });
+        const user = await User.create({
+            email: email,
+            name: name,
+            password: hash,
+            birth: birth,
+            promotion: promotion,
+        });
         console.log('추가된 user:' + user);
         res.send('success');
         next();

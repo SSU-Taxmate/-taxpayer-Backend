@@ -79,7 +79,7 @@ router.get('/', function (req, res) {
 // 회원가입 form
 
 router.post('/', isNotLoggedIn, function _callee2(req, res, next) {
-  var _req$body, email, name, password, birth, exUser, hash;
+  var _req$body, email, name, password, birth, exUser, hash, user;
 
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
@@ -111,33 +111,36 @@ router.post('/', isNotLoggedIn, function _callee2(req, res, next) {
 
         case 12:
           hash = _context2.sent;
-          //프로필 이미지
-          // const user = await User.create({
-          //     email: email,
-          //     name: name,
-          //     password: hash,
-          //     birth: birth,
-          //     promotion: promotion,
-          // });
+          _context2.next = 15;
+          return regeneratorRuntime.awrap(User.create({
+            email: email,
+            name: name,
+            password: hash,
+            birth: birth,
+            promotion: promotion
+          }));
+
+        case 15:
+          user = _context2.sent;
           console.log('추가된 user:' + user);
           res.send('success');
           next(); // return res.redirect('/login');
 
-          _context2.next = 23;
+          _context2.next = 26;
           break;
 
-        case 18:
-          _context2.prev = 18;
+        case 21:
+          _context2.prev = 21;
           _context2.t0 = _context2["catch"](3);
           console.log('회원가입 에러');
           console.error(_context2.t0);
           return _context2.abrupt("return", next(_context2.t0));
 
-        case 23:
+        case 26:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[3, 18]]);
+  }, null, null, [[3, 21]]);
 });
 module.exports = router;
