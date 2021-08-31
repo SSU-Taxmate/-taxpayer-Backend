@@ -5,7 +5,13 @@ import { bindActionCreators } from "redux";
 import { clickMenuOpen } from "../../../redux/_actions";
 import LogoutModal from "../../Modal/Logout";
 import Sidebar from "../Sidebar";
+import { useSelector } from "react-redux";
+
 function Topbar(props) {
+
+  const user = useSelector(state => state.user);
+
+
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -256,9 +262,10 @@ function Topbar(props) {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-              Valerie Luna
+            {user.userData && <span className="mr-2 d-none d-lg-inline text-gray-600 small">
+              {user.userData.name}
             </span>
+            }
             <img
               className="img-profile rounded-circle"
               src="https://source.unsplash.com/QAB-WJcbgJk/60x60"

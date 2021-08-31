@@ -7,7 +7,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from './sections/TabPanel'
 import AddValuePanel from './sections/AddValuePanel';
-import AddStockPanel from './sections/AddStockPanel';
 import ChooseStockPanel from './sections/ChooseStockPanel';
 import { Box } from '@material-ui/core';
 
@@ -50,17 +49,13 @@ export default function SettingStock() {
                 <Box position="static">
                   <Tabs value={value} onChange={handleChange} aria-label="주식설정" centered>
                     <Tab label="매일 값 입력" {...a11yProps(0)} />
-                    <Tab label="주식 추가" {...a11yProps(1)} />
-                    <Tab label="클래스 이용 주식 설정" {...a11yProps(2)} />
+                    <Tab label="클래스 이용 주식 설정" {...a11yProps(1)} />
                   </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
                   <AddValuePanel/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                  <AddStockPanel/>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
                   <ChooseStockPanel/>
                 </TabPanel>
               </div>
