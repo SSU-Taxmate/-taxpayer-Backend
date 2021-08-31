@@ -159,13 +159,7 @@ export default function Sidebar(props) {
               >
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">중앙은행</h6>
-                  {user.userData.role === 1 /*학생의 경우 */ ? (
-                    <>
-                      <Link className="collapse-item" to="/bank_statics">
-                        통계
-                      </Link>{" "}
-                    </>
-                  ) : null}
+                  
                   {user.userData.role === 0 ? (
                     <>
                       <Link

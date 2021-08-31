@@ -7,18 +7,18 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Error from "../../components/Error";
-import Loading from '../../components/Loading'
+import Loading from "../../components/Loading";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
-
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
 
 /*selectedClass구분해서 Store에저장하기 위해서
 import {selectClass} from '../../redux/_actions'; */
 function ClassListDetail() {
+<<<<<<< HEAD
     const [classes, setclasses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -78,6 +78,70 @@ function ClassListDetail() {
                 /div>
         );
     }
+=======
+  const [classes, setclasses] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  let user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        const result = await axios.get("/api/classes", {
+          params: { userId: user.userData._id, role: user.userData.role },
+        }); //
+        setclasses(result.data);
+        console.log(result.data);
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [user]);
+  return (
+    <div className="row">
+      {/*<!--className 추가-->*/}
+      <div className="col-lg-3">
+        <div
+          className="row justify-content-center align-items-center"
+          style={{ height: 450 }}
+        >
+          <div className="card m-40">
+            <div className="card-body">
+              {user.userData &&
+                (user.userData.role == 0 ? (
+                  <FormDialog />
+                ) : (
+                  "새로운 국가 시민권 얻기"
+                ))}
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      {/* 데이터 만큼 */}
+      {isError && <Error></Error>}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        classes&&classes.map((info, i) => (
+          <ClassCard
+            id={info._id}
+            key={info._id}
+            title={info.name}
+            img={info.image}
+            comment={info.comment}
+          ></ClassCard>
+        ))
+      )}
+    </div>
+  );
+}
+>>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
 
     export default ClassListDetail;
     //수정
@@ -123,6 +187,7 @@ function ClassListDetail() {
                 });
         };
 
+<<<<<<< HEAD
         return ( <
             div >
             <
@@ -143,6 +208,24 @@ function ClassListDetail() {
             DialogContentText >
             등록하고자 하는 학급 이름과 설정을 입력해주세요 <
             /DialogContentText>
+=======
+  return (
+    <div>
+      <IconButton onClick={handleClickOpen}>
+        <AddIcon fontSize="large" />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">학급 추가</DialogTitle>
+        <form onSubmit={handleSubmit}>
+          <DialogContent>
+            <DialogContentText>
+              등록하고자 하는 학급 이름과 설정을 입력해주세요
+            </DialogContentText>
+>>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
 
             <
             div className = "form-inline mb-3" >

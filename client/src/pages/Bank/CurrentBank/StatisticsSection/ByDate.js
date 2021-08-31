@@ -24,8 +24,8 @@ function ByDate() {
                 {
                     params: {
                         type: 'bydate',
-                        startDate: moment().subtract(1, 'weeks').startOf('isoWeek').format('YYYY-MM-DD'),//지난주 월~
-                        endDate: moment().subtract(1, 'weeks').endOf('isoWeek').add(1, 'd').format('YYYY-MM-DD')//일
+                        startDate: moment().tz('Asia/Seoul').subtract(1, 'weeks').startOf('isoWeek').utc().format(),//지난주 월~
+                        endDate: moment().tz('Asia/Seoul').subtract(1, 'weeks').endOf('isoWeek').utc().format()//일
                     }
                 })
             let temp = [0, 0, 0, 0, 0, 0, 0]
@@ -61,10 +61,10 @@ function ByDate() {
         {
             label: '출금',
             data: bydateout,
-            backgroundColor:  [
+            backgroundColor: [
                 'rgba(201, 203, 207, 0.2)',
             ],
-          }]
+        }]
     }];
     const barChartField = React.useMemo(
         () => (
@@ -74,13 +74,15 @@ function ByDate() {
                         id={`bank_bar_${i}`} data={v} />
                 })}
             </>
-        ), [bydatein,bydateout, bydatelabel]);
+        ), [bydatein, bydateout, bydatelabel]);
     return (
         <div style={{ textAlign: 'center', marginBottom: '5px' }}>
             <h5>지난주 요일별 거래 금액</h5>
             {isError && <Error></Error>}
             {isLoading ?
-                <Loading /> : barChartField}
+                <Loading /> : (
+                    bydatein && bydateout && bydatelabel &&
+                    barChartField)}
         </div>
     )
 }

@@ -6,19 +6,11 @@ import ScrollToTop from '../../../components/Scroll'
 
 //modal import
 import { DataGrid, GridToolbarFilterButton } from '@material-ui/data-grid';
-import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
-import { GridToolbarContainer, GridToolbarDensitySelector,  GridCellParams, GridColDef } from '@material-ui/data-grid';
-
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 
 
-import TextField from '@material-ui/core/TextField';
 import { useSelector } from "react-redux";
 import axios from 'axios'
 
-import DetailTable from '../../../components/Table/Detail'
 import StudentCard from './components/StudentCard';
 
 
