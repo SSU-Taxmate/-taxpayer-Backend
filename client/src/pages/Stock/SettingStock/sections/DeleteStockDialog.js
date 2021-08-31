@@ -28,28 +28,30 @@ function DeleteStockDialog({stockId}) {
         })
     };
 
-    return (
-        <>
-        <IconButton color="primary" onClick={handleOpen}><RemoveCircleOutlineIcon/></IconButton>
-        <Dialog aria-labelledby="stock-dialog-title" open={open}>
-            <DialogTitle id="stock-dialog-title">주식 삭제</DialogTitle>
-            <form onSubmit={handleSubmit}>
-                <DialogContent>
 
-                    <div>
-                        정말 삭제하시겠습니까?
-                        복구 불가능합니다.
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary" onClick={handleClose} type="submit">네</Button>
-                    <Button color="primary" onClick={handleClose}>아니요</Button>
-                </DialogActions>
-            </form>
-
-        </Dialog>
+  return (
+    <>
+      <IconButton color="primary" onClick={handleOpen}>
+        <RemoveCircleOutlineIcon />
+      </IconButton>
+      <Dialog aria-labelledby="stock-dialog-title" open={open}>
+        <DialogTitle id="stock-dialog-title">주식 삭제</DialogTitle>
+        <form onSubmit={handleSubmit}>
+          <DialogContent>
+            <div>정말 삭제하시겠습니까? 복구 불가능합니다.</div>
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={handleClose} type="submit">
+              네
+            </Button>
+            <Button color="primary" onClick={handleClose}>
+              아니요
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </>
-    )
+  );
 }
 
-export default DeleteStockDialog
+export default DeleteStockDialog;
