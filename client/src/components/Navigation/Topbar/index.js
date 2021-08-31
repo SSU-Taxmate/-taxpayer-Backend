@@ -6,7 +6,6 @@ import { clickMenuOpen } from "../../../redux/_actions";
 import LogoutModal from "../../Modal/Logout";
 import Sidebar from "../Sidebar";
 function Topbar(props) {
-
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,7 +21,7 @@ function Topbar(props) {
       {/* <button onClick={() => { clickMenuOpen() }} id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
         <i className="fa fa-bars"></i>
       </button> */}
-      {props.name != "classList" ? <Sidebar></Sidebar> : null}
+      {props.name !== "classList" ? <Sidebar></Sidebar> : null}
       {/* <!-- Topbar Search --> */}
       <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div className="input-group">

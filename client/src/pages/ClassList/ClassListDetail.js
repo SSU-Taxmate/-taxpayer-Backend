@@ -10,7 +10,7 @@ import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
@@ -51,7 +51,7 @@ function ClassListDetail() {
           <div className="card m-40">
             <div className="card-body">
               {user.userData &&
-                (user.userData.role == 0 ? (
+                (user.userData.role === 0 ? (
                   <FormDialog />
                 ) : (
                   "새로운 국가 시민권 얻기"
