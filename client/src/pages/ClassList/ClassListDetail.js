@@ -59,13 +59,15 @@ function ClassListDetail() {
             </div>
           </div>
         </div>
-        </div>
+      </div>
+
       {/* 데이터 만큼 */}
       {isError && <Error></Error>}
       {isLoading ? (
         <Loading />
       ) : (
-        classes&&classes.map((info, i) => (
+        classes &&
+        classes.map((info, i) => (
           <ClassCard
             id={info._id}
             key={info._id}

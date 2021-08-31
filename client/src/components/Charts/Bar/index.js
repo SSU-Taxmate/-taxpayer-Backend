@@ -6,6 +6,7 @@ Chart.defaults.global.defaultFontFamily = "Nunito";
 Chart.defaults.global.defaultFontColor = "#858796";
 
 export default function ChartBar(props) {
+
     const chartRef = React.createRef();
     useEffect(() => {
         const myChartRef = chartRef.current.getContext("2d");
