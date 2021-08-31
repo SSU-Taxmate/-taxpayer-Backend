@@ -25,25 +25,6 @@ function SignUp(props) {
                   <h1 className="h4 text-gray-900 mb-4">계정 생성</h1>
                 </div>
                 <Formik
-<<<<<<< HEAD
-                  initialValues={{ //내가 보내줘야되는 값들의 초깃값.
-                    email: '',
-                    name: '',
-                    sId: '',
-                    password: '',
-                    confirmPassword: '',
-                    entryCode: ''
-                  }}
-                  validationSchema={Yup.object().shape({ //만약 입력하지 않았다면.
-                    name: Yup.string()
-                      .required('이름을 입력해주세요'),
-                    sId: Yup.string()
-                      .required('번호를 입력해주세요'),
-
-                    email: Yup.string()
-                      .email('유효하지 않은 이메일입니다') //yup.XX 는 타입을 검증하는 함수.
-                      .required('이메일을 입력해주세요'),
-=======
                   initialValues={{
                     email: "",
                     name: "",
@@ -59,19 +40,10 @@ function SignUp(props) {
                     email: Yup.string()
                       .email("유효하지 않은 이메일입니다")
                       .required("이메일을 입력해주세요"),
->>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
                     password: Yup.string()
                       .min(6, "비밀번호는 최소 6자 이상이어야 합니다.")
                       .required("비밀번호를 입력해주세요"),
                     confirmPassword: Yup.string()
-<<<<<<< HEAD
-                      .oneOf([Yup.ref('password'), null], 'Passwords must match')
-                      .required('Confirm Password is required'),
-                    entryCode: Yup.string()
-                      .required('선생님이 알려준 entryCode를 입력하세요'),
-                  })} //여기까지 initialvalue.
-                  onSubmit={(values, {setSubmitting }) => {
-=======
                       .oneOf(
                         [Yup.ref("password"), null],
                         "Passwords must match"
@@ -82,24 +54,18 @@ function SignUp(props) {
                     ),
                   })}
                   onSubmit={(values, { setSubmitting }) => {
->>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
                     //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
                       let dataToSubmit = {
                         email: values.email,
                         password: values.password,
                         name: values.name,
-<<<<<<< HEAD
-                        entryCode: values.entryCode
-                      }; //보낼 데이터에 대해서 저장.
-=======
                         entryCode: values.entryCode,
                       };
->>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
 
                       dispatch(registerUser(dataToSubmit)).then((response) => {
                         if (response.payload.success) {
-                          props.history.push("/signin");
+                          props.history.push("/signup1");
                         } else {
                           alert(response.payload.err.errmsg);
                         }
@@ -167,23 +133,6 @@ function SignUp(props) {
                           </div>
                         </div>
                         <div className="form-group row">
-<<<<<<< HEAD
-                        <div className="col-sm-6 mb-3 mb-sm-0">
-                          <input
-                            id="email"
-                            placeholder="이메일 주소"
-                            className="form-control form-control-user"
-                            type="email"
-                            value={values.email}
-                            onChange={handleChange}
-                            onBlur={handleBlur} />
-                          {errors.email && touched.email && (
-                            <div className="input-feedback">{errors.email}</div>
-                          )}
-                        </div>
-                        <button className="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button>
-                        {/* <button onClick={this.sendEmail} class="col-sm-3 mb-5 mb-sm-0 btn btn-primary">이메일 인증받기</button> */}
-=======
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
                               id="email"
@@ -207,7 +156,6 @@ function SignUp(props) {
                           >
                             이메일 인증받기
                           </button>
->>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
                         </div>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
@@ -310,10 +258,6 @@ function SignUp(props) {
                             <div className="input-feedback">{errors.entryCode}</div>
                           )}
                         </div> */}
-<<<<<<< HEAD
-                        <button disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button>
-                        {/* <button onClick={handleSubmit} disabled={isSubmitting} className="btn btn-primary btn-user btn-block" type="submit">회원가입</button> */}
-=======
                         <button
                           onClick={handleSubmit}
                           disabled={isSubmitting}
@@ -323,7 +267,6 @@ function SignUp(props) {
                           회원가입
                         </button>
 
->>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
                         <hr />
                         <Link
                           to="/classes"
@@ -364,10 +307,4 @@ function SignUp(props) {
   );
 }
 
-<<<<<<< HEAD
-
-
 export default withRouter(SignUp);
-=======
-export default withRouter(SignUp);
->>>>>>> 0894d699bc3670587e918df3e078b9a6cf118c5c
