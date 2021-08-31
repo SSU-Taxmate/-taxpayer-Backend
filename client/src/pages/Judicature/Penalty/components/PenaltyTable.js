@@ -13,6 +13,7 @@ import {
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 function PenaltyTable(props) {
+  console.log("data", props.data);
   const [data, setData] = useState(props.data);
   const columns = props.columns;
   let user = useSelector((state) => state.user);
@@ -85,7 +86,7 @@ function PenaltyTable(props) {
     <div className="row justify-content-center">
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid
-          rows={data}
+          rows={props.data}
           columns={columns}
           components={{
             Toolbar: PaneltyToolbar,

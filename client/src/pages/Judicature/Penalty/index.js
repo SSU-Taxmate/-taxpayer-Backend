@@ -131,12 +131,12 @@ function Penalty() {
                                 <div className='row justify-content-center'>
                                   <div className='col-lg-8'>
                                     <div className="text-center py-5 mx-4">
-                                      {console.log('user',user.userData)}
                                       {isLoading? null:
-                                      user.userData&& <PenaltyTable
-                                      data={user.userData.role ===0? fines:example.filter(data =>data.studentId==='0')}
+                                      user.userData&& fines &&
+                                      <PenaltyTable
+                                      data={user.userData.role ===0? fines:fines.filter(data =>data.studentId._id===user.userData._id)}
                                       columns={ user.userData.role ===0?columns:columnStudent}
-                                      />}
+                                       />}
                                     </div>
                                   {  user.userData&&  user.userData.role ===0? <div className="text-center card py-5 shadow">
                                     <h4>벌금부과</h4>
