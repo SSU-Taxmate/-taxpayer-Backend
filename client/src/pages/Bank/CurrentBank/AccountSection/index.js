@@ -17,8 +17,8 @@ function Account(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [history, sethistory] = useState([]);
-    const [startdate, setstartdate] = useState(moment().subtract(7, 'd').format('YYYY-MM-DD'));//7일전내역까지
-    const [enddate, setenddate] = useState(moment().format('YYYY-MM-DD'));//현재날짜
+    const [startdate, setstartdate] = useState(moment().tz('Asia/Seoul').subtract(7, 'd').format('YYYY-MM-DD'));//7일전내역까지
+    const [enddate, setenddate] = useState(moment().tz('Asia/Seoul').format('YYYY-MM-DD'));//현재날짜
     const column = ['날짜', '입/출금', '값', '잔액','메모'];
     /*페이지 */
     const [page, setPage] = useState(0);
@@ -44,25 +44,28 @@ function Account(props) {
     }
     const getDate = (date) => {
         let localtime = moment(date).tz('Asia/Seoul').format('YYYY-MM-DD')
+        console.log(date)
         return localtime
     }
     const fetchData = async () => {
         setIsError(false);
         setIsLoading(true);
         try {
-            const result = await axios.get(`/api/students/${joinedUser.classUser}/account/history`, { params: { startDate: startdate, endDate: moment(enddate).add(1, 'd').format('YYYY-MM-DD') } })
+            const result = await axios.get(`/api/students/${joinedUser.classUser}/account/history`, 
+            { params: { startDate: moment(startdate).tz('Asia/Seoul').startOf('day').utc().format(), 
+                endDate: moment(enddate).tz('Asia/Seoul').endOf('day').utc().format() } })
             //console.log("/api/students/:id/account/history", result.data);
             const temp = result.data
             const res = []
             for (let i = 0; i < temp.length; i++) {
                 if (temp[i].transactionType == 1) {//입금
                     res.push({ id: temp[i]._id, transactionType: '입금', amount: temp[i].amount, 
-                    date: getDate(temp[i].date.split('T')[0]),
+                    date: getDate(temp[i].date),
                     afterbalance:temp[i].afterbalance,
                     memo: temp[i].memo })
                 } else {//출금
                     res.push({ id: temp[i]._id, transactionType: '출금', amount: temp[i].amount,
-                    date: getDate(temp[i].date.split('T')[0]), 
+                    date: getDate(temp[i].date), 
                     afterbalance:temp[i].afterbalance,
                     memo: temp[i].memo })
                 }
@@ -104,10 +107,10 @@ function Account(props) {
                         <div id="bank_statement" className="collapse" aria-labelledby="bank_statement" >
                             <div style={{ textAlign: 'right' }}>
                                 <input id='startDate' defaultValue={startdate}
-                                    max={moment().format('YYYY-MM-DD')}
+                                    max={moment().tz('Asia/Seoul').format('YYYY-MM-DD')}
                                     type='date' onChange={handlestartdate} style={{ marginRight: '3px' }}></input>
                                 <input id='endDate' defaultValue={enddate}
-                                    min={startdate} max={moment().format('YYYY-MM-DD')}
+                                    min={startdate} max={moment().tz('Asia/Seoul').format('YYYY-MM-DD')}
                                     type='date' onChange={handleenddate} style={{ marginRight: '3px' }}></input>
                                 <button onClick={onhandleclick}>조회하기</button>
                             </div>

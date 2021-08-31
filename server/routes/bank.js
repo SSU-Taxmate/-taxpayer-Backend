@@ -34,7 +34,7 @@ router.get('/deposits', (req, res) => {
   classId 정보도 추가
 */
 router.post('/deposits', (req, res) => {
-  console.log('/api/bank/deposits', req.body)
+  //console.log('/api/bank/deposits', req.body)
   const cDeposit = new Deposit(req.body)
   cDeposit.save((err, doc) => {
     if (err) return res.json({ success: false, err })
@@ -210,7 +210,7 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
 
     // 3) Account에 입금
     // 3-1) rate를 토대로 해지 후 금액 구하기
-    const newamount = (rate + 100) * contract.amount / 100
+    const newamount = Math.round((rate + 100) * contract.amount / 100)
     //console.log(newamount)
     // 3-2) Account currentBalance update
     const account = await Account.findOne({ studentId: contract.studentId }).exec({ session })

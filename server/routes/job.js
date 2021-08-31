@@ -49,7 +49,7 @@ router.put('/', (req, res) => {
   })
 })
 /*
-  [정상] Job 삭제
+  [] Job 삭제 -> 예금 삭제처럼 로직 바꿔야 함.
   : JoinedUser에 저장되어 있는 JobId도 없어져야 함.
 */
 router.delete('/:id', async (req, res) => {

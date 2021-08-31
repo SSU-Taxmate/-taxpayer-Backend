@@ -7,6 +7,7 @@ function SellDialog(props) {
     const { data, type, color } = props;//data - stockId,stockName, currentPrice * quantity = amount
     const [open, setOpen] = useState(false);
     const joinedUser = useSelector(state => state.classUser);
+    let classData = useSelector(state => state.classInfo.classData);
     const [quantity, setquantity] = useState(1)
     const onChange = (e) => {
         setquantity(e.target.value)
@@ -23,7 +24,8 @@ function SellDialog(props) {
             studentId: joinedUser.classUser,
             quantity: quantity,
             currentPrice: data.currentPrice,
-            orderType: type
+            orderType: type,
+            classId:classData.classId
         }
         axios.post(`/api/stocks/${data.stockId}/orders`, sendData)
             .then(function (response) {
@@ -49,6 +51,7 @@ function SellDialog(props) {
                     <DialogContentText>
                         {data.stockName} {quantity}주를 {data.currentPrice * quantity}에 {type}하시겠습니까?
                     </DialogContentText>
+                    <DialogContentText>증권거래세 미포함 금액</DialogContentText>
                     <div className="input-group">
                         <input type="number" readOnly className="form-control" id="currentValue" placeholder="현재가" value={data.currentPrice} />
                         <div className="input-group-append"><span className="input-group-text outline-none">X</span></div>
