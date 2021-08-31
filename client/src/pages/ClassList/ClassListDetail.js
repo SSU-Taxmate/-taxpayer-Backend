@@ -60,8 +60,6 @@ function ClassListDetail() {
           </div>
         </div>
         </div>
-      </div>
-
       {/* 데이터 만큼 */}
       {isError && <Error></Error>}
       {isLoading ? (
