@@ -5,7 +5,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import axios from 'axios';
 function DeleteStockDialog({stockId}) {

@@ -10,13 +10,16 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import EditStockDialog from './EditStockDialog';
+import DetailStockDialog from './DetailStockDialog';
+import AddStockDialog from './AddStockDialog'
+import moment from 'moment-timezone';
+
 function ChooseStockPanel() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [stocks, setstocks] = useState([]);
     let classData = useSelector(state => state.classInfo.classData);
-    const column = ['', '이름', '설명', '자세히보기'];
+    const column = ['삭제', '이름', '설명','상장 폐지 예정' ,'자세히보기'];
 
     /*페이지 */
     const [page, setPage] = useState(0);
@@ -49,6 +52,8 @@ function ChooseStockPanel() {
             <h6>클래스 주식</h6>
             {isLoading ?
                 <Loading /> : (
+                    <>
+                    <AddStockDialog/>
                     <Table aria-label="setting-table" size="small">
                         <TableHead>
                             <TableRow>
@@ -69,7 +74,8 @@ function ChooseStockPanel() {
                                         {row.stockName}
                                     </TableCell>
                                     <TableCell >{row.description}</TableCell>
-                                    <TableCell ><EditStockDialog stock={row} /></TableCell>
+                                    <TableCell>{row.ondelete?moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD'):''}</TableCell>
+                                    <TableCell ><DetailStockDialog stock={row} /></TableCell>
                                 </TableRow>
                             ))}
 
@@ -93,9 +99,8 @@ function ChooseStockPanel() {
                             </TableRow>
                         </TableFooter>
                     </Table>
-
+                </>
                 )
-
             }
 
         </div>

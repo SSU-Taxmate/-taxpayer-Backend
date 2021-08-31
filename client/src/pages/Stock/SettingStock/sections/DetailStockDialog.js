@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogActions } from '@material-ui/core';
-import { useSelector } from "react-redux";
+
 import IconButton from '@material-ui/core/IconButton';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import axios from 'axios';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-function EditStockDialog({ stock }) {
+import NewsItem from './NewsItem'
+function DetailStockDialog({ stock }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -61,10 +61,9 @@ function EditStockDialog({ stock }) {
                         <div className="justify-content-center mb-4" >
                             <List dense >
                                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
-                                    const labelId = `checkbox-list-secondary-label-${value}`;
                                     return (
-                                        <ListItem key={value} button>
-                                            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                                        <ListItem key={value}>
+                                            <NewsItem/>
                                         </ListItem>
                                     );
                                 })}
@@ -82,4 +81,4 @@ function EditStockDialog({ stock }) {
     )
 }
 
-export default EditStockDialog
+export default DetailStockDialog

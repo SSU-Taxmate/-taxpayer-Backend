@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { selectClass, selectUser } from "../../redux/_actions";
 import ClassCodeModal from "../../components/Modal/ClassCodeModal";
-
-
+import moment from 'moment-timezone';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -43,7 +42,6 @@ function ClassCard(props) {
   const dispatch = useDispatch();
   let user = useSelector((state) => state.user);
 
-
   const classes = useStyles();
 
   return (
@@ -64,7 +62,7 @@ function ClassCard(props) {
         >
           <CardHeader
             title={props.title}
-            subheader="September 14, 2016"
+            subheader={moment(props.date).tz('Asia/Seoul').format('YYYY-MM-DD')}
           /></Link>
         <CardMedia
           className={classes.media}

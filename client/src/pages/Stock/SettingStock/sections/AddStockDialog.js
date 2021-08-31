@@ -3,10 +3,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { useSelector } from "react-redux";
 import IconButton from '@material-ui/core/IconButton';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'; import axios from 'axios';
+import AddIcon from '@material-ui/icons/Add';
 import moment from 'moment-timezone';
+import axios from 'axios'
+import { DialogContent } from '@material-ui/core';
 
-function AddStockDialog({ stockId }) {
+function AddStockDialog() {
     const [stockName, setstockName] = useState('')
     const [stockDescription, setstockDescription] = useState('')
     const [stockInit, setstockInit] = useState(0)
@@ -36,31 +38,29 @@ function AddStockDialog({ stockId }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        const now = moment().tz('Asia/Seoul')
-        console.log(now)
+        const now = moment().tz('Asia/Seoul').startOf('day').utc().format()
         axios.post('/api/stocks',
-            {
-                stockInfo: {
-                    stockName: stockName,
-                    description: stockDescription,
-                    prices: [{ updateDate: now, value: stockInit, hint: stockHint }]
-                },
-                classId: classData.classId
+            {stockInfo:{
+                stockName: stockName,
+                description: stockDescription,
+                prices: [{ updateDate: now, value: stockInit ,hint:stockHint}],
+            },
+            classId:classData.classId
             })
             .then(function (response) {
                 console.log(response);
+                handleClose()
             })
             .catch(function (error) {
                 console.log(error);
             });
-    };
-
+    }
     return (
         <>
-            <IconButton color="primary" onClick={handleOpen}><EditOutlinedIcon /></IconButton>
-            <Dialog aria-labelledby="stock-dialog-title" open={open} onClose={handleClose}>
-                <DialogTitle id="stock-dialog-title">주식 수정</DialogTitle>
-                <div className='row'>
+            <IconButton color="primary" onClick={handleOpen}>주식 추가<AddIcon /></IconButton>
+            <Dialog fullWidth aria-labelledby="stock-dialog-title" open={open} onClose={handleClose}>
+                <DialogTitle id="stock-dialog-title">주식 추가</DialogTitle>
+                    <DialogContent>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group row">
                             <label htmlFor="inputstockname" className="col-sm-2 col-form-label">주식명</label>
@@ -92,9 +92,7 @@ function AddStockDialog({ stockId }) {
                             </div>
                         </div>
                     </form>
-
-                </div>
-
+                    </DialogContent>
             </Dialog>
         </>
     )
