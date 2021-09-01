@@ -5,6 +5,8 @@ import axios from 'axios'
 import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import ScrollToTop from '../../../components/Scroll';
+import Loading from '../../../components/Loading'
+
 import Transfer from './components/Transfer';
 import PenaltyTable from './components/PenaltyTable';
 
@@ -131,10 +133,10 @@ function Penalty() {
                                 <div className='row justify-content-center'>
                                   <div className='col-lg-8'>
                                     <div className="text-center py-5 mx-4">
-                                      {isLoading? null:
-                                      user.userData&& fines &&
-                                      <PenaltyTable
-                                      data={user.userData.role ===0? fines:fines.filter(data =>data.studentId._id===user.userData._id)}
+                                      {console.log("fine",fines)}
+                                      {isLoading ?  <Loading />:
+                                      user.userData&&fines&&  <PenaltyTable
+                                      data={user.userData.role ===0? fines:example.filter(data =>data.studentId==='0')}
                                       columns={ user.userData.role ===0?columns:columnStudent}
                                        />}
                                     </div>

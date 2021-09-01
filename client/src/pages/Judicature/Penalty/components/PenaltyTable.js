@@ -12,12 +12,15 @@ import {
 } from "@material-ui/data-grid";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
+
 function PenaltyTable(props) {
-  console.log("data", props.data);
-  const [data, setData] = useState(props.data);
+
+
   const columns = props.columns;
+  const [data, setData] = useState(props.data);
+
+
   let user = useSelector((state) => state.user);
-  console.log(data);
 
   function filterRow(status) {
     status !== null
@@ -85,7 +88,7 @@ function PenaltyTable(props) {
   return (
     <div className="row justify-content-center">
       <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
+      <DataGrid
           rows={props.data}
           columns={columns}
           components={{
