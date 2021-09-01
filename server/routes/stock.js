@@ -105,8 +105,6 @@ router.get('/manage', async (req, res) => {
     //console.log(stocks)
     const stock = await Stock.find({ _id: { $in: stocks } })
     res.json(stock)
-
-    res.json(result)
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -148,10 +146,11 @@ router.post("/", async (req, res) => {
 });
 
 /*
-   [정상] stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
+   [] stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
 */
 router.put('/', (req, res) => {
-  //console.log('update',req.body)
+  console.log('update',req.body)
+  //daily 입력값이있다면(date로 확인) 빼고 그 자리에 새로운값 넣기
   Stock.updateOne({ _id: req.body._id },
     {
       $push: {

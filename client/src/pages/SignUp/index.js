@@ -35,12 +35,10 @@ alert("ssss");
                     sId: "",
                     password: "",
                     confirmPassword: "",
-                    entryCode: "",
                   }}
                   validationSchema={Yup.object().shape({
                     name: Yup.string().required("이름을 입력해주세요"),
                     sId: Yup.string().required("번호를 입력해주세요"),
-
                     email: Yup.string()
                       .email("유효하지 않은 이메일입니다")
                       .required("이메일을 입력해주세요"),
@@ -61,7 +59,6 @@ alert("ssss");
                         email: values.email,
                         password: values.password,
                         name: values.name,
-                        entryCode: values.entryCode,
                       };
 
                       dispatch(registerUser(dataToSubmit)).then((response) => {
@@ -249,20 +246,6 @@ alert("ssss");
                               )}
                           </div>
                         </div>
-                        {/* <div className="form-group">
-                          <input
-                            id="entryCode"
-                            placeholder="참가코드"
-                            className="form-control form-control-user"
-                            type="entryCode"
-                            value={values.entryCode}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
-                          {errors.entryCode && touched.entryCode && (
-                            <div className="input-feedback">{errors.entryCode}</div>
-                          )}
-                        </div> */}
                         <button
                           onClick={handleSubmit}
                           disabled={isSubmitting}
@@ -284,7 +267,7 @@ alert("ssss");
                           to="/classes"
                           className="btn btn-facebook btn-user btn-block"
                         >
-                          <i className="fab fa-facebook-f fa-fw"></i>{" "}
+                          <i className="fab fa-facebook-f fa-fw"></i>
                           Facebook으로 회원 가입하기
                         </Link>
                       </form>

@@ -19,10 +19,6 @@ import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
-import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
-import AddRoundedIcon from '@material-ui/icons/AddRounded';
-import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
-import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -83,21 +79,6 @@ function JobDetailModal(props) {
 
   }
 
-  const jobJoinPossibleChange = () => {
-
-    props.jobJoinPossibleChange({ joinPossible: !props.row.joinPossible })
-    modalClose();
-
-  }
-
-
-  const jobDeleteModalOpen = () => {
-
-    props.jobDeleteModalOpen();
-
-  }
-
-
 
   return (
 
@@ -124,9 +105,6 @@ function JobDetailModal(props) {
               <h6 className="m-0 font-weight-bold text-primary">직업정보 조회</h6>
               <div className="dropdown no-arrow">
                 <ButtonGroup color="primary" variant='text' size="small" >
-                  {props.row.joinPossible ? <Button><RemoveRoundedIcon onClick={jobJoinPossibleChange} /></Button> : null}
-                  {!props.row.joinPossible ? <Button onClick={jobDeleteModalOpen}><Delete /></Button> : null}
-                  {!props.row.joinPossible ? <Button><RestoreFromTrashIcon onClick={jobJoinPossibleChange} /></Button> : null}
                   <Button onClick={jobEditModalOpen}><EditIcon /></Button>
                 </ButtonGroup>
               </div>

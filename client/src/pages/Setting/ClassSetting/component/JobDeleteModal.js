@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import '../../../../styles/css/jobModal.css'
 
@@ -7,15 +7,10 @@ import '../../../../styles/css/jobModal.css'
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
-
 import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
-
 import Delete from '@material-ui/icons/Delete';
 import axios from 'axios'
-
-
-
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -61,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
 function JobDeleteModal(props){
 
     const classes=useStyles();
+    let classData = useSelector(state => state.classInfo.classData);
+
+    const [rows,setRows]=useState(props.rows)
+    console.log("delete",props.rows)
+
     
     const modalClose=()=>{
 
@@ -72,33 +72,38 @@ const row=props.row
 
 const jobDelete=()=>{
 
+props.rows.map(row => 
+  axios
+    .put("/api/jobs", {
 
-    console.log('/api/jobs/'+ row.id)
-    axios.delete('/api/jobs/'+ row.id)
-    .then(function (response) {
-      console.log(response);
+      joinPossible:false,
+      classId: classData.classId,
+      _id: row,
+
     })
-    // 응답(실패)
+    .then(response => {
+      console.log(response);
+
+    })
     .catch(function (error) {
       console.log(error);
     })
+);
 
     modalClose();
+  };
 
-  }
-
-
-    return(
-        <Modal
-        id="jobDetailModal"
-          className={classes.modal}
-          open={props.open}
-          onClose={modalClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-          timeout: 500,
-    }}
+  return (
+    <Modal
+      id="jobDetailModal"
+      className={classes.modal}
+      open={props.open}
+      onClose={modalClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
     >
     
     
@@ -115,9 +120,9 @@ const jobDelete=()=>{
     
     <div className="card-body">
 
-    <div className="h5 mb-0 font-weight-bold text-gray-800 text-center py-3">정말 삭제하시겠습니까</div>    
+    <div className="h5 mb-0 font-weight-bold text-gray-800 text-center py-3"> {props.rows.length}개의 직업을 삭제하시겠습니까</div>    
     
-    <div className="justify-content-center">
+    <div className="row justify-content-center">
       <Button
         variant="contained"
         color="primary"
@@ -134,9 +139,9 @@ const jobDelete=()=>{
     
     
     </Fade>
-    </Modal>
-    )
 
+    </Modal>
+  );
 }
 
-export default React.memo(JobDeleteModal)
+export default React.memo(JobDeleteModal);

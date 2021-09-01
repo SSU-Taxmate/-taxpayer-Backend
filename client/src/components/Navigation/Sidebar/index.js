@@ -21,6 +21,7 @@ const useStyles = makeStyles({
 
 export default function Sidebar(props) {
   const classes = useStyles();
+
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -36,7 +37,7 @@ export default function Sidebar(props) {
     ) {
       return;
     }
-
+    // classes.paper = "overflowY:visible";
     setState({ ...state, [anchor]: open });
   };
 
@@ -159,7 +160,7 @@ export default function Sidebar(props) {
               >
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">중앙은행</h6>
-                  
+
                   {user.userData.role === 0 ? (
                     <>
                       <Link
@@ -240,7 +241,7 @@ export default function Sidebar(props) {
               </div>
             </li>
             {/* <!-- Nav Item - Utilities Collapse Menu --> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a
                 className="nav-link collapsed"
                 href="#"
@@ -270,7 +271,7 @@ export default function Sidebar(props) {
                   </Link>
                 </div>
               </div>
-            </li>
+            </li> */}
 
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider" />
@@ -330,7 +331,7 @@ export default function Sidebar(props) {
             </li>
 
             {/* <!-- Nav Item - Utilities Collapse Menu --> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a
                 className="nav-link collapsed"
                 href="#"
@@ -379,7 +380,7 @@ export default function Sidebar(props) {
                   ) : null}
                 </div>
               </div>
-            </li>
+            </li> */}
 
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider" />
@@ -416,12 +417,12 @@ export default function Sidebar(props) {
               </div>
             </li>
             {/* <!-- Nav Item - Tables --> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/classes/:classId/lawmaking">
                 <i className="fas fa-vote-yea"></i>
                 <span>국회</span>
               </Link>
-            </li>
+            </li> */}
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider" />
 
@@ -438,13 +439,11 @@ export default function Sidebar(props) {
 
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider d-none d-md-block" />
-
           </div>
         )}
       </ul>
     </div>
   );
-
 
   return (
     <React.Fragment>

@@ -36,15 +36,7 @@ function Expenditure({ data }) {
       </ul>
       <div className="row mt-4">
         <div className="col">
-          <p className="h5 font-weight-bold pl-3">한 줄 분석</p>
-          <div className="col ml-1">
-            <textarea
-              rows="5"
-              readOnly={true}
-              className="form-control"
-              id="evaluation"
-            />
-          </div>
+          {/* <p className="h5 font-weight-bold pl-3">한 줄 분석</p> */}
         </div>
       </div>
     </div>

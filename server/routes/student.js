@@ -1,8 +1,9 @@
 /* base URL
   : /api/students
 */
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { JoinedUser } = require('../models/JoinedUser');
@@ -15,65 +16,83 @@ const{Tax}=require('../models/Tax/Tax')
   [완료] 클래스 내 학생에 대한 모든 정보 - 학생 관리 테이블
   query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
 */
-router.get('/', async (req, res) => {
-    //console.log("classId:", req.query)
-    try {
-        // console.log("studentId:",req.params.id,req.query)
-        const students = await JoinedUser.find(req.query, ["userId", "alias", "jobId"])
-            .populate('userId', 'email name alias jobId').populate('jobId').exec()
-        let result = await Promise.all(
-            students.map(async (v, i) => {
-                const account = await Account.findOne({ 'studentId': v._id })
-                return {
-                    '_id':v.userId._id,
-                    'name': v.userId.name, 'email': v.userId.email,
-                    'alias': v.alias, 'job': v.jobId, 'balance': account.currentBalance
-                }
-            })
-        )
-        res.json(result)
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
-    }
-})
+router.get("/", async (req, res) => {
+  //console.log("classId:", req.query)
+  try {
+    // console.log("studentId:",req.params.id,req.query)
+    const students = await JoinedUser.find(req.query, [
+      "userId",
+      "alias",
+      "jobId",
+    ])
+      .populate("userId", "email name alias jobId")
+      .populate("jobId")
+      .exec();
+    let result = await Promise.all(
+      students.map(async (v, i) => {
+        const account = await Account.findOne({ studentId: v._id });
+        return {
+          studentId: v._id, //user
+          name: v.userId.name,
+          email: v.userId.email,
+          alias: v.alias,
+          job: v.jobId,
+          balance: account.currentBalance,
+        };
+      })
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err });
+  }
+});
 
 /*
   [완료] 클래스 내 학생에 대한 job 정보 - job 테이블
   query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
 */
-router.get('/job', async (req, res) => {
-    //console.log("classId:", req.query)
-    try {
-        // console.log("studentId:",req.params.id,req.query)
-        const students = await JoinedUser.find(req.query, ["userId", "jobId"])
-            .populate('userId').populate('jobId').exec()
-        //console.log(students)
-        let result = await Promise.all(
-            students.map(async (v, i) => {
-                return {
-                    'studentId': v.userId._id, 'name': v.userId.name, 'job': v.jobId
-                }
-            })
-        )
-        res.json(result)
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
-    }
-})
+router.get("/job", async (req, res) => {
+  //console.log("classId:", req.query)
+  try {
+    // console.log("studentId:",req.params.id,req.query)
+    const students = await JoinedUser.find(req.query, ["userId", "jobId"])
+      .populate("userId")
+      .populate("jobId")
+      .exec();
+    console.log(students);
+    let result = await Promise.all(
+      students.map(async (v, i) => {
+        return {
+          studentId: v.userId._id,
+          name: v.userId.name,
+          job: v.jobId,
+        };
+      })
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err });
+  }
+});
+
 /* 
    [완료] 클래스 내 한 학생의 job 삭제
 */
-router.delete('/:id/jobs/:jobId', (req, res) => {
-    const studentId = req.params.id
-    const jobId = req.params.jobId
-    //console.log(studentId,jobId)
-    JoinedUser.updateOne({ _id: studentId }, { $pull: { jobId: jobId } }, (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
-        })
-    })
-})
+router.delete("/:id/jobs/:jobId", (req, res) => {
+  const studentId = req.params.id;
+  const jobId = req.params.jobId;
+  //console.log(studentId,jobId)
+  JoinedUser.updateOne(
+    { _id: studentId },
+    { $pull: { jobId: jobId } },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true,
+      });
+    }
+  );
+});
 
 /*
   ====================== 계좌 정보, 거래 내역
@@ -82,18 +101,19 @@ router.delete('/:id/jobs/:jobId', (req, res) => {
   [정상] : 학생 자신의 기본 계좌 정보 가져오기
   : accountId 모르지만, studentId는 아는 상황
 */
-router.get('/:id/account', (req, res) => {
-    //console.log("studentId",req.params.id)
-    Account.findOne({ studentId: req.params.id }, (err, doc) => {
-        const result = doc
-        if (err) return res.status(500).json({ error: err });
-        res.json(result)
-    })
-})
+router.get("/:id/account", (req, res) => {
+  //console.log("studentId",req.params.id)
+  Account.findOne({ studentId: req.params.id }, (err, doc) => {
+    const result = doc;
+    if (err) return res.status(500).json({ error: err });
+    res.json(result);
+  });
+});
 /*
   [정상] : 학생 자신의 계좌 거래 내역보기
   {accountId:,startDate:,endDate:} <=studentId로 Account에서 찾을 수 있음
 */
+
 router.get('/:id/account/history', async (req, res) => {
     const startDate=req.query.startDate
     const endDate=req.query.endDate
@@ -119,6 +139,7 @@ router.get('/:id/account/history', async (req, res) => {
     [*정상]자신 계좌의 통계정보 확인
     : 입/출금
 */
+
 router.get('/:id/account/statistics', async (req, res) => {
     const startDate=req.query.startDate
     const endDate=req.query.endDate
@@ -186,7 +207,8 @@ router.get('/:id/account/statistics', async (req, res) => {
     } catch (err) {
         res.status(500).json({ success: false, error: err });
     }
-})
+ 
+});
 
 /*
   ====================== 가입한 금융 상품
@@ -195,54 +217,61 @@ router.get('/:id/account/statistics', async (req, res) => {
   [정상] : 가입한 상품 보여주세요 {studentId:}
   isClosed : false인 것만!
 */
-router.get('/:id/deposit', (req, res) => {
-    //console.log("studentId:", req.params.id)
-    const studentId = req.params.id
-    JoinDeposit.findOne({ studentId: studentId, isClosed: false }, ["productId", "amount", "createdAt"])
-        .populate("productId").exec((err, data) => {
-            const result = data
-            //console.log("get:/students/deposit",result)
-            if (err) return res.status(500).json({ error: err });
-            res.json(result)
-        })
-})
-
+router.get("/:id/deposit", (req, res) => {
+  //console.log("studentId:", req.params.id)
+  const studentId = req.params.id;
+  JoinDeposit.findOne({ studentId: studentId, isClosed: false }, [
+    "productId",
+    "amount",
+    "createdAt",
+  ])
+    .populate("productId")
+    .exec((err, data) => {
+      const result = data;
+      //console.log("get:/students/deposit",result)
+      if (err) return res.status(500).json({ error: err });
+      res.json(result);
+    });
+});
 
 /*
   [정상] [student] Student의 수행 여부 가져오기
   { studentId:joinedUser의 _id }로 GrantedHomework에서 찾는다. 
   homeworkId는 필요가 없다.
 */
-router.get('/:id/homeworks', async (req, res) => {
-    try {
-        //console.log("studentId:",req.params.id)
-        const studentId = req.params.id;
-        const ghw = await GrantedHomework.find({ studentId: studentId })
-            .populate({ path: 'homeworkId', select: ['name', 'detail', 'expDate'] })
-        //console.log('Class숙제와 student의 제출여부\n',ghw)
-        let result;
-        result = ghw.map((v, i) => {
-            return {
-                homeworkId: v.homeworkId._id,
-                name: v.homeworkId.name,
-                detail: v.homeworkId.detail,
-                expDate: v.homeworkId.expDate,
-                submission: v.submission,
-                withinDeadline: v.withinDeadline,
-                coupon_id: v.coupon_id,
-            }
-        })
-        //console.log(result)
-        res.json(result)
-    } catch (err) {
-        res.json({ success: false, err })
-    }
-})
+router.get("/:id/homeworks", async (req, res) => {
+  try {
+    //console.log("studentId:",req.params.id)
+    const studentId = req.params.id;
+    const ghw = await GrantedHomework.find({ studentId: studentId }).populate({
+      path: "homeworkId",
+      select: ["name", "detail", "expDate"],
+    });
+    //console.log('Class숙제와 student의 제출여부\n',ghw)
+    let result;
+    result = ghw.map((v, i) => {
+      return {
+        homeworkId: v.homeworkId._id,
+        name: v.homeworkId.name,
+        detail: v.homeworkId.detail,
+        expDate: v.homeworkId.expDate,
+        submission: v.submission,
+        withinDeadline: v.withinDeadline,
+        coupon_id: v.coupon_id,
+      };
+    });
+    //console.log(result)
+    res.json(result);
+  } catch (err) {
+    res.json({ success: false, err });
+  }
+});
 
 /*
     [정상]student가 구매한 모든 stock 보여주기
     : ByStudentStock이 이거 사용중
 */
+
 router.get('/:id/stocks', async (req, res) => {
     //console.log(req.params)
     const studentId = req.params.id;
@@ -283,10 +312,11 @@ router.get('/:id/stocks', async (req, res) => {
 /*
     [정상]stuent 가 구매한 stock들에 대한 통계정보
 */
+
 router.get('/:id/stocks/statistics',async (req, res) => {
     //console.log(req.params)
     const studentId = req.params.id;
-    const classId=req.query.classId;
+    const classId=req.query.cla
     try {
         const tax=await Tax.findOne({classId:classId})
         const stocktax=tax.taxlist.stock//stock에 붙는 tax
@@ -323,9 +353,14 @@ router.get('/:id/stocks/statistics',async (req, res) => {
             evaluatedProfit:,평가수익률//(총평가-총매입)/총매입*100
         }
         */
-        res.json({allPay:allPayAmount,allEvaluated,evaluatedIncome,evaluatedProfit})
-    } catch (err) {
-        res.json({ success: false, err })
-    }
-})
+    res.json({
+      allPay: allPayAmount,
+      allEvaluated,
+      evaluatedIncome,
+      evaluatedProfit,
+    });
+  } catch (err) {
+    res.json({ success: false, err });
+  }
+});
 module.exports = router;

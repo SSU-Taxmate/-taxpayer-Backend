@@ -10,7 +10,7 @@ import Error from "../../components/Error";
 import Loading from '../../components/Loading'
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
@@ -45,6 +45,7 @@ function ClassListDetail() {
     <div className="row">
       {/*<!--className 추가-->*/}
       <div className="col-lg-3">
+<<<<<<< HEAD
         <div className="row justify-content-center align-items-center" style={{height:450}}>
         <div className="card m-40">
           <div className="card-body">
@@ -53,6 +54,23 @@ function ClassListDetail() {
           </div>
         </div>
         </div>
+=======
+        <div
+          className="row justify-content-center align-items-center"
+          style={{ height: 450 }}
+        >
+          <div className="card m-40">
+            <div className="card-body">
+              {user.userData &&
+                (user.userData.role === 0 ? (
+                  <FormDialog />
+                ) : (
+                  "새로운 국가 시민권 얻기"
+                ))}
+            </div>
+          </div>
+        </div>
+>>>>>>> 9a57e2778eb73b1410afa2be34b44c5108368ead
       </div>
 
       {/* 데이터 만큼 */}
@@ -60,6 +78,10 @@ function ClassListDetail() {
       {isLoading ? (
         <Loading/>
       ) : (
+<<<<<<< HEAD
+=======
+        classes &&
+>>>>>>> 9a57e2778eb73b1410afa2be34b44c5108368ead
         classes.map((info, i) => (
           <ClassCard
             id={info._id}
@@ -67,6 +89,8 @@ function ClassListDetail() {
             title={info.name}
             img={info.image}
             comment={info.comment}
+            date={info.createdAt}
+            entrycode={info.entrycode}
           ></ClassCard>
         ))
       )}

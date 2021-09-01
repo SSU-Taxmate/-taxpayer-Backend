@@ -4,6 +4,10 @@ import MainHeader from "../../components/Navigation/MainHeader";
 import Footer from "../../components/Footer";
 import "../../styles/css/main_page.css";
 
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import GavelIcon from '@material-ui/icons/Gavel';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
+
 class Main extends Component {
   componentWillMount() {
     document.getElementById("body").className = "text-gray-100";
@@ -21,7 +25,7 @@ class Main extends Component {
             >
               <div className="col text-center">
                 <span style={{ fontSize: "3vw" }}>TAXMATE</span>
-                <h4 className="mb-5">가장 간단한 경제를 만나보세요.</h4>
+                <h4 className="mb-5">우리가 만들어가는 온라인 경제 국가</h4>
                 <p>
                   <a
                     href="/signup"
@@ -43,20 +47,17 @@ class Main extends Component {
             <div className="py-4"></div>
             <div className="row row-cols-1 mt-3 mb-3 justify-content-center">
               <div className="col-md-7 text-gray-900">
-                <h1 className="heading-section ">" 세금 내는 아이들 "</h1>
-                <h3 className="mb-4"> &nbsp; 학생 참여형 경제 학습 플랫폼! </h3>
-                <p className="p-2 h4">
+                <h5 className="heading-section ">" 세금 내는 아이들 "</h5>
+                <h6 className="mb-4"> &nbsp; 학생 참여형 경제 학습 플랫폼! </h6>
+                <p className="p-2">
                   아이들의 눈높이에서 경제 / 경영 이야기를 풀어갑니다! <br></br>
                   온라인 학급화폐로 만들어가는 학급 경영 이야기! <br></br>{" "}
                   <br></br>
                   재미있는 경제 교육을 위한 원픽! TaxMate 지금 바로 함께하세요!
                 </p>
               </div>
-              <div className="col-md-5 d-lg-block">
-                <img
-                  id="main-img1"
-                  src={require("../../assets/img/background-main2.png")}
-                ></img>
+              <div className="col-md-5 embed-responsive embed-responsive-16by9 p-4">
+              <iframe className="embed-responsive embed-responsive-16by9" src="https://www.youtube.com/embed/bhm08qUddso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
           </div>
