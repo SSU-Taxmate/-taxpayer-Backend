@@ -86,7 +86,7 @@ export default function ChartBar(props) {
 
   return (
     <div className="chart-area">
-      <div className="h3 mt-1">{props.title}</div>
+      <div className="h4 mt-1">{props.title}</div>
       <div className="chart-bar">
         <canvas id="myBarChart" ref={chartRef}></canvas>
       </div>

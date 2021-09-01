@@ -15,7 +15,7 @@ function SelectDate({selectedValue}) {
    
     return (
         <>
-            <FormControl variant="outlined" className='col-md-2'>
+            <FormControl variant="outlined" className='col-md-2 mr-2 mb-2'>
                 <InputLabel htmlFor="select-date">날짜</InputLabel>
                 <Select
                     defaultValue=""
