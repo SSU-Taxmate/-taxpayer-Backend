@@ -3,6 +3,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import moment from 'moment-timezone';
 
 function SelectDate({selectedValue}) {
 
@@ -28,7 +29,7 @@ function SelectDate({selectedValue}) {
                     {
                         selectedValue.prices.map((detail, i) =>
                             <option key={detail._id} value={detail.hint}>
-                                {detail.updateDate.split('T')[0]}
+                                {moment(detail.updateDate).tz('Asia/Seoul').format('YYYY-MM-DD')}
                             </option>)
                     }
                 </Select>

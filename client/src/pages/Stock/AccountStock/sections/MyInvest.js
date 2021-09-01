@@ -4,9 +4,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import { Link } from "react-router-dom";
 export default function MyInvest({ data }) {
-    const evaluated = data.quantity * data.currentPrice//평가금액
-    const gainNloss = evaluated - data.allPayAmount//평가손익
-    const icon = gainNloss>0?<TrendingUpIcon/>: <TrendingDownIcon/>
+    const icon = data.gainNloss>0?<TrendingUpIcon/>: <TrendingDownIcon/>
     return (
         <div className="col-6">
             <div className="card py-2">
@@ -27,7 +25,7 @@ export default function MyInvest({ data }) {
                             <td>잔고</td>
                             <td>{data.quantity}</td>
                             <td>평가금액</td>
-                            <td>{evaluated}미소</td>
+                            <td>{data.evaluated}미소</td>
                         </tr>
                         <tr>
                             <td>현재가</td>
@@ -37,9 +35,9 @@ export default function MyInvest({ data }) {
                         </tr>
                         <tr>
                             <td>평가 손익</td>
-                            <td>{gainNloss}미소</td>
+                            <td>{data.gainNloss}미소</td>
                             <td>수익률</td>
-                            <td>{Math.round(gainNloss / data.allPayAmount * 100)}%</td>
+                            <td>{Math.round(data.gainNloss / data.allPayAmount * 100)}%</td>
                         </tr>
                     </tbody>
                 </table>

@@ -138,7 +138,7 @@ function Penalty() {
                                       user.userData&&fines&&  <PenaltyTable
                                       data={user.userData.role ===0? fines:example.filter(data =>data.studentId==='0')}
                                       columns={ user.userData.role ===0?columns:columnStudent}
-                                      />}
+                                       />}
                                     </div>
                                   {  user.userData&&  user.userData.role ===0? <div className="text-center card py-5 shadow">
                                     <h4>벌금부과</h4>

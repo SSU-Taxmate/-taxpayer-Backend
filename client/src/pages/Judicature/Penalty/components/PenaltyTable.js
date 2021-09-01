@@ -15,6 +15,7 @@ import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 function PenaltyTable(props) {
 
+
   const columns = props.columns;
   const [data, setData] = useState(props.data);
 

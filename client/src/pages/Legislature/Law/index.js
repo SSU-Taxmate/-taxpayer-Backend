@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 //Navigation
-import Sidebar from "../../../components/Navigation/Sidebar";
 import Topbar from "../../../components/Navigation/Topbar";
 import PageHeading from "../../../components/PageHeading";
 import ScrollToTop from "../../../components/Scroll";
@@ -13,8 +12,8 @@ import EditLawDialog from "./sections/EditLawDialog";
 import DeleteLawDialog from "./sections/DeleteLawDialog";
 import CardCollapse from "../../../components/Cards/Collapse";
 import Viewer from "../../../components/Editor/Viewer";
-import moment from 'moment-timezone'
-import { useSelector } from 'react-redux';
+import moment from "moment-timezone";
+import { useSelector } from "react-redux";
 import Loading from "../../../components/Loading";
 
 export default function Law() {
@@ -22,7 +21,7 @@ export default function Law() {
   const [updateTime, setupdateTime] = useState("****-**-**");
   const [isLoading, setIsLoading] = useState(false);
   const [err, setIsError] = useState(false);
-  let classData = useSelector(state => state.classInfo.classData);
+  let classData = useSelector((state) => state.classInfo.classData);
   let user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -30,8 +29,10 @@ export default function Law() {
       setIsError(false);
       setIsLoading(true);
       try {
-        const result = await axios.get("/api/laws", { params: { classId: classData.classId } });
-        console.log(result.data)
+        const result = await axios.get("/api/laws", {
+          params: { classId: classData.classId },
+        });
+        console.log(result.data);
         setlaws(result.data);
       } catch (error) {
         setIsError(true);
@@ -53,14 +54,12 @@ export default function Law() {
     <div>
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
-
-
         {/* <!-- End of Sidebar --> */}
 
         {/* <!-- Content Wrapper --> */}
         <div id="content-wrapper" className="d-flex flex-column">
           {/* <!-- Main Content --> */}
-          <div id="content" >
+          <div id="content">
             {/* <!-- Topbar --> */}
             <Topbar />
             {/* <!-- End of Topbar --> */}
@@ -69,10 +68,15 @@ export default function Law() {
             <div className="container-fluid">
               {/* <!-- Page Heading --> */}
               <PageHeading title="법">
-              {user.userData && user.userData.role === 0 ? <PreviewDialog laws={laws} />:<></>}
+                {user.userData && user.userData.role === 0 ? (
+                  <PreviewDialog laws={laws} />
+                ) : (
+                  <></>
+                )}
               </PageHeading>
-              {user.userData && user.userData.role === 0 ?
-                <AddLawDialog /> :null }
+              {user.userData && user.userData.role === 0 ? (
+                <AddLawDialog />
+              ) : null}
 
               <List>
                 {/* <!-- Content Row --> */}
@@ -95,11 +99,12 @@ export default function Law() {
                           <Viewer content={law.content} />
                         </CardCollapse>
                       </div>
-                      {user.userData && user.userData.role === 0 ?
+                      {user.userData && user.userData.role === 0 ? (
                         <div className="col-1">
-                        <EditLawDialog data={law} />
-                        <DeleteLawDialog data={law} />
-                      </div> : null}
+                          <EditLawDialog data={law} />
+                          <DeleteLawDialog data={law} />
+                        </div>
+                      ) : null}
                     </ListItem>
                   ))
                 )}

@@ -18,6 +18,10 @@ import { useSelector } from "react-redux";
 
 
 
+import { Button } from "@material-ui/core";
+
+import Delete from "@material-ui/icons/Delete";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -96,22 +100,21 @@ props.rows.map(row =>
       console.log(error);
     })
 );
+
     modalClose();
+  };
 
-  }
-
-
-    return(
-        <Modal
-        id="jobDetailModal"
-          className={classes.modal}
-          open={props.open}
-          onClose={modalClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-          timeout: 500,
-    }}
+  return (
+    <Modal
+      id="jobDetailModal"
+      className={classes.modal}
+      open={props.open}
+      onClose={modalClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
     >
     
     
@@ -147,9 +150,9 @@ props.rows.map(row =>
     
     
     </Fade>
-    </Modal>
-    )
 
+    </Modal>
+  );
 }
 
-export default React.memo(JobDeleteModal)
+export default React.memo(JobDeleteModal);

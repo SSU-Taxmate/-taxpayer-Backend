@@ -14,7 +14,12 @@ function AddValuePanel() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('선택한 stock', data, 'setSelectedValue')
+    //console.log('선택한 stock', data, 'setSelectedValue')
+    //2021-08-31 보냈을 때
+    //console.log(moment(data.updateDate).tz('Asia/Seoul').format(),moment(data.updateDate).tz('Asia/Seoul').utc().format())
+    //2021-08-31T00:00:00+09:00 2021-08-30T15:00:00Z
+    //console.log(moment(data.updateDate).tz('Asia/Seoul').startOf('day').utc().format())
+    data.updateDate=moment(data.updateDate).tz('Asia/Seoul').startOf('day').utc().format()
     axios.put('/api/stocks', { ...data, _id: selectedValue })
       .then(function (response) {
         console.log(response);
@@ -55,7 +60,7 @@ function AddValuePanel() {
   const dateField = React.useMemo(
     () => (
         <input name='updateDate' defaultValue={data.updateDate}
-          min={moment().add(1, 'd').format('YYYY-MM-DD')}
+          min={moment().tz('Asia/Seoul').add(1, 'd').format('YYYY-MM-DD')}
           type='date' onChange={onChange} style={{ marginRight: '3px' }}></input>
     ), [data.updateDate])
   const todayValueField = React.useMemo(
