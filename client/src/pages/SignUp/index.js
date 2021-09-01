@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from 'axios';
 import { registerUser } from "../../redux/_actions/index";
 import { useDispatch } from "react-redux";
 
@@ -11,6 +12,9 @@ function SignUp(props) {
   useEffect(() => {
     document.getElementById("body").className = "bg-gradient-primary";
   });
+  const handleSubmit2= (e) => {
+alert("ssss");
+  }
   const dispatch = useDispatch();
   return (
     <div className="container">
@@ -47,7 +51,7 @@ function SignUp(props) {
                         "Passwords must match"
                       )
                       .required("Confirm Password is required"),
-                  })}
+                  })} //해당하는 정보를 만족하지 않으면 넘어가지 않음.
                   onSubmit={(values, { setSubmitting }) => {
                     //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
@@ -59,9 +63,9 @@ function SignUp(props) {
 
                       dispatch(registerUser(dataToSubmit)).then((response) => {
                         if (response.payload.success) {
-                          props.history.push("/signin");
+                          props.history.push("/signup");
                         } else {
-                          alert(response.payload.err.errmsg);
+                          //alert(response.payload.err.errmsg);
                         }
                       });
 
@@ -83,7 +87,7 @@ function SignUp(props) {
                       handleReset,
                     } = props;
                     return (
-                      <form className="user">
+                      <form className="user" onSubmit={handleSubmit}>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
@@ -145,11 +149,15 @@ function SignUp(props) {
                           </div>
                           <button
                             type="button"
-                            class="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
+                            onClick={handleSubmit2}
+                            className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
                             style={{ marginLeft: "1rem" }}
+                            
                           >
                             이메일 인증받기
                           </button>
+                          <script>
+                          </script>
                         </div>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
@@ -161,39 +169,39 @@ function SignUp(props) {
                             />
                           </div>
                           <div className="col-sm-6 mb-3 mb-sm-0">
-                            <div class="row">
-                              <div class="form-check">
+                            <div className="row">
+                              <div className="form-check">
                                 가입 유형<br></br> 선택
                               </div>
 
                               <div
-                                class="form-check"
+                                className="form-check"
                                 style={{ marginLeft: "1rem" }}
                               >
-                                <div class="col ">
+                                <div className="col ">
                                   <input
-                                    class="form-check-input"
+                                    className="form-check-input"
                                     type="radio"
                                     name="flexRadioDefault"
                                     id="flexRadioDefault1"
                                   />
                                   <label
-                                    class="form-check-label"
+                                    className="form-check-label"
                                     for="flexRadioDefault1"
                                   >
                                     선생님
                                   </label>
                                 </div>
-                                <div class="col">
+                                <div className="col">
                                   <input
-                                    class="form-check-input"
+                                    className="form-check-input"
                                     type="radio"
                                     name="flexRadioDefault"
                                     id="flexRadioDefault2"
                                     checked
                                   />
                                   <label
-                                    class="form-check-label"
+                                    className="form-check-label"
                                     for="flexRadioDefault2"
                                   >
                                     학생
