@@ -7,21 +7,10 @@ import '../../../../styles/css/jobModal.css'
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
-
 import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
-
 import Delete from '@material-ui/icons/Delete';
 import axios from 'axios'
 import { useSelector } from "react-redux";
-
-
-
-
-import { Button } from "@material-ui/core";
-
-import Delete from "@material-ui/icons/Delete";
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     modal: {

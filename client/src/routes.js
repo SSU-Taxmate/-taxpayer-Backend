@@ -54,7 +54,7 @@ const Routes = () => (
       <Route exact path="/classes/:classId" component={Auth(ClassMain,true)} />
       {/* 클래스 설정 - 선생님 */}
       <Route exact path="/classes/:classId/set-up/student" component={Auth(StudentSetting,true,true)}/>
-      <Route exact path="/classes/:classId/set-up/class"component={Auth(ClassSetting,true,true)}/>
+      <Route exact path="/classes/:classId/set-up/class"component={Auth(ClassSetting,true)}/>
 
       {/* ***************  경제  ************** */}
 
