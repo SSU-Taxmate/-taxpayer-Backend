@@ -48,13 +48,26 @@ function DetailStockDialog({selectedValue}) {
 
             <Dialog aria-labelledby={`${selectedValue.stockName}dialog-title`} open={open} fullWidth={true} maxWidth='lg'>
                 <DialogTitle id={`${selectedValue.stockName}dialog-title`} >
-                    자세히 '{selectedValue.stockName}' 보기
-                    <IconButton className='float-right' color="primary" onClick={handleClose}>
+                <div className="row row-cols-2 row-cols-md-2">
+                    <div className="col-10 ">
+                        <div className="row row-cols-1 row-cols-md-2">
+                            <div className="col">
+                                <span>'{selectedValue.stockName}' 주식</span>
+                            </div>
+                            <div className="col">
+                                <span  style={{color:'red', fontWeight:'bold'}}>{selectedValue.ondelete?'* 상장 폐지 예정 *':''}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-1 text-center">
+                    <IconButton className='float-right' color="primary" onClick={handleClose} style={{width:'1rem'}}>
                         <Icon>close</Icon>
                     </IconButton>
+                    </div>
+                </div>
                 </DialogTitle>
                 <DialogContent className='mb-4'>
-                    <div className='row'>
+                    <div className='row justify-content-center'>
                         <div className='col-11'>
                             <ChartLine id={`${selectedValue.stockName} 주가`} title={`${selectedValue.stockName} 주가 그래프`}
                                 data={adjustData(selectedValue.prices)} />
@@ -62,7 +75,7 @@ function DetailStockDialog({selectedValue}) {
                         </div>
                     </div>
 
-                    <div className='row'>
+                    <div className='row justify-content-center'>
                         <TextField
                             className='col-md-6'
                             fullWidth
@@ -74,11 +87,8 @@ function DetailStockDialog({selectedValue}) {
                                 readOnly: true,
                             }}
                         />
-
-                        <div>{selectedValue.ondelete?'상장 폐지 예정':''}</div>
-
                     </div>
-                    <div className='row mt-3'>
+                    <div className='row mt-3 justify-content-center'>
                     <SelectDate selectedValue={selectedValue}/>
 
                     </div>

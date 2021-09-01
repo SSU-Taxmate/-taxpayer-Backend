@@ -40,62 +40,77 @@ function BudgetSection() {
         budget && (
           <>
             {" "}
-            <div className="h3" style={{marginLeft:"-1rem"}}>이번달 재정 현황</div>
-            <div className="row d-flex pt-3" style={{height:"100%", flexDirection:"column"}}>
-            <table className="border-right h5 mb-2" style={{borderCollapse: "separate",borderSpacing: "0 0.5rem"}} >
-              <tbody>
-                <tr>
-                  <td>보유세금</td>
-                  {/*국채+세금*/}
-                  <td style={{ float: "right", marginRight: "1rem" }}>
-                    {budget.balance.income +
-                      budget.balance.realestate +
-                      budget.balance.place +
-                      budget.balance.electric +
-                      budget.balance.stamp +
-                      budget.balance.vat +
-                      budget.balance.stock +
-                      budget.debet}
-                    미소
-                  </td>
-                </tr>
-                <tr>
-
-                </tr>
-                <tr>
-                  <td>국채</td>
-                  <td  style={{ float: "right", marginRight: "1rem" }}>
-                    {budget.debet}미소
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="border-right h5 mt-2" style={{borderCollapse: "separate",borderSpacing: "0 0.5rem"}} >
-              <tbody>
-                <tr>
-                  <td>세입</td>
-                  <td style={{ float: "right", marginRight: "1rem" }}>
-                    {budget.balance.income +
-                      budget.balance.realestate +
-                      budget.balance.place +
-                      budget.balance.electric +
-                      budget.balance.stamp +
-                      budget.balance.vat +
-                      budget.balance.stock}
-                    미소
-                  </td>
-                </tr>
-                <tr>
-                  <td>세출</td>
-                  <td style={{ float: "right", marginRight: "1rem" }}>
-                    {budget.expenditure.culture +
-                      budget.expenditure.education +
-                      budget.expenditure.environment}
-                    미소
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style={{ marginLeft: "-1rem", fontSize: "1.5rem" }}>
+              이번달 재정 현황
+            </div>
+            <div
+              className="row d-flex pt-3"
+              style={{ height: "100%", flexDirection: "column" }}
+            >
+              <table
+                className="border-right h5 mb-2"
+                style={{
+                  borderCollapse: "separate",
+                  borderSpacing: "0 0.5rem",
+                }}
+              >
+                <tbody>
+                  <tr>
+                    <td>보유세금</td>
+                    {/*국채+세금*/}
+                    <td style={{ float: "right", marginRight: "1rem" }}>
+                      {budget.balance.income +
+                        budget.balance.realestate +
+                        budget.balance.place +
+                        budget.balance.electric +
+                        budget.balance.stamp +
+                        budget.balance.vat +
+                        budget.balance.stock +
+                        budget.debet}
+                      미소
+                    </td>
+                  </tr>
+                  <tr></tr>
+                  <tr>
+                    <td>국채</td>
+                    <td style={{ float: "right", marginRight: "1rem" }}>
+                      {budget.debet}미소
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table
+                className="border-right h5 mt-2"
+                style={{
+                  borderCollapse: "separate",
+                  borderSpacing: "0 0.5rem",
+                }}
+              >
+                <tbody>
+                  <tr>
+                    <td>세입</td>
+                    <td style={{ float: "right", marginRight: "1rem" }}>
+                      {budget.balance.income +
+                        budget.balance.realestate +
+                        budget.balance.place +
+                        budget.balance.electric +
+                        budget.balance.stamp +
+                        budget.balance.vat +
+                        budget.balance.stock}
+                      미소
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>세출</td>
+                    <td style={{ float: "right", marginRight: "1rem" }}>
+                      {budget.expenditure.culture +
+                        budget.expenditure.education +
+                        budget.expenditure.environment}
+                      미소
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </>
         )
