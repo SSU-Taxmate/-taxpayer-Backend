@@ -31,6 +31,7 @@ router.get("/", async (req, res) => {
         const student = await JoinedUser.findOne({ _id: v.studentId }).populate(
           "userId"
         );
+        console.log(v.studentId.role);
         return {
           _id: v._id,
           studentId: v.studentId,
@@ -38,6 +39,7 @@ router.get("/", async (req, res) => {
           Amount: v.Amount,
           isPayed: v.isPayed,
           lawReason: v.lawReason.title,
+          role: v.studentId.role,
         };
       })
     );
