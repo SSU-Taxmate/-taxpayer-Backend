@@ -57,6 +57,7 @@ export default class ClassCodeModal extends Component {
                     id="CopyCode"
                     className="form-control"
                     placeholder="Invite Code"
+                    defaultValue={this.props.entrycode}
                   />
                   <div
                     className="btn btn-info btn-clipboard"

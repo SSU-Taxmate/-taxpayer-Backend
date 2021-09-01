@@ -14,7 +14,7 @@ import DetailStockDialog from './DetailStockDialog';
 import AddStockDialog from './AddStockDialog'
 import moment from 'moment-timezone';
 
-function ChooseStockPanel() {
+function SettingStocks() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [stocks, setstocks] = useState([]);
@@ -38,7 +38,7 @@ function ChooseStockPanel() {
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
-                console.log("/api/stocks/manage", result.data);
+                //console.log("/api/stocks/manage", result.data);
                 setstocks(result.data)
             } catch (error) {
                 setIsError(true);
@@ -49,7 +49,6 @@ function ChooseStockPanel() {
     }, [classData.classId])
     return (
         <div>
-            <h6>클래스 주식</h6>
             {isLoading ?
                 <Loading /> : (
                     <>
@@ -60,7 +59,6 @@ function ChooseStockPanel() {
                                 {column.map((v, i) =>
                                     <TableCell key={i}>{v}</TableCell>
                                 )}
-
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -78,13 +76,12 @@ function ChooseStockPanel() {
                                     <TableCell ><DetailStockDialog stock={row} /></TableCell>
                                 </TableRow>
                             ))}
-
                         </TableBody>
                         <TableFooter>
                             <TableRow>
                                 <TablePagination
                                     rowsPerPageOptions={[5, 10, 25, { label: '모두', value: -1 }]}
-                                    colSpan={3}
+                                    colSpan={5}
                                     count={stocks.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
@@ -165,4 +162,4 @@ function TablePaginationActions(props) {
     );
 }
 
-export default ChooseStockPanel
+export default SettingStocks

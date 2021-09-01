@@ -75,6 +75,7 @@ function ClassListDetail() {
             img={info.image}
             comment={info.comment}
             date={info.createdAt}
+            entrycode={info.entrycode}
           ></ClassCard>
         ))
       )}
