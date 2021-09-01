@@ -34,7 +34,7 @@ var userSchema = mongoose.Schema({
 
   /*superAdmin:0, 
   모든 DB접근가능
-  선생님 : 1 , 학생 2 */
+  선생님 :  0, 학생 1 */
   role: {
     type: Number,
     "default": 1
