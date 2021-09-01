@@ -12,9 +12,6 @@ import { Button } from '@material-ui/core';
 
 
 import JobTable from './component/JobTable';
-import JobDetailModal from './component/JobDetailModal';
-import JobEditModal from './component/JobEditModal';
-import JobDeleteModal from './component/JobDeleteModal';
 
 
 
@@ -31,6 +28,8 @@ function ClassSetting() {
     //modal 띄워서 axios요청 보냄
   }
   let classData = useSelector(state => state.classInfo.classData);
+  let user = useSelector((state) => state.user);
+
 
   const fetchData = async () => {
     setIsError(false);
@@ -68,8 +67,6 @@ function ClassSetting() {
     { field: 'name', headerName: '직업명', flex: 3, minWidth: 120, },
     { field: 'salary', headerName: '월급', flex: 2, minWidth: 105, },
     { field: 'recruitment', headerName: '모집인원', flex: 2, minWidth: 135 },
-    { field: 'joinPossible', headerName: '지원가능', type: "boolean", flex: 2, minWidth: 135 },
-
   ]
 
   //student job date grid 
@@ -82,94 +79,6 @@ function ClassSetting() {
       renderCell: (params) => (<Button variant='contained' onClick={showapplicant}>신청서작성</Button>)
     }]
 
-
-  //job modal handle
-
-  //job modal data
-  const [modalRow, setModalRow] = useState([]);
-
-  //job detail modal: 선생님과 학생들이 job에 대한 상세정보를 조회하는 모달
-  const [jobDetailIsOpen, setjobDetailOpen] = useState(false);
-
-  const jobDetailModalOpen = () => {
-    setjobDetailOpen(true);
-
-  };
-
-  const jobDetailModalClose = () => {
-    setjobDetailOpen(false);
-  };
-
-
-  //job 삭제
-  const [jobDeleteIsOpen, setjobDeleteOpen] = useState(false);
-
-  const jobDeleteModalOpen = () => {
-
-    jobEditModalClose();
-    jobDetailModalClose();
-
-    setjobDeleteOpen(true);
-
-  };
-
-  const jobDeleteModalClose = () => {
-    setjobDeleteOpen(false);
-  };
-
-
-  //apply student List
-
-
-
-  //job edit modal: 선생님의 job에 대한 정보를 수정할 수 있는 곳
-
-  const [jobEditIsOpen, setjobEditOpen] = useState(false);
-
-
-  const jobEditModalOpen = () => {
-    setjobEditOpen(true);
-  };
-
-  const jobEditModalClose = () => {
-    setjobEditOpen(false);
-  };
-
-  function jobAddModalOpen() {
-
-    setModalRow([]);
-    jobEditModalOpen();
-
-  }
-
-
-
-  //job CRUD
-
-
-
-  function jobEdit() {
-
-    jobEditModalOpen();
-    jobDetailModalClose();
-
-  }
-
-
-
-  //
-
-  function jobSelected(params) {
-
-    setModalRow(params.row)
-    setjobDetailOpen(true)
-
-  }
-
-  function selectionHandle(select) {
-
-    console.log("selection", select)
-  }
 
 
   return (
@@ -202,46 +111,12 @@ function ClassSetting() {
               {isLoading ?
                 <Loading /> : (
                   <>
-                    <JobTable
-                      columns={jobcolumns}
-                      data={data}
-                      jobSelected={jobSelected}
-                      jobAddModalOpen={jobAddModalOpen}
-                      selectionHandle={(select) => selectionHandle(select)}
-
-                    />
+                  {  user.userData&& <JobTable
+                      columns={user.userData.role ===0 ?jobcolumns:jobstudentcolumns}
+                      data={data.filter(data =>data.joinPossible===true)}
+                    />}
                   </>
                 )}
-
-              <JobDetailModal
-
-                row={modalRow}
-                open={jobDetailIsOpen}
-                close={jobDetailModalClose}
-                jobEditModalOpen={jobEditModalOpen}
-                jobJoinPossibleChange={(input) => jobUpdate(input)}
-                jobDeleteModalOpen={jobDeleteModalOpen}
-
-              />
-
-              <JobEditModal
-
-                row={modalRow}
-                open={jobEditIsOpen}
-                close={jobEditModalClose}
-                jobUpdate={(input) => jobUpdate(input)}
-              />
-
-              <JobDeleteModal
-                open={jobDeleteIsOpen}
-                close={jobDeleteModalClose}
-                row={modalRow}
-
-              />
-
-
-
-
 
 
             </div>

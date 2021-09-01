@@ -16,6 +16,7 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import axios from 'axios';
 
 
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -54,27 +55,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const jobAdd = (input) => {
-
-  const { name, salary, recruitment, whatdo, } = input; // 비구조화 할당을 통해 값 추출
-
-  axios
-    .post("/api/jobs", {
-
-      name, salary, recruitment, whatdo,
-      joinPossible: true,
-      classId: classData.classId,
-
-    })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-
-};
 
 
 function JobEditModal(props) {
@@ -98,7 +78,28 @@ function JobEditModal(props) {
     });
 
   };
- 
+  const jobAdd = (input) => {
+
+    const { name, salary, recruitment, whatdo, } = input; // 비구조화 할당을 통해 값 추출
+  
+    axios
+      .post("/api/jobs", {
+  
+        name, salary, recruitment, whatdo,
+        joinPossible: true,
+        classId: classData.classId,
+  
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+  };
+  
   const jobUpdate = () => {
     if (props.row.id === undefined)
       jobAdd({...inputs,classId:classData.classId})
@@ -214,17 +215,16 @@ function JobEditModal(props) {
               </div>
 
               <div className="row py-2">
+
                 <TextField
-                  className="text-gray-900 text-center m-2 job-input"
+                  className="text-gray-900 text-center m-2 job-input col-lg-12 px-4"
                   name="whatdo"
                   defaultValue={props.row.whatdo}
                   required
                   multiline
-                  fullwidth={true}
                   rows={4}
                   onChange={onChange}
                   variant="outlined"
-                  size="small"
                   margin="none"
 
                 />

@@ -35,26 +35,19 @@ class MainHeader extends Component {
           </button>
           <div className="collapse navbar-collapse" id="ftco-nav">
             <ul className="navbar-nav ml-auto">
-              <li className="dropdown nav-item">
+               
+            <li className="nav-item">
                 <a
-                  href="#"
-                  className="dropdown-toggle nav-link icon d-flex align-items-center"
-                  data-toggle="dropdown"
-                  aria-expanded="false"
+                  href=""
+                  className="nav-link icon d-flex align-items-center"
                   style={{ color: "#FFFFFF" }}
                 >
-                  커뮤니티
-                  <b className="caret"></b>
+                  {" "}
+                  CONNECT US
                 </a>
-                <div className="dropdown-menu dropdown-menu-left">
-                  <a href="#" className="dropdown-item">
-                    connect us
-                  </a>
-                  <a href="#" className="dropdown-item">
-                    자주묻는 질문{" "}
-                  </a>
-                </div>
               </li>
+           
+              
               <li className="nav-item">
                 <a
                   href="/signin"
@@ -65,6 +58,7 @@ class MainHeader extends Component {
                   SIGN IN
                 </a>
               </li>
+           
             </ul>
           </div>
         </div>
