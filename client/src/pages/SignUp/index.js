@@ -246,7 +246,7 @@ function SignUp(props) {
                         >
                           회원가입
                         </button>
-
+{/* 
                         <hr />
                         <Link
                           to="/classes"
@@ -261,7 +261,7 @@ function SignUp(props) {
                         >
                           <i className="fab fa-facebook-f fa-fw"></i>
                           Facebook으로 회원 가입하기
-                        </Link>
+                        </Link> */}
                       </form>
                     );
                   }}
@@ -269,9 +269,7 @@ function SignUp(props) {
 
                 <hr />
                 <div className="text-center">
-                  <a className="small" href="forgot-password.html">
-                    비밀번호를 잊어버리셨습니까?
-                  </a>
+                <Link className="small" to="/">메인으로 돌아가기</Link>
                 </div>
                 <div className="text-center">
                   <Link className="small" to="/signin">
