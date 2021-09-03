@@ -45,16 +45,6 @@ function ClassListDetail() {
     <div className="row">
       {/*<!--className 추가-->*/}
       <div className="col-lg-3">
-<<<<<<< HEAD
-        <div className="row justify-content-center align-items-center" style={{height:450}}>
-        <div className="card m-40">
-          <div className="card-body">
-            {user.userData &&
-              (user.userData.role == 0 ? <FormDialog /> : "hello")}
-          </div>
-        </div>
-        </div>
-=======
         <div
           className="row justify-content-center align-items-center"
           style={{ height: 450 }}
@@ -70,7 +60,6 @@ function ClassListDetail() {
             </div>
           </div>
         </div>
->>>>>>> 9a57e2778eb73b1410afa2be34b44c5108368ead
       </div>
 
       {/* 데이터 만큼 */}
@@ -78,10 +67,7 @@ function ClassListDetail() {
       {isLoading ? (
         <Loading/>
       ) : (
-<<<<<<< HEAD
-=======
         classes &&
->>>>>>> 9a57e2778eb73b1410afa2be34b44c5108368ead
         classes.map((info, i) => (
           <ClassCard
             id={info._id}

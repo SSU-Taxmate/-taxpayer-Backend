@@ -63,7 +63,8 @@ router.get('/', (req, res) => {
 router.post('/', isNotLoggedIn, async(req, res, next) => {
 
     const { email, name, password, birth } = req.body;
-
+    const AuthNum = req.body.AuthNum;
+    console.log(AuthNum);
     console.log('회원가입 버튼 누름');
     console.log('email:' + email + ', name:' + name + ', password:' + password, 'promotion:', promotion);
 
