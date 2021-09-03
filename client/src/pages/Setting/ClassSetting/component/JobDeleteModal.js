@@ -3,14 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../../../../styles/css/jobModal.css";
 
 //modal import
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
 
-import { Box, Button, ButtonGroup, Paper } from "@material-ui/core";
-
-import Delete from "@material-ui/icons/Delete";
-import axios from "axios";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
+import Delete from '@material-ui/icons/Delete';
+import axios from 'axios'
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({

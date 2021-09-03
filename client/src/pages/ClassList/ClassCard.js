@@ -76,7 +76,7 @@ function ClassCard(props) {
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="share">
-            <ClassCodeModal id={`${props.title}displaycode`}></ClassCodeModal>
+            <ClassCodeModal id={`${props.title}displaycode`} entrycode={props.entrycode}></ClassCodeModal>
           </IconButton>
           <IconButton aria-label="delete" style={{ marginLeft: 'auto' }}>
             <DeleteIcon />
