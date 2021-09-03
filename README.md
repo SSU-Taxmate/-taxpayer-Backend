@@ -4,7 +4,7 @@ The repository for tax pay simulation for children
 
 # Collaborator🙅‍♀️
 ----------------------
-- Kim Seung Joo [🏠️](https://github.com/Seung-Joo)
+- Kim Seung Joo [🏠️](https://github.com/SeungJooKim)
 - Park Eun Jeong [🏠️](https://github.com/Eundms)
 - Bae mi hea [🏠️](https://github.com/mihea1206)
 - Choi si eon [🏠️](https://github.com/noino0819)
