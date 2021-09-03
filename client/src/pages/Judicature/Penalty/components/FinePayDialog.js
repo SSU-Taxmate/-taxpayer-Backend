@@ -25,16 +25,16 @@ export default function AlertDialog(props) {
       .then(function (response) {
         if (response.data.success == false) {
           alert("잔액이 부족합니다!");
+        } else {
+          console.log(response);
+          window.location.reload();
         }
-        console.log(response);
       })
       .catch(function (error) {
         alert("error");
         console.log(error);
       });
-
     setOpen(false);
-    window.location.reload();
   };
   return (
     <div>

@@ -237,16 +237,15 @@ function SignUp(props) {
                                   <input
                                     className="form-check-input"
                                     type="radio"
-                                    name="flexRadioDefault"
                                     id="role"
-                                    name="role"
+                                    name="signup"
                                     value={0} //선생님일시 0
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                   />
                                   <label
                                     className="form-check-label"
-                                    for="flexRadioDefault1"
+                                    for="signup"
                                   >
                                     선생님
                                   </label>
@@ -255,13 +254,13 @@ function SignUp(props) {
                                   <input
                                     className="form-check-input"
                                     type="radio"
-                                    name="flexRadioDefault"
-                                    id="flexRadioDefault2"
+                                    name="signup"
+                                    id="role1"
                                     checked
                                   />
                                   <label
                                     className="form-check-label"
-                                    for="flexRadioDefault2"
+                                    for="signup"
                                   >
                                     학생
                                   </label>
