@@ -3,6 +3,8 @@ const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 //=================================
 //             User
@@ -22,20 +24,55 @@ router.get("/auth", auth, (req, res) => {
     });
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async(req, res, next) => {
 
-    //console.log(req.body);
-    const user = new User(req.body);
-    if (req.body.AuthNum == 1) {
-        user.save((err, doc) => {
-            if (err) return res.json({ success: false, err });
-            return res.status(200).json({
-                success: true
-            });
-        });
+    var myrole = 1;
+    const { email, name, password, AuthNum, role } = req.body;
+    if (role == '') {
+        myrole = 1;
     } else {
-        return res.redirect('/signup?error=exist');
+        myrole = 0;
     }
+    try {
+        const exUser = await User.findOne({ email: email }); // 이메일 중복 확인
+        if (exUser) {
+            return res.json({ success: false, err: '이미가입된 회원입니다' })
+        }
+        if (req.body.AuthNum == 0) {
+            return res.json({ success: false, err: '이메일 인증을 먼저 진행해주세요' });
+        }
+        const user = await User.create({
+            email: email,
+            name: name,
+            password: password,
+            token: "",
+            tokenExp: null,
+            role: myrole
+        });
+        //console.log('추가된 user:' + user);
+        return res.json({ success: true, err: '회원가입성공!' })
+        next();
+
+        // return res.redirect('/login');
+    } catch (error) {
+        return res.json({ success: false, err: '회원가입실패' })
+    }
+
+
+    // const { email, name, AuthNum, role, passsword } = req.body;
+    // onsole.log(req.body);
+    // const user = new User(req.body);
+    // if (req.body.AuthNum == 1) {
+    //     user.save((err, doc) => {
+    //         if (err) return res.json({ success: false, err: '회원가입실패' });
+    //         return res.status(200).json({
+    //             success: true
+    //         });
+    //     });
+    //     console.log("회원가입성공");
+    // } else {
+    //     return res.json({ success: false, err: '회원가입실패' })
+    // }
     //회원가입시 현재 이게 불리는거임.
 });
 

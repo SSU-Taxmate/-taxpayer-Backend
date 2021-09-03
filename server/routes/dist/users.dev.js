@@ -10,7 +10,13 @@ var _require = require("../models/User"),
 var _require2 = require("../middleware/auth"),
     auth = _require2.auth;
 
-var nodemailer = require('nodemailer'); //=================================
+var nodemailer = require('nodemailer');
+
+var bcrypt = require('bcrypt');
+
+var _require3 = require('./middlewares'),
+    isLoggedIn = _require3.isLoggedIn,
+    isNotLoggedIn = _require3.isNotLoggedIn; //=================================
 //             User
 //=================================
 
@@ -28,30 +34,90 @@ router.get("/auth", auth, function (req, res) {
     role: req.user.role
   });
 });
-router.post("/register", function (req, res) {
-  //console.log(req.body);
-  var user = new User(req.body);
+router.post("/register", function _callee(req, res, next) {
+  var myrole, _req$body, email, name, password, AuthNum, role, exUser, user;
 
-  if (req.body.AuthNum == 1) {
-    user.save(function (err, doc) {
-      if (err) return res.json({
-        success: false,
-        err: err
-      });
-      return res.status(200).json({
-        success: true
-      });
-    });
-  } else {
-    return res.redirect('/signup?error=exist');
-  } //회원가입시 현재 이게 불리는거임.
-
-});
-router.post('/email', function _callee(req, res, next) {
-  var email, name, sId, emailverify, password, confirmpassword, entryCode, exUser, authNum, emailTemplete, transporter, mailOptions;
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
+        case 0:
+          myrole = 1;
+          _req$body = req.body, email = _req$body.email, name = _req$body.name, password = _req$body.password, AuthNum = _req$body.AuthNum, role = _req$body.role;
+
+          if (role == '') {
+            myrole = 1;
+          } else {
+            myrole = 0;
+          }
+
+          _context.prev = 3;
+          _context.next = 6;
+          return regeneratorRuntime.awrap(User.findOne({
+            email: email
+          }));
+
+        case 6:
+          exUser = _context.sent;
+
+          if (!exUser) {
+            _context.next = 9;
+            break;
+          }
+
+          return _context.abrupt("return", res.json({
+            success: false,
+            err: '이미가입된 회원입니다'
+          }));
+
+        case 9:
+          if (!(req.body.AuthNum == 0)) {
+            _context.next = 11;
+            break;
+          }
+
+          return _context.abrupt("return", res.json({
+            success: false,
+            err: '이메일 인증을 먼저 진행해주세요'
+          }));
+
+        case 11:
+          _context.next = 13;
+          return regeneratorRuntime.awrap(User.create({
+            email: email,
+            name: name,
+            password: password,
+            token: "",
+            tokenExp: null,
+            role: myrole
+          }));
+
+        case 13:
+          user = _context.sent;
+          return _context.abrupt("return", res.json({
+            success: true,
+            err: '회원가입성공!'
+          }));
+
+        case 18:
+          _context.prev = 18;
+          _context.t0 = _context["catch"](3);
+          return _context.abrupt("return", res.json({
+            success: false,
+            err: '회원가입실패'
+          }));
+
+        case 21:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, null, null, [[3, 18]]);
+});
+router.post('/email', function _callee2(req, res, next) {
+  var email, name, sId, emailverify, password, confirmpassword, entryCode, exUser, authNum, emailTemplete, transporter, mailOptions;
+  return regeneratorRuntime.async(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
         case 0:
           email = req.body.email;
           name = req.body.name;
@@ -61,14 +127,14 @@ router.post('/email', function _callee(req, res, next) {
           confirmpassword = req.body.confirmpassword;
           entryCode = req.body.entryCode; // 이미 가입된 이메일인지 확인
 
-          _context.prev = 7;
-          _context.next = 10;
+          _context2.prev = 7;
+          _context2.next = 10;
           return regeneratorRuntime.awrap(User.findOne({
             email: email
           }));
 
         case 10:
-          exUser = _context.sent;
+          exUser = _context2.sent;
 
           // 이메일 중복 확인
           if (exUser) {
@@ -120,17 +186,17 @@ router.post('/email', function _callee(req, res, next) {
               transporter.close();
             }
           });
-          _context.next = 22;
+          _context2.next = 22;
           break;
 
         case 19:
-          _context.prev = 19;
-          _context.t0 = _context["catch"](7);
-          return _context.abrupt("return", res.status(403).send('This account does not exist'));
+          _context2.prev = 19;
+          _context2.t0 = _context2["catch"](7);
+          return _context2.abrupt("return", res.status(403).send('This account does not exist'));
 
         case 22:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
     }
   }, null, null, [[7, 19]]);

@@ -73,6 +73,7 @@ function SignUp(props) {
                     password: "",
                     confirmPassword: "",
                     emailverify: "",
+                    role: "",
                   }}
                   validationSchema={Yup.object().shape({
                     name: Yup.string().required("이름을 입력해주세요"),
@@ -98,13 +99,16 @@ function SignUp(props) {
                         password: values.password,
                         name: values.name,
                         AuthNum: AuthNum,
+                        role: values.role,
                       };
 
                       dispatch(registerUser(dataToSubmit)).then((response) => {
+                        console.log(response.payload);
                         if (response.payload.success) {
-                          props.history.push("/signup");
+                          alert("회원가입 성공!");
+                          props.history.push("/signin");
                         } else {
-                          alert(response.payload.err.errmsg);
+                          alert(response.payload.err);
                         }
                       });
 
@@ -234,7 +238,11 @@ function SignUp(props) {
                                     className="form-check-input"
                                     type="radio"
                                     name="flexRadioDefault"
-                                    id="flexRadioDefault1"
+                                    id="role"
+                                    name="role"
+                                    value={0} //선생님일시 0
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                   />
                                   <label
                                     className="form-check-label"
