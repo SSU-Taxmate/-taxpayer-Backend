@@ -6,15 +6,52 @@ import axios from 'axios';
 import { registerUser } from "../../redux/_actions/index";
 import { useDispatch } from "react-redux";
 
-/**SignupForm부분을 추가해야 함 */
+var Authcheck ;
+var AuthNum=0 ; //이메일 확인시 1, 아니면 0
 
 function SignUp(props) {
   useEffect(() => {
     document.getElementById("body").className = "bg-gradient-primary";
   });
   const handleSubmit2= (e) => {
-alert("ssss");
+    {
+      const data = {
+        email: e.target.value
+      };
+      alert("인증번호가 발송되었습니다 이메일을 확인해주세요");
+      axios
+        .post(`/api/users/email`, data)
+        .then(function (response) {
+          console.log(response.data);
+          Authcheck=response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("testing fine error");
+        });
+    };
+
   }
+  const handleSubmit3= (e) => {
+    {
+      const data = {
+        emailverify: e.target.value
+      };
+      if (e.target.value == Authcheck){
+        alert("이메일 인증이 완료되었습니다");
+        AuthNum=1; //이메일 인증완료
+        e.currentTarget.disabled = true ; //성공했으니 다시 못누르게하기
+      }
+      else {
+        alert("이메일 확인 코드를 다시 확인해주세요");
+        AuthNum=0; //이메일 인증실패. 다시요구하기
+      }
+    };
+
+  }
+
+  
+
   const dispatch = useDispatch();
   return (
     <div className="container">
@@ -35,6 +72,7 @@ alert("ssss");
                     sId: "",
                     password: "",
                     confirmPassword: "",
+                    emailverify: "",
                   }}
                   validationSchema={Yup.object().shape({
                     name: Yup.string().required("이름을 입력해주세요"),
@@ -55,17 +93,18 @@ alert("ssss");
                   onSubmit={(values, { setSubmitting }) => {
                     //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
-                      let dataToSubmit = {
+                      let dataToSubmit = { //이곳에 송신할 데이터 추가.
                         email: values.email,
                         password: values.password,
                         name: values.name,
+                        AuthNum: AuthNum,
                       };
 
                       dispatch(registerUser(dataToSubmit)).then((response) => {
                         if (response.payload.success) {
                           props.history.push("/signup");
                         } else {
-                          //alert(response.payload.err.errmsg);
+                          alert(response.payload.err.errmsg);
                         }
                       });
 
@@ -148,7 +187,8 @@ alert("ssss");
                             )}
                           </div>
                           <button
-                            type="button"
+                            type="submit"
+                            value={values.email}
                             onClick={handleSubmit2}
                             className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
                             style={{ marginLeft: "1rem" }}
@@ -156,8 +196,6 @@ alert("ssss");
                           >
                             이메일 인증받기
                           </button>
-                          <script>
-                          </script>
                         </div>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
@@ -166,8 +204,21 @@ alert("ssss");
                               placeholder="이메일 확인 코드"
                               className="form-control form-control-user"
                               type="verifycode"
+                              value={values.emailverify}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
                           </div>
+                          <button
+                            type="submit"
+                            value={values.emailverify}
+                            onClick={handleSubmit3}
+                            className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
+                            style={{ marginLeft: "1rem" }}
+                            
+                          >
+                            이메일 인증확인
+                          </button>
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <div className="row">
                               <div className="form-check">

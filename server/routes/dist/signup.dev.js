@@ -79,39 +79,41 @@ router.get('/', function (req, res) {
 // 회원가입 form
 
 router.post('/', isNotLoggedIn, function _callee2(req, res, next) {
-  var _req$body, email, name, password, birth, exUser, hash, user;
+  var _req$body, email, name, password, birth, AuthNum, exUser, hash, user;
 
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
           _req$body = req.body, email = _req$body.email, name = _req$body.name, password = _req$body.password, birth = _req$body.birth;
+          AuthNum = req.body.AuthNum;
+          console.log(AuthNum);
           console.log('회원가입 버튼 누름');
           console.log('email:' + email + ', name:' + name + ', password:' + password, 'promotion:', promotion);
-          _context2.prev = 3;
-          _context2.next = 6;
+          _context2.prev = 5;
+          _context2.next = 8;
           return regeneratorRuntime.awrap(User.findOne({
             email: email
           }));
 
-        case 6:
+        case 8:
           exUser = _context2.sent;
 
           if (!exUser) {
-            _context2.next = 10;
+            _context2.next = 12;
             break;
           }
 
           console.log('이미 가입된 회원입니다.');
           return _context2.abrupt("return", res.redirect('/signup?error=exist'));
 
-        case 10:
-          _context2.next = 12;
+        case 12:
+          _context2.next = 14;
           return regeneratorRuntime.awrap(bcrypt.hash(password, 12));
 
-        case 12:
+        case 14:
           hash = _context2.sent;
-          _context2.next = 15;
+          _context2.next = 17;
           return regeneratorRuntime.awrap(User.create({
             email: email,
             name: name,
@@ -120,27 +122,27 @@ router.post('/', isNotLoggedIn, function _callee2(req, res, next) {
             promotion: promotion
           }));
 
-        case 15:
+        case 17:
           user = _context2.sent;
           console.log('추가된 user:' + user);
           res.send('success');
           next(); // return res.redirect('/login');
 
-          _context2.next = 26;
+          _context2.next = 28;
           break;
 
-        case 21:
-          _context2.prev = 21;
-          _context2.t0 = _context2["catch"](3);
+        case 23:
+          _context2.prev = 23;
+          _context2.t0 = _context2["catch"](5);
           console.log('회원가입 에러');
           console.error(_context2.t0);
           return _context2.abrupt("return", next(_context2.t0));
 
-        case 26:
+        case 28:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[3, 21]]);
+  }, null, null, [[5, 23]]);
 });
 module.exports = router;
