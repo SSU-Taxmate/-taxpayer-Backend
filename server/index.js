@@ -45,7 +45,7 @@ app.use('/api/laws', require('./routes/law'))
     /* cron */
     //app.use('/api/batch',require('./routes/batch'))
 
-
+app.use('/api/fine', require('./routes/fine'))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/api/stats/nation', (req, res) => {
