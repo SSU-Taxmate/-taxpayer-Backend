@@ -24,8 +24,8 @@ function AccountStock() {
         setIsLoading(true);
         try {
             const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`,{params:{classId:classData.classId}})
-            console.log('>>>>>',result.data)//Alert로 사용자에게 보여주기
             setstocks(result.data)
+            console.log('stock/accountstock/index.js',result.data)
         } catch (error) {
             setIsError(true);
         }

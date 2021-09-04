@@ -21,13 +21,14 @@ function DeleteValueDialog({stockId,priceId}) {
         axios.delete(`/api/stocks/${stockId}/prices/${priceId}`)
         .then(function (response) {
           console.log(response);
+          window.location.reload();
+
         })
         // 응답(실패)
         .catch(function (error) {
           console.log(error);
         })
     };
-
 
   return (
     <>
