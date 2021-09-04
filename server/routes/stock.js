@@ -412,7 +412,7 @@ router.post('/:id/orders', async (req, res) => {
       const classId = req.body.classId
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-      //console.log(stockaccount.holdingStocks[index].quantity)
+      console.log('매도-보유수량',quantity,stockaccount,stockaccount.holdingStocks[index].quantity)
 
       if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {//매도수량 확인
         //매도
@@ -423,16 +423,17 @@ router.post('/:id/orders', async (req, res) => {
               [`holdingStocks.${index}.allPayAmount`]: - currentPrice * quantity
             }
           }
-          , { session })//
+          ).exec({session})
         const pullStock = await StockAccount.updateOne({ studentId: studentId },
           {
             $pull: {
               holdingStocks: { quantity: 0 }//수량없는 경우
             }
-          }, { session })
+          }).exec({session})
+       
 
         // 1. 은행 (입금)
-        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
+        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }).exec({session})
 
         // 은행 거래 데이터 추가(입금)
         const transfer = new AccountTransaction({
