@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Table, TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from '@material-ui/core';
 import { useSelector } from "react-redux";
 import Loading from '../../../../components/Loading';
+import Error from '../../../../components/Error'
+
 import DeleteStockDialog from './DeleteStockDialog';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,16 +12,17 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import DetailStockDialog from './DetailStockDialog';
 import AddStockDialog from './AddStockDialog'
 import moment from 'moment-timezone';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { Link } from "react-router-dom";
 
 function SettingStocks() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [stocks, setstocks] = useState([]);
     let classData = useSelector(state => state.classInfo.classData);
-    const column = ['삭제', '이름', '설명','상장 폐지 예정' ,'자세히보기'];
+    const column = ['삭제', '이름', '설명', '상장 폐지 예정', '자세히보기'];
 
     /*페이지 */
     const [page, setPage] = useState(0);
@@ -32,71 +35,83 @@ function SettingStocks() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+    const fetchData = async () => {
+        setIsError(false);
+        setIsLoading(true);
+        try {
+            const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
+            //console.log("/api/stocks/manage", result.data);
+            setstocks(result.data)
+        } catch (error) {
+            setIsError(true);
+        }
+        setIsLoading(false);
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            setIsError(false);
-            setIsLoading(true);
-            try {
-                const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
-                //console.log("/api/stocks/manage", result.data);
-                setstocks(result.data)
-            } catch (error) {
-                setIsError(true);
-            }
-            setIsLoading(false);
-        };
         fetchData();
     }, [classData.classId])
     return (
         <div>
+            {isError&&<Error/>}
             {isLoading ?
                 <Loading /> : (
                     <>
-                    <AddStockDialog/>
-                    <Table aria-label="setting-table" size="small">
-                        <TableHead>
-                            <TableRow>
-                                {column.map((v, i) =>
-                                    <TableCell key={i}>{v}</TableCell>
-                                )}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {(rowsPerPage > 0 ?
-                                stocks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : stocks
-                            ).map((row, i) => (
-                                <TableRow key={i}>
-                                    <TableCell  style={{ width: '1rem' }}><DeleteStockDialog stockId={row._id} /></TableCell>
-                                    <TableCell style={{ width: '5rem' }}>
-                                        {row.stockName}
-                                    </TableCell>
-                                    <TableCell >{row.description}</TableCell>
-                                    <TableCell>{row.ondelete?moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD'):''}</TableCell>
-                                    <TableCell ><DetailStockDialog stock={row} /></TableCell>
+                        <AddStockDialog />
+                        <Table aria-label="setting-table" size="small">
+                            <TableHead>
+                                <TableRow>
+                                    {column.map((v, i) =>
+                                        <TableCell key={i}>{v}</TableCell>
+                                    )}
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 25, { label: '모두', value: -1 }]}
-                                    colSpan={5}
-                                    count={stocks.length}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    SelectProps={{
-                                        inputProps: { 'aria-label': '한 페이지 당 열수' },
-                                        native: true,
-                                    }}
-                                    onPageChange={handleChangePage}
-                                    onRowsPerPageChange={handleChangeRowsPerPage}
-                                    ActionsComponent={TablePaginationActions}
-                                />
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
-                </>
+                            </TableHead>
+                            <TableBody>
+                                {(rowsPerPage > 0 ?
+                                    stocks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    : stocks
+                                ).map((row, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell style={{ width: '1rem' }}><DeleteStockDialog stockId={row._id} /></TableCell>
+                                        <TableCell style={{ width: '5rem' }}>
+                                            {row.stockName}
+                                        </TableCell>
+                                        <TableCell >{row.description}</TableCell>
+                                        <TableCell>{row.ondelete ? moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD') : ''}</TableCell>
+                                        <TableCell >
+                                            <Link
+                                                to={
+                                                    {
+                                                        pathname:"/classes/:classId/stock/manage/detail",
+                                                        state:{stockId:row._id}
+                                                    }
+                                                }
+                                            >
+                                                <ArrowForwardIosIcon />
+                                            </Link>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25, { label: '모두', value: -1 }]}
+                                        colSpan={5}
+                                        count={stocks.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        SelectProps={{
+                                            inputProps: { 'aria-label': '한 페이지 당 열수' },
+                                            native: true,
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+                    </>
                 )
             }
 

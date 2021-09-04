@@ -22,9 +22,25 @@ router.post("/", async (req, res) => {
     // 트랜젝션 시작
     session.startTransaction();
     // 1) Class 생성
-    const cClass = new Class(req.body);
+    // 1-1) Class 생성시 랜덤번호 부여.
+    var Random = Math.floor(Math.random() * 89999) + 10000; //10000~99999사이의값.
+    // console.log("랜덤" + Random);
+    while ((entry_check = await Class.findOne({ entrycode: Random }))) {
+      Random = Random + 1;
+      // console.log("랜덤_중복" + Random);
+      if (Random > 99999) {
+        Random = 10000;
+      }
+    } // 중복없는 랜덤번호
+    const cClass = await Class.create({
+      name: req.body.name,
+      image: req.body.image,
+      comment: req.body.comment,
+      teacherId: req.body.teacherId,
+      entrycode: Random,
+    });
     const classres = await cClass.save({ session });
-    //console.log('cClass',cClass)
+    //console.log('cClass', cClass)
     // 2) Tax default 생성
     const cTax = new Tax({ classId: cClass._id });
     //console.log('cTax',cTax)
@@ -81,9 +97,9 @@ router.get("/", (req, res) => {
   }
 });
 /*
-  [정상] class 정보 업데이트
-  : comment, image
-*/
+      [정상] class 정보 업데이트
+      : comment, image
+    */
 router.put("/", (req, res) => {
   //console.log(req.body)
   Class.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
@@ -94,11 +110,11 @@ router.put("/", (req, res) => {
   });
 });
 /*
-  class 삭제 - 미완 (Cascade- 모두 합친 cascade)
-  : (1) ClassId - Tax, Stock, Homework 모두 삭제
-    (2) ClassId - Class 삭제
-    - req.query{classId:}
-*/
+      class 삭제 - 미완 (Cascade- 모두 합친 cascade)
+      : (1) ClassId - Tax, Stock, Homework 모두 삭제
+        (2) ClassId - Class 삭제
+        - req.query{classId:}
+    */
 router.delete("/:id", async (req, res) => {
   /*role확인*/
   //classId필수
@@ -175,9 +191,9 @@ router.post("/join", async (req, res) => {
   }
 });
 /*
-  [정상]class에 join한 User의 class내 ID
-  : redux에 저장하기 위해서 사용
-*/
+      [정상]class에 join한 User의 class내 ID
+      : redux에 저장하기 위해서 사용
+    */
 router.get("/:id/join", (req, res) => {
   //console.log(req.params.id,req.query)
   const classId = req.params.id;
@@ -193,10 +209,10 @@ router.get("/:id/join", (req, res) => {
   );
 });
 /*
-  [] JoinedUser 학생 한명 삭제
-  학생의 클래스 탈퇴
-  클래스에 속한 학생의 모든 정보를 삭제해야 함
-*/
+      [] JoinedUser 학생 한명 삭제
+      학생의 클래스 탈퇴
+      클래스에 속한 학생의 모든 정보를 삭제해야 함
+    */
 router.delete("/:id/join", (req, res) => {
   // {classId:, userId:}
   console.log(req.params.id, req.query.userId);
@@ -210,8 +226,27 @@ router.delete("/:id/join", (req, res) => {
     res.json({ success: true });
   });
 });
-module.exports = router;
 
+// class extends React.Component {
+//     state = { number: [0, 0, 0, 0, 0, 0, 0] };
+//     randomize = () => {
+//         if (!this.state.effect) {
+//             const numberCopy = numbers.map((x) => x);
+//             const arr = [];
+//             for (let i = 0; i <= 7; i++) {
+//                 const random = Math.floor(
+//                     Math.random() * (numberCopy.length - 1)
+//                 );
+//                 arr.push(numberCopy[random] + 1);
+//                 numberCopy.splice(random, 1);
+//             }
+//             this.setState({ number: arr, effect: true });
+//             setTimeout(() => {
+//                 this.setState({ effect: false });
+//             }, 8000);
+//         }
+//     };
+// }
 /*참가코드로 해당 국가 찾기*/
 router.get("/findClass", (req, res) => {
   entryCode = req.query.entryCode;
@@ -221,3 +256,4 @@ router.get("/findClass", (req, res) => {
     res.json(classes);
   });
 });
+module.exports = router;

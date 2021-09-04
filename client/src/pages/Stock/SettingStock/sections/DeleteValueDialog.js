@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import axios from 'axios';
-function DeleteStockDialog({stockId}) {
+function DeleteValueDialog({stockId,priceId}) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -18,10 +18,11 @@ function DeleteStockDialog({stockId}) {
     const handleSubmit = (e) => {
        e.preventDefault();
         //console.log('submit')
-        axios.delete(`/api/stocks/${stockId}`)
+        axios.delete(`/api/stocks/${stockId}/prices/${priceId}`)
         .then(function (response) {
           console.log(response);
           window.location.reload();
+
         })
         // 응답(실패)
         .catch(function (error) {
@@ -29,14 +30,13 @@ function DeleteStockDialog({stockId}) {
         })
     };
 
-
   return (
     <>
       <IconButton color="primary" onClick={handleOpen}>
         <RemoveCircleOutlineIcon />
       </IconButton>
       <Dialog aria-labelledby="stock-dialog-title" open={open}>
-        <DialogTitle id="stock-dialog-title">주식 삭제</DialogTitle>
+        <DialogTitle id="stock-dialog-title">값 삭제</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <div>정말 삭제하시겠습니까? 복구 불가능합니다.</div>
@@ -55,4 +55,4 @@ function DeleteStockDialog({stockId}) {
   );
 }
 
-export default DeleteStockDialog;
+export default DeleteValueDialog;
