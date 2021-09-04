@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import $ from "jquery";
 import ClipboardJS from "clipboard";
-import ShareIcon from '@material-ui/icons/Share';
+import ShareIcon from "@material-ui/icons/Share";
+import "../../../styles/css/classCodeModal.css";
 
 export default class ClassCodeModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
   componentDidMount() {
     $(document).ready(function () {
@@ -23,8 +23,8 @@ export default class ClassCodeModal extends Component {
           data-toggle="modal"
           data-target={`#${this.state.id}Modal`}
         >
-      {/*    <i className={this.state.icon}></i>*/}
-      <ShareIcon />
+          {/*    <i className={this.state.icon}></i>*/}
+          <ShareIcon />
         </a>
         <div
           className="modal fade"
@@ -36,35 +36,38 @@ export default class ClassCodeModal extends Component {
         >
           <div className="modal-dialog" role="document">
             <div className="modal-content p-4">
-              <img src="https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classNameroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp" />
-
-              <div className="modal-header">
+              <img src="img/background-main2.png" /> {/*이미지*/}
+              <div className="modal-header justify-content-center">
                 <div className="modal-code" id="DisplayCodeModal">
-                  {" "}
-                  className : 꿈나무
+                  <span>국가 : {this.props.className}</span>
                 </div>
               </div>
-              <div className="form-inline">
-                <div className="form-group mb-2">
-                  <strong>참가코드: </strong>
-                </div>
-                <div className="form-group mx-sm-1 mb-2">
-                  <label htmlFor="CopyCode" className="sr-only">
-                    참가코드
-                  </label>
-                  <input
-                    type="text"
-                    id="CopyCode"
-                    className="form-control"
-                    placeholder="Invite Code"
-                    defaultValue={this.props.entrycode}
-                  />
-                  <div
-                    className="btn btn-info btn-clipboard"
-                    data-clipboard-action="copy"
-                    data-clipboard-target="#CopyCode"
-                  >
-                    Copy
+              <div className="form-inline mt-2">
+                <div className="row" style={{ width: "100%" }}>
+                  <div className="col ml-2">
+                    <div className="form-group mb-2 mt-2" id="entryCodeText">
+                      <strong>참가코드: </strong>
+                    </div>
+                    <div className="form-group mx-sm-1 mb-2" style={{display: "inline"}}>
+                      <label htmlFor="CopyCode" className="sr-only">
+                        참가코드
+                      </label>
+                      <input
+                        type="text"
+                        id="CopyCode"
+                        className="form-control"
+                        placeholder="Invite Code"
+                        defaultValue={this.props.entrycode}
+                      />
+                    </div>
+                    <div
+                      className="btn btn-info btn-clipboard"
+                      id="entryCodebtn"
+                      data-clipboard-action="copy"
+                      data-clipboard-target="#CopyCode"
+                    >
+                      Copy
+                    </div>
                   </div>
                 </div>
               </div>
