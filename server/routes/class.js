@@ -148,7 +148,7 @@ router.delete('/:id', async(req, res) => { /*role확인*/
 */
 // transaction이 필요한지는 조금 더 고민해보자
 router.post('/join', async(req, res) => {
-        //console.log('/classes/join',req.body)
+        console.log('/classes/join',req.body)
         const session = await startSession();
         try {
             // 트랜젝션 시작
