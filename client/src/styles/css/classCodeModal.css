@@ -22,12 +22,13 @@
 }
 #CopyCode{
     display:inline;
+    margin-top:0.5rem;
 }
 #entryCode{
     display:flex;
     align-items:center;
 }
 #entryCodebtn{
-    margin-top :-0.3rem;
+    margin-top:0.5rem;
     margin-left: 0.5rem;
 }
