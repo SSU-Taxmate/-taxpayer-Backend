@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,8 +7,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment-timezone';
 import axios from 'axios'
 import { DialogContent } from '@material-ui/core';
-function MangeValueDialog({ type, stockId }) {
-  const [data, setdata] = useState({ value: 0, hint: '' ,updateDate:moment().tz('Asia/Seoul').add(1, 'd').format('YYYY-MM-DD')})
+function MangeValueDialog({ type, stockId,price}) {
+  const [data, setdata] = useState(
+     {
+      value: type==='edit'?price.value:0,
+      hint: type==='edit'?price.hint:'',
+      updateDate: type==='edit'?moment(price.updateDate).tz('Asia/Seoul').format('YYYY-MM-DD'):moment().tz('Asia/Seoul').add(1, 'd').format('YYYY-MM-DD')
+    }
+  )
 
   const [open, setOpen] = useState(false);
 
@@ -20,17 +26,25 @@ function MangeValueDialog({ type, stockId }) {
   };
   const onSubmit = (e) => {
     e.preventDefault()
+    data.updateDate = moment(data.updateDate).tz('Asia/Seoul').startOf('day').utc().format()
     if (type === 'add') {
-      data.updateDate = moment(data.updateDate).tz('Asia/Seoul').startOf('day').utc().format()
-      axios.put(`/api/stocks/${stockId}/prices`, data)
+      axios.post(`/api/stocks/${stockId}/prices`, data)
         .then(function (response) {
           handleClose();
+          window.location.reload();
         })
         .catch(function (error) {
           console.log(error);
         });
-    }else{
-      console.log('edit')
+    } else {
+      axios.put(`/api/stocks/${stockId}/prices`,data)
+      .then(function(response){
+        handleClose();
+        window.location.reload();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   }
   const onChange = useCallback(
@@ -39,7 +53,9 @@ function MangeValueDialog({ type, stockId }) {
 
   const dateField = React.useMemo(
     () => (
-      <input name='updateDate' defaultValue={data.updateDate}
+      <input name='updateDate' 
+        readOnly={type==="edit"?true:false}
+        defaultValue={data.updateDate}
         min={moment().tz('Asia/Seoul').add(1, 'd').format('YYYY-MM-DD')}
         type='date' onChange={onChange} style={{ marginRight: '3px' }}></input>
     ), [data.updateDate])
@@ -56,7 +72,7 @@ function MangeValueDialog({ type, stockId }) {
 
   return (
     <>
-      <IconButton color="primary" onClick={handleOpen}>{type==='add'?<AddIcon />:<EditIcon/>}</IconButton>
+      <IconButton color="primary" onClick={handleOpen}>{type === 'add' ? <AddIcon /> : <EditIcon />}</IconButton>
       <Dialog fullWidth aria-labelledby="stock-dialog-title" open={open} onClose={handleClose}>
         <DialogTitle id="stock-dialog-title">주가 입력</DialogTitle>
         <DialogContent>
