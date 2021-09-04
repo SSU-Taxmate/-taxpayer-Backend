@@ -10,6 +10,8 @@ const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { Tax } = require('../models/Tax/Tax');
 const { Budget } = require('../models/Tax/Budget');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 const router = express.Router();
 /*
@@ -146,20 +148,16 @@ router.post("/", async (req, res) => {
 });
 
 /*
-   [] stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
+   [정상] stock prices 추가/수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
 */
-router.put('/', (req, res) => {
-  console.log('update',req.body)
+router.put('/:id/prices', (req, res) => {
+  const stockId=req.params.id
+  //console.log('update',req.body)
   //daily 입력값이있다면(date로 확인) 빼고 그 자리에 새로운값 넣기
-  Stock.updateOne({ _id: req.body._id },
+  Stock.updateOne({ _id: stockId },
     {
       $push: {
-        prices:
-        {
-          hint: req.body.description,
-          value: req.body.price,
-          updateDate: req.body.updateDate
-        }
+        prices : req.body
       }
     }, (err, doc) => {
       if (err) return res.json({ success: false, err });
@@ -169,6 +167,26 @@ router.put('/', (req, res) => {
     })
 
 })
+/*
+  [정상] stock prices 삭제
+*/
+router.delete('/:id/prices/:priceId',(req,res)=>{
+const stockId=req.params.id
+const priceId=req.params.priceId
+Stock.updateOne({_id:stockId},
+  {
+    $pull:{
+      "prices":{_id:ObjectId(priceId)}
+    }
+  },(err,doc)=>{
+    if (err)return res.json({success:false,err});
+    return res.status(200).json({
+      success:true
+    })
+  })
+})
+
+
 /*
   [정상]  stock 삭제&미사용 : ClassStock , Stock  { stockId: }
 

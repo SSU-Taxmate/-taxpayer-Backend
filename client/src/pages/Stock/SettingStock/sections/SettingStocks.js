@@ -32,19 +32,19 @@ function SettingStocks() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+    const fetchData = async () => {
+        setIsError(false);
+        setIsLoading(true);
+        try {
+            const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
+            //console.log("/api/stocks/manage", result.data);
+            setstocks(result.data)
+        } catch (error) {
+            setIsError(true);
+        }
+        setIsLoading(false);
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            setIsError(false);
-            setIsLoading(true);
-            try {
-                const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
-                //console.log("/api/stocks/manage", result.data);
-                setstocks(result.data)
-            } catch (error) {
-                setIsError(true);
-            }
-            setIsLoading(false);
-        };
         fetchData();
     }, [classData.classId])
     return (
@@ -52,7 +52,7 @@ function SettingStocks() {
             {isLoading ?
                 <Loading /> : (
                     <>
-                    <AddStockDialog/>
+                    <AddStockDialog />
                     <Table aria-label="setting-table" size="small">
                         <TableHead>
                             <TableRow>

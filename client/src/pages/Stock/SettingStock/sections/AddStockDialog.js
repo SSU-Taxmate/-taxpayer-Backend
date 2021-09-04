@@ -9,6 +9,7 @@ import axios from 'axios'
 import { DialogContent } from '@material-ui/core';
 
 function AddStockDialog() {
+
     const [stockName, setstockName] = useState('')
     const [stockDescription, setstockDescription] = useState('')
     const [stockInit, setstockInit] = useState(0)
@@ -49,6 +50,7 @@ function AddStockDialog() {
             })
             .then(function (response) {
                 console.log(response);
+                window.location.reload();
                 handleClose()
             })
             .catch(function (error) {
