@@ -4,7 +4,7 @@ import DeleteValueDialog from './DeleteValueDialog';
 import ManageValueDialog from './ManageValueDialog';
 
 function NewsItem({ price, stockId }) {
-    console.log('>>', price)
+   // console.log('>>', price)
     const week = { 1: '월', 2: '화', 3: '수', 4: '목', 5: '금', 6: '토', 7: '일' }
     return (
         <div>
@@ -21,7 +21,7 @@ function NewsItem({ price, stockId }) {
                 {moment(price.updateDate).tz('Asia/Seoul') <= moment().tz('Asia/Seoul') ?
                     null :
                     <>
-                        <ManageValueDialog type={'edit'} />
+                        <ManageValueDialog type={'edit'} stockId={stockId} price={price}/>
                         <DeleteValueDialog priceId={price._id} stockId={stockId} />
                     </>
                 }
