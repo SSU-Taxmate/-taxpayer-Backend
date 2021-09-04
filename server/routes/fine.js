@@ -3,7 +3,6 @@
 */
 const express = require("express");
 const { Fine } = require("../models/Judiciary/Fine");
-const { User } = require("../models/User");
 const { JoinedUser } = require("../models/JoinedUser");
 
 const router = express.Router(); /* moongoose로 서버와 데이터베이스 연결 */
@@ -31,9 +30,11 @@ router.get("/", async (req, res) => {
         const student = await JoinedUser.findOne({ _id: v.studentId }).populate(
           "userId"
         );
+        console.log(v.studentId);
         return {
           _id: v._id,
           studentId: v.studentId,
+          studentId_id: student.userId._id,
           name: student.userId.name,
           Amount: v.Amount,
           isPayed: v.isPayed,

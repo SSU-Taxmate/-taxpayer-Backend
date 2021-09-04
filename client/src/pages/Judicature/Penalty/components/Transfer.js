@@ -74,7 +74,7 @@ function Transfer(props) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const data = {
       classId: classData.classId,
       lawReason,

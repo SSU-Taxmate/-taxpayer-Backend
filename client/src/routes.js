@@ -75,7 +75,7 @@ const Routes = () => (
 
       {/*법*/}
       <Route exact path="/classes/:classId/law" component={Auth(Law,true)}/>
-      <Route exact path="/classes/:classId/lawmaking" component={Auth(Congress,true)}/>
+      <Route exact path="/classes/:classId/congress" component={Auth(Congress,true)}/>
 
       {/* 통계청 */}
 

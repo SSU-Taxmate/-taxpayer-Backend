@@ -39,9 +39,9 @@ function SignIn(props) {
               <div className="row">
                 <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
                 <div className="col-lg-6">
-                  <div className="p-5">
-                    <div className="text-center">
-                      <h1 className="h4 text-gray-900 mb-4">TaxMate에 오신 걸 환영합니다</h1>
+                  <div className="p-4">
+                    <div className="text-center mb-3">
+                      <span className="text-gray-900 mb-4" style={{fontSize:"1.5rem"}}>TaxMate에 오신 걸<br></br> 환영합니다</span>
                     </div>
                     <Formik
                       initialValues={{
@@ -104,7 +104,7 @@ function SignIn(props) {
                         return (
                           <>
                             <form onSubmit={handleSubmit} className="user">
-                              <div className="form-group">
+                              <div className="form-group p-1">
                                 <input id="email" type="email"
                                   className="form-control form-control-user"
                                   placeholder="이메일을 입력해주세요..."
@@ -112,7 +112,7 @@ function SignIn(props) {
                                   onChange={handleChange}
                                   onBlur={handleBlur} />
                               </div>
-                              <div className="form-group">
+                              <div className="form-group p-1">
                                 <input id="password" type="password"
                                   className="form-control form-control-user"
                                   placeholder="비밀번호"
@@ -136,14 +136,15 @@ function SignIn(props) {
                                 disabled={isSubmitting} onSubmit={handleSubmit}>
                                 Login
                               </button>
-                              <hr />
+                              {/* <hr />
                               <a href="/classes" className="btn btn-google btn-user btn-block">
                                 <i className="fab fa-google fa-fw"></i> Google으로 로그인
                               </a>
                               <a href="/classes" className="btn btn-facebook btn-user btn-block">
                                 <i className="fab fa-facebook-f fa-fw"></i> Facebook으로 로그인
-                              </a>
+                              </a> */}
                             </form>
+                            
 
                           </>
                         );
@@ -152,7 +153,7 @@ function SignIn(props) {
 
                     <hr />
                     <div className="text-center">
-                      <a className="small" href="forgot-password.html">비밀번호를 잊어버리셨습니까?</a>
+                      <Link className="small" to="/">메인으로 돌아가기</Link>
                     </div>
                     <div className="text-center">
                       <Link className="small" to="/signup">계정 생성</Link>
