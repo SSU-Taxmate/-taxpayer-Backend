@@ -73,9 +73,7 @@ router.post('/', function _callee(req, res) {
           break;
 
         case 13:
-          // 중복없는 랜덤번호
-          console.log("바디바디" + req.body);
-          _context.next = 16;
+          _context.next = 15;
           return regeneratorRuntime.awrap(Class.create({
             name: req.body.name,
             image: req.body.image,
@@ -84,27 +82,27 @@ router.post('/', function _callee(req, res) {
             entrycode: Random
           }));
 
-        case 16:
+        case 15:
           cClass = _context.sent;
-          _context.next = 19;
+          _context.next = 18;
           return regeneratorRuntime.awrap(cClass.save({
             session: session
           }));
 
-        case 19:
+        case 18:
           classres = _context.sent;
-          console.log('cClass', cClass); // 2) Tax default 생성
-
+          //console.log('cClass', cClass)
+          // 2) Tax default 생성
           cTax = new Tax({
             classId: cClass._id
           }); //console.log('cTax',cTax)
 
-          _context.next = 24;
+          _context.next = 22;
           return regeneratorRuntime.awrap(cTax.save({
             session: session
           }));
 
-        case 24:
+        case 22:
           taxres = _context.sent;
           //console.log(taxres)
           // 3) Class Account 생성
@@ -112,44 +110,44 @@ router.post('/', function _callee(req, res) {
             classId: cClass._id
           }); //console.log(budget)
 
-          _context.next = 28;
+          _context.next = 26;
           return regeneratorRuntime.awrap(budget.save({
             session: session
           }));
 
-        case 28:
+        case 26:
           accountres = _context.sent;
-          _context.next = 31;
+          _context.next = 29;
           return regeneratorRuntime.awrap(session.commitTransaction());
 
-        case 31:
+        case 29:
           // 끝
           session.endSession();
           res.status(200).json({
             success: true
           });
-          _context.next = 41;
+          _context.next = 39;
           break;
 
-        case 35:
-          _context.prev = 35;
+        case 33:
+          _context.prev = 33;
           _context.t0 = _context["catch"](3);
-          _context.next = 39;
+          _context.next = 37;
           return regeneratorRuntime.awrap(session.abortTransaction());
 
-        case 39:
+        case 37:
           session.endSession();
           res.json({
             success: false,
             err: _context.t0
           });
 
-        case 41:
+        case 39:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[3, 35]]);
+  }, null, null, [[3, 33]]);
 });
 /*
   [정상] classes 불러오기
