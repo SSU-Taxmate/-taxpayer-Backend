@@ -5,7 +5,7 @@ import PageHeading from "../../../components/PageHeading";
 import ScrollToTop from "../../../components/Scroll";
 
 //modal import
-import { DataGrid, GridToolbarFilterButton } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -21,7 +21,6 @@ function StudentSetting() {
     //modal 띄워서 axios요청 보냄
   };
   let classData = useSelector((state) => state.classInfo.classData);
-  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {

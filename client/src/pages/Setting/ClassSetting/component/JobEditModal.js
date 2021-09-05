@@ -79,16 +79,10 @@ function JobEditModal(props) {
 
   };
   const jobAdd = (input) => {
-
-    const { name, salary, recruitment, whatdo, } = input; // 비구조화 할당을 통해 값 추출
-  
-    axios
-      .post("/api/jobs", {
-  
+    const { name, salary, recruitment, whatdo } = input; // 비구조화 할당을 통해 값 추출
+    axios.post("/api/jobs", {
         name, salary, recruitment, whatdo,
-        joinPossible: true,
         classId: classData.classId,
-  
       })
       .then(response => {
         console.log(response);
@@ -96,36 +90,30 @@ function JobEditModal(props) {
       .catch(function (error) {
         console.log(error);
       });
-  
-  
   };
-  
+
   const jobUpdate = () => {
     if (props.row.id === undefined)
-      jobAdd({...inputs,classId:classData.classId})
+      jobAdd({ ...inputs, classId: classData.classId })
 
-    else
-      {
+    else {
+      const { name, salary, recruitment, whatdo, } = inputs; // 비구조화 할당을 통해 값 추출
 
-        const { name, salary, recruitment, whatdo, joinPossible, } = inputs; // 비구조화 할당을 통해 값 추출
-
-        axios
-          .put("/api/jobs", {
-      
-            name, salary, recruitment, whatdo, joinPossible,
-            classId: classData.classId,
-            _id: props.row.id,
-      
-          })
-          .then(response => {
-            console.log(response);
-      
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-
+      axios.put("/api/jobs", {
+        name: name,
+        salary: salary,
+        recruitment: recruitment,
+        whatdo: whatdo,
+        classId: classData.classId,
+        _id: props.row.id,
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
     modalClose()
   }
 
@@ -173,7 +161,6 @@ function JobEditModal(props) {
                   size="small"
                   margin="none"
 
-
                 />
               </div>
 
@@ -215,7 +202,6 @@ function JobEditModal(props) {
               </div>
 
               <div className="row py-2">
-
                 <TextField
                   className="text-gray-900 text-center m-2 job-input col-lg-12 px-4"
                   name="whatdo"
@@ -226,11 +212,11 @@ function JobEditModal(props) {
                   onChange={onChange}
                   variant="outlined"
                   margin="none"
-
                 />
               </div>
-
-            </div></div>
+            </div>
+          
+          </div>
         </div>
       </Fade>
     </Modal>

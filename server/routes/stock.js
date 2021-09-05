@@ -162,14 +162,6 @@ router.get('/:id/manage', (req, res) => {
         prices: {
           $push: '$prices'
         }
-
-        /* 
-        hint:'$hint',
-         value:'$value',
-         updateDate:{
-           $push:'$updateDate'
-         }
-         */
       }
     }
   ]).exec((err, stock) => {

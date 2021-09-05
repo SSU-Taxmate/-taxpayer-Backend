@@ -17,9 +17,7 @@ const { Tax } = require('../models/Tax/Tax')
   query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
 */
 router.get("/", async (req, res) => {
-  //console.log("classId:", req.query)
   try {
-    // console.log("studentId:",req.params.id,req.query)
     const students = await JoinedUser.find(req.query, [
       "userId",
       "alias",
@@ -41,6 +39,7 @@ router.get("/", async (req, res) => {
         };
       })
     );
+
     res.json(result);
   } catch (err) {
     res.status(500).json({ success: false, error: err });
@@ -75,24 +74,40 @@ router.get("/job", async (req, res) => {
   }
 });
 /*
-  [완료] 클래스 내 한 학생의 직업 지원
+  [완료] 클래스 내 한 학생의 직업 지원 
+  : 이미 가지고 있는 직업에 apply 안됨
 */
 router.post("/:id/jobs/:jobId", (req, res) => {
   const studentId = req.params.id;
   const jobId = req.params.jobId;
-  //console.log(studentId,jobId)
+  console.log(studentId, jobId)
+
   JoinedUser.updateOne(
-    { _id: studentId },
-    { $push: { jobId: jobId } },
-    (err, doc) => {
+    { _id: studentId, jobId: { $ne: jobId } },
+    { $addToSet: { jobId: jobId } }
+    , (err, doc) => {
       if (err) return res.json({ success: false, err });
       return res.status(200).json({
-        success: true,
-      });
-    }
-  );
+        success: true
+      })
+    })
 });
+/*
+  [] 클래스 내 한 학생의 직업 현황
+ */
+router.get('/:id/jobs', (req, res) => {
+  const studentId = req.params.id
+  console.log(req.params)
 
+  JoinedUser.findOne({ _id: studentId }).populate('jobId').exec((err, doc) => {
+    const result = { Job: doc.jobId, studentId: studentId };
+    
+    if (err) return res.status(500).json({ error: err });
+    res.json(result);
+  })
+
+
+})
 
 /* 
    [완료] 클래스 내 한 학생의 job 삭제
@@ -453,8 +468,7 @@ router.get('/:id/stocks/statistics', async (req, res) => {
     let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)
     let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)
     let evaluatedIncome = allEvaluated - allPayAmount
-    let evaluatedProfit = await Math.round(evaluatedIncome / allPayAmount * 100) / 100
-    //console.log(first,allPayAmount,allEvaluated,evaluatedIncome,evaluatedProfit)
+    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100) / 100
     /*
     {
         allPay:,//총매입 - allPayAmount 다 더하기

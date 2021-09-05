@@ -18,7 +18,7 @@ function MangeDeposits() {
     let classData = useSelector(state => state.classInfo.classData);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [deposits, setdeposits] = useState([]);
+    const [deposits, setdeposits] = useState();
     const onhandleClick = (id) => {
         console.log('delete!', id)
         axios.delete(`/api/bank/deposits/${id}`)
@@ -29,26 +29,27 @@ function MangeDeposits() {
                 console.log(error);
             });
     }
-    const fetchData = async () => {
-        setIsError(false);
-        setIsLoading(true);
-        try {
-            const result = await axios.get(`/api/bank/deposits`, { params: { classId: classData.classId } })
-            setdeposits(result.data)
-            // console.log(result.data)//Alert로 사용자에게 보여주기
-        } catch (error) {
-            setIsError(true);
-        }
-        setIsLoading(false);
-    };
+    
     useEffect(() => {
+        const fetchData = async () => {
+            setIsError(false);
+            setIsLoading(true);
+            try {
+                const result = await axios.get(`/api/bank/deposits`, { params: { classId: classData.classId } })
+                setdeposits(result.data)
+                // console.log(result.data)//Alert로 사용자에게 보여주기
+            } catch (error) {
+                setIsError(true);
+            }
+            setIsLoading(false);
+        };
         fetchData();
     }, [])
     return (
         <div className="row justify-content-center">
             <div className='col-lg-8'>
                 <AddDepositDialog />
-                {deposits.map((v, i) =>
+                {deposits&&deposits.map((v, i) =>
                     <div key={i} className='row'>
                         <div className='card shadow col-12 p-2 mb-3'>
                             <div className="row justify-content-between align-items-center mx-4">

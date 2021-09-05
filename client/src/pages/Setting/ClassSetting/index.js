@@ -4,29 +4,25 @@ import Topbar from '../../../components/Navigation/Topbar';
 import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
 import ScrollToTop from '../../../components/Scroll'
+import CheckIcon from '@material-ui/icons/Check';
 
 import axios from 'axios'
 import { useSelector } from "react-redux";
 import Loading from '../../../components/Loading'
-import { Button } from '@material-ui/core';
-
+import ApplyJob from './component/ApplyJob'
 
 import JobTable from './component/JobTable';
-
+import StudentJob from './component/StudentJob';
+import PaySalary from './component/PaySalary';
 
 
 function ClassSetting() {
-
-
   //job date 요청
-  const [isLoading, setIsLoading] = useState(false)
-  const [data, setData] = useState([
-    { id: '0', name: '우체부', salary: '직업', applyed: '' }
-  ])
   const [err, setIsError] = useState(false);
-  const showapplicant = () => {
-    //modal 띄워서 axios요청 보냄
-  }
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [data, setData] = useState()
+
   let classData = useSelector(state => state.classInfo.classData);
   let user = useSelector((state) => state.user);
 
@@ -36,7 +32,7 @@ function ClassSetting() {
     setIsLoading(true);
 
     try {
-      const result = await axios.get('/api/jobs', { params: { classId: classData.classId } });
+      const result = await axios.get('/api/jobs/manage', { params: { classId: classData.classId } });
       let temp = []
       for (let i = 0; i < result.data.length; i++) {
         temp.push({ ...result.data[i], id: result.data[i]._id })
@@ -67,6 +63,7 @@ function ClassSetting() {
     { field: 'name', headerName: '직업명', flex: 3, minWidth: 120, },
     { field: 'salary', headerName: '월급', flex: 2, minWidth: 105, },
     { field: 'recruitment', headerName: '모집인원', flex: 2, minWidth: 135 },
+    { field: 'ondelete', headerName: '삭제예정', flex: 2, minWidth: 100, renderCell: (v) => (v.value ? <CheckIcon color="primary" /> : <div></div>) }
   ]
 
   //student job date grid 
@@ -76,7 +73,7 @@ function ClassSetting() {
     { field: 'recruitment', headerName: '모집인원', flex: 1, minWidth: 135 },
     {
       field: 'applyed', headerName: '지원하기', width: 150,
-      renderCell: (params) => (<Button variant='contained' onClick={showapplicant}>신청서작성</Button>)
+      renderCell: (params) => (<ApplyJob data={params.row} />)
     }]
 
 
@@ -105,16 +102,22 @@ function ClassSetting() {
 
               {/* <!-- Page Heading --> */}
 
-              <PageHeading title="클래스 세팅" />
+              <PageHeading title="직업 설정" />
 
               {/* <!-- Content Row --> */}
               {isLoading ?
                 <Loading /> : (
                   <>
-                  {  user.userData&& <JobTable
-                      columns={user.userData.role ===0 ?jobcolumns:jobstudentcolumns}
-                      data={data.filter(data =>data.joinPossible===true)}
-                    />}
+                    {user.userData &&
+                      data &&
+                      <div className='row'>
+                        <JobTable
+                          columns={user.userData.role === 0 ? jobcolumns : jobstudentcolumns}
+                          data={data}
+                        />
+                        {user.userData.role===1?<StudentJob/>:<PaySalary/>}
+                      </div>
+                    }
                   </>
                 )}
 
