@@ -47,7 +47,6 @@ function ClassListDetail() {
     fetchData();
   }, [user]);
 
-  
   return (
     <div className="row">
       {/*<!--className 추가-->*/}
@@ -95,7 +94,6 @@ function FormDialog() {
   const [open, setOpen] = useState(false);
   /* user값 받아오기 */
   let user = useSelector((state) => state.user);
-  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -187,17 +185,15 @@ function FormDialog() {
   );
 }
 
-
 const steps = [FirstStep, SecondStep];
 const label = ["국가코드 입력", "시민권 발급"];
 
 function FormDialog2() {
-
   const [open, setOpen] = useState(false); //전체 dialog open
   const [activeStep, setActiveStep] = useState(0); //순서
 
   const [errmsg, seterrmsg] = useState(""); //step마다 생기는 errmsg
- 
+
   const [data, setdata] = React.useState({
     entryCode: undefined,
   });
@@ -210,8 +206,8 @@ function FormDialog2() {
 
   const handleChange = (type) => (e) => {
     setdata({ ...data, [type]: e.target.value });
-    console.log(e)
-    console.log("테스트",data);
+    console.log(e);
+    console.log("테스트", data);
   };
 
   //전체 dialog open/close
@@ -222,40 +218,44 @@ function FormDialog2() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleNext =()=>{
-    if(activeStep===0){
-      if (data.entryCode === undefined) { //국가코드 입력 없이 다음으로 넘어갈때 
-        return seterrmsg("국가 코드를 입력해주세요"); 
-      }else{
-          //클래스 데이터 설정
-          console.log("hello", data.entryCode)
-          const result = axios.get("/api/classes/findClass", {
-            params: { entryCode: data.entryCode},
-          }).then(function (response) {
+  const handleNext = () => {
+    if (activeStep === 0) {
+      if (data.entryCode === undefined) {
+        //국가코드 입력 없이 다음으로 넘어갈때
+        return seterrmsg("국가 코드를 입력해주세요");
+      } else {
+        //클래스 데이터 설정
+        console.log("hello", data.entryCode);
+        const result = axios
+          .get("/api/classes/findClass", {
+            params: { entryCode: data.entryCode },
+          })
+          .then(function (response) {
             console.log(response);
-            if(response.data ==null){
-              return seterrmsg("해당 국가가 없습니다.")
-            }else{
+            if (response.data == null) {
+              return seterrmsg("해당 국가가 없습니다.");
+            } else {
               setclass({
-                entryClass : response.data
+                entryClass: response.data,
               });
             }
-            console.log("첫번째 스탭",data.class)
-        })
-        .catch(function (error) {
+            console.log("첫번째 스탭", data.class);
+          })
+          .catch(function (error) {
             console.log(error);
-        });
-
-
+          });
       }
-    }else if(activeStep===1){
-      if (entryClass.entryClass === undefined) { //국가코드 입력 없이 다음으로 넘어갈때 
-        return seterrmsg("해당 국가가 없습니다. 이전으로 돌아가세요"); 
+    } else if (activeStep === 1) {
+      if (entryClass.entryClass === undefined) {
+        //국가코드 입력 없이 다음으로 넘어갈때
+        return seterrmsg("해당 국가가 없습니다. 이전으로 돌아가세요");
+      } else {
+        onSubmit();
       }
     }
     seterrmsg("");
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  }
+  };
   const handleBack = () => {
     setdata({
       entryCode: undefined,
@@ -269,7 +269,7 @@ function FormDialog2() {
     });
     setActiveStep(0);
   };
-  console.log("data1",data)
+  console.log("data1", data);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -291,31 +291,36 @@ function FormDialog2() {
         return <SecondStep data={entryClass} handleChange={handleChange} />;
 
       // case 2:
-        // return <ConfirmStep data={data} handleChange={handleChange} />;
+      // return <ConfirmStep data={data} handleChange={handleChange} />;
       default:
         return "Unknown stepIndex";
     }
   }
+  const finish = () => {
+    alert("가입이 완료되었습니다.");
+    window.location.reload();
+  };
 
-  const onSubmit= (e) => {
-    //e.preventDefault();
-    //console.log('handleSubmit',user.userData._id)
+  const onSubmit = (e) => {
+    // e.preventDefault();
+    console.log("handleSubmit", user.userData._id);
     //데이터 저장
-    // axios
-    //   .post("/api/classes", {
-    //     name: classname,
-    //     image:
-    //       "https://assets.tvo.org/prod/s3fs-public/styles/full_width_1280/public/article-thumbnails/kids%20in%20classroom.JPG?KgEyQTBORydSiHj.xIj8ROjMdJvgPW4r&itok=G4OLcZhp",
-    //     comment: classcontent,
-    //     teacherId: user.userData._id,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    handleNext();
+    axios
+      .post("/api/classes/join", {
+        classInfo: entryClass.entryClass,
+        entrycode: data.entryCode,
+        userId: user.userData._id,
+      })
+      .then(function (response) {
+        console.log(response);
+        if (response.data.success === true) {
+          finish();
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // handleNext();
   };
 
   return (
