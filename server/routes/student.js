@@ -74,6 +74,25 @@ router.get("/job", async (req, res) => {
     res.status(500).json({ success: false, error: err });
   }
 });
+/*
+  [완료] 클래스 내 한 학생의 직업 지원
+*/
+router.post("/:id/jobs/:jobId", (req, res) => {
+  const studentId = req.params.id;
+  const jobId = req.params.jobId;
+  //console.log(studentId,jobId)
+  JoinedUser.updateOne(
+    { _id: studentId },
+    { $push: { jobId: jobId } },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true,
+      });
+    }
+  );
+});
+
 
 /* 
    [완료] 클래스 내 한 학생의 job 삭제
@@ -268,7 +287,7 @@ router.get("/:id/homeworks", async (req, res) => {
 });
 
 /*
-    [으악-정상]student가 구매한 모든 stock 보여주기
+    [정상]student가 구매한 모든 stock 보여주기
     : ByStudentStock이 이거 사용중
 */
 
@@ -356,7 +375,7 @@ router.get('/:id/stocks', async (req, res) => {
   }
 })
 /*
-    [으악-정상]stuent 가 구매한 stock들에 대한 통계정보
+    [정상]stuent 가 구매한 stock들에 대한 통계정보
 */
 
 router.get('/:id/stocks/statistics', async (req, res) => {

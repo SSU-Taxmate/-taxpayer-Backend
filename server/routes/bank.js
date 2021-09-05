@@ -54,7 +54,7 @@ router.put('/deposits', (req, res) => {
   })
 })
 /*
-  [] 예금 상품 삭제 :id이용.
+  [정상] 예금 상품 삭제 :id이용.
   : JoinDeposit에서도 삭제 해야 함.
     1) JoinDeposit에 이 예금 상품({productId:req.params.id})에 가입중인 사람이 있다면, (isClosed:false)
     Deposit의 joinPossible 만 true로(나중에 JoinDeposit을 productId로 aggregate해서 isClosed:false가 없다면, 서버에서 알아서 주기적으로 삭제)

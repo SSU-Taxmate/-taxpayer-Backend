@@ -147,30 +147,31 @@ router.delete("/:id", async (req, res) => {
 
 /*
   [정상/리팩토링필요] Class에 Join하기 위한 목적
-  : 학생이 참가코드입력
+  : 학생이 참가코드입력 - 이미 가입 되어 있다면 가입 되어있다고 메시지 보내기
 */
 // transaction이 필요한지는 조금 더 고민해보자
-router.post('/join', async(req, res) => {
-        console.log('/classes/join',req.body)
-        const session = await startSession();
-        try {
-            // 트랜젝션 시작
-            session.startTransaction();
-            // (1) class에서 entry code로 참가할 class를 찾는다.
-            const classInfo = await Class.findOne({ entrycode: req.body.entrycode }).session(session)
-                //console.log(classInfo)
-                // (2) JoinedUser 스키마에 학생ID, classID를 넣어 학생을 등록시킨다.
-            const cjoineduser = new JoinedUser({ userId: req.body.userId, classId: classInfo._id });
-            const savejoineduser = await cjoineduser.save({ session })
-                //console.log('Save Joined User',savejoineduser)
-                // (3) 기본 계좌 개설
-            const caccount = new Account({ studentId: cjoineduser._id })
-                //console.log('create Account',caccount)
-            const saveaccount = await caccount.save({ session })
-                // (4) 주식 계좌 개설
-            const saccount = new StockAccount({ studentId: cjoineduser._id })
-            const savesaccount = await saccount.save({ session })
-
+router.post('/join', async (req, res) => {
+  console.log('/classes/join', req.body)
+  const entrycode=req.body.entrycode
+  const userId=req.body.userId
+  const session = await startSession();
+  try {
+    // 트랜젝션 시작
+    session.startTransaction();
+    // (1) class에서 entry code로 참가할 class를 찾는다.
+    const classInfo = await Class.findOne({ entrycode: entrycode }).session(session)
+    //console.log(classInfo)
+    // (2) JoinedUser 스키마에 학생ID, classID를 넣어 학생을 등록시킨다.
+    const cjoineduser = new JoinedUser({ userId: userId, classId: classInfo._id });
+    const savejoineduser = await cjoineduser.save({ session })
+    //console.log('Save Joined User',savejoineduser)
+    // (3) 기본 계좌 개설
+    const caccount = new Account({ studentId: cjoineduser._id })
+    //console.log('create Account',caccount)
+    const saveaccount = await caccount.save({ session })
+    // (4) 주식 계좌 개설
+    const saccount = new StockAccount({ studentId: cjoineduser._id })
+    const savesaccount = await saccount.save({ session })
 
     // 트랜젝션 커밋
     await session.commitTransaction();
@@ -187,9 +188,9 @@ router.post('/join', async(req, res) => {
   }
 });
 /*
-      [정상]class에 join한 User의 class내 ID
-      : redux에 저장하기 위해서 사용
-    */
+  [정상]class에 join한 User의 class내 ID
+  : redux에 저장하기 위해서 사용
+*/
 router.get("/:id/join", (req, res) => {
   //console.log(req.params.id,req.query)
   const classId = req.params.id;

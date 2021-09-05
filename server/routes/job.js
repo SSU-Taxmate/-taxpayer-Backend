@@ -10,6 +10,8 @@ const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { Tax } = require('../models/Tax/Tax');
 const { Budget } = require('../models/Tax/Budget');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 /*
   [정상] Job 생성
   {classId: , Job정보들~}
@@ -53,15 +55,21 @@ router.put('/', (req, res) => {
   : JoinedUser에 저장되어 있는 JobId도 없어져야 함.
 */
 router.delete('/:id', async (req, res) => {
-  console.log(req.params.id)
+  const jobId = req.params.id;
+  console.log(jobId)
   const session = await startSession();
   try {
     session.startTransaction();
-    const jobId = req.params.id;
+    
+    //job 
     const res1 = await JoinedUser.updateMany({}, { $pull: { jobId: jobId } }).exec({ session })
     console.log(res1)
+    
+    
+    //job 삭제
     const res2 = await Job.deleteOne({ _id: jobId }).exec({ session })
     console.log(res2)
+    
     // 트랜젝션 커밋
     await session.commitTransaction();
     // 트랜젝션 종료
@@ -75,6 +83,60 @@ router.delete('/:id', async (req, res) => {
     res.json({ success: false, err });
   }
 })
+
+/*
+  >>>>>>>>>>>>>해당 직업을 가지고 있는 모든 학생
+*/
+router.get('/:id/students',(req,res)=>{
+  const jobId=req.params.id
+  const classId=req.query.classId
+  JoinedUser.aggregate([
+    {
+      $match: {
+        'classId':ObjectId(classId),
+        'jobId': ObjectId(jobId)
+      }
+    },
+    {
+      $project:{
+        "userId":'$userId',
+      }
+    },
+    {
+      $lookup:{
+        from :'users',
+        localField:'userId',
+        foreignField:'_id',
+        as:'user'
+      }
+    },
+    {
+      $unwind:'$user'
+    },
+    {
+      $project:{
+        "name":'$user.name'
+      }
+    },
+  ]).exec((err, employee) => {
+    const result = employee
+    console.log(employee)//_id(studentId), name(user.name)
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+
+  /*
+
+  JoinedUser.find({"jobId":jobId}) .populate("userId", "email name alias jobId").exec((err,students)=>{
+       console.log(students)
+       const result = students
+       if (err) return res.status(500).json({ error: err });
+       res.json(result)
+  })
+
+  */
+})
+
 /*
   [완성]Job마다 salary 부여&세금 부여
 */
