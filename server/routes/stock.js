@@ -141,26 +141,27 @@ router.get('/:id/manage', (req, res) => {
     {
       $group: {
         _id: "$_id",
-        description:{
-          $first:"$description"
+
+        description: {
+          $first: "$description"
         },
-        ondelete:{
-          $first:'$ondelete'
+        ondelete: {
+          $first: '$ondelete'
         },
-        ondeleteDay:{
-          $first:'$ondeleteDay'
+        ondeleteDay: {
+          $first: '$ondeleteDay'
         },
-        stockName:{
-          $first:'$stockName'
+        stockName: {
+          $first: '$stockName'
         },
-        createdAt:{
-          $first:'$createdAt'
+        createdAt: {
+          $first: '$createdAt'
         },
-        updatedAt:{
-          $first:'updatedAt'
+        updatedAt: {
+          $first: 'updatedAt'
         },
-        prices:{
-          $push:'$prices'
+        prices: {
+          $push: '$prices'
         }
 
         /* 
@@ -412,7 +413,7 @@ router.post('/:id/orders', async (req, res) => {
       const classId = req.body.classId
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-      //console.log(stockaccount.holdingStocks[index].quantity)
+      console.log('매도-보유수량',quantity,stockaccount,stockaccount.holdingStocks[index].quantity)
 
       if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {//매도수량 확인
         //매도
@@ -423,16 +424,18 @@ router.post('/:id/orders', async (req, res) => {
               [`holdingStocks.${index}.allPayAmount`]: - currentPrice * quantity
             }
           }
-          , { session })//
+          ).exec({session})
         const pullStock = await StockAccount.updateOne({ studentId: studentId },
           {
             $pull: {
               holdingStocks: { quantity: 0 }//수량없는 경우
             }
-          }, { session })
+          }).exec({session})
+       
 
         // 1. 은행 (입금)
-        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
+
+        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }).exec({session})
 
         // 은행 거래 데이터 추가(입금)
         const transfer = new AccountTransaction({
@@ -449,22 +452,24 @@ router.post('/:id/orders', async (req, res) => {
         const tax = await Tax.findOne({ classId: classId }).exec({ session })
         const stocktax = tax.taxlist.stock
         const tax2user = Math.round(stocktax * currentPrice * quantity / 100)
-        //console.log(tax2user)        
+        console.log(tax2user)
 
         //은행 (출금)
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }, { session })
+        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }).exec({session})
         //은행 거래 데이터 추가(출금)
         const account2 = await Account.findOne({ _id: account._id }).exec({ session })
-        //console.log('account2',account,account2)
-        const transfer2 = new AccountTransaction({
-          accountId: account2._id,
-          transactionType: 0,
-          amount: tax2user,
-          memo: '증권거래세',
-          afterbalance: account2.currentBalance
-        })
-        await transfer2.save({ session })
 
+        console.log('>account2',account,account2)
+        if (tax2user > 0)  {
+          const transfer2 = new AccountTransaction({
+            accountId: account2._id,
+            transactionType: 0,
+            amount: tax2user,
+            memo: '증권거래세',
+            afterbalance: account2.currentBalance
+          })
+          await transfer2.save({ session })
+        }
         // 국세청 세금에 추가
         await Budget.updateOne({ classId: classId },
           { $inc: { 'balance.stock': tax2user } }).exec({ session })

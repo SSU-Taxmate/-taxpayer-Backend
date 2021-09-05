@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import axios from 'axios'
-import moment from 'moment-timezone';
 import ChartPie from '../../../../components/Charts/Pie';
 import Loading from '../../../../components/Loading'
 import Error from '../../../../components/Error'
@@ -24,7 +23,7 @@ function ByStudentStock() {
                         classId: classData.classId,
                     }
                 })
-            console.log(result.data)
+            console.log('ByStudentStock.js',result.data)
             let temp=result.data.map((v,i)=>v.currentPrice*v.quantity)
             let sumData=temp.reduce((prev,cur)=>prev+cur)
             setdata(result.data.map((v, i) => Math.round(v.currentPrice*v.quantity/sumData*100)))
