@@ -1,68 +1,72 @@
-import React, { useState} from 'react';
-import PropTypes from 'prop-types';
-import Draft from '../../../../components/Editor';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent'
-import { Button } from '@material-ui/core';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import axios from "axios";
+import { useState } from "react";
 
+export default function AlertDialog(props) {
+  const [open, setOpen] = React.useState(false);
+  const [payFine, setPayFine] = useState(props.data);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-export default function AddLawDialog() {
-    const [lawtitle,setlawtitle]=useState('')
-    const [lawcontent, setlawcontent] = useState({})//{title:'',content:''}
-    const [open, setOpen] = useState(false);
-    let classData = useSelector(state => state.classInfo.classData);
-
-    const handleOpen = () => {
-        setOpen(true);
-      };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleSubmit = (e) => {
-        //e.preventDefault();
-    
-        axios.post(`/api/laws`,{"classId":classData.classId,"title":lawtitle,"content":lawcontent})
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    };
-    const onTitleChange = (e) => {
-        setlawtitle(e.target.value);//e.currentTarget.value
-      };
-    const onContentChange = (value) => {/*editor에서 현재 editor 값 넘겨줌 */
-        setlawcontent(value);
-      };
-    return (
-        <>
-        <button onClick={handleOpen} className='btn btn-outline-primary ml-4 mb-3' style={{ width: '87%' }}>+</button>
-        <Dialog aria-labelledby="law-dialog-title" open={open}>
-            <DialogTitle id="law-dialog-title">법 추가</DialogTitle>
-            <form onSubmit={handleSubmit}>
-                <DialogContent>
-                    <div className="form-inline mb-3">
-                        <label className="mr-2 my-1" htmlFor='newlawtitle'>제목</label>
-                        <input type="text" onChange={onTitleChange} className="form-control" id='newlawtitle'/>
-                    </div>
-                    <label className="mr-2 my-1" htmlFor='newlawcontent'>내용</label>
-                    <Draft type='create' onChange={onContentChange} />
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary" onClick={handleClose} type="submit">추가</Button>
-                    <Button color="primary" onClick={handleClose}>취소</Button>
-                </DialogActions>
-            </form>
-
-        </Dialog>
-        </>
-    );
+  const submitFine = (e) => {
+    axios
+      .put("/api/fine", payFine)
+      .then(function (response) {
+        if (response.data.success == false) {
+          alert("잔액이 부족합니다!");
+        } else {
+          console.log(response);
+          window.location.reload();
+        }
+      })
+      .catch(function (error) {
+        alert("error");
+        console.log(error);
+      });
+    setOpen(false);
+  };
+  return (
+    <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        납부하기
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"해당 벌금을 납부하시겠습니까?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <span>
+              납부해야할 금액은 총 {payFine.Amount} 미소 입니다.<br></br>
+              납부하시겠습니까?
+            </span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            취소
+          </Button>
+          <Button onClick={submitFine} color="primary" autoFocus>
+            납부
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
-
-

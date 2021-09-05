@@ -18,7 +18,6 @@ import Loading from "../../../components/Loading";
 
 export default function Law() {
   const [laws, setlaws] = useState([]);
-  const [updateTime, setupdateTime] = useState("****-**-**");
   const [isLoading, setIsLoading] = useState(false);
   const [err, setIsError] = useState(false);
   let classData = useSelector((state) => state.classInfo.classData);
@@ -71,7 +70,7 @@ export default function Law() {
                 {user.userData && user.userData.role === 0 ? (
                   <PreviewDialog laws={laws} />
                 ) : (
-                  <></>
+                  null
                 )}
               </PageHeading>
               {user.userData && user.userData.role === 0 ? (

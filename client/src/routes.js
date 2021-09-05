@@ -43,6 +43,7 @@ import Penalty from "./pages/Judicature/Penalty";
 import Law from "./pages/Legislature/Law";
 import Congress from "./pages/Legislature/Congress";
 import Auth from "../src/hoc/auth";
+import ManageStock from "./pages/Stock/SettingStock/sections/ManageStock";
 
 const Routes = () => (
   <BrowserRouter>
@@ -64,8 +65,9 @@ const Routes = () => (
       
       {/* 증권 거래소 */}
       <Route exact path="/classes/:classId/stock" component={Auth(TradeStock,true)} />
-      <Route exact path='/classes/:classId/stock/account' component={Auth(AccountStock,true)}/>
+      <Route exact path="/classes/:classId/stock/account" component={Auth(AccountStock,true)}/>
       <Route exact path="/classes/:classId/stock/manage" component={Auth(SettingStock,true,true)}/>
+      <Route exact path="/classes/:classId/stock/manage/detail" component={Auth(ManageStock,true,true)}/>
 
       {/* ***************  행정부  ************** */}
       {/* 국세청 */}

@@ -2,15 +2,56 @@ import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from 'axios';
 import { registerUser } from "../../redux/_actions/index";
 import { useDispatch } from "react-redux";
 
-/**SignupForm부분을 추가해야 함 */
+var Authcheck ;
+var AuthNum=0 ; //이메일 확인시 1, 아니면 0
 
 function SignUp(props) {
   useEffect(() => {
     document.getElementById("body").className = "bg-gradient-primary";
   });
+  const handleSubmit2= (e) => {
+    {
+      const data = {
+        email: e.target.value
+      };
+      alert("인증번호가 발송되었습니다 이메일을 확인해주세요");
+      axios
+        .post(`/api/users/email`, data)
+        .then(function (response) {
+          console.log(response.data);
+          Authcheck=response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("testing fine error");
+        });
+    };
+
+  }
+  const handleSubmit3= (e) => {
+    {
+      const data = {
+        emailverify: e.target.value
+      };
+      if (e.target.value == Authcheck){
+        alert("이메일 인증이 완료되었습니다");
+        AuthNum=1; //이메일 인증완료
+        e.currentTarget.disabled = true ; //성공했으니 다시 못누르게하기
+      }
+      else {
+        alert("이메일 확인 코드를 다시 확인해주세요");
+        AuthNum=0; //이메일 인증실패. 다시요구하기
+      }
+    };
+
+  }
+
+  
+
   const dispatch = useDispatch();
   return (
     <div className="container">
@@ -31,6 +72,8 @@ function SignUp(props) {
                     sId: "",
                     password: "",
                     confirmPassword: "",
+                    emailverify: "",
+                    role: "",
                   }}
                   validationSchema={Yup.object().shape({
                     name: Yup.string().required("이름을 입력해주세요"),
@@ -47,21 +90,25 @@ function SignUp(props) {
                         "Passwords must match"
                       )
                       .required("Confirm Password is required"),
-                  })}
+                  })} //해당하는 정보를 만족하지 않으면 넘어가지 않음.
                   onSubmit={(values, { setSubmitting }) => {
                     //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
-                      let dataToSubmit = {
+                      let dataToSubmit = { //이곳에 송신할 데이터 추가.
                         email: values.email,
                         password: values.password,
                         name: values.name,
+                        AuthNum: AuthNum,
+                        role: values.role,
                       };
 
                       dispatch(registerUser(dataToSubmit)).then((response) => {
+                        console.log(response.payload);
                         if (response.payload.success) {
+                          alert("회원가입 성공!");
                           props.history.push("/signin");
                         } else {
-                          alert(response.payload.err.errmsg);
+                          alert(response.payload.err);
                         }
                       });
 
@@ -83,7 +130,7 @@ function SignUp(props) {
                       handleReset,
                     } = props;
                     return (
-                      <form className="user">
+                      <form className="user" onSubmit={handleSubmit}>
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
@@ -144,9 +191,12 @@ function SignUp(props) {
                             )}
                           </div>
                           <button
-                            type="button"
-                            class="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
+                            type="submit"
+                            value={values.email}
+                            onClick={handleSubmit2}
+                            className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
                             style={{ marginLeft: "1rem" }}
+                            
                           >
                             이메일 인증받기
                           </button>
@@ -158,43 +208,59 @@ function SignUp(props) {
                               placeholder="이메일 확인 코드"
                               className="form-control form-control-user"
                               type="verifycode"
+                              value={values.emailverify}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
                           </div>
+                          <button
+                            type="submit"
+                            value={values.emailverify}
+                            onClick={handleSubmit3}
+                            className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
+                            style={{ marginLeft: "1rem" }}
+                            
+                          >
+                            이메일 인증확인
+                          </button>
                           <div className="col-sm-6 mb-3 mb-sm-0">
-                            <div class="row">
-                              <div class="form-check">
+                            <div className="row">
+                              <div className="form-check">
                                 가입 유형<br></br> 선택
                               </div>
 
                               <div
-                                class="form-check"
+                                className="form-check"
                                 style={{ marginLeft: "1rem" }}
                               >
-                                <div class="col ">
+                                <div className="col ">
                                   <input
-                                    class="form-check-input"
+                                    className="form-check-input"
                                     type="radio"
-                                    name="flexRadioDefault"
-                                    id="flexRadioDefault1"
+                                    id="role"
+                                    name="signup"
+                                    value={0} //선생님일시 0
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                   />
                                   <label
-                                    class="form-check-label"
-                                    for="flexRadioDefault1"
+                                    className="form-check-label"
+                                    for="signup"
                                   >
                                     선생님
                                   </label>
                                 </div>
-                                <div class="col">
+                                <div className="col">
                                   <input
-                                    class="form-check-input"
+                                    className="form-check-input"
                                     type="radio"
-                                    name="flexRadioDefault"
-                                    id="flexRadioDefault2"
+                                    name="signup"
+                                    id="role1"
                                     checked
                                   />
                                   <label
-                                    class="form-check-label"
-                                    for="flexRadioDefault2"
+                                    className="form-check-label"
+                                    for="signup"
                                   >
                                     학생
                                   </label>

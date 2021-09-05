@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import CardBasic from '../../../../components/Cards/Basic'
-import DefaultTable from '../../../../components/Table/Default';
 import ChartPie from './../../../../components/Charts/Pie'
 import Error from '../../../../components/Error';
 import { useSelector } from "react-redux";

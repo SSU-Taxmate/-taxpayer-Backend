@@ -10,6 +10,8 @@ const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { Tax } = require('../models/Tax/Tax');
 const { Budget } = require('../models/Tax/Budget');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 const router = express.Router();
 /*
@@ -25,12 +27,12 @@ router.get('/', async (req, res) => {
     }
     //console.log(stocks)
     const stock = await Stock.find({ _id: { $in: stocks } })
-    const now=new Date()
-    
+    const now = new Date()
+
     //console.log('기존:',new Date().toISOString(),'원하는 모양',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
     let result = await Promise.all(
       stock.map(async (v, i) => {
-        v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.getFullYear(),now.getMonth(), now.getDate()));
+        v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate()));
         return v
       })
     )
@@ -47,8 +49,8 @@ router.get('/statistics', async (req, res) => {
   const classId = req.query.classId
   const startDate = req.query.startDate
   const endDate = req.query.endDate
-  
-  //console.log('/api/stocks/statistics',classId,startDate,new Date(startDate),endDate)
+
+  //  console.log('/api/stocks/statistics',classId,startDate,new Date(startDate),endDate)//2021-08-22T15:00:00Z 2021-08-22T15:00:00.000Z 2021-08-29T14:59:59Z
   try {
     const classstock = await ClassStock.find({ classId: classId }, "stockId")
     let stocks = []
@@ -61,7 +63,7 @@ router.get('/statistics', async (req, res) => {
       {
         $match: {
           'stockId': { $in: stocks },
-          "createdAt": { $gte: new Date(startDate), $lte: new Date(endDate)}
+          "createdAt": { $gte: new Date(startDate), $lte: new Date(endDate) }
         }
       },
       {
@@ -110,6 +112,67 @@ router.get('/manage', async (req, res) => {
   }
 })
 /*
+  [정상] Class에서 사용하는 하나의 Stock GET
+*/
+router.get('/:id/manage', (req, res) => {
+  const stockId = req.params.id
+  //console.log(stockId)
+  /*
+  Stock.findOne({ _id: stockId }, function (err, stock) {
+    const result = stock
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+  */
+  Stock.aggregate([
+    {
+      $match: {
+        '_id': ObjectId(stockId)
+      }
+    },
+    {
+      $unwind: '$prices'
+    },
+    {
+      $sort: {
+        'prices.updateDate': -1
+      }
+    },
+    {
+      $group: {
+        _id: "$_id",
+
+        description: {
+          $first: "$description"
+        },
+        ondelete: {
+          $first: '$ondelete'
+        },
+        ondeleteDay: {
+          $first: '$ondeleteDay'
+        },
+        stockName: {
+          $first: '$stockName'
+        },
+        createdAt: {
+          $first: '$createdAt'
+        },
+        updatedAt: {
+          $first: 'updatedAt'
+        },
+        prices: {
+          $push: '$prices'
+        }
+      }
+    }
+  ]).exec((err, stock) => {
+    const result = stock[0]
+    //console.log(stock)
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+})
+/*
   [정상] stock 생성&사용 
   : Stock, ClassStock body-{stockInfo:,classId:}필수
 */
@@ -144,21 +207,21 @@ router.post("/", async (req, res) => {
   }
 
 });
-
 /*
-   [정상] stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
+  [정상] stock prices 추가 : 같은 날짜가 있다면 안 바뀜
 */
-router.put('/', (req, res) => {
-  //console.log('update',req.body)
-  Stock.updateOne({ _id: req.body._id },
+router.post('/:id/prices', (req, res) => {
+  const stockId = req.params.id
+  //console.log('update', req.body)
+  var price = req.body
+  Stock.updateOne(
+    {
+      _id: stockId,
+      'prices.updateDate': { $ne: price.updateDate }
+    },
     {
       $push: {
-        prices:
-        {
-          hint: req.body.description,
-          value: req.body.price,
-          updateDate: req.body.updateDate
-        }
+        prices: req.body
       }
     }, (err, doc) => {
       if (err) return res.json({ success: false, err });
@@ -166,8 +229,51 @@ router.put('/', (req, res) => {
         success: true
       })
     })
-
 })
+/*
+   [정상] stock prices 수정 : 해당 날짜의 값을 바꿈
+*/
+router.put('/:id/prices', (req, res) => {
+  const stockId = req.params.id
+  //console.log('update',req.body)
+  //daily 입력값이있다면(date로 확인) 빼고 그 자리에 새로운값 넣기
+  Stock.updateOne(
+    {
+      _id: stockId,
+      'prices': { $elemMatch: { updateDate: req.body.updateDate } }
+    },
+    {
+      '$set': {
+        'prices.$.value': req.body.value,
+        'prices.$.hint': req.body.hint
+      }
+    }, (err, doc) => {
+      // console.log(doc)
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true
+      })
+    })
+})
+/*
+  [정상] stock prices 삭제
+*/
+router.delete('/:id/prices/:priceId', (req, res) => {
+  const stockId = req.params.id
+  const priceId = req.params.priceId
+  Stock.updateOne({ _id: stockId },
+    {
+      $pull: {
+        "prices": { _id: ObjectId(priceId) }
+      }
+    }, (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true
+      })
+    })
+})
+
 /*
   [정상]  stock 삭제&미사용 : ClassStock , Stock  { stockId: }
 
@@ -217,7 +323,6 @@ router.delete('/:id', async (req, res) => {
 
 })
 
-
 /*
   [90%완료] 주식 주문
   : 학생의 Stock 매수/매도 req.params orderType로 구분
@@ -234,8 +339,8 @@ router.post('/:id/orders', async (req, res) => {
 
   try {
     session.startTransaction();// 트랜젝션 시작
-    const account = await Account.findOne({ studentId: studentId }).exec({session})
-    console.log('account1',account)
+    const account = await Account.findOne({ studentId: studentId }).exec({ session })
+    console.log('account1', account)
     if (orderType === '매수') {
       console.log('매수')
       // 1) 은행 잔고 확인
@@ -300,7 +405,7 @@ router.post('/:id/orders', async (req, res) => {
       const classId = req.body.classId
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-      //console.log(stockaccount.holdingStocks[index].quantity)
+      console.log('매도-보유수량',quantity,stockaccount,stockaccount.holdingStocks[index].quantity)
 
       if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {//매도수량 확인
         //매도
@@ -311,17 +416,19 @@ router.post('/:id/orders', async (req, res) => {
               [`holdingStocks.${index}.allPayAmount`]: - currentPrice * quantity
             }
           }
-          , { session })//
+          ).exec({session})
         const pullStock = await StockAccount.updateOne({ studentId: studentId },
           {
             $pull: {
               holdingStocks: { quantity: 0 }//수량없는 경우
             }
-          }, { session })
+          }).exec({session})
+       
 
         // 1. 은행 (입금)
-        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }, { session })
-        
+
+        const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }).exec({session})
+
         // 은행 거래 데이터 추가(입금)
         const transfer = new AccountTransaction({
           accountId: account._id,
@@ -337,22 +444,24 @@ router.post('/:id/orders', async (req, res) => {
         const tax = await Tax.findOne({ classId: classId }).exec({ session })
         const stocktax = tax.taxlist.stock
         const tax2user = Math.round(stocktax * currentPrice * quantity / 100)
-        //console.log(tax2user)        
+        console.log(tax2user)
 
         //은행 (출금)
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }, { session })
+        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }).exec({session})
         //은행 거래 데이터 추가(출금)
-         const account2 = await Account.findOne({ _id: account._id }).exec({ session })
-         //console.log('account2',account,account2)
-         const transfer2 = new AccountTransaction({
-           accountId: account2._id,
-           transactionType: 0,
-           amount: tax2user,
-           memo: '증권거래세',
-           afterbalance: account2.currentBalance
-         })
-         await transfer2.save({ session })
-        
+        const account2 = await Account.findOne({ _id: account._id }).exec({ session })
+
+        console.log('>account2',account,account2)
+        if (tax2user > 0)  {
+          const transfer2 = new AccountTransaction({
+            accountId: account2._id,
+            transactionType: 0,
+            amount: tax2user,
+            memo: '증권거래세',
+            afterbalance: account2.currentBalance
+          })
+          await transfer2.save({ session })
+        }
         // 국세청 세금에 추가
         await Budget.updateOne({ classId: classId },
           { $inc: { 'balance.stock': tax2user } }).exec({ session })

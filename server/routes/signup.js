@@ -1,14 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+//const User = require('../models/user');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path'); // 현재 프로젝트의 경로
 
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-
-const path = require('path'); // 현재 프로젝트의 경로
 
 var promotion; // 프로모션 수신 동의 여부
 
@@ -64,7 +63,8 @@ router.get('/', (req, res) => {
 router.post('/', isNotLoggedIn, async(req, res, next) => {
 
     const { email, name, password, birth } = req.body;
-
+    const AuthNum = req.body.AuthNum;
+    console.log(AuthNum);
     console.log('회원가입 버튼 누름');
     console.log('email:' + email + ', name:' + name + ', password:' + password, 'promotion:', promotion);
 
@@ -78,13 +78,13 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
 
         //프로필 이미지
 
-        // const user = await User.create({
-        //     email: email,
-        //     name: name,
-        //     password: hash,
-        //     birth: birth,
-        //     promotion: promotion,
-        // });
+        const user = await User.create({
+            email: email,
+            name: name,
+            password: hash,
+            birth: birth,
+            promotion: promotion,
+        });
         console.log('추가된 user:' + user);
         res.send('success');
         next();

@@ -1,0 +1,34 @@
+.modal-dialog img{
+    width:20rem;
+    height:auto;
+    align-self: center;
+    margin-left:2rem;
+
+}
+.modal-header{
+    justify-content: center;
+    font-weight:bold;
+}
+#DisplayCodeModal{
+    margin-top: 1.5rem;
+}
+
+#DisplayCodeModal span{
+    font-size: 1.3rem;
+}
+#entryCodeText{
+    font-size: 1.3rem;
+    display: inline;
+}
+#CopyCode{
+    display:inline;
+    margin-top:0.5rem;
+}
+#entryCode{
+    display:flex;
+    align-items:center;
+}
+#entryCodebtn{
+    margin-top:0.5rem;
+    margin-left: 0.5rem;
+}

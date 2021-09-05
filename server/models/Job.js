@@ -36,10 +36,11 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type:Boolean,
         default:false
     },
-    joinPossible:{/*직업 apply가능여부-false=버튼=>true */
+    /*직업 apply가능여부는 다른 schema이용하기
+    joinPossible:{
         type:Boolean,
         default:false
-    }
+    }*/
 },{timestamps:true})
 const Job = mongoose.model('Job', jobSchema)
 module.exports = { Job}

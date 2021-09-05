@@ -119,7 +119,7 @@ export default function Sidebar(props) {
                         to="/classes/:classId/set-up/class"
                       >
                         학급관리
-                      </Link>{" "}
+                      </Link>
                     </>
                   ) : null}
                   {user.userData.role === 1 ? (
@@ -127,10 +127,10 @@ export default function Sidebar(props) {
                       <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
-                        to="/classes/:classId/real_estate_setting"
+                        to="/classes/:classId/set-up/class"
                       >
-                        부동산/직업
-                      </Link>{" "}
+                        직업
+                      </Link>
                     </>
                   ) : null}
                 </div>

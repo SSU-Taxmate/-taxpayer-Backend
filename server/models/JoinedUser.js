@@ -8,7 +8,7 @@ const joineduserSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Class'
     },
-    userId:{//student
+    userId:{//학생의 계정정보
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },

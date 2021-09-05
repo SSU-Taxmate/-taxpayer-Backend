@@ -17,15 +17,15 @@ function AccountStock() {
     const user = useSelector((state) => state.user);
     let classData = useSelector(state => state.classInfo.classData);
 
-    const [stocks, setstocks] = useState([])
+    const [stocks, setstocks] = useState()
 
     const fetchData = async () => {
         setIsError(false);
         setIsLoading(true);
         try {
             const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`,{params:{classId:classData.classId}})
-            console.log('>>>>>',result.data)//Alert로 사용자에게 보여주기
             setstocks(result.data)
+            console.log('stock/accountstock/index.js',result.data)
         } catch (error) {
             setIsError(true);
         }
@@ -61,14 +61,14 @@ function AccountStock() {
                             {user.userData&&
                             <h4 className='pt-2'>{user.userData.name}님의 투자 현황</h4>}
                             <div style={{display:'flex',justifyContent:'space-evenly'}}className="account-card shadow bg-white"> 
-                                <InvestStatus data={stocks} />
+                                {stocks&&<InvestStatus data={stocks} />}
                                 <ByStudentStock/>
                             </div>
                             <h4 className='pt-2'>보유 주식</h4>
                             {isError && <Error></Error>}
                             {isLoading ? <Loading /> :
                                 <div className='row flex-row flex-nowrap overflow-auto'>
-                                    {stocks.map((item, i) => (
+                                    {stocks&&stocks.map((item, i) => (
                                         <MyInvest
                                             key={i}
                                             data={item}

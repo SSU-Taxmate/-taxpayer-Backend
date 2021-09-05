@@ -11,15 +11,9 @@ function MyTaxDetail() {
         </p>
         <form className="ml-1">
           <div className="form-row">
-            <div className="form-group col-md-4">
               <InputTax id='income' title='소득세' value={1} unit='%'  readOnly={true}/>
-            </div>
-            <div className="form-group col-md-4">
               <InputTax id='realestate' title='부동산세' value={1} unit='%' readOnly={true} />
-            </div>
-            <div className="form-group col-md-4">
               <InputTax id='seat' title='자리세' value={10} unit='%' readOnly={true} />
-            </div>
           </div>
         </form>
         {/*<!--직접세  끝-->*/}
@@ -37,18 +31,10 @@ function MyTaxDetail() {
         <div id='useornotarea'>
           <form className="ml-1" >
             <div className="form-row">
-              <div className="form-group col-lg-3">
                 <InputTax id='electric' title='전기세 ' value={1} unit='%'  readOnly={true}/>
-              </div>
-              <div className="form-group col-lg-3">
                 <InputTax id='stamp' title='인지세' value={1} unit='미소' readOnly={true} />
-              </div>
-              <div className="form-group col-lg-3">
                 <InputTax id='vat' title='부가가치세' value={1} unit='%' readOnly={true} />
-              </div>
-              <div className="form-group col-lg-3">
                 <InputTax id='vat' title='증권거래세' value={1} unit='%'  readOnly={true} />
-              </div>
             </div>
           </form>
           {/*<!--   간접세  끝     -->*/}

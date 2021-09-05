@@ -21,6 +21,7 @@ function DeleteStockDialog({stockId}) {
         axios.delete(`/api/stocks/${stockId}`)
         .then(function (response) {
           console.log(response);
+          window.location.reload();
         })
         // 응답(실패)
         .catch(function (error) {

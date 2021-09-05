@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import '../../../../styles/css/jobModal.css'
 
@@ -15,10 +15,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
-import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
-import Delete from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import axios from 'axios';
+import Error from '../../../../components/Error'
+import Loading from '../../../../components/Loading';
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -60,28 +67,47 @@ const useStyles = makeStyles((theme) => ({
 
 
 function JobDetailModal(props) {
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const classes = useStyles();
-
-
   const modalRow = props.row;
+  const [employee, setemployee] = useState()
+  let user = useSelector((state) => state.user);
 
   const modalClose = () => {
-
     props.close(false);
-
   }
-
   const jobEditModalOpen = () => {
-
     modalClose();
     props.jobEditModalOpen();
-
   }
-
+  const onhandlefire = (studentId) => {
+    axios.delete(`/api/students/${studentId}/jobs/${modalRow._id}`)
+      .then(function (response) {
+        console.log(response);
+        window.location.reload();
+      })
+      // 응답(실패)
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        const result = await axios.get(`/api/jobs/${modalRow._id}/students`, { params: { classId: modalRow.classId } })
+        setemployee(result.data)
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [modalRow._id])
 
   return (
-
     <Modal
       id="jobDetailModal"
       className={classes.modal}
@@ -93,20 +119,17 @@ function JobDetailModal(props) {
         timeout: 500,
       }}
     >
-
-
       <Fade in={props.open}>
-
-
         <div className={classes.paper}>
           <div className="card col-lg-12 p-0">
-
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">직업정보 조회</h6>
               <div className="dropdown no-arrow">
-                <ButtonGroup color="primary" variant='text' size="small" >
-                  <Button onClick={jobEditModalOpen}><EditIcon /></Button>
-                </ButtonGroup>
+                {user.userData.role === 0 ?
+                  <ButtonGroup color="primary" variant='text' size="small" >
+                    <Button onClick={jobEditModalOpen}><EditIcon /></Button>
+                  </ButtonGroup>
+                  : <></>}
               </div>
             </div>
 
@@ -119,11 +142,9 @@ function JobDetailModal(props) {
               </div>
 
               <div className="row">
-
                 <div className="text-center font-weight-bold m-2 label job-label">월급</div>
                 <div className="seperator-gray m-1"></div>
                 <div className="text-gray-900 text-center m-2 job-input">{modalRow.salary}</div>
-
                 <div className="text-center font-weight-bold m-2 job-label">모집인원</div>
                 <div className="seperator-gray m-1"></div>
                 <div className="text-gray-900 text-center m-2 job-input">{modalRow.recruitment}</div>
@@ -141,23 +162,32 @@ function JobDetailModal(props) {
 
               <hr />
               <div className="justify-content-center mb-4" >
-                <List dense className={classes.root}>
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
-                    const labelId = `checkbox-list-secondary-label-${value}`;
-                    return (
-                      <ListItem key={value} button>
-                        <ListItemAvatar>
-                          <Avatar
-                            alt={`Avatar n°${value + 1}`}
-                            src={`/static/images/avatar/${value + 1}.jpg`}
-                          />
-                        </ListItemAvatar>
-                        <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                {isError && <Error />}
+                {user.userData.role === 0 ?
+                  isLoading ?
+                    <Loading /> : (
+                      <List dense className={classes.root}>
+                        {employee &&
+                          employee.map((value, index) => {
+                            const labelId = `checkbox-list-secondary-label-${index}`;
+                            return (
+                              <ListItem key={index}>
+                                <ListItemAvatar>
+                                  <Avatar />
+                                </ListItemAvatar>
 
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                                <ListItemText id={labelId} primary={value.name} />
+                                <ListItemSecondaryAction>
+                                  <IconButton onClick={() => onhandlefire(value._id)} edge="end" aria-label="delete">
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </ListItemSecondaryAction>
+                              </ListItem>
+                            );
+                          })}
+                      </List>
+                    )
+                  : null}
               </div>
             </div>
           </div>

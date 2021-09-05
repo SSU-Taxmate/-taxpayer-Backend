@@ -42,9 +42,7 @@ function StockList({ data }) {
                                 : { color: iconSet[1].color }
                             }
                           />
-                        ) : (
-                          <></>
-                        )}
+                        ) : null}
                         <p className="ml-2 text-danger">{item.currentValue}</p>
                         <div className="ml-2">
                           {item.prices.length <= 1
