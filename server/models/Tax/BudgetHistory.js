@@ -17,7 +17,7 @@ const budgethistorySchema = mongoose.Schema({
         type: Number,
         require: true
     },
-    date: {/* 언제-월별 */
+    date: {/* 언제-매월1일자정 */
         type: Date,
         default: Date.now
     },

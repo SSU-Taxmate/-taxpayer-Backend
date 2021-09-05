@@ -56,8 +56,8 @@ function CongressPanel() {
 
 <Box p={3}>
              <List dense={true} >
-                    {data.slice(0,3).map((item) => (
-                        <div className="col-12 col-xl-12 col-md-12"> 
+                    {data.slice(0,3).map((item,i) => (
+                        <div className="col-12 col-xl-12 col-md-12" key={i}> 
                             <h4 className="small">{item.title}<span className="float-right">60%</span></h4>
                             <div className="progress mb-4">
                             <div className="progress-bar" role="progressbar" style={{width: "60%"}} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div></div>

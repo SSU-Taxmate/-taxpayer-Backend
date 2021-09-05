@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
     const stock = await Stock.find({ _id: { $in: stocks } })
     const now = new Date()
 
-    //console.log('기존:',new Date().toISOString(),'원하는 모양',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
+    //오늘 0시 : new Date(now.getFullYear(), now.getMonth(), now.getDate())
     let result = await Promise.all(
       stock.map(async (v, i) => {
         v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate()));
@@ -117,13 +117,7 @@ router.get('/manage', async (req, res) => {
 router.get('/:id/manage', (req, res) => {
   const stockId = req.params.id
   //console.log(stockId)
-  /*
-  Stock.findOne({ _id: stockId }, function (err, stock) {
-    const result = stock
-    if (err) return res.status(500).json({ error: err });
-    res.json(result)
-  })
-  */
+
   Stock.aggregate([
     {
       $match: {
