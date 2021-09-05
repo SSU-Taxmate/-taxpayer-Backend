@@ -141,6 +141,7 @@ router.get('/:id/manage', (req, res) => {
     {
       $group: {
         _id: "$_id",
+
         description: {
           $first: "$description"
         },
@@ -425,6 +426,7 @@ router.post('/:id/orders', async (req, res) => {
        
 
         // 1. 은행 (입금)
+
         const plus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }).exec({session})
 
         // 은행 거래 데이터 추가(입금)
@@ -448,6 +450,7 @@ router.post('/:id/orders', async (req, res) => {
         const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }).exec({session})
         //은행 거래 데이터 추가(출금)
         const account2 = await Account.findOne({ _id: account._id }).exec({ session })
+
         console.log('>account2',account,account2)
         if (tax2user > 0)  {
           const transfer2 = new AccountTransaction({

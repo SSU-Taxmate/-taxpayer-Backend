@@ -57,7 +57,7 @@ router.put("/", async (req, res) => {
     Amount = req.body.Amount
     const account = await Account.findOne({ studentId: req.body.studentId._id }).exec({session})
     if(account.currentBalance > Amount){
-    fine = await Fine.updateOne({ _id: req.body._id }, { $set: { isPayed : 'true' }}, { session })
+    fine = await Fine.updateOne({ _id: req.body._id }, { $set: { isPayed : 'true' }}).exec({session})
     const pay= await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- Amount) } }, { session })
     const payfine = new AccountTransaction({
       accountId: account._id,
