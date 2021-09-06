@@ -57,7 +57,8 @@ function SettingStocks() {
                 <Loading /> : (
                     <>
                         <AddStockDialog />
-                        <Table aria-label="setting-table" size="small">
+                        <div className="container" id="stockSetting-container" >
+                        <Table aria-label="setting-table" size="small" >
                             <TableHead>
                                 <TableRow>
                                     {column.map((v, i) =>
@@ -72,7 +73,7 @@ function SettingStocks() {
                                 ).map((row, i) => (
                                     <TableRow key={i}>
                                         <TableCell style={{ width: '1rem' }}><DeleteStockDialog stockId={row._id} /></TableCell>
-                                        <TableCell style={{ width: '5rem' }}>
+                                        <TableCell style={{ width: '10rem' }}>
                                             {row.stockName}
                                         </TableCell>
                                         <TableCell >{row.description}</TableCell>
@@ -111,6 +112,7 @@ function SettingStocks() {
                                 </TableRow>
                             </TableFooter>
                         </Table>
+                        </div>
                     </>
                 )
             }
