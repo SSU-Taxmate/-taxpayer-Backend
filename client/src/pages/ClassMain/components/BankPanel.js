@@ -10,6 +10,7 @@ function BankPanel() {
     const [isError, setIsError] = useState(false);
     const [data, setdata] = useState()
     const joinedUser = useSelector(state => state.classUser);
+
     const month = moment().tz('Asia/Seoul').month() + 1
     useEffect(() => {
         const fetchData = async () => {
