@@ -13,7 +13,7 @@ function BudgetStatistics() {
   const [revenue, setrevenue] = useState();
   const [expend, setexpend] = useState();
   const finance_labels = [
-    //현재 날자까지
+    //현재 날짜까지
     "3월",
     "4월",
     "5월",
@@ -54,15 +54,15 @@ function BudgetStatistics() {
         params: { classId: classData.classId },
       });
       setdata(result.data);
-      console.log(result.data)
+      
       const revenue = result.data.filter((v) => v._id.transType === 1);
       let mrevenue=[0,0,0,0,0,0,0,0,0,0]//3~12
-      revenue.map((v, i) => mrevenue[v._id.month-3]=v.sum)
+      revenue.map((v, i) => mrevenue[(v._id.month-4+12)%12]=v.sum)
       setrevenue(mrevenue);
-
+      console.log((1-4+12)%12)
       const expend = result.data.filter((v) => v._id.transType === 0);
       let mexpend=[0,0,0,0,0,0,0,0,0,0]//3~12
-      expend.map((v, i) => mexpend[v._id.month-3]=v.sum)
+      expend.map((v, i) => mexpend[(v._id.month-4+12)%12]=v.sum)
       setexpend(mexpend);
 
     } catch (error) {
