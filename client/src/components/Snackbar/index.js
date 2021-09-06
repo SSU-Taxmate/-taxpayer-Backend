@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Snackbar({message}) {
+function Snackbar({message,color}) {
     const [opensnackbar, setopensnackbar] = useState(false);
     const closesnackbar = () => {
         setopensnackbar(false)
@@ -16,7 +16,7 @@ function Snackbar({message}) {
                 onClose={closesnackbar}
                 action={<IconButton
                     aria-label="close"
-                    color="inherit"
+                    color={color}
                     onClick={closesnackbar}
                 >
                     <CloseIcon />

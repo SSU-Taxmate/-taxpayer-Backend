@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Topbar from "../../../components/Navigation/Topbar";
-import Footer from "../../../components/Footer";
 import Error from "../../../components/Error";
 import PageHeading from "../../../components/PageHeading";
-import ScrollToTop from "../../../components/Scroll";
 import TradeSection from "./sections/TradeSection";
 import StockList from "./sections/StockList";
 import { useSelector } from "react-redux";
 import Loading from "../../../components/Loading";
 import InfoBalance from "./sections/InfoBalance";
 import BuyStockStat from "./sections/BuyStockStat";
+import PageFrame from "../../PageFrame";
 export default function TradeStock() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,60 +30,27 @@ export default function TradeStock() {
       setIsLoading(false);
     };
     fetchData();
-    return () => {};
+    return () => { };
   }, [classData.classId]);
   return (
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- End of Sidebar --> */}
-
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
-
-              <PageHeading title="주식거래창" />
-
-              {/* <!-- Content Row --> */}
-              <h4 className="pt-2">오늘의 주식</h4>
-              {isError && <Error></Error>}
-              {isLoading ? <Loading /> : <StockList data={stocks} />}
-              <h4 className="pt-4">지난주 통계</h4>
-              <div className="account-card shadow bg-white">
-                <BuyStockStat />
-                <InfoBalance />
-              </div>
-              <h4 className="pt-4">주식 매수 창</h4>
-              <div
-                className="account-card shadow bg-white"
-                style={{ minHeight: "30vh" }}
-              >
-                {isError && <Error></Error>}
-                {isLoading ? <Loading /> : <TradeSection stocks={stocks} />}
-              </div>
-            </div>
-            {/* <!-- /.container-fluid --> */}
-          </div>
-          {/* <!-- End of Main Content --> */}
-
-          {/* <!-- Footer --> */}
-          <Footer />
-          {/* <!-- End of Footer --> */}
-        </div>
-        {/* <!-- End of Content Wrapper --> */}
+    <PageFrame>
+      <PageHeading title="주식거래창" />
+      <h4 className="pt-2">오늘의 주식</h4>
+      {isError && <Error></Error>}
+      {isLoading ? <Loading /> : <StockList data={stocks} />}
+      <h4 className="pt-4">지난주 통계</h4>
+      <div className="account-card shadow bg-white">
+        <BuyStockStat />
+        <InfoBalance />
       </div>
-      {/* <!-- End of Page Wrapper --> */}
-
-      {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
-    </div>
+      <h4 className="pt-4">주식 매수 창</h4>
+      <div
+        className="account-card shadow bg-white"
+        style={{ minHeight: "30vh" }}
+      >
+        {isError && <Error></Error>}
+        {isLoading ? <Loading /> : <TradeSection stocks={stocks} />}
+      </div>
+    </PageFrame>
   );
 }

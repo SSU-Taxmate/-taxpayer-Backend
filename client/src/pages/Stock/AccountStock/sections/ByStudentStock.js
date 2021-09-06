@@ -13,29 +13,28 @@ function ByStudentStock() {
 
     const [data, setdata] = useState([])
     const [datalabel, setdatalabel] = useState([])
-    const fetchData = async () => {
-        setIsError(false);
-        setIsLoading(true);
-        try {//학생이 구매한 대한 통계정보
-            const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`,
-                {
-                    params: {
-                        classId: classData.classId,
-                    }
-                })
-            console.log('ByStudentStock.js',result.data)
-            let temp=result.data.map((v,i)=>v.currentPrice*v.quantity)
-            let sumData=temp.reduce((prev,cur)=>prev+cur)
-            setdata(result.data.map((v, i) => Math.round(v.currentPrice*v.quantity/sumData*100)))
-            setdatalabel(result.data.map((v, i) => v.stockName))
-            
-        } catch (error) {
-            setIsError(true);
-        }
-        setIsLoading(false);
-    };
-
+    
     useEffect(() => {
+        const fetchData = async () => {
+            setIsError(false);
+            setIsLoading(true);
+            try {//학생이 구매한 대한 통계정보
+                const result = await axios.get(`/api/students/${joinedUser.classUser}/stocks`,
+                    {
+                        params: {
+                            classId: classData.classId,
+                        }
+                    })
+                let temp=result.data.map((v,i)=>v.currentPrice*v.quantity)
+                let sumData=temp.reduce((prev,cur)=>prev+cur)
+                setdata(result.data.map((v, i) => Math.round(v.currentPrice*v.quantity/sumData*100)))
+                setdatalabel(result.data.map((v, i) => v.stockName))
+                
+            } catch (error) {
+                setIsError(true);
+            }
+            setIsLoading(false);
+        };
         fetchData();
     }, [joinedUser])
     const stock_user_pie_data = [{

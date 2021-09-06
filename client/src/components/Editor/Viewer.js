@@ -7,7 +7,6 @@ function Viewer(props) {
     const editorState = EditorState.createWithContent(storedcontent);
     return (
         <Editor editorState={editorState} readOnly={true} />
-
     )
 }
 
