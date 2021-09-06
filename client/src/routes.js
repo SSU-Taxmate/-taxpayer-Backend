@@ -48,6 +48,7 @@ import SuggestDetail from "./pages/Legislature/Congress/components/SuggestDetail
 import BillDetail from "./pages/Legislature/Congress/components/BillDetail";
 import SuggestAdd from "./pages/Legislature/Congress/components/SuggestAdd";
 
+
 const Routes = () => (
   <BrowserRouter>
     <Switch>
@@ -84,6 +85,8 @@ const Routes = () => (
       <Route exact path="/classes/:classId/congress/suggest" component={Auth(SuggestDetail,true)}/>
       <Route exact path="/classes/:classId/congress/bill" component={Auth(BillDetail,true)}/>
       <Route exact path="/classes/:classId/congress/add" component={Auth(SuggestAdd,true)}/>
+
+
 
 
 
