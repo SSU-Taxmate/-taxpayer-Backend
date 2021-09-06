@@ -135,20 +135,8 @@ function Penalty() {
     },
   ];
   return (
+    <PageFrame>
 
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
               <div className="row justify-content-center">
                 {user.userData && user.userData.role === 0 ? (
                   <div className="col">
@@ -196,11 +184,10 @@ function Penalty() {
                   </div>
                 </div>
               </div>
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </PageFrame>
+              
+              
+              
+              </PageFrame>
   );
 }
 export default Penalty;
