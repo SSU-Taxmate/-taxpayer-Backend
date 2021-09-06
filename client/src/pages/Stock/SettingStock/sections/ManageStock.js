@@ -18,142 +18,118 @@ import Loading from "../../../../components/Loading";
 
 //css
 import "../../../../styles/css/stockSetting.css";
+import PageFrame from "../../../PageFrame";
 
 function ManageStock(props) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  console.log("ManageStock", props.location.state);
-  let history = useHistory();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    console.log("ManageStock", props.location.state);
+    let history = useHistory();
 
-  const stockId = props.location.state.stockId;
-  const [stock, setstock] = useState();
+    const stockId = props.location.state.stockId;
+    const [stock, setstock] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        const result = await axios.get(`/api/stocks/${stockId}/manage`);
-        //console.log("/api/stocks/manage", result.data);
-        setstock(result.data);
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [stockId]);
-  return (
-    <>
-      <div>
-        {/* <!-- Page Wrapper --> */}
-        <div id="wrapper">
-          {/* <!-- Content Wrapper --> */}
-          <div id="content-wrapper" className="d-flex flex-column">
-            {/* <!-- Main Content --> */}
-            <div id="content" style={{ minHeight: "85vh" }}>
-              {/* <!-- Topbar --> */}
-              <Topbar />
-              {/* <!-- End of Topbar --> */}
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsError(false);
+            setIsLoading(true);
+            try {
+                const result = await axios.get(`/api/stocks/${stockId}/manage`);
+                //console.log("/api/stocks/manage", result.data);
+                setstock(result.data);
+            } catch (error) {
+                setIsError(true);
+            }
+            setIsLoading(false);
+        };
+        fetchData();
+    }, [stockId]);
+    return (
+        <PageFrame>
 
-              {/* <!-- Begin Page Content --> */}
-              <div className="container-fluid">
-                {/* <!-- Page Heading --> */}
+            <PageHeading title="주식설정" />
 
-                <PageHeading title="주식설정" />
-
-                {/* <!-- Content Row --> */}
-                {isError && <Error />}
-                {isLoading ? (
-                  <Loading />
-                ) : (
-                  stock && (
+            {/* <!-- Content Row --> */}
+            {isError && <Error />}
+            {isLoading ? (
+                <Loading />
+            ) : (
+                stock && (
                     <>
-                      <div className="container p-4 mb-4" id="stockSetting-container">
-                        <div className="row py-2"  style={{justifyContent:"space-between"}}>
-                        <div style={{display:"inherit"}}>
-                            <div className="font-weight-bold mx-2 job-label">
-                                주식이름
+                        <div className="container p-4" id="stockSetting-container">
+                            <div className="row py-2" style={{ justifyContent: "space-between" }}>
+                                <div style={{ display: "inherit" }}>
+                                    <div className="font-weight-bold mx-2 job-label">
+                                        주식이름
+                                    </div>
+                                    <div className="seperator-gray mx-1"></div>
+                                    <div className="text-gray-900 mx-2 job-input">
+                                        {stock.stockName}
+                                    </div>
+                                </div>
+                                <div style={{ display: "inherit" }} >
+                                    <div className="font-weight-bold m-2 job-label">
+                                        주식 정보 추가
+                                    </div>
+                                    <div className="seperator-gray m-1"></div>
+                                    <div className="text-gray-900 m-2 job-input">
+                                        <ManageValueDialog type={"add"} stockId={stock._id} />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="seperator-gray mx-1"></div>
-                            <div className="text-gray-900 mx-2 job-input">
-                                {stock.stockName}
+                            <div className="row py-2" style={{ justifyContent: "space-between" }}>
+                                <div style={{ display: "inherit" }}>
+                                    <div className="font-weight-bold m-2 job-label">
+                                        설명
+                                    </div>
+                                    <div className="seperator-gray m-1"></div>
+                                    <div className="text-gray-900 m-2 job-input">
+                                        {stock.description}
+                                    </div>
+                                </div>
+                                <div style={{ display: "inherit" }}>
+                                    <div className="font-weight-bold m-2 job-label">
+                                        상장 폐지 예정
+                                    </div>
+                                    <div className="seperator-gray m-1"></div>
+                                    <div className="text-gray-900 m-2 job-input">
+                                        {stock.ondelete
+                                            ? moment(stock.ondeleteDay)
+                                                .tz("Asia/Seoul")
+                                                .format("YYYY-MM-DD")
+                                            : "X"}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div  style={{display:"inherit"}} >
-                        <div className="font-weight-bold m-2 job-label">
-                                주식 정보 추가
-                            </div>
-                            <div className="seperator-gray m-1"></div>
-                            <div className="text-gray-900 m-2 job-input">
-                            <ManageValueDialog type={"add"} stockId={stock._id} />
-                            </div>
-                        </div>
-                        </div>
-                        <div className="row py-2" style={{justifyContent:"space-between"}}>
-                        <div style={{display:"inherit"}}>
-                            <div className="font-weight-bold m-2 job-label">
-                                설명
-                            </div>
-                            <div className="seperator-gray m-1"></div>
-                            <div className="text-gray-900 m-2 job-input">
-                            {stock.description}
-                            </div>
-                        </div>
-                        <div style={{display:"inherit"}}>
-                            <div className="font-weight-bold m-2 job-label">
-                            상장 폐지 예정
-                            </div>
-                            <div className="seperator-gray m-1"></div>
-                            <div className="text-gray-900 m-2 job-input">
-                            {stock.ondelete
-                                ? moment(stock.ondeleteDay)
-                                    .tz("Asia/Seoul")
-                                    .format("YYYY-MM-DD")
-                                : "X"}
-                            </div>
-                        </div>
-                        </div>
-                        <hr />
-                        <List dense>
-                            {stock.prices.map((price, i) => {
+                            <hr />
+                            <List dense>
+                                {stock.prices.map((price, i) => {
 
-                            return (
-                                <ListItem key={i}>
-                                    <NewsItem price={price} stockId={stock._id} />
-                                </ListItem>
-                            );
-                            })}
-                        </List>
-                        <div className="row justify-content-center mt-4">
-                            <Button
-                              onClick={() =>
-                                history.push("/classes/:classId/stock/manage")
-                            }
-                              color="primary"
-                              autoFocus
-                            >
-                              주식 설정 메인으로 돌아가기
-                            </Button>
-                          </div>
-                    </div>
+                                    return (
+                                        <ListItem key={i}>
+                                            <NewsItem price={price} stockId={stock._id} />
+                                        </ListItem>
+                                    );
+                                })}
+                            </List>
+                            <div className="row justify-content-center mt-4">
+                                <Button
+                                    onClick={() =>
+                                        history.push("/classes/:classId/stock/manage")
+                                    }
+                                    color="primary"
+                                    autoFocus
+                                >
+                                    주식 설정 메인으로 돌아가기
+                                </Button>
+                            </div>
+                        </div>
                     </>
-                    )
-                )}
-                </div>
-              {/* <!-- /.container-fluid --> */}
-            </div>
-            {/* <!-- End of Main Content --> */}
-            <Footer />
-          </div>
-          {/* <!-- End of Content Wrapper --> */}
-        </div>
-        {/* <!-- End of Page Wrapper --> */}
+                )
+            )}
 
-        {/* <!-- Scroll to Top Button--> */}
-      </div>
-    </>
-  );
+        </PageFrame>
+    );
 }
 
 export default ManageStock;
