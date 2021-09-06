@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Topbar from "../../../components/Navigation/Topbar";
-import Footer from "../../../components/Footer";
 import PageHeading from "../../../components/PageHeading";
-import ScrollToTop from "../../../components/Scroll";
 
 //modal import
 import { DataGrid } from "@material-ui/data-grid";
@@ -11,6 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import StudentCard from "./components/StudentCard";
+import PageFrame from "../../PageFrame";
 
 function StudentSetting() {
   //job date 요청
@@ -59,57 +57,36 @@ function StudentSetting() {
   }
 
   return (
-    <>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- End of Sidebar --> */}
+    <PageFrame>
 
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
-              <PageHeading title="학생 세팅" />
-              {/* <!-- Content Row --> */}
 
-              <div className="row justify-content-center">
-                <div
-                  style={{ height: 500, width: "100%" }}
-                  className="col-lg-4"
-                >
-                  <DataGrid
-                    columns={columns}
-                    rows={data}
-                    autoPageSize
-                    onRowDoubleClick={(params) => studentSelected(params)}
-                    disableSelectionOnClick
-                  />
-                </div>
-                <div className="col-lg-6 card shadow m-4">
-                  <StudentCard row={row} />
-                </div>
-              </div>
-            </div>
-            {/* <!-- /.container-fluid --> */}
-          </div>
-          {/* <!-- End of Main Content --> */}
 
-          {/* <!-- Footer --> */}
-          <Footer />
-          {/* <!-- End of Footer --> */}
+
+      <PageHeading title="학생 세팅" />
+      {/* <!-- Content Row --> */}
+
+      <div className="row justify-content-center">
+        <div
+          style={{ height: 500, width: "100%" }}
+          className="col-lg-4"
+        >
+          <DataGrid
+            columns={columns}
+            rows={data}
+            autoPageSize
+            onRowDoubleClick={(params) => studentSelected(params)}
+            disableSelectionOnClick
+          />
         </div>
-        {/* <!-- End of Content Wrapper --> */}
+        <div className="col-lg-6 card shadow m-4">
+          <StudentCard row={row} />
+        </div>
       </div>
-      {/* <!-- End of Page Wrapper --> */}
 
-      {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
-    </>
+
+
+
+    </PageFrame>
   );
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class MainHeader extends Component {
   render() {
@@ -9,9 +10,9 @@ class MainHeader extends Component {
         style={{ background: "#4E73DF", marginBottom: "30px" }}
       >
         <div className="container">
-          <a
+          <Link
             className="d-flex align-items-center justify-content-center"
-            href="main.html"
+            to="/"
           >
             <div className="rotate-n-15">
               <i className="fas fa-piggy-bank" style={{ color: "#FFFFFF" }}></i>
@@ -19,8 +20,7 @@ class MainHeader extends Component {
             <div className="mx-3" style={{ color: "#FFFFFF" }}>
               TAX MATE
             </div>
-          </a>
-
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -35,30 +35,25 @@ class MainHeader extends Component {
           </button>
           <div className="collapse navbar-collapse" id="ftco-nav">
             <ul className="navbar-nav ml-auto">
-               
-            <li className="nav-item">
+              <li className="nav-item">
                 <a
-                  href=""
+                  href="https://github.com/SSU-PaceMaker/taxpayer"
                   className="nav-link icon d-flex align-items-center"
                   style={{ color: "#FFFFFF" }}
                 >
-                  {" "}
                   CONNECT US
                 </a>
               </li>
-           
-              
+
               <li className="nav-item">
-                <a
-                  href="/signin"
+                <Link
+                  to="/signin"
                   className="nav-link icon d-flex align-items-center"
                   style={{ color: "#FFFFFF" }}
                 >
-                  {" "}
                   SIGN IN
-                </a>
+                </Link>
               </li>
-           
             </ul>
           </div>
         </div>

@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-
-import Topbar from "../../../components/Navigation/Topbar";
-import Footer from "../../../components/Footer";
-import ScrollToTop from "../../../components/Scroll";
 import Loading from "../../../components/Loading";
 
 import Transfer from "./components/Transfer";
 import PenaltyTable from "./components/PenaltyTable";
 import FinePayDialog from "./components/FinePayDialog";
 
-import { Button } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
+import PageFrame from "../../PageFrame";
 
 function Penalty() {
   //job date 요청
@@ -139,24 +135,30 @@ function Penalty() {
     },
   ];
   return (
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
+    <PageFrame>
+
               <div className="row justify-content-center">
-                <div className="col-lg-8">
+                {user.userData && user.userData.role === 0 ? (
+                  <div className="col">
+                    <div className="row justify-content-center mt-5">
+                      <div
+                        className="text-center card py-5 shadow"
+                        style={{ width: "80%" }}
+                      >
+                        <h4>벌금부과</h4>
+                        <div className="row justify-content-center">
+                          {isLoading ? null : (
+                            <Transfer users={users} laws={laws} />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+                <div className="col">
                   <div className="text-center py-5 mx-4">
                     {user.userData && user.userData.role === 0 ? (
-                      <h3>벌금</h3>
+                      <h3>벌금 부여 내역</h3>
                     ) : (
                       <h3>나의 벌금 내역</h3>
                     )}
@@ -180,34 +182,12 @@ function Penalty() {
                       )
                     )}
                   </div>
-                  {user.userData && user.userData.role === 0 ? (
-                    <div className="text-center card py-5 shadow">
-                      <h4>벌금부과</h4>
-                      <div className="row justify-content-center">
-                        {isLoading ? null : (
-                          <Transfer users={users} laws={laws} />
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
                 </div>
               </div>
-              {/* <!-- Content Row --> */}
-            </div>
-            {/* <!-- /.container-fluid --> */}
-          </div>
-          {/* <!-- End of Main Content --> */}
-
-          {/* <!-- Footer --> */}
-          <Footer></Footer>
-          {/* <!-- End of Footer --> */}
-        </div>
-        {/* <!-- End of Content Wrapper --> */}
-      </div>
-      {/* <!-- End of Page Wrapper --> */}
-      {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
-    </div>
+              
+              
+              
+              </PageFrame>
   );
 }
 export default Penalty;

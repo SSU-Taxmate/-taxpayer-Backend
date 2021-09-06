@@ -72,7 +72,7 @@ function MangeValueDialog({ type, stockId,price}) {
 
   return (
     <>
-      <IconButton color="primary" onClick={handleOpen}>{type === 'add' ? <AddIcon /> : <EditIcon />}</IconButton>
+      <IconButton color="primary" onClick={handleOpen} style={{padding:"0"}}>{type === 'add' ? <AddIcon/> : <EditIcon />}</IconButton>
       <Dialog fullWidth aria-labelledby="stock-dialog-title" open={open} onClose={handleClose}>
         <DialogTitle id="stock-dialog-title">주가 입력</DialogTitle>
         <DialogContent>

@@ -58,14 +58,12 @@ function MyStatsDetail() {
         {field:'coupon_id',headerName:'면제여부',width:150},
     ]
     let joinedUser = useSelector(state => state.classUser);
-    //console.log(joinedUser.classUser)
     useEffect(() => {
         const fetchData = async () => {
             setIsError(false);
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/students/${joinedUser.classUser}/homeworks`);
-                //console.log('MyStatsDetail',result.data)
                 result.data.map((v,i)=>{
                     v['id']=i
                 })
@@ -98,7 +96,6 @@ function MyStatsDetail() {
                 <ChartPie className='col-6' title='제출/미제출' id='학급과제현황' data={hw_pie_data} />
                 <ChartPie className='col-6'title='기간내제출' id='학급과제현황' data={hw_pie_data} />
                 <div>전체 N회 중 i번 숙제를 미제출하였고, j번 늦게 제출하였습니다.</div>
-
             </CardBasic>
       
         </div>
