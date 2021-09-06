@@ -53,14 +53,18 @@ function BudgetStatistics() {
       const result = await axios.get("/api/budget/history", {
         params: { classId: classData.classId },
       });
-      console.log("budget>>>>", result.data);
       setdata(result.data);
-
+      console.log(result.data)
       const revenue = result.data.filter((v) => v._id.transType === 1);
-      setrevenue(revenue.map((v, i) => v.sum));
+      let mrevenue=[0,0,0,0,0,0,0,0,0,0]//3~12
+      revenue.map((v, i) => mrevenue[v._id.month-3]=v.sum)
+      setrevenue(mrevenue);
 
       const expend = result.data.filter((v) => v._id.transType === 0);
-      setexpend(expend.map((v, i) => v.sum));
+      let mexpend=[0,0,0,0,0,0,0,0,0,0]//3~12
+      expend.map((v, i) => mexpend[v._id.month-3]=v.sum)
+      setexpend(mexpend);
+
     } catch (error) {
       setIsError(true);
     }
