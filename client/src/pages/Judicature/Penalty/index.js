@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-
-import Topbar from "../../../components/Navigation/Topbar";
-import Footer from "../../../components/Footer";
-import ScrollToTop from "../../../components/Scroll";
+import PageFrame from "../../../pages/PageFrame";
 import Loading from "../../../components/Loading";
 
 import Transfer from "./components/Transfer";

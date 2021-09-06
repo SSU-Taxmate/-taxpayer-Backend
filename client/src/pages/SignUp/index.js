@@ -2,55 +2,50 @@ import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
+import axios from "axios";
 import { registerUser } from "../../redux/_actions/index";
 import { useDispatch } from "react-redux";
 
-var Authcheck ;
-var AuthNum=0 ; //이메일 확인시 1, 아니면 0
+var Authcheck;
+var AuthNum = 0; //이메일 확인시 1, 아니면 0
 
 function SignUp(props) {
   useEffect(() => {
     document.getElementById("body").className = "bg-gradient-primary";
   });
-  const handleSubmit2= (e) => {
+  const handleSubmit2 = (e) => {
     {
       const data = {
-        email: e.target.value
+        email: e.target.value,
       };
       alert("인증번호가 발송되었습니다 이메일을 확인해주세요");
       axios
         .post(`/api/users/email`, data)
         .then(function (response) {
           console.log(response.data);
-          Authcheck=response.data;
+          Authcheck = response.data;
         })
         .catch(function (error) {
           console.log(error);
           console.log("testing fine error");
         });
-    };
-
-  }
-  const handleSubmit3= (e) => {
+    }
+  };
+  const handleSubmit3 = (e) => {
     {
       const data = {
-        emailverify: e.target.value
+        emailverify: e.target.value,
       };
-      if (e.target.value == Authcheck){
+      if (e.target.value === Authcheck) {
         alert("이메일 인증이 완료되었습니다");
-        AuthNum=1; //이메일 인증완료
-        e.currentTarget.disabled = true ; //성공했으니 다시 못누르게하기
-      }
-      else {
+        AuthNum = 1; //이메일 인증완료
+        e.currentTarget.disabled = true; //성공했으니 다시 못누르게하기
+      } else {
         alert("이메일 확인 코드를 다시 확인해주세요");
-        AuthNum=0; //이메일 인증실패. 다시요구하기
+        AuthNum = 0; //이메일 인증실패. 다시요구하기
       }
-    };
-
-  }
-
-  
+    }
+  };
 
   const dispatch = useDispatch();
   return (
@@ -94,7 +89,8 @@ function SignUp(props) {
                   onSubmit={(values, { setSubmitting }) => {
                     //alert(JSON.stringify(values, null, 2))
                     setTimeout(() => {
-                      let dataToSubmit = { //이곳에 송신할 데이터 추가.
+                      let dataToSubmit = {
+                        //이곳에 송신할 데이터 추가.
                         email: values.email,
                         password: values.password,
                         name: values.name,
@@ -196,7 +192,6 @@ function SignUp(props) {
                             onClick={handleSubmit2}
                             className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
                             style={{ marginLeft: "1rem" }}
-                            
                           >
                             이메일 인증받기
                           </button>
@@ -219,7 +214,6 @@ function SignUp(props) {
                             onClick={handleSubmit3}
                             className="col-sm-5 mb-5 mb-sm-0 btn btn-primary"
                             style={{ marginLeft: "1rem" }}
-                            
                           >
                             이메일 인증확인
                           </button>
@@ -312,7 +306,7 @@ function SignUp(props) {
                         >
                           회원가입
                         </button>
-{/* 
+                        {/* 
                         <hr />
                         <Link
                           to="/classes"
@@ -335,7 +329,9 @@ function SignUp(props) {
 
                 <hr />
                 <div className="text-center">
-                <Link className="small" to="/">메인으로 돌아가기</Link>
+                  <Link className="small" to="/">
+                    메인으로 돌아가기
+                  </Link>
                 </div>
                 <div className="text-center">
                   <Link className="small" to="/signin">

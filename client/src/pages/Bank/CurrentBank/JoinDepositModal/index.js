@@ -107,7 +107,6 @@ function DepositAdd({ balance }) {
       }) //
       .then(function (response) {
         console.log(response);
-        //setopensnackbar(true)
         handleNext();
       })
       .catch(function (error) {
