@@ -12,23 +12,16 @@ import List from '@material-ui/core/List';
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
 
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 
-import ListItem from '@material-ui/core/ListItem';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+
+
 
 
 
@@ -87,33 +80,53 @@ function Congress() {
     const quorum=10;
     const total=25;
 
+    const [page,setPage]=useState(1);
+    const pageChange = (event, value) => {
+        setPage(value);
+    };
+
+    const sorting=[{label:"최신순",status:0,},{label:"추천순",status:1}]
+
     const [data,setData]=useState([
-        {id:"0",title:"직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
+        {id:"0",title:"직업활동 세금 개정안직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
         {id:"1",title:"직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
         {id:"2",title:"직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
         {id:"3",title:"직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
-        {id:"4",title:"직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
-        {id:"5",title:"직업활동 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
-        {id:"5",title:"직업활동 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"},
+        {id:"4",title:"직업활동 세금 개정안", student:"배미혜", ayes:4, detail:"세금이 너무 높습니다"}     
 
-       
     ])
+
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
 
-      
         return (
           <div
-            className="row justify-content-center"
             role="tabpanel"
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
+            {...other}>
+                 <div className="card-body d-none d-sm-inline">
+                        <div className="row no-gutters align-items-center mx-2 justify-content-end">
+                        <div className="col-auto h6 mb-0 mr-2 text-gray-800 font-weight-bold">
+                        <a  className="btn btn-primary btn-icon-split">
+                                        <span className="text">제안하기</span>
+                                    </a>
+                            </div>
+                        <div className="col-auto h6 mb-0 text-gray-800 font-weight-bold">
+                        <Autocomplete
+                            id="list-sorting"
+                            options={sorting}
+                            getOptionLabel={(option) => option.label}
+                            style={{ width: 135}}
+                            renderInput={(params) => <TextField {...params} label="정렬" variant="outlined" dense="true" size="small"/>}
+    /></div></div>
 
-    <div className="card-body d-none d-sm-inline ">
+                        </div>
+
+            <hr className="m-0 "/>
+                        <div className="card-body d-none d-sm-inline">
                         <div className="row no-gutters align-items-center mx-4">
                         <div className="col-2 mr-2">
                         <div className="h6 mb-0 text-gray-800 font-weight-bold">만료일</div></div>
@@ -123,21 +136,11 @@ function Congress() {
 
                         </div>
 
-                    <hr className="m-0 py-1"/>
+            <hr className="m-0 py-1"/>
 
-          <Pagination 
-          className="col-12"
-          showFirstButton
-          showLastButton
-          count={Math.ceil(data.length/5)} 
-          color="primary" 
-          renderItem={(params) =>(
-          
-          <List className="col-lg-8 ">
-              {console.log("pagination",(params.page-1)*5+","+params.page*5-1)}
-              {console.log("pagination page",params.page)}
-
-              {data.slice((params.page-1)*5,params.page*5-1).map((item)=>(
+            <List className="">
+            
+              {data.slice((page-1)*5,page*5).map((item)=>(
                   <div>
                     <div className="card-body" id={"suggest"+item.id}>
                         <div className="row no-gutters align-items-center">
@@ -149,18 +152,22 @@ function Congress() {
 
                         <div className="d-block d-sm-none">
                         <div className="py-2"></div>
-                        <div className="row no-gutters align-items-center">
-                        <div className="col mr-2">
+                        <div className="row no-gutters align-items-center justify-content-end">
+                        <div className="col-auto ">
                         <div className="mb-0 font-weight-bold text-gray-500">~ 10/2</div></div>
-                        <div className="col-auto text-gray-500">배미혜</div></div></div></div>
+                        </div></div></div>
 
                     <hr className="m-0"/></div>
               ))}
           </List>
-          
-          )}
-            
-            />
+
+          <Pagination 
+          className="row justify-content-center"
+          size="small"  
+          page={page}
+          count={Math.ceil(data.length/5)} 
+          color="primary"
+          onChange={pageChange}/>
 
           </div>
         );
@@ -208,9 +215,10 @@ function Congress() {
 
                         </Tabs>
 
-                        
-                        <TabPanel value={value} index={0}></TabPanel>
-                        <TabPanel value={value} index={1}></TabPanel>
+                        <div className="row justify-content-center">
+                        <TabPanel  className="col-lg-8"value={value} index={0}></TabPanel>
+                        <TabPanel  className="col-lg-8"value={value} index={1}></TabPanel>
+                        </div>
                         </div>
 
 </div>
@@ -229,6 +237,7 @@ function Congress() {
                 {/* <!-- End of Content Wrapper --> */}
 
             </div>
+            
             {/* <!-- End of Page Wrapper --> */}
 
             {/* <!-- Scroll to Top Button--> */}
