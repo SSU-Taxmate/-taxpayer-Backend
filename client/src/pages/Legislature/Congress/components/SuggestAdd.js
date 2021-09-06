@@ -147,7 +147,7 @@ const onContentChange = (value) => {/*editor에서 현재 editor 값 넘겨줌 *
 
 <hr />
 
-  
+   
 
 <div className="row py-2">
 <div className="text-gray-900 font-weight-bold col-auto mb-2">건의내용</div>
