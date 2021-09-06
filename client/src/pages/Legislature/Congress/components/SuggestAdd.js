@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { withStyles, makeStyles, lighten } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
 
 //Navigation
 import Topbar from "../../../../components/Navigation/Topbar";
@@ -52,6 +53,27 @@ const useStyles = makeStyles((theme) => ({
     
 
 export default function SuggestAdd({match}) {
+
+  const [lawtitle,setlawtitle]=useState('')
+  const [lawcontent, setlawcontent] = useState({})//{title:'',content:''}
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+
+    axios.post(`/api/laws`,{"classId":classData.classId,"title":lawtitle,"content":lawcontent})
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+};
+
+const onTitleChange = (e) => {
+  setlawtitle(e.target.value);//e.currentTarget.value
+};
+const onContentChange = (value) => {/*editor에서 현재 editor 값 넘겨줌 */
+  setlawcontent(value);
+};
 
     const classes = useStyles();
 
@@ -109,11 +131,11 @@ export default function SuggestAdd({match}) {
             {/* <!-- Begin Page Content --> */}
             <div className="container-fluid">
               {/* <!-- Page Heading --> */}
-
               <div className="row justify-content-center">
+              <form onSubmit={handleSubmit}>
             <div className="card-body col-lg-8">
             <div className="row align-items-center  justify-content-center">
-                <div className="text-gray-900 font-weight-bold mr-2">제목</div>
+                <div className="text-gray-900 font-weight-bold mr-2" htmlFor='suggestlawtitle'>제목</div>
                 <TextField
                   className="text-gray-900 text-center col-10"
                   name="whatdo"
@@ -143,6 +165,8 @@ export default function SuggestAdd({match}) {
 
 <hr />
 </div>
+<Button color="primary" onClick={handleSubmit} type="submit">추가</Button>
+</form>
 </div>
 
               
