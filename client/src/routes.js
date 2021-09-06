@@ -44,9 +44,7 @@ import Law from "./pages/Legislature/Law";
 import Congress from "./pages/Legislature/Congress";
 import Auth from "../src/hoc/auth";
 import ManageStock from "./pages/Stock/SettingStock/sections/ManageStock";
-import SuggestDetail from "./pages/Legislature/Congress/modals/SuggestDetail";
-import BillDetail from "./pages/Legislature/Congress/modals/BillDetail";
-import SuggestAdd from "./pages/Legislature/Congress/modals/SuggestAdd";
+
 
 const Routes = () => (
   <BrowserRouter>
@@ -81,9 +79,6 @@ const Routes = () => (
       {/*법*/}
       <Route exact path="/classes/:classId/law" component={Auth(Law,true)}/>
       <Route exact path="/classes/:classId/congress" component={Auth(Congress,true)}/>
-      <Route exact path="/classes/:classId/congress/suggest" component={Auth(SuggestDetail,true)}/>
-      <Route exact path="/classes/:classId/congress/bill" component={Auth(BillDetail,true)}/>
-      <Route exact path="/classes/:classId/congress/add" component={Auth(SuggestAdd,true)}/>
 
 
 

@@ -3,13 +3,11 @@ import axios from "axios";
 import { withStyles, makeStyles, lighten } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 
-//Navigation
-import Topbar from "../../../../components/Navigation/Topbar";
-import ScrollToTop from "../../../../components/Scroll";
-import Footer from "../../../../components/Footer";
+//modal import
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
-import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
-import ThumbDownAltRoundedIcon from '@material-ui/icons/ThumbDownAltRounded';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   }));
     
 
-export default function SuggestAdd({match}) {
+export default function SuggestAdd(props) {
 
     const classes = useStyles();
 
@@ -68,50 +66,26 @@ export default function SuggestAdd({match}) {
     let classData = useSelector(state => state.classInfo.classData);
     let user = useSelector((state) => state.user);
 
-
-    const fetchData = async () => {
-    setIsError(false);
-    setIsLoading(true);
-
-    try {
-        const result = await axios.get('/', { params: { classId: classData.classId } });
-        setData(result)
-    } catch (error) {
-      setIsError(true);
-
+    const modalClose=()=>{
+      props.modalClose()
     }
-    setIsLoading(false);
 
-  };
-
-  useEffect(() => {
-
-   // fetchData();
-
-  }, []);
-
-
- 
   return (
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- End of Sidebar --> */}
-
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
-
-              <div className="row justify-content-center">
-            <div className="card-body col-lg-8">
+  
+<Modal
+      id="suggestAddModal"
+      className={classes.modal}
+      open={props.open}
+      onClose={modalClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={props.open}>
+      
+            <div className="card col-lg-8 px-5 py-3">
             <div className="row align-items-center  justify-content-center">
                 <div className="text-gray-900 font-weight-bold mr-2">제목</div>
                 <TextField
@@ -129,39 +103,32 @@ export default function SuggestAdd({match}) {
 
 <div className="row py-2">
 <div className="text-gray-900 font-weight-bold col-auto mb-2">건의내용</div>
-
   <TextField
                   className="text-gray-900 text-center col-12"
                   name="whatdo"
                   required
                   multiline
-                  rows={20}
+                  rows={15}
                   variant="outlined"
                   margin="none"
                 /></div>
 
 
 <hr />
+
+<div className="row py-2 justify-content-center">
+<a className="btn btn-primary btn-icon-split m-2">
+<span className="text">제출하기</span></a>
+
 </div>
 </div>
+
 
               
-            </div>
-            {/* <!-- /.container-fluid --> */}
-          </div>
-          {/* <!-- End of Main Content --> */}
 
-          {/* <!-- Footer --> */}
-          <Footer />
-          {/* <!-- End of Footer --> */}
-        </div>
-        {/* <!-- End of Content Wrapper --> */}
-      </div>
-      {/* <!-- End of Page Wrapper --> */}
+      </Fade>
+    </Modal>
 
-      {/* <!-- Scroll to Top Button--> */}
 
-      <ScrollToTop />
-    </div>
   );
 }
