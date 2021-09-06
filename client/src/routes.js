@@ -44,9 +44,9 @@ import Law from "./pages/Legislature/Law";
 import Congress from "./pages/Legislature/Congress";
 import Auth from "../src/hoc/auth";
 import ManageStock from "./pages/Stock/SettingStock/sections/ManageStock";
-import SuggestDetail from "./pages/Legislature/Congress/components/SuggestDetail";
-import BillDetail from "./pages/Legislature/Congress/components/BillDetail";
-import SuggestAdd from "./pages/Legislature/Congress/components/SuggestAdd";
+import SuggestDetail from "./pages/Legislature/Congress/modals/SuggestDetail";
+import BillDetail from "./pages/Legislature/Congress/modals/BillDetail";
+import SuggestAdd from "./pages/Legislature/Congress/modals/SuggestAdd";
 
 const Routes = () => (
   <BrowserRouter>

@@ -3,15 +3,10 @@ import axios from "axios";
 import { withStyles, makeStyles, lighten } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 
-//Navigation
-import Topbar from "../../../../components/Navigation/Topbar";
-import ScrollToTop from "../../../../components/Scroll";
-import Footer from "../../../../components/Footer";
-
-import TextField from '@material-ui/core/TextField';
-import { Box, Button, ButtonGroup, Paper } from '@material-ui/core';
-
-import IconButton from '@material-ui/core/IconButton';
+//modal import
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
@@ -55,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   }));
     
 
-export default function SuggestDetail({match}) {
+export default function SuggestDetail(props) {
 
     const classes = useStyles();
 
@@ -73,49 +68,26 @@ export default function SuggestDetail({match}) {
     let user = useSelector((state) => state.user);
 
 
-    const fetchData = async () => {
-    setIsError(false);
-    setIsLoading(true);
-
-    try {
-        const result = await axios.get('/', { params: { classId: classData.classId } });
-        setData(result)
-    } catch (error) {
-      setIsError(true);
-
+    const modalClose=()=>{
+      props.modalClose()
     }
-    setIsLoading(false);
-
-  };
-
-  useEffect(() => {
-
-   // fetchData();
-
-  }, []);
-
-
  
   return (
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- End of Sidebar --> */}
 
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
-
-              <div className="row justify-content-center">
-            <div className="card-body col-lg-8">
+    
+<Modal
+      id="billDetailModal"
+      className={classes.modal}
+      open={props.open}
+      onClose={modalClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={props.open}>
+      <div className="col-lg-8 card">
 
                 <div className="text-gray-900 font-weight-bold text-center mx-2 h5 my-5">{data.title}</div>
 
@@ -154,10 +126,6 @@ export default function SuggestDetail({match}) {
 
 <div className="row py-2 justify-content-center">
 
-<a class="btn btn-light btn-icon-split m-2">
-    <span class="icon text-white-50"><EditRoundedIcon/></span>
-    <span class="text">수정하기</span></a>
-
         <a class="btn btn-success btn-icon-split m-2">
             <span class="icon text-white-50"> <ThumbUpAltRoundedIcon/> </span>
             <span class="text">동의합니다</span></a>
@@ -167,25 +135,9 @@ export default function SuggestDetail({match}) {
 </div>
 <hr />
 </div>
-</div>
 
-              
-            </div>
-            {/* <!-- /.container-fluid --> */}
-          </div>
-          {/* <!-- End of Main Content --> */}
+      </Fade>
+    </Modal>
 
-          {/* <!-- Footer --> */}
-          <Footer />
-          {/* <!-- End of Footer --> */}
-        </div>
-        {/* <!-- End of Content Wrapper --> */}
-      </div>
-      {/* <!-- End of Page Wrapper --> */}
-
-      {/* <!-- Scroll to Top Button--> */}
-
-      <ScrollToTop />
-    </div>
   );
 }
