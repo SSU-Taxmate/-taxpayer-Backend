@@ -107,7 +107,8 @@ function StockPanel() {
 
                         </div>
 
-                        <div className="row justify-content-center">
+                        {data.exist&&
+                            <div className="row justify-content-center">
                             <div className="col-xl-10 col-md-10 ">
                                 <div className="row justify-content-center">
 
@@ -145,6 +146,7 @@ function StockPanel() {
 
                                 </div></div>
                         </div>
+                        }
 
                     </>
                 )

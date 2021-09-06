@@ -23,7 +23,7 @@ router.get('/bank', async (req, res) => {
         const account = await Account.findOne({ studentId: studentId })
 
         // 2. 이번달 수입
-        const income = await AccountTransaction.aggregate([
+        const thismonth = await AccountTransaction.aggregate([
             {
                 $match: {
                     accountId: account._id,
@@ -41,9 +41,13 @@ router.get('/bank', async (req, res) => {
             },
         ])
         //이번달꺼만 사용하기
-        //console.log('dashboard/bank', income)
+        if(thismonth.length===0){
+            income= { exist: false}
+        }else{
+            income={income:thismonth,exist:true}
+        }
         // 3. 예금
-        const deposit = await JoinDeposit.aggregate([
+        let deposit = await JoinDeposit.aggregate([
             {
                 $match: {
                     studentId: ObjectId(studentId),
@@ -62,12 +66,17 @@ router.get('/bank', async (req, res) => {
                 $unwind: '$product'
             }
         ])
-        //console.log(deposit)
-        const createdAt = deposit[0].createdAt
-        const duration = deposit[0].product.minDuration
-        //console.log(createdAt,duration)
-        const result = { balance: account.currentBalance, income: income, deposit: { createdAt, duration } }
-        //console.log(result)
+        
+        if (deposit.length === 0) {
+            deposit={exist:false}
+        }
+        else {
+            const createdAt = deposit[0].createdAt
+            const duration = deposit[0].product.minDuration
+            deposit = { exist: true, createdAt, duration }
+        }
+        const result = { balance: account.currentBalance, income: income, deposit: deposit }
+        console.log(result)
         res.json(result)
     } catch (err) {
         res.json({ success: false, err })
@@ -137,84 +146,85 @@ router.get('/stock', async (req, res) => {
         const stocktax = tax.taxlist.stock//stock에 붙는 tax
         const userStocks = await StockAccount.findOne({ studentId: studentId })
         const holdingStocks = userStocks.holdingStocks
-        let first = await Promise.all(
-            holdingStocks.map(async (v, i) => {
-                //const stock = await Stock.findOne({ '_id': v.stockId })
-                const temp = await Stock.aggregate([
-                    {
-                        $match: {
-                            '_id': v.stockId
-                        }
-                    },
-                    {
-                        $unwind: '$prices'
-                    },
-                    {
-                        $sort: {
-                            'prices.updateDate': -1
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: "$_id",
-                            description: {
-                                $first: "$description"
-                            },
-                            ondelete: {
-                                $first: '$ondelete'
-                            },
-                            ondeleteDay: {
-                                $first: '$ondeleteDay'
-                            },
-                            stockName: {
-                                $first: '$stockName'
-                            },
-                            createdAt: {
-                                $first: '$createdAt'
-                            },
-                            updatedAt: {
-                                $first: 'updatedAt'
-                            },
-                            prices: {
-                                $push: '$prices'
+        if (holdingStocks.length === 0) {//학생이 보유한 stock이 없다면
+            res.json({exist:false ,hint})
+        } else {
+            let first = await Promise.all(
+                holdingStocks.map(async (v, i) => {
+                    const temp = await Stock.aggregate([
+                        {
+                            $match: {
+                                '_id': v.stockId
+                            }
+                        },
+                        {
+                            $unwind: '$prices'
+                        },
+                        {
+                            $sort: {
+                                'prices.updateDate': -1
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: "$_id",
+                                description: {
+                                    $first: "$description"
+                                },
+                                ondelete: {
+                                    $first: '$ondelete'
+                                },
+                                ondeleteDay: {
+                                    $first: '$ondeleteDay'
+                                },
+                                stockName: {
+                                    $first: '$stockName'
+                                },
+                                createdAt: {
+                                    $first: '$createdAt'
+                                },
+                                updatedAt: {
+                                    $first: 'updatedAt'
+                                },
+                                prices: {
+                                    $push: '$prices'
+                                }
                             }
                         }
-                    }
-                ])
-                const stock = temp[0]//prices가 정렬되어 나옴
+                    ])
+                    const stock = temp[0]//prices가 정렬되어 나옴
 
-                //console.log('>?aggregate?',stock)
-                const now = new Date()
-                const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
-                const index = stock.prices.findIndex(isSameDate)
-                let frate;
-                if (index + 1 >= stock.prices.length) {//이전값이 없어서 등락률비교불가
-                    frate = 0
-                } else {
-                    if (stock.prices[index + 1].value === 0) {
+                    const now = new Date()
+                    const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
+                    const index = stock.prices.findIndex(isSameDate)
+                    let frate;
+                    if (index + 1 >= stock.prices.length) {//이전값이 없어서 등락률비교불가
                         frate = 0
                     } else {
-                        frate =await Math.round((stock.prices[index].value - stock.prices[index + 1].value) / stock.prices[index + 1].value * 100)
+                        if (stock.prices[index + 1].value === 0) {
+                            frate = 0
+                        } else {
+                            frate = await Math.round((stock.prices[index].value - stock.prices[index + 1].value) / stock.prices[index + 1].value * 100)
+                        }
                     }
-                }
-                return {
-                    stockId: v._id,
-                    fluctuation: frate,//등락률
-                    PayAmount: v.allPayAmount,//총매입
-                    evaluated: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100),//총 평가금액:현재가*잔고*(100-세금)/100
-                    evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount//총 평가손익:총평가금액-총매입
-                }
-            })
-        )
-        
-        let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)//총매입
-        let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)//총평가
-        let evaluatedIncome = allEvaluated - allPayAmount//평가손익
-        let fluct = await first.reduce((v,c)=>v+c.fluctuation,0)
-        let evaluatedProfit = allPayAmount === 0 ? 0 : await Math.round(evaluatedIncome / allPayAmount * 100) / 100//평가수익률
-        let fluctuation=await Math.round(fluct/first.length)//평균 등락률
-        
-        res.json({hint,evaluatedProfit,fluctuation})
+                    return {
+                        stockId: v._id,
+                        fluctuation: frate,//등락률
+                        PayAmount: v.allPayAmount,//총매입
+                        evaluated: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100),//총 평가금액:현재가*잔고*(100-세금)/100
+                        evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount//총 평가손익:총평가금액-총매입
+                    }
+                })
+            )
+            let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)//총매입
+            let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)//총평가
+            let evaluatedIncome = allEvaluated - allPayAmount//평가손익
+            let fluct = await first.reduce((v, c) => v + c.fluctuation, 0)
+            let evaluatedProfit = allPayAmount === 0 ? 0 : await Math.round(evaluatedIncome / allPayAmount * 100) / 100//평가수익률
+            let fluctuation = await Math.round(fluct / first.length)//평균 등락률
+            res.json({exist:true, hint, evaluatedProfit, fluctuation })
+        }
+
     } catch (err) {
         res.status(500).json({ error: err });
     }
