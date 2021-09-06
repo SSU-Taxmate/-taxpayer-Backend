@@ -13,7 +13,7 @@ function BudgetStatistics() {
   const [revenue, setrevenue] = useState();
   const [expend, setexpend] = useState();
   const finance_labels = [
-    //현재 날자까지
+    //현재 날짜까지
     "3월",
     "4월",
     "5월",

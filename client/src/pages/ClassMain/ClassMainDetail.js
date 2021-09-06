@@ -12,13 +12,7 @@ import StockPanel from './components/StockPanel';
 
 export default function ClassMainDetail() {
 
-   
-  
-
- 
-
     return (
-
     /* student 기준 */
         <div className="row justify-content-center ">
             <div className="col-lg-10 col-xs-12">

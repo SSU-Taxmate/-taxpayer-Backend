@@ -450,8 +450,6 @@ router.get('/:id/stocks/statistics', async (req, res) => {
         ])
         const stock = temp[0]
 
-
-
         //console.log('>?aggregate?',stock)
         const now = new Date()
         const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
