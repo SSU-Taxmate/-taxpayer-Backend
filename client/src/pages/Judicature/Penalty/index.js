@@ -153,10 +153,27 @@ function Penalty() {
             <div className="container-fluid">
               {/* <!-- Page Heading --> */}
               <div className="row justify-content-center">
-                <div className="col-lg-8">
+                {user.userData && user.userData.role === 0 ? (
+                  <div className="col">
+                    <div className="row justify-content-center mt-5">
+                      <div
+                        className="text-center card py-5 shadow"
+                        style={{ width: "80%" }}
+                      >
+                        <h4>벌금부과</h4>
+                        <div className="row justify-content-center">
+                          {isLoading ? null : (
+                            <Transfer users={users} laws={laws} />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+                <div className="col">
                   <div className="text-center py-5 mx-4">
                     {user.userData && user.userData.role === 0 ? (
-                      <h3>벌금</h3>
+                      <h3>벌금 부여 내역</h3>
                     ) : (
                       <h3>나의 벌금 내역</h3>
                     )}
@@ -180,16 +197,6 @@ function Penalty() {
                       )
                     )}
                   </div>
-                  {user.userData && user.userData.role === 0 ? (
-                    <div className="text-center card py-5 shadow">
-                      <h4>벌금부과</h4>
-                      <div className="row justify-content-center">
-                        {isLoading ? null : (
-                          <Transfer users={users} laws={laws} />
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
                 </div>
               </div>
               {/* <!-- Content Row --> */}

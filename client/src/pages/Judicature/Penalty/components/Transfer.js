@@ -27,8 +27,6 @@ const inputStyles = makeStyles((theme) => ({
   },
 }));
 
-// class에서 student_list 받아오기
-
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
 
@@ -54,27 +52,30 @@ function NumberFormatCustom(props) {
 function Transfer(props) {
   const [lawReason, setLaw] = useState(null);
   const [studentId, setStudent] = useState(null);
-  const [Amount, setAmount] = useState(0);
+  const [Amount, setAmount] = useState(0); //벌금 금액 정보
 
   // 리덕스에 있는 정보 가져오기!
   let classData = useSelector((state) => state.classInfo.classData);
 
+  // 해당 학급의 학생들 정보
   const studenthandleChange = (e, values) => {
     e.preventDefault();
     setStudent(values);
   };
 
+  // 벌금 사유 = 법 정보
   const lawhandleChange = (e, values) => {
     e.preventDefault();
     setLaw(values);
   };
 
+  // 부여할 벌금 값
   const AmounthandleChange = (e) => {
     setAmount(e.target.value);
   };
 
+  // 벌금 부여 처리 로직
   const handleSubmit = (e) => {
-    // e.preventDefault();
     const data = {
       classId: classData.classId,
       lawReason,
@@ -85,14 +86,19 @@ function Transfer(props) {
       .post(`/api/fine/`, data)
       .then(function (response) {
         console.log(response);
+        if (response.data.success === true) {
+          alert("벌금 부여가 완료되었습니다.");
+        } else {
+          alert("오류가 발생하였습니다. 다시 시도하세요.");
+        }
       })
       .catch(function (error) {
         console.log(error);
-        console.log("testing fine error");
       });
+    window.location.reload();
   };
   return (
-    <div className="col-lg-8 justify-content-center">
+    <div className="col-10 justify-content-center">
       <form onSubmit={handleSubmit}>
         <Autocomplete
           className="py-3"
