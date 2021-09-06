@@ -69,7 +69,7 @@ function ManageStock(props) {
                 ) : (
                   stock && (
                     <>
-                      <div className="container p-4" id="stockSetting-container">
+                      <div className="container p-4 mb-4" id="stockSetting-container">
                         <div className="row py-2"  style={{justifyContent:"space-between"}}>
                         <div style={{display:"inherit"}}>
                             <div className="font-weight-bold mx-2 job-label">

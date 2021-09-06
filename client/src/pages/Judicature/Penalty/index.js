@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+
+import Topbar from "../../../components/Navigation/Topbar";
+import Footer from "../../../components/Footer";
+import ScrollToTop from "../../../components/Scroll";
 import Loading from "../../../components/Loading";
 
 import Transfer from "./components/Transfer";
 import PenaltyTable from "./components/PenaltyTable";
 import FinePayDialog from "./components/FinePayDialog";
 
+import { Button } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
-import PageFrame from "../../PageFrame";
 
 function Penalty() {
   //job date 요청
@@ -135,7 +139,6 @@ function Penalty() {
     },
   ];
   return (
-
     <div>
       {/* <!-- Page Wrapper --> */}
       <div id="wrapper">
@@ -196,11 +199,22 @@ function Penalty() {
                   </div>
                 </div>
               </div>
+              {/* <!-- Content Row --> */}
             </div>
-          ) : null}
+            {/* <!-- /.container-fluid --> */}
+          </div>
+          {/* <!-- End of Main Content --> */}
+
+          {/* <!-- Footer --> */}
+          <Footer></Footer>
+          {/* <!-- End of Footer --> */}
         </div>
+        {/* <!-- End of Content Wrapper --> */}
       </div>
-    </PageFrame>
+      {/* <!-- End of Page Wrapper --> */}
+      {/* <!-- Scroll to Top Button--> */}
+      <ScrollToTop />
+    </div>
   );
 }
 export default Penalty;

@@ -58,8 +58,12 @@ function AddStockDialog() {
             });
     }
     return (
-        <>
-            <IconButton color="primary" onClick={handleOpen}>주식 추가<AddIcon /></IconButton>
+        <>  
+            <div className="row d-flex p-3" style={{justifyContent:"space-between"}}>
+            <h5 className="mt-1">현재 등록 주식 및 설정</h5>
+            <button type="button" className="btn btn-outline-primary "  onClick={handleOpen}> 주식 등록 <AddIcon /></button>
+            </div>
+            {/* <Button color="primary" onClick={handleOpen}>주식 추가<AddIcon /></Button> */}
             <Dialog fullWidth aria-labelledby="stock-dialog-title" open={open} onClose={handleClose}>
                 <DialogTitle id="stock-dialog-title">주식 추가</DialogTitle>
                     <DialogContent>

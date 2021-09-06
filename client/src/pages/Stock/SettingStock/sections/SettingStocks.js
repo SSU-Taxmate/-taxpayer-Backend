@@ -56,9 +56,10 @@ function SettingStocks() {
             {isLoading ?
                 <Loading /> : (
                     <>
+                        <div className="container" id="stockSetting-outContainer">
                         <AddStockDialog />
-                        <div className="container" id="stockSetting-container" >
-                        <Table aria-label="setting-table" size="small" >
+                        <div className="container" id="stockSetting-container" style={{overflow:"auto"}} >
+                        <Table aria-label="setting-table" size="small" style={{minWidth:"1000px"}} >
                             <TableHead>
                                 <TableRow>
                                     {column.map((v, i) =>
@@ -77,7 +78,7 @@ function SettingStocks() {
                                             {row.stockName}
                                         </TableCell>
                                         <TableCell >{row.description}</TableCell>
-                                        <TableCell>{row.ondelete ? moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD') : ''}</TableCell>
+                                        <TableCell>{row.ondelete ? moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD') : 'X'}</TableCell>
                                         <TableCell >
                                             <Link
                                                 to={
@@ -112,6 +113,7 @@ function SettingStocks() {
                                 </TableRow>
                             </TableFooter>
                         </Table>
+                        </div>
                         </div>
                     </>
                 )
