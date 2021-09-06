@@ -8,6 +8,7 @@ import ManageValueDialog from "./ManageValueDialog";
 import moment from "moment-timezone";
 import { useHistory } from "react-router-dom";
 
+
 import Topbar from "../../../../components/Navigation/Topbar";
 import Footer from "../../../../components/Footer";
 import PageHeading from "../../../../components/PageHeading";
@@ -116,6 +117,7 @@ function ManageStock(props) {
                         <hr />
                         <List dense>
                             {stock.prices.map((price, i) => {
+
                             return (
                                 <ListItem key={i}>
                                     <NewsItem price={price} stockId={stock._id} />

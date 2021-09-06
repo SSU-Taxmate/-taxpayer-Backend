@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ClassCodeModal from '../../../components/Modal/ClassCodeModal'
+import ClassCodeModal from '../../../pages/ClassList/sections/ClassCodeModal'
 class MiniCard extends Component {
     constructor(props) {
         super(props)
