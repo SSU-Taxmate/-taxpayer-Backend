@@ -27,6 +27,7 @@ export default function AlertDialog(props) {
           alert("잔액이 부족합니다!");
         } else {
           console.log(response);
+          alert("벌금 납부가 완료되었습니다. ");
           window.location.reload();
         }
       })
