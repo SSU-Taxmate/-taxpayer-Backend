@@ -51,7 +51,7 @@ export default function SuggestDetail(props) {
   //console.log('suggestDetail', props.data)
   const classes = useStyles();
 
-  const handleSubmit = (e) => {
+  const handleSubmit1 = (e) => {
     //e.preventDefault();
 
     if (window.confirm("정말 동의하시겠습니까?")) {
@@ -62,6 +62,32 @@ export default function SuggestDetail(props) {
         vote:{
         initiator: user.userData._id,
         value: true}
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      modalClose();
+      
+  } else {
+      alert("동의취소하셨습니다");
+  }
+
+
+  };
+
+  const handleSubmit2 = (e) => {
+    //e.preventDefault();
+
+    if (window.confirm("정말 승인하시겠습니까?")) {
+      alert("승인하셨습니다");
+      axios
+      .post(`/api/congress/approve`, {
+        _id:props.data._id,
+        state:"suggest-vote",
+        vote:[]
       })
       .then(function (response) {
         console.log(response);
@@ -178,8 +204,12 @@ export default function SuggestDetail(props) {
                     {" "}
                     <ThumbUpAltRoundedIcon />{" "}
                   </span>
-                  <span className="text" onClick={handleSubmit}>동의합니다</span>
+                  <span className="text" onClick={handleSubmit1}>동의합니다</span>
                 </a>
+                {user.userData.role === 0 ? (
+                                <a className="btn btn-danger btn-icon-split m-2">
+                                <span className="text" onClick={handleSubmit2}>승인</span></a>
+                  ) : null}
               </div>
               <hr />
             </>

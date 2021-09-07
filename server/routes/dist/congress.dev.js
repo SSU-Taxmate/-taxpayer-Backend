@@ -208,6 +208,21 @@ router.post('/vote', function (req, res) {
     });
   });
 });
+router.post('/approve', function (req, res) {
+  LawSuggest.updateOne({
+    _id: req.body._id
+  }, {
+    $set: req.body
+  }, function (err, doc) {
+    if (err) return res.json({
+      success: false,
+      err: err
+    });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
 /*
     SuggestLaw 하나의 vote값만 가져오기
 */
