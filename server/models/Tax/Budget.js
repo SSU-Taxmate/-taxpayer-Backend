@@ -1,9 +1,8 @@
 
 /*
-    Budget
-    : Class 각각이 가지고 있는 Budget Account
+    Budget[이번달]
     Class 만들때 생성O
-    한달마다 BudgetHistory로 옮기고 없애자
+    한달마다 BudgetHistory, BudgetAccount로
 */
 const mongoose = require('mongoose')
 
@@ -12,7 +11,7 @@ const budgetSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
-    balance: {//보유세금
+    balance: {// 이번달 세입현황
         income: {//소득세
             type: Number,
             default: 0
@@ -42,11 +41,11 @@ const budgetSchema = mongoose.Schema({
             default: 0
         }
     },
-    debet: {//국채
+    debet: {// 이번달 국채
         type: Number,
         default: 0
     },
-    expenditure: {//세출현황
+    expenditure: {// 이번달 세출현황
         culture: {
             type:Number,
             default:0

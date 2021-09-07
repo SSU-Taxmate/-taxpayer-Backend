@@ -14,7 +14,7 @@ function TaxTypeArea() {
     setIsError(false);
     setIsLoading(true);
     try {
-      const result = await axios.get("/api/budget", {
+      const result = await axios.get("/api/budget/month", {
         params: { classId: classData.classId },
       });
       setdata(result.data);

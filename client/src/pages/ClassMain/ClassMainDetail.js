@@ -19,17 +19,12 @@ export default function ClassMainDetail() {
                 <div className="card-body m-4">
                     <div className="row">
                         <div className="col-lg-6 mb-0">
-                            
-                        {user.userData && (user.userData.role === 1 ?  <BankPanel/>:<TaxPanel/>)}
-                            <hr className="m-0"/>
-                            
+                            {user.userData && (user.userData.role === 1 ? <BankPanel /> : <TaxPanel />)}
+                            <hr className="m-0" />
                             <div className="py-3"></div>
                             <CongressPanel />
-
                         </div>
-
                         <div className="col-lg-6">
-
                             <StockPanel />
                         </div>
                     </div>

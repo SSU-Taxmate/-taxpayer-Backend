@@ -24,7 +24,6 @@ router.get('/', (req, res) => {
   //console.log('routes:tax',req.query)
   Tax.findOne(req.query).exec((err,tax) => {
     const result = tax
-    console.log(tax)
     if (err) return res.status(500).json({ error: err });
     res.json(result)
   }) 
