@@ -7,7 +7,6 @@ function PaySalary() {
   let classData = useSelector((state) => state.classInfo.classData);
 
   const onhandleclick = () => {
-    console.log(classData);
     axios
       .post("/api/jobs/salary", { classId: classData.classId })
       .then(function (response) {

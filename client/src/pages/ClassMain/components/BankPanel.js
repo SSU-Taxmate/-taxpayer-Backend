@@ -18,7 +18,6 @@ function BankPanel() {
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/dashboard/bank`, { params: { studentId: joinedUser.classUser } })
-                console.log(result)
                 /*1) 이번달 수입 */
                 let income;
                 if (result.data.income.exist) {

@@ -29,7 +29,6 @@ function StudentSetting() {
         const result = await axios.get("/api/students", {
           params: { classId: classData.classId },
         });
-        console.log("student", result);
 
         let temp = [];
         for (let i = 0; i < result.data.length; i++) {

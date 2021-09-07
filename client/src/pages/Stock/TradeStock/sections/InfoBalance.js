@@ -16,7 +16,6 @@ function InfoBalance() {
                 if (user.userData.role === 1) {
                     const result = await axios.get(`/api/students/${joinedUser.classUser}/account`);
                     setbalance(result.data.currentBalance)
-                   //console.log(result.data)
                 }
                 
             } catch (error) {

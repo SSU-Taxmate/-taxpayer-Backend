@@ -8,7 +8,6 @@ function ChartPie(props) {
   //class로 바꾸었을 때는? 몇번이나..?
   const chartRef = React.createRef();
   useEffect(() => {
-    console.log("useEffect-ChartPie", props.data);
 
     const myChartRef = chartRef.current.getContext("2d");
     var pieChart;
@@ -21,7 +20,6 @@ function ChartPie(props) {
       },
     });
     return () => {
-      //console.log('useEffect-CleanUP-ChartPie',pieChart)
       pieChart.destroy();
     };
   }, [props.data]);

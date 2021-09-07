@@ -25,7 +25,6 @@ function BuyStockStat() {
                         endDate: moment().tz('Asia/Seoul').subtract(1, 'weeks').endOf('isoWeek').utc().format()//일
                     }
                 })
-            console.log(result.data)
             setdata(result.data.map((v, i) => v.allquantity))
             setdatalabel(result.data.map((v, i) => v.stock.stockName))
 

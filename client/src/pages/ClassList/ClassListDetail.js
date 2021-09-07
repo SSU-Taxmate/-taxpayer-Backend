@@ -260,7 +260,6 @@ function FormDialog2() {
     });
     setActiveStep(0);
   };
-  console.log("data1", data);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:

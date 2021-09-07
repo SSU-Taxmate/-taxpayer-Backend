@@ -59,7 +59,6 @@ function BudgetStatistics() {
       let mrevenue=[0,0,0,0,0,0,0,0,0,0]//3~12
       revenue.map((v, i) => mrevenue[(v._id.month-4+12)%12]=v.sum)
       setrevenue(mrevenue);
-      console.log((1-4+12)%12)
       const expend = result.data.filter((v) => v._id.transType === 0);
       let mexpend=[0,0,0,0,0,0,0,0,0,0]//3~12
       expend.map((v, i) => mexpend[(v._id.month-4+12)%12]=v.sum)

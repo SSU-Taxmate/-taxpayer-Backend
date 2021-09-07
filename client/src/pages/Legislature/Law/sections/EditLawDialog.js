@@ -35,7 +35,6 @@ function EditLawDialog(props) {
       }
     
     const onChange = (content) => {
-        //console.log(content)
         setEditedLaw({"_id":editedLaw._id, "title": editedLaw.title, 'content': content });
     };
 

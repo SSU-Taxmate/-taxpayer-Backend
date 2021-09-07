@@ -69,7 +69,6 @@ function SignIn(props) {
                               if (response.payload.loginSuccess) {
                                 window.localStorage.setItem('userId', response.payload.userId);
                                 if (rememberMe === true) {
-                                  //console.log(values)
                                   window.localStorage.setItem('rememberMe', values.email);
                                 } else {
                                   localStorage.removeItem('rememberMe');

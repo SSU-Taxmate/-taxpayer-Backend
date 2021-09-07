@@ -1,7 +1,6 @@
 import React from 'react'
 //Navigation
 import PageHeading from '../../../components/PageHeading';
-import ProposalDialog from './ProposalDialog'
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -36,10 +35,7 @@ function Congress() {
     return (
         <PageFrame>
             <PageHeading title="국회(입법)"></PageHeading>
-            {/* <h3>제안리스트</h3> */}
             {/* <!-- Content Row --> */}
-            {/* <ProposalDialog/>
-                            <Fab color="primary" aria-label="add"><AddIcon /></Fab> */}
             <div className="row justify-content-center">
                 <div className="col-12">
                     <Tabs

@@ -56,7 +56,6 @@ function StockPanel() {
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/dashboard/stock`, { params: { classId: classData.classId, studentId: joinedUser.classUser } })
-                console.log(result.data)
                 setData(result.data)//Alert로 사용자에게 보여주기
             } catch (error) {
                 setIsError(true);

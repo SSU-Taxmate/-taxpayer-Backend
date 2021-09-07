@@ -17,7 +17,6 @@ function TaxTypeArea() {
       const result = await axios.get("/api/budget", {
         params: { classId: classData.classId },
       });
-      //console.log(result.data.balance)
       setdata(result.data);
     } catch (error) {
       setIsError(true);

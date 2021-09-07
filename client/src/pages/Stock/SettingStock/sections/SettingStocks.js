@@ -40,7 +40,6 @@ function SettingStocks() {
         setIsLoading(true);
         try {
             const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
-            //console.log("/api/stocks/manage", result.data);
             setstocks(result.data)
         } catch (error) {
             setIsError(true);

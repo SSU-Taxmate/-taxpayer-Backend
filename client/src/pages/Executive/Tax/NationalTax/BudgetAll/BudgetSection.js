@@ -21,7 +21,6 @@ function BudgetSection() {
         debet: result.data.debet,
         expenditure: result.data.expenditure,
       });
-      console.log("/api/budget", result.data);
     } catch (error) {
       setIsError(true);
     }

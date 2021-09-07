@@ -35,7 +35,6 @@ function ManageStock(props) {
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/stocks/${stockId}/manage`);
-                //console.log("/api/stocks/manage", result.data);
                 setstock(result.data);
             } catch (error) {
                 setIsError(true);

@@ -17,7 +17,6 @@ function BuyDialog(props) {
     };
     const handleTradeComplete = (e) => {
         e.preventDefault();
-        //console.log('trade complete')
         const sendData={
             studentId:joinedUser.classUser,
             quantity:quantity,

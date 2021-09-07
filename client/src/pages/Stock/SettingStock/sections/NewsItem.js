@@ -4,7 +4,6 @@ import DeleteValueDialog from './DeleteValueDialog';
 import ManageValueDialog from './ManageValueDialog';
 
 function NewsItem({ price, stockId }) {
-   // console.log('>>', price)
     const week = { 1: '월', 2: '화', 3: '수', 4: '목', 5: '금', 6: '토', 7: '일' }
     return (
         <div id="stocklist" className="p-3">
