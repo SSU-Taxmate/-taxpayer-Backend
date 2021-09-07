@@ -78,9 +78,13 @@ function ClassCard(props) {
               className={props.title}
             ></ClassCodeModal>
           </IconButton>
-          <IconButton aria-label="delete" style={{ marginLeft: "auto" }}>
-            <DeleteIcon />
-          </IconButton>
+          {user.userData && user.userData.role === 0 ? (
+            <IconButton aria-label="delete" style={{ marginLeft: "auto" }}>
+              <DeleteIcon />
+            </IconButton>
+          ) : (
+            ""
+          )}
         </CardActions>
       </Card>
     </div>
