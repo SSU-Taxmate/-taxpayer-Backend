@@ -127,16 +127,35 @@ router.post('/agree', (req, res) => {
     });
 })
 
+router.post('/vote', (req, res) => {
+    console.log(req.body._id);
+    LawSuggest.updateOne({ _id: req.body._id }, {
+        $push: {
+            vote: { initiator: req.body.vote.initiator, value: req.body.vote.value }
+        }
+    }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        })
+    });
+})
+
 /*
     SuggestLaw 하나의 vote값만 가져오기
 */
 router.get('/:id/vote', (req, res) => {
-    const suggestId = req.params.id
-    LawSuggest.findOne({ _id: suggestId }, (err, doc) => {
-        if (err) return res.status(500).json({ error: err });
-        console.log(doc.vote)
-        res.json(doc.vote);
-    })
+    console.log(req.body._id);
+    LawSuggest.updateOne({ _id: req.body._id }, {
+        $push: {
+            vote: { initiator: req.body.vote.initiator, value: req.body.vote.value }
+        }
+    }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        })
+    });
 })
 
 module.exports = router;
