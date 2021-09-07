@@ -25,7 +25,7 @@ function SignIn(props) {
     document.getElementById('body').className = 'bg-gradient-primary'
   }, [])
 
- 
+
   return (
     <div className="container">
       {/* <!-- Outer Row --> */}
@@ -41,7 +41,7 @@ function SignIn(props) {
                 <div className="col-lg-6">
                   <div className="p-4">
                     <div className="text-center mb-3">
-                      <span className="text-gray-900 mb-4" style={{fontSize:"1.5rem"}}>TaxMate에 오신 걸<br></br> 환영합니다</span>
+                      <span className="text-gray-900 mb-4" style={{ fontSize: "1.5rem" }}>TaxMate에 오신 걸<br></br> 환영합니다</span>
                     </div>
                     <Formik
                       initialValues={{
@@ -50,11 +50,11 @@ function SignIn(props) {
                       }}
                       validationSchema={Yup.object().shape({
                         email: Yup.string()
-                          .email('Email is invalid')
-                          .required('Email is required'),
+                          .email('유효하지 않은 이메일입니다.')
+                          .required('이메일을 입력해주세요'),
                         password: Yup.string()
-                          .min(6, 'Password must be at least 6 characters')
-                          .required('Password is required'),
+                          .min(6, '비밀번호는 최소 6자리 이상입니다.')
+                          .required('비밀번호를 입력해주세요.'),
                       })}
                       onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
@@ -75,11 +75,13 @@ function SignIn(props) {
                                 }
                                 props.history.push("/classes");
                               } else {
-                                setFormErrorMessage('Check out your Account or Password again')
+                                setFormErrorMessage('계정이나 비밀번호를 확인해주세요!')
+                                alert('계정이나 비밀번호를 확인해주세요!')
                               }
                             })
                             .catch(err => {
-                              setFormErrorMessage('Check out your Account or Password again')
+                              setFormErrorMessage('계정이나 비밀번호를 확인해주세요!')
+                              alert('계정이나 비밀번호를 확인해주세요!')
                               setTimeout(() => {
                                 setFormErrorMessage("")
                               }, 3000);
@@ -110,6 +112,11 @@ function SignIn(props) {
                                   value={values.email}
                                   onChange={handleChange}
                                   onBlur={handleBlur} />
+                                {errors.email && touched.email && (
+                                  <div className="input-feedback">
+                                    {errors.email}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group p-1">
                                 <input id="password" type="password"
@@ -118,12 +125,17 @@ function SignIn(props) {
                                   vlaue={values.password}
                                   onChange={handleChange}
                                   onBlur={handleBlur} />
+                                     {errors.password && touched.password && (
+                                  <div className="input-feedback">
+                                    {errors.password}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group">
                                 <div className="custom-control custom-checkbox small">
                                   <input id="rememberMe" type="checkbox"
                                     className="custom-control-input"
-                                    onChange={handleRememberMe} 
+                                    onChange={handleRememberMe}
                                     checked={rememberMe}
                                   />
                                   <label className="custom-control-label" htmlFor="rememberMe">Remember Me</label>
@@ -143,7 +155,7 @@ function SignIn(props) {
                                 <i className="fab fa-facebook-f fa-fw"></i> Facebook으로 로그인
                               </a> */}
                             </form>
-                            
+
 
                           </>
                         );
