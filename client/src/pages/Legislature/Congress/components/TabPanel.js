@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import List from '@material-ui/core/List';
 
-
+import moment from 'moment-timezone';
 import Pagination from '@material-ui/lab/Pagination';
 import LawListHeader from './LawListHeader';
 import SuggestDetail from '../modals/SuggestDetail';
@@ -17,7 +17,7 @@ export default function TabPanel(props) {
 
   const quorum = 10
 
-  const { children, value, index, data, ...other } = props;
+  const { children, value, index, data,numofstudent, ...other } = props;
 
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [billOpen, setBillOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function TabPanel(props) {
       aria-labelledby={`congress-tab-${index}`}
       {...other}>
 
-      <LawListHeader />
+     {index===0? <LawListHeader types={'suggest'}/>:<LawListHeader types={'vote'} />}
       <hr className="m-0 py-1" />
       {/* Tab안의 게시판*/}
       <List>
@@ -58,12 +58,13 @@ export default function TabPanel(props) {
             <div className="card-body" id={"law" + item.id}>
               <div className="row no-gutters align-items-center">
                 <div className="col-2 mr-2 d-none d-sm-inline">
-                  <div className="mb-0 font-weight-bold text-gray-500">D-10</div></div>
+                  <div className="mb-0 font-weight-bold text-gray-500">D-{moment(item.createdAt).tz('Asia/Seoul').add(7,'d').diff(moment().tz('Asia/Seoul'),'days')}</div></div>
                 <div className="col mr-2">
                   <div className="h6 mb-0 text-gray-800 font-weight-bold ">{item.title}</div></div>
-                <div className="col-auto h5 font-weight-bold text-primary">{Math.round(item.ayes / quorum * 100) + "%"}</div>
+                {index===0?
+                  <div className="col-auto h5 font-weight-bold text-primary">{Math.round(item.numvoter / quorum * 100) + "%"}</div>
+                :<div className="col-auto h5 font-weight-bold text-primary">{Math.round(item.numvoter / numofstudent * 100) + "%"}</div>}{/* ayes:numvoter */}
               </div>
-
               <div className="d-block d-sm-none">
                 <div className="py-2"></div>
                 <div className="row no-gutters align-items-center justify-content-end">
@@ -90,8 +91,8 @@ export default function TabPanel(props) {
         onChange={pageChange} />
       {/* 해당 row 선택했을 때 */}
       {selected &&
-        <><SuggestDetail open={suggestOpen} modalClose={suggestClose} data={selected} />
-          <BillDetail open={billOpen} modalClose={billClose} data={selected} />
+        <><SuggestDetail open={suggestOpen} modalClose={suggestClose} data={selected}  />
+          <BillDetail open={billOpen} modalClose={billClose} data={selected} numofstudent={numofstudent}/>
         </>
       }
     </div>

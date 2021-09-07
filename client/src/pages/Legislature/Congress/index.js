@@ -21,7 +21,7 @@ function Congress() {
 
     const [suggestData, setsuggestData] = useState([])
     const [billData, setbillData] = useState([])
-
+    const [studentnum,setstudentnum]=useState()
 
     //state : 법률제안:suggest-law , suggest-vote
     useEffect(() => {
@@ -32,8 +32,9 @@ function Congress() {
                 // 기존의 예금 상품 불러오기
                 const result = await axios.get(`/api/congress`, { params: { classId: classData.classId } })
                 console.log(result.data)
-                setsuggestData(result.data.filter((v) => v.state === "suggest-law"))
-                setbillData(result.data.filter((v) => v.state === "suggest-vote"))
+                setsuggestData(result.data.lawsuggest.filter((v) => v.state === "suggest-law"))
+                setbillData(result.data.lawsuggest.filter((v) => v.state === "suggest-vote"))
+                setstudentnum(result.data.studentnum)
             } catch (error) {
                 setIsError(true);
             }
@@ -60,7 +61,7 @@ function Congress() {
 
                     <div className="row justify-content-center">
                         <TabPanel className="col-lg-8" value={value} data={suggestData} index={0}></TabPanel>
-                        <TabPanel className="col-lg-8" value={value} data={billData} index={1}></TabPanel>
+                        <TabPanel className="col-lg-8" value={value} data={billData} numofstudent={studentnum} index={1}></TabPanel>
                     </div>
                 </div>
 

@@ -3,6 +3,7 @@
 */
 const express = require('express');
 const { LawSuggest } = require('../models/Law_suggest');
+const {JoinedUser}=require('../models/JoinedUser')
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const router = express.Router();
@@ -28,6 +29,8 @@ router.post('/', (req, res) => {
 router.get('/', async (req, res) => {
     const classId = req.query.classId
     try {
+        const studentnum=await JoinedUser.countDocuments({'classId':classId}).exec()
+        
         const lawsuggest = await LawSuggest.aggregate([
             {
                 $match: {
@@ -57,15 +60,29 @@ router.get('/', async (req, res) => {
             },
             {
                 $unwind:'$initiator'
+            },
+            {
+                $addFields:{
+                    'numvoter':{$size:'$vote'},
+                    'numpros':{
+                        $size:{
+                            $filter:{
+                                input:'$vote',
+                                as:'voter',
+                                cond:{
+                                    $eq:['$$voter.value',true]
+                                }
+                            }
+                        }
+                    }
+                }
             }
           
         ])
-        //console.log(lawsuggest[0])
-        const result=lawsuggest
+        const result={lawsuggest,studentnum:studentnum}
         res.send(result);
     } catch (error) {
-        return res.status(403).send('This account does not exist');
-        // return res.status(403).send('error 설명 메시지');
+        return res.json({ success: false, err });
     }
 
 })

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import Error from '../../../../components/Error'
 import Loading from '../../../../components/Loading'
@@ -7,6 +7,7 @@ import Loading from '../../../../components/Loading'
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import moment from 'moment-timezone';
 
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
 
@@ -55,12 +56,13 @@ export default function SuggestDetail(props) {
 
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
-
+  const quorum = 10
   const [data, setData] = useState({
     title: props.data.title,
     student: props.data.initiator.name,
-    dueDate: props.data.createdAt,
-    content:props.data.content
+    dueDate: moment(props.data.createdAt).tz('Asia/Seoul').add(7, 'd').diff(moment().tz('Asia/Seoul'), 'days'),//7일후마감
+    content: props.data.content,
+    numvoter: props.data.numvoter
   }
   )
 
@@ -98,11 +100,11 @@ export default function SuggestDetail(props) {
                     <div className="col-8 mr-2">
                       <div className="row no-gutters align-items-center">
                         <div className="col-auto">
-                          <div className="h5 mb-0 mr-3 text-gray-600 font-weight-bold">50%</div>
+                          <div className="h5 mb-0 mr-3 text-gray-600 font-weight-bold">{Math.round(data.numvoter / quorum * 100)}%</div>
                         </div>
                         <div className="col">
                           <div className="progress mr-2">
-                            <div className="progress-bar bg-primary" role="progressbar" style={{ width: "50%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${Math.round(data.numvoter / quorum * 100)}%` }} aria-valuenow={Math.round(data.numvoter / quorum * 100)} aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
                       </div>
