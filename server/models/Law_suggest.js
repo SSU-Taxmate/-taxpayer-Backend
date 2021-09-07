@@ -24,7 +24,7 @@ const lawSuggestSchema = mongoose.Schema({
         ref: 'Class'
     },
     vote: [{
-        initiator: { /*발의자-학생의 ID꼴로저장*/
+        initiator: { /*동의한 사람-학생의 ID꼴로저장*/
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },

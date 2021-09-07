@@ -12,33 +12,33 @@ import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "scroll",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   paper: {
-    border: "none",
+    border: 'none',
     boxShadow: theme.shadows[5],
-    minWidth: 360,
+    minWidth: 360
   },
 
   root: {
     backgroundColor: theme.palette.background.paper,
-    overflow: "auto",
+    overflow: 'auto',
     maxHeight: 200,
-    justifyContent: "center",
+    justifyContent: 'center'
+
   },
 
   inline: {
-    display: "inline",
+    display: 'inline',
   },
 
   listSection: {
-    backgroundColor: "inherit",
+    backgroundColor: 'inherit',
   },
   ul: {
-    backgroundColor: "inherit",
+    backgroundColor: 'inherit',
     padding: 0,
   },
 
