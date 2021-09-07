@@ -16,7 +16,7 @@ var router = express.Router();
 
 router.post('/', function (req, res) {
   var laws = new LawSuggest(req.body);
-  console.log(laws);
+  console.log(req.body);
   laws.save(function (err, doc) {
     if (err) return res.json({
       success: false,
@@ -34,7 +34,7 @@ router.post('/', function (req, res) {
 */
 
 router.get('/', function (req, res) {
-  Law_suggest.find(req.query, function (err, classlaw) {
+  LawSuggest.find(req.query, function (err, classlaw) {
     var result = classlaw; //console.log(result)
 
     if (err) return res.status(500).json({
@@ -49,7 +49,7 @@ router.get('/', function (req, res) {
 */
 
 router.put('/', function (req, res) {
-  Law_suggest.updateOne({
+  LawSuggest.updateOne({
     _id: req.body._id
   }, {
     $set: req.body
@@ -70,7 +70,7 @@ router.put('/', function (req, res) {
 router["delete"]('/:id', function (req, res) {
   console.log(req.params.id);
   var lawId = req.params.id;
-  Law_suggest.deleteOne({
+  LawSuggest.deleteOne({
     _id: lawId
   }, function (err, doc) {
     if (err) return res.json({
