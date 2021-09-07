@@ -393,7 +393,7 @@ router.get('/:id/stocks', async (req, res) => {
 */
 
 router.get('/:id/stocks/statistics', async (req, res) => {
-  console.log('/stocks/statistics', req.params)
+ // console.log('/stocks/statistics', req.params)
   const studentId = req.params.id;
   const classId = req.query.classId
   try {
