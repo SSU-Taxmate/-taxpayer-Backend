@@ -55,9 +55,8 @@ export default function SuggestAdd({ match }) {
   const [lawcontent, setlawcontent] = useState({}); //{title:'',content:''}
   const handleSubmit = (e) => {
     //e.preventDefault();
-
     axios
-      .post(`/api/laws`, {
+      .post(`/api/congress`, {
         classId: classData.classId,
         title: lawtitle,
         content: lawcontent,
@@ -150,6 +149,8 @@ export default function SuggestAdd({ match }) {
                         variant="outlined"
                         margin="none"
                         size="small"
+                        onChange={onTitleChange}
+                        id='newlawtitle'
                       />
                     </div>
 
@@ -169,6 +170,7 @@ export default function SuggestAdd({ match }) {
                         rows={20}
                         variant="outlined"
                         margin="none"
+                        onChange={onContentChange}
                       />
 
                   </div>

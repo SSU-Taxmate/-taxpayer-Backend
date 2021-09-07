@@ -2,7 +2,7 @@
   : /api/congress
 */
 const express = require('express');
-const { Law_suggest } = require('../models/Law_suggest');
+const { LawSuggest } = require('../models/Law_suggest');
 const router = express.Router();
 
 /*
@@ -10,7 +10,8 @@ const router = express.Router();
   : Suggest_law
 */
 router.post('/', (req, res) => {
-    const laws = new Law_suggest(req.body);
+    const laws = new LawSuggest(req.body);
+    console.log(laws);
     laws.save((err, doc) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })

@@ -50,6 +50,23 @@ const useStyles = makeStyles((theme) => ({
     
 
 export default function SuggestAdd(props) {
+  const [lawtitle, setlawtitle] = useState("");
+  const [lawcontent, setlawcontent] = useState({});
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+    axios
+      .post(`/api/congress`, {
+        classId: classData.classId,
+        title: lawtitle,
+        content: lawcontent,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
     const classes = useStyles();
 
@@ -84,7 +101,7 @@ export default function SuggestAdd(props) {
       }}
     >
       <Fade in={props.open}>
-      
+      <form onSubmit={handleSubmit} >
             <div className="card col-lg-8 px-5 py-3">
             <div className="row align-items-center  justify-content-center">
                 <div className="text-gray-900 font-weight-bold mr-2">제목</div>
@@ -117,15 +134,15 @@ export default function SuggestAdd(props) {
 <hr />
 
 <div className="row py-2 justify-content-center">
-<a className="btn btn-primary btn-icon-split m-2">
-<span className="text">제출하기</span></a>
+<button type="submit" onClick={handleSubmit} class="btn btn-outline-primary mr-2">등록</button>
+                  <button type="button" class="btn btn-outline-primary ml-2">취소</button>
 
 </div>
 </div>
 
 
               
-
+</form>
       </Fade>
     </Modal>
 
