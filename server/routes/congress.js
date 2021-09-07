@@ -3,7 +3,7 @@
 */
 const express = require('express');
 const { LawSuggest } = require('../models/Law_suggest');
-const {JoinedUser}=require('../models/JoinedUser')
+const { JoinedUser } = require('../models/JoinedUser')
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const router = express.Router();
@@ -14,6 +14,7 @@ const router = express.Router();
 */
 router.post('/', (req, res) => {
     const laws = new LawSuggest(req.body);
+    console.log(req.body);
     laws.save((err, doc) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -26,13 +27,12 @@ router.post('/', (req, res) => {
     - req.query {classId:}
 */
 
-router.get('/', async (req, res) => {
+router.get('/', async(req, res) => {
     const classId = req.query.classId
     try {
-        const studentnum=await JoinedUser.countDocuments({'classId':classId}).exec()
-        
-        const lawsuggest = await LawSuggest.aggregate([
-            {
+        const studentnum = await JoinedUser.countDocuments({ 'classId': classId }).exec()
+
+        const lawsuggest = await LawSuggest.aggregate([{
                 $match: {
                     "classId": ObjectId(classId)
                 }
@@ -40,18 +40,17 @@ router.get('/', async (req, res) => {
             {
                 $lookup: {
                     from: 'users',
-                    let:{initiator:'$initiator'},
-                    pipeline: [
-                        {
-                            $match:{
-                                $expr:{
-                                    $eq:['$$initiator','$_id']
+                    let: { initiator: '$initiator' },
+                    pipeline: [{
+                            $match: {
+                                $expr: {
+                                    $eq: ['$$initiator', '$_id']
                                 }
                             }
                         },
                         {
-                            $project:{
-                                'name':1
+                            $project: {
+                                'name': 1
                             }
                         }
                     ],
@@ -59,27 +58,27 @@ router.get('/', async (req, res) => {
                 }
             },
             {
-                $unwind:'$initiator'
+                $unwind: '$initiator'
             },
             {
-                $addFields:{
-                    'numvoter':{$size:'$vote'},
-                    'numpros':{
-                        $size:{
-                            $filter:{
-                                input:'$vote',
-                                as:'voter',
-                                cond:{
-                                    $eq:['$$voter.value',true]
+                $addFields: {
+                    'numvoter': { $size: '$vote' },
+                    'numpros': {
+                        $size: {
+                            $filter: {
+                                input: '$vote',
+                                as: 'voter',
+                                cond: {
+                                    $eq: ['$$voter.value', true]
                                 }
                             }
                         }
                     }
                 }
             }
-          
+
         ])
-        const result={lawsuggest,studentnum:studentnum}
+        const result = { lawsuggest, studentnum: studentnum }
         res.send(result);
     } catch (error) {
         return res.json({ success: false, err });

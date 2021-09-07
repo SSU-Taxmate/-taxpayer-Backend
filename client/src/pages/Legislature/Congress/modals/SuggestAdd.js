@@ -57,6 +57,7 @@ export default function SuggestAdd(props) {
         classId: classData.classId,
         title: lawtitle,
         content: lawcontent,
+        initiator: user.userData._id
       })
       .then(function (response) {
         console.log(response);
@@ -73,7 +74,6 @@ export default function SuggestAdd(props) {
   const onContentChange = (e) => {
     /*editor에서 현재 editor 값 넘겨줌 */
     setlawcontent(e.target.value);
-    console.log(e.target.value);
   };
 
   const classes = useStyles();
