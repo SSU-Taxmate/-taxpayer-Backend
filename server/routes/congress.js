@@ -11,7 +11,7 @@ const router = express.Router();
 */
 router.post('/', (req, res) => {
     const laws = new LawSuggest(req.body);
-    console.log(laws);
+    console.log(req.body);
     laws.save((err, doc) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 */
 
 router.get('/', (req, res) => {
-    Law_suggest.find(req.query, (err, classlaw) => {
+    LawSuggest.find(req.query, (err, classlaw) => {
         const result = classlaw
             //console.log(result)
         if (err) return res.status(500).json({ error: err });
@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
 */
 
 router.put('/', (req, res) => {
-    Law_suggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+    LawSuggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
             success: true
@@ -55,7 +55,7 @@ router.put('/', (req, res) => {
 router.delete('/:id', (req, res) => {
     console.log(req.params.id)
     const lawId = req.params.id
-    Law_suggest.deleteOne({ _id: lawId }, (err, doc) => {
+    LawSuggest.deleteOne({ _id: lawId }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
             success: true
