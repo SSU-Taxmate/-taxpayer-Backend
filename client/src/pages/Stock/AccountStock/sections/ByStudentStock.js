@@ -4,16 +4,16 @@ import axios from 'axios'
 import ChartPie from '../../../../components/Charts/Pie';
 import Loading from '../../../../components/Loading'
 import Error from '../../../../components/Error'
-
+import NoholdingStocks from './NoholdingStocks'
 function ByStudentStock() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     let joinedUser = useSelector(state => state.classUser);
     let classData = useSelector(state => state.classInfo.classData);
 
-    const [data, setdata] = useState([])
-    const [datalabel, setdatalabel] = useState([])
-    
+    const [data, setdata] = useState()
+    const [datalabel, setdatalabel] = useState()
+
     useEffect(() => {
         const fetchData = async () => {
             setIsError(false);
@@ -25,11 +25,14 @@ function ByStudentStock() {
                             classId: classData.classId,
                         }
                     })
-                let temp=result.data.map((v,i)=>v.currentPrice*v.quantity)
-                let sumData=temp.reduce((prev,cur)=>prev+cur)
-                setdata(result.data.map((v, i) => Math.round(v.currentPrice*v.quantity/sumData*100)))
-                setdatalabel(result.data.map((v, i) => v.stockName))
-                
+                console.log('result', result)
+                if (result.data.length !== 0) {
+                    let temp = result.data.map((v, i) => v.currentPrice * v.quantity)
+                    let sumData = temp.reduce((prev, cur) => prev + cur)
+                    setdata(result.data.map((v, i) => Math.round(v.currentPrice * v.quantity / sumData * 100)))
+                    setdatalabel(result.data.map((v, i) => v.stockName))
+                }
+
             } catch (error) {
                 setIsError(true);
             }
@@ -53,21 +56,21 @@ function ByStudentStock() {
     }];
     const pieChartField = React.useMemo(
         () => (
-            <div style={{justifyContent:'space-evenly'}}>
+            <div style={{ justifyContent: 'space-evenly' }}>
                 {stock_user_pie_data.map((v, i) => {
                     return <ChartPie key={i}
-                            id={`stock_user_pie_${i}`} title={'보유 비중 (%)'}
-                            data={v} />
+                        id={`stock_user_pie_${i}`} title={'보유 비중 (%)'}
+                        data={v} />
                 })}
             </div>
         ), [datalabel, data]);
     return (
         <>
-            {isError && <Error></Error>}
-            {isLoading ? (
-                <Loading />
-            ) :
-                (pieChartField)
+            {isError ? <Error /> :
+                isLoading ? (
+                    <Loading />
+                ) :
+                data?(pieChartField):<NoholdingStocks/>
             }
         </>
 
