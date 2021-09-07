@@ -89,6 +89,7 @@ export default function SuggestDetail(props) {
       }}
     >
       <Fade in={props.open}>
+
         <div className="col-lg-8 card">
           {isError ? <Error /> :
             isLoading ?
