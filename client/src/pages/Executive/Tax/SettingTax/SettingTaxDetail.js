@@ -49,6 +49,11 @@ function SettingTaxDetail() {
       .put(`/api/taxes`, { taxlist: data, _id: taxId })
       .then(function (response) {
         console.log(response);
+        if(response.data.success){
+          alert('세금 설정이 완료되었습니다.')
+        }else{
+          alert('세금 설정에 실패하였습니다')
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -71,6 +76,11 @@ function SettingTaxDetail() {
       })
       .then(function (response) {
         console.log(response);
+        if(response.data.success){
+          alert('세금 사용이 완료되었습니다.')
+        }else{
+          alert('세금 사용에 실패하였습니다')
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -253,7 +263,7 @@ function SettingTaxDetail() {
                     style={{ justifyContent: "space-between" }}
                   >
                     <p className="h5 mb-1">
-                      세금 추가 &nbsp;
+                      세금 사용 &nbsp;
                       <Popover id="세금추가" icon="info-circle">
                         기타 세출을 기록해보세요
                       </Popover>
