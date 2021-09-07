@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SuggestDetail(props) {
+function SuggestDetail(props) {
   //console.log('suggestDetail', props.data)
   const classes = useStyles();
 
@@ -149,3 +149,4 @@ export default function SuggestDetail(props) {
 
   );
 }
+export default React.memo(SuggestDetail)
