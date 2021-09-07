@@ -53,10 +53,8 @@ function Congress() {
                         onChange={handleChange}
                         indicatorColor="primary"
                         centered>
-
                         <Tab label="법률 제안" />
                         <Tab label="안건 투표" />
-
                     </Tabs>
 
                     <div className="row justify-content-center">
