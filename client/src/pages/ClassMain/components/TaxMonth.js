@@ -32,14 +32,14 @@ function TaxMonth() {
                 <Loading /> : (
                     data &&
                     <div className="row justify-content-center">
-                        <div className="col-xl-5 col-md-5 ">
+                        <div className="col">
                             <div className=" h-100 py-2">
-                                <div className="card-body">
-                                    <div className="row no-gutters align-items-center">
+                                <div className="card-body d-flex justify-content-center">
+                                    <div className="row d-flex no-gutters align-items-center" style={{width:"80%",justifyContent:"space-between"}}>
                                         <div className="col-auto">
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">이번 달 세금</div></div>
 
-                                        <div className="col mr-2">
+                                        <div className="col-auto">
                                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 세입</div>
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">{data.balance.income +
