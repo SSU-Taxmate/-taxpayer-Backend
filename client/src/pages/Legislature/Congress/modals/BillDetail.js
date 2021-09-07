@@ -100,9 +100,9 @@ export default function BillDetail(props) {
           <div className="row justify-content-center no-gutters align-items-center mb-4">
             <div className="col-md-8 mr-2">
               <div className="row no-gutters align-items-center justify-content-between">
-                <div className="text-xs font-weight-bold text-uppercase mb-1">{Math.round(props.data.numpros/props.data.numvoter*100)}%</div>
-                <div className="font-weight-bold mb-1">투표율 [ {Math.round(props.data.numvoter/props.numofstudent*100)}% ]</div>
-                <div className="text-xs font-weight-bold text-uppercase mb-1">{100-Math.round(props.data.numpros/props.data.numvoter*100)}%</div>
+                <div className="text-xs font-weight-bold text-uppercase mb-1">{props.data.numvoter !== 0? Math.round(props.data.numpros/props.data.numvoter*100) : 0}%</div>
+                <div className="font-weight-bold mb-1">투표율 [ {props.data.numvoter !==0 ? Math.round(props.data.numvoter/props.numofstudent*100) : 0}% ]</div>
+                <div className="text-xs font-weight-bold text-uppercase mb-1">{ props.data.numvoter !==0 ? 100-Math.round(props.data.numpros/props.data.numvoter*100) : 0}%</div>
               </div>
               <div className="row no-gutters align-items-center">
                 <div className="col-auto">
@@ -111,8 +111,8 @@ export default function BillDetail(props) {
                 <div className="col">
                   <div className="progress mr-2 justify-content-between">
                     {/*동의/비동의 비율*/}
-                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${Math.round(props.data.numpros/props.data.numvoter*100)}%` }} aria-valuenow={Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
-                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${100-Math.round(props.data.numpros/props.data.numvoter*100)}%` }} aria-valuenow={100-Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${props.data.numvoter !== 0? Math.round(props.data.numpros/props.data.numvoter*100) : 0}%` }} aria-valuenow={Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${ props.data.numvoter !==0 ? 100-Math.round(props.data.numpros/props.data.numvoter*100) : 0}%` }} aria-valuenow={100-Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
                 <div className="col-auto">
