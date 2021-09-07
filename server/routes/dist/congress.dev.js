@@ -8,12 +8,6 @@ var express = require('express');
 var _require = require('../models/Law_suggest'),
     LawSuggest = _require.LawSuggest;
 
-var _require2 = require('../models/JoinedUser'),
-    JoinedUser = _require2.JoinedUser;
-
-var mongoose = require("mongoose");
-
-var ObjectId = mongoose.Types.ObjectId;
 var router = express.Router();
 /*
   [정상] Suggest_law 생성
@@ -22,7 +16,6 @@ var router = express.Router();
 
 router.post('/', function (req, res) {
   var laws = new LawSuggest(req.body);
-  console.log(req.body);
   laws.save(function (err, doc) {
     if (err) return res.json({
       success: false,
@@ -39,90 +32,15 @@ router.post('/', function (req, res) {
     - req.query {classId:}
 */
 
-router.get('/', function _callee(req, res) {
-  var classId, studentnum, lawsuggest, result;
-  return regeneratorRuntime.async(function _callee$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          classId = req.query.classId;
-          _context.prev = 1;
-          _context.next = 4;
-          return regeneratorRuntime.awrap(JoinedUser.countDocuments({
-            'classId': classId
-          }).exec());
+router.get('/', function (req, res) {
+  LawSuggest.find(req.query, function (err, classlaw) {
+    var result = classlaw; //console.log(result)
 
-        case 4:
-          studentnum = _context.sent;
-          _context.next = 7;
-          return regeneratorRuntime.awrap(LawSuggest.aggregate([{
-            $match: {
-              "classId": ObjectId(classId)
-            }
-          }, {
-            $lookup: {
-              from: 'users',
-              "let": {
-                initiator: '$initiator'
-              },
-              pipeline: [{
-                $match: {
-                  $expr: {
-                    $eq: ['$$initiator', '$_id']
-                  }
-                }
-              }, {
-                $project: {
-                  'name': 1
-                }
-              }],
-              as: 'initiator'
-            }
-          }, {
-            $unwind: '$initiator'
-          }, {
-            $addFields: {
-              'numvoter': {
-                $size: '$vote'
-              },
-              'numpros': {
-                $size: {
-                  $filter: {
-                    input: '$vote',
-                    as: 'voter',
-                    cond: {
-                      $eq: ['$$voter.value', true]
-                    }
-                  }
-                }
-              }
-            }
-          }]));
-
-        case 7:
-          lawsuggest = _context.sent;
-          result = {
-            lawsuggest: lawsuggest,
-            studentnum: studentnum
-          };
-          res.send(result);
-          _context.next = 15;
-          break;
-
-        case 12:
-          _context.prev = 12;
-          _context.t0 = _context["catch"](1);
-          return _context.abrupt("return", res.json({
-            success: false,
-            err: err
-          }));
-
-        case 15:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, null, null, [[1, 12]]);
+    if (err) return res.status(500).json({
+      error: err
+    });
+    res.json(result);
+  });
 });
 /*
   [정상] Suggest_Law수정
