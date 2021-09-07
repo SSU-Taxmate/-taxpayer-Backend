@@ -133,7 +133,7 @@ export default function SuggestAdd({ match }) {
               <div className="row py-2 justify-content-center" >
                 <div className="card mb-5" style={{ width: "60%", minWidth: "310px"}}>
                 <form onSubmit={handleSubmit} >
-                  <h5 class="card-header">법안 발의 제안서</h5>
+                  <h5 className="card-header">법안 발의 제안서</h5>
                   <div className="card-body">
                     <div className="row p-2" style={{alignItems:"center"}}>
                       <div

@@ -43,10 +43,12 @@ function MangeDeposits() {
         fetchData();
     }, [classData.classId])
     return (
-        <div className="row">
+        <div className="row justify-content-center">
             <div className='col-lg-8'>
+                <div className="row p-2 align-items-center " style={{justifyContent:"space-between"}}><h4>예금 상품 관리 <br></br></h4>
                 {/* 예금 상품 추가 */}
                 <AddDepositDialog />
+                </div>
                 {/* 기존 예금 상품 렌더링 */}
                 {isError ? <Error /> :
                     isLoading ? <Loading /> :
@@ -91,8 +93,9 @@ function MangeDeposits() {
                             </div>
                         )
                 }
+                </div>
             </div>
-        </div>
+   
     )
 }
 

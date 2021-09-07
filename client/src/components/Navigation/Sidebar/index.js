@@ -273,7 +273,6 @@ export default function Sidebar(props) {
                   ) : null}
                   {user.userData.role === 0 ? (
                     <>
-                      <h6 className="collapse-header">선생님</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/tax/manage"
@@ -308,7 +307,6 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 className="collapse-header">선생님</h6>
                   <Link className="collapse-item" to="/classes/:classId/law">
                     법
                   </Link>
