@@ -86,7 +86,8 @@ export default function SuggestDetail(props) {
       axios
       .post(`/api/congress/approve`, {
         _id:props.data._id,
-        state:"suggest-vote"
+        state:"suggest-vote",
+        vote:[]
       })
       .then(function (response) {
         console.log(response);
