@@ -59,17 +59,4 @@ router.delete('/:id', (req, res) => {
     })
 })
 
-/*
-여기서부터 이후 suggetion에 사용할 코드입니다
-*/
-
-router.post('/suggest', (req, res) => {
-    Law.patch(req.query, (err, classlaw) => {
-        const result = classlaw
-            //console.log(result)
-        if (err) return res.status(500).json({ error: err });
-        res.json(result)
-    })
-})
-
 module.exports = router;
