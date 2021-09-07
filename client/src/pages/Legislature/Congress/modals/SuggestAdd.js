@@ -64,15 +64,16 @@ export default function SuggestAdd(props) {
       .catch(function (error) {
         console.log(error);
       });
+      modalClose();
   };
 
   const onTitleChange = (e) => {
     setlawtitle(e.target.value); //e.currentTarget.value
   };
-  const onContentChange = (value) => {
+  const onContentChange = (e) => {
     /*editor에서 현재 editor 값 넘겨줌 */
-    setlawcontent(value);
-    console.log(value);
+    setlawcontent(e.target.value);
+    console.log(e.target.value);
   };
 
   const classes = useStyles();
@@ -156,7 +157,8 @@ export default function SuggestAdd(props) {
                 >
                   등록
                 </button>
-                <button type="button" className="btn btn-outline-primary ml-2">
+                <button type="button" className="btn btn-outline-primary ml-2"
+                onClick={modalClose}>
                   취소
                 </button>
               </div>

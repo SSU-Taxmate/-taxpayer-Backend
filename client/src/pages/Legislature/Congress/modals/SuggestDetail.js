@@ -52,6 +52,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SuggestDetail(props) {
 
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+    axios
+      .put(`/api/congress`, {
+        // classId: classData.classId,
+        // title: lawtitle,
+        // content: lawcontent,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      modalClose();
+  };
+
     const classes = useStyles();
 
     const [err, setIsError] = useState(false);
@@ -128,7 +145,7 @@ export default function SuggestDetail(props) {
 
         <a class="btn btn-success btn-icon-split m-2">
             <span class="icon text-white-50"> <ThumbUpAltRoundedIcon/> </span>
-            <span class="text">동의합니다</span></a>
+            <span class="text" onClick={handleSubmit}>동의합니다</span></a>
 
 
 
