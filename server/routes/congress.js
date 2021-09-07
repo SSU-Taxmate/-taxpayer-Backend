@@ -141,6 +141,15 @@ router.post('/vote', (req, res) => {
     });
 })
 
+router.post('/approve', (req, res) => {
+    LawSuggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        })
+    })
+})
+
 /*
     SuggestLaw 하나의 vote값만 가져오기
 */
