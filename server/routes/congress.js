@@ -14,6 +14,7 @@ const router = express.Router();
 */
 router.post('/', (req, res) => {
     const laws = new LawSuggest(req.body);
+    console.log(req.body);
     laws.save((err, doc) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })

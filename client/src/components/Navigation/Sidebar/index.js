@@ -121,7 +121,6 @@ export default function Sidebar(props) {
                   {/* 학생 */}
                   {user.userData.role === 1 ? (
                     <>
-                      <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/set-up/class"
@@ -262,7 +261,6 @@ export default function Sidebar(props) {
                   </Link>
                   {user.userData.role === 1 ? (
                     <>
-                      <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/tax-invoice"
@@ -273,7 +271,6 @@ export default function Sidebar(props) {
                   ) : null}
                   {user.userData.role === 0 ? (
                     <>
-                      <h6 className="collapse-header">선생님</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/tax/manage"
@@ -308,7 +305,6 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 className="collapse-header">선생님</h6>
                   <Link className="collapse-item" to="/classes/:classId/law">
                     법
                   </Link>

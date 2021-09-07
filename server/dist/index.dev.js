@@ -61,9 +61,18 @@ app.use('/api/budget', require('./routes/budget'));
 /* 법 */
 
 app.use('/api/laws', require('./routes/law'));
+/* 논의중인 법 */
+
+app.use('/api/congress', require('./routes/congress'));
 /* cron */
 //app.use('/api/batch',require('./routes/batch'))
 
+/* 벌금 */
+
+app.use('/api/fine', require('./routes/fine'));
+/* 대시보드 */
+
+app.use('/api/dashboard', require('./routes/dashboard'));
 app.get('/', function (req, res) {
   return res.send('Hello World!');
 });
