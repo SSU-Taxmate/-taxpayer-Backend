@@ -1,5 +1,5 @@
-import React from 'react'
-//Navigation
+import React, { useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 import PageHeading from '../../../components/PageHeading';
 
 import Tabs from '@material-ui/core/Tabs';
@@ -7,31 +7,40 @@ import Tab from '@material-ui/core/Tab';
 
 import TabPanel from './components/TabPanel'
 import PageFrame from '../../PageFrame';
+import axios from 'axios'
 
 function Congress() {
-
+    let classData = useSelector(state => state.classInfo.classData);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    // Tab 선택
     const [value, setValue] = React.useState(0);
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-
-    const suggestData = [
-        { id: "0", title: "직업활동 세금 개정안직업활동 세금 개정안", student: "배미혜", ayes: 4, detail: "세금이 너무 높습니다" },
-        { id: "1", title: "직업활동 세금 개정안", student: "배미혜", ayes: 4, detail: "세금이 너무 높습니다" },
-        { id: "2", title: "직업활동 세금 개정안", student: "배미혜", ayes: 4, detail: "세금이 너무 높습니다" },
-        { id: "3", title: "직업활동 세금 개정안", student: "배미혜", ayes: 4, detail: "세금이 너무 높습니다" },
-        { id: "4", title: "직업활동 세금 개정안", student: "배미혜", ayes: 4, detail: "세금이 너무 높습니다" }
-
-    ]
-
-    const billData = [
-        { id: "0", title: "직업활동 세금 개정안직업활동 세금 개정안", student: "", ayes: 4, noes: 5, detail: "세금이 너무 높습니다" },
-    ]
+    const [suggestData, setsuggestData] = useState([])
+    const [billData, setbillData] = useState([])
 
 
-
+    //state : 법률제안:suggest-law , suggest-vote
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsError(false);
+            setIsLoading(true);
+            try {
+                // 기존의 예금 상품 불러오기
+                const result = await axios.get(`/api/congress`, { params: { classId: classData.classId } })
+                console.log(result.data)
+                setsuggestData(result.data.filter((v) => v.state === "suggest-law"))
+                setbillData(result.data.filter((v) => v.state === "suggest-vote"))
+            } catch (error) {
+                setIsError(true);
+            }
+            setIsLoading(false);
+        };
+        fetchData();
+    }, [classData.classId])
     return (
         <PageFrame>
             <PageHeading title="국회(입법)"></PageHeading>

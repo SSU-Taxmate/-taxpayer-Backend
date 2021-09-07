@@ -2,7 +2,9 @@
   : /api/congress
 */
 const express = require('express');
-const { Law_suggest } = require('../models/Law_suggest');
+const { LawSuggest } = require('../models/Law_suggest');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const router = express.Router();
 
 /*
@@ -10,7 +12,7 @@ const router = express.Router();
   : Suggest_law
 */
 router.post('/', (req, res) => {
-    const laws = new Law_suggest(req.body);
+    const laws = new LawSuggest(req.body);
     laws.save((err, doc) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -23,13 +25,49 @@ router.post('/', (req, res) => {
     - req.query {classId:}
 */
 
-router.get('/', (req, res) => {
-    Law_suggest.find(req.query, (err, classlaw) => {
-        const result = classlaw
-            //console.log(result)
-        if (err) return res.status(500).json({ error: err });
-        res.json(result)
-    })
+router.get('/', async (req, res) => {
+    const classId = req.query.classId
+    try {
+        const lawsuggest = await LawSuggest.aggregate([
+            {
+                $match: {
+                    "classId": ObjectId(classId)
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    let:{initiator:'$initiator'},
+                    pipeline: [
+                        {
+                            $match:{
+                                $expr:{
+                                    $eq:['$$initiator','$_id']
+                                }
+                            }
+                        },
+                        {
+                            $project:{
+                                'name':1
+                            }
+                        }
+                    ],
+                    as: 'initiator',
+                }
+            },
+            {
+                $unwind:'$initiator'
+            }
+          
+        ])
+        //console.log(lawsuggest[0])
+        const result=lawsuggest
+        res.send(result);
+    } catch (error) {
+        return res.status(403).send('This account does not exist');
+        // return res.status(403).send('error 설명 메시지');
+    }
+
 })
 
 /*
@@ -38,7 +76,7 @@ router.get('/', (req, res) => {
 */
 
 router.put('/', (req, res) => {
-    Law_suggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+    LawSuggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
             success: true
@@ -54,7 +92,7 @@ router.put('/', (req, res) => {
 router.delete('/:id', (req, res) => {
     console.log(req.params.id)
     const lawId = req.params.id
-    Law_suggest.deleteOne({ _id: lawId }, (err, doc) => {
+    LawSuggest.deleteOne({ _id: lawId }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
             success: true

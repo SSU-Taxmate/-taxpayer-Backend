@@ -42,6 +42,8 @@ app.use('/api/taxes', require('./routes/tax'))
 app.use('/api/budget', require('./routes/budget'))
 /* 법 */
 app.use('/api/laws', require('./routes/law'))
+/* 국회 */
+app.use('/api/congress',require('./routes/congress'))
 /* cron */
 //app.use('/api/batch',require('./routes/batch'))
 /* 벌금 */
