@@ -17,7 +17,7 @@ const lawSuggestSchema = mongoose.Schema({
     },
     state: { /* 투표중=>[발의]=>본회의심의=>[의결]=>대통령거부권행사=>[공포]*/
         type: String,
-        default: 'suggest-law'
+        default: 'suggest-law'//suggest-vote
     },
     classId: {
         type: mongoose.Schema.Types.ObjectId,
