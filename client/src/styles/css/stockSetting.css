@@ -11,6 +11,9 @@
 }
 #stocklist{
     width:100%; 
-    border:solid 2px lightgray;
+    border: solid 2px lightgray;
     border-radius: 10px;
+}
+#stockSetting-outContainer{
+    margin-bottom: 10rem;
 }

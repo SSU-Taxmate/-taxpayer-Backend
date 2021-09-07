@@ -18,7 +18,6 @@ function FirstStep({ data, handleChange, seterrmsg }) {
         params: { classId: classData.classId, joinPossible: true },
       });
       setdeposits(result.data);
-      //console.log(result.data)
     } catch (error) {
       setIsError(true);
     }
@@ -28,8 +27,6 @@ function FirstStep({ data, handleChange, seterrmsg }) {
     fetchData();
   }, []);
   const handleStepChange = (type) => (e) => {
-    //console.log(deposits[e.target.value]._id)
-    //console.log(e.target.value)
     setvalue(
       deposits[deposits.findIndex((i) => i._id === e.target.value)].name
     );

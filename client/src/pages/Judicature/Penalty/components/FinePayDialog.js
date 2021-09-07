@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
     axios
       .put("/api/fine", payFine)
       .then(function (response) {
-        if (response.data.success == false) {
+        if (response.data.success === false) {
           alert("잔액이 부족합니다!");
         } else {
           console.log(response);

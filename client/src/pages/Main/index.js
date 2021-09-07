@@ -4,9 +4,9 @@ import MainHeader from "../../components/Navigation/MainHeader";
 import Footer from "../../components/Footer";
 import "../../styles/css/main_page.css";
 
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import GavelIcon from '@material-ui/icons/Gavel';
-import ShowChartIcon from '@material-ui/icons/ShowChart';
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import GavelIcon from "@material-ui/icons/Gavel";
+import ShowChartIcon from "@material-ui/icons/ShowChart";
 
 class Main extends Component {
   componentWillMount() {
@@ -35,7 +35,6 @@ class Main extends Component {
                     <i className="fas fa-sign-in-alt"></i> Sign Up
                   </a>
                 </p>
-                
               </div>
             </div>
           </div>
@@ -57,7 +56,14 @@ class Main extends Component {
                 </p>
               </div>
               <div className="col-md-5 embed-responsive embed-responsive-16by9 p-4">
-              <iframe className="embed-responsive embed-responsive-16by9" src="https://www.youtube.com/embed/bhm08qUddso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe
+                  className="embed-responsive embed-responsive-16by9"
+                  src="https://www.youtube.com/embed/bhm08qUddso"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
           </div>

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import PageFrame from "../../../pages/PageFrame";
 import Loading from "../../../components/Loading";
 
 import Transfer from "./components/Transfer";
 import PenaltyTable from "./components/PenaltyTable";
 import FinePayDialog from "./components/FinePayDialog";
 
+import { Button } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
-import PageFrame from "../../PageFrame";
 
 function Penalty() {
   //job date 요청
@@ -136,58 +137,48 @@ function Penalty() {
   ];
   return (
     <PageFrame>
-
-              <div className="row justify-content-center">
-                {user.userData && user.userData.role === 0 ? (
-                  <div className="col">
-                    <div className="row justify-content-center mt-5">
-                      <div
-                        className="text-center card py-5 shadow"
-                        style={{ width: "80%" }}
-                      >
-                        <h4>벌금부과</h4>
-                        <div className="row justify-content-center">
-                          {isLoading ? null : (
-                            <Transfer users={users} laws={laws} />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-                <div className="col">
-                  <div className="text-center py-5 mx-4">
-                    {user.userData && user.userData.role === 0 ? (
-                      <h3>벌금 부여 내역</h3>
-                    ) : (
-                      <h3>나의 벌금 내역</h3>
-                    )}
-                    {isLoading ? (
-                      <Loading />
-                    ) : (
-                      user.userData &&
-                      fines && (
-                        <PenaltyTable
-                          data={
-                            user.userData.role === 0
-                              ? fines
-                              : fines.filter(
-                                  (v) => v.studentId_id == user.userData._id
-                                )
-                          }
-                          columns={
-                            user.userData.role === 0 ? columns : columnStudent
-                          }
-                        />
-                      )
-                    )}
-                  </div>
+      <div className="row justify-content-center">
+        {user.userData && user.userData.role === 0 ? (
+          <div className="col">
+            <div className="row justify-content-center mt-5">
+              <div
+                className="text-center card py-5 shadow"
+                style={{ width: "80%" }}
+              >
+                <h4>벌금부과</h4>
+                <div className="row justify-content-center">
+                  {isLoading ? null : <Transfer users={users} laws={laws} />}
                 </div>
               </div>
-              
-              
-              
-              </PageFrame>
+            </div>
+          </div>
+        ) : null}
+        <div className="col">
+          <div className="text-center py-5 mx-4">
+            {user.userData && user.userData.role === 0 ? (
+              <h3>벌금 부여 내역</h3>
+            ) : (
+              <h3>나의 벌금 내역</h3>
+            )}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              user.userData &&
+              fines && (
+                <PenaltyTable
+                  data={
+                    user.userData.role === 0
+                      ? fines
+                      : fines.filter((v) => v.studentId_id == user.userData._id)
+                  }
+                  columns={user.userData.role === 0 ? columns : columnStudent}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </div>
+    </PageFrame>
   );
 }
 export default Penalty;

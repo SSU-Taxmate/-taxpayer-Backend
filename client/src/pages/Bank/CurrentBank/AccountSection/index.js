@@ -44,7 +44,6 @@ function Account(props) {
     }
     const getDate = (date) => {
         let localtime = moment(date).tz('Asia/Seoul').format('YYYY-MM-DD')
-        console.log(date)
         return localtime
     }
     const fetchData = async () => {
