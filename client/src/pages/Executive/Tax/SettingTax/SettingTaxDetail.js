@@ -49,10 +49,10 @@ function SettingTaxDetail() {
       .put(`/api/taxes`, { taxlist: data, _id: taxId })
       .then(function (response) {
         console.log(response);
-        if(response.data.success){
-          alert('세금 설정이 완료되었습니다.')
-        }else{
-          alert('세금 설정에 실패하였습니다')
+        if (response.data.success) {
+          alert("세금 설정이 완료되었습니다.");
+        } else {
+          alert("세금 설정에 실패하였습니다");
         }
       })
       .catch(function (error) {
@@ -76,10 +76,10 @@ function SettingTaxDetail() {
       })
       .then(function (response) {
         console.log(response);
-        if(response.data.success){
-          alert('세금 사용이 완료되었습니다.')
-        }else{
-          alert('세금 사용에 실패하였습니다')
+        if (response.data.success) {
+          alert("세금 사용이 완료되었습니다.");
+        } else {
+          alert("세금 사용에 실패하였습니다");
         }
       })
       .catch(function (error) {
@@ -215,7 +215,7 @@ function SettingTaxDetail() {
                       name="electric"
                       title="전기세 : 전기요금의"
                       value={data.electric}
-                      unit="%"
+                      unit="미소"
                       onChange={onChange}
                     />
                     <InputTax
