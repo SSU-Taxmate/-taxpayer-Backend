@@ -121,7 +121,6 @@ export default function Sidebar(props) {
                   {/* 학생 */}
                   {user.userData.role === 1 ? (
                     <>
-                      <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/set-up/class"
@@ -262,7 +261,6 @@ export default function Sidebar(props) {
                   </Link>
                   {user.userData.role === 1 ? (
                     <>
-                      <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/tax-invoice"
