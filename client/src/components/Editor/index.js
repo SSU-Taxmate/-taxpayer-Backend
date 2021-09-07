@@ -114,7 +114,6 @@ export default class Draft extends Component {
   }
 }
 
-// Custom overrides for "code" style.
 const styleMap = {
   CODE: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',

@@ -13,7 +13,7 @@ function BudgetStatistics() {
   const [revenue, setrevenue] = useState();
   const [expend, setexpend] = useState();
   const finance_labels = [
-    //현재 날자까지
+    //현재 날짜까지
     "3월",
     "4월",
     "5월",
@@ -53,14 +53,17 @@ function BudgetStatistics() {
       const result = await axios.get("/api/budget/history", {
         params: { classId: classData.classId },
       });
-      console.log("budget>>>>", result.data);
       setdata(result.data);
-
+      
       const revenue = result.data.filter((v) => v._id.transType === 1);
-      setrevenue(revenue.map((v, i) => v.sum));
-
+      let mrevenue=[0,0,0,0,0,0,0,0,0,0]//3~12
+      revenue.map((v, i) => mrevenue[(v._id.month-4+12)%12]=v.sum)
+      setrevenue(mrevenue);
       const expend = result.data.filter((v) => v._id.transType === 0);
-      setexpend(expend.map((v, i) => v.sum));
+      let mexpend=[0,0,0,0,0,0,0,0,0,0]//3~12
+      expend.map((v, i) => mexpend[(v._id.month-4+12)%12]=v.sum)
+      setexpend(mexpend);
+
     } catch (error) {
       setIsError(true);
     }

@@ -18,7 +18,6 @@ const router = express.Router();
   {classId:}
 */
 router.get('/deposits', (req, res) => {
-  //console.log('deposits/',req.query)
   Deposit.find(req.query, (err, doc) => {
     const result = doc;
     if (err) return res.status(500).json({ error: err });
@@ -34,7 +33,6 @@ router.get('/deposits', (req, res) => {
   classId 정보도 추가
 */
 router.post('/deposits', (req, res) => {
-  //console.log('/api/bank/deposits', req.body)
   const cDeposit = new Deposit(req.body)
   cDeposit.save((err, doc) => {
     if (err) return res.json({ success: false, err })
@@ -61,7 +59,6 @@ router.put('/deposits', (req, res) => {
     2) JoinDeposit에 가입 중인 사람(isClosed:false)이 없다면, 바로 즉시 2-1)JoinDeposit에서 {productId:req.params.id}로 삭제 2-2)Deposit에서 {_id:req.params.id}로 삭제
 */
 router.delete('/deposits/:id', async (req, res) => {
-  //console.log('/api/bank/deposits/:id', req.params.id)
   const depositId = req.params.id
 
   const session = await startSession();

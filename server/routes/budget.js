@@ -68,7 +68,7 @@ router.get('/history', async (req, res) => {
         {
           _id:{
             'transType':'$transType',
-            'month':{$month:'$date'},//group by multiple
+            'month':{$month:{date:'$date',timezone:'Asia/Seoul'}},//group by multiple&timezone
           },
           sum:{$sum:'$amount'}
         }

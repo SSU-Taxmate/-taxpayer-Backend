@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import $ from 'jquery'
 export default class Popover extends Component {
- 
     componentDidMount(){
         $(function () {
             $('[data-toggle="popover"]').popover({trigger:'hover'});
           });
-    }
-    componentWillUnmount() {
-       
     }
     render() {
         return (

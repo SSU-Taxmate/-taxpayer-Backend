@@ -8,7 +8,6 @@ import{
 import storage from 'redux-persist/lib/storage';
 
 export default function user(state={},action){
-    //console.log('_reducers/user_reducer/user',state,action)
 
     switch (action.type) {
         case LOGIN_USER:
@@ -19,7 +18,6 @@ export default function user(state={},action){
             return {...state, userData:action.payload} /*user의 Data가 모두 들어있음 */
         case LOGOUT_USER:
             storage.removeItem('persist:root')
-            //console.log('LOGOUTUSER2',action.payload)
             return action.payload
         default:
             return state;

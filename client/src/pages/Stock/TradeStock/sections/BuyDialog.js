@@ -3,7 +3,6 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } 
 import { useSelector } from "react-redux";
 import axios from 'axios'
 
-
 function BuyDialog(props) {
     const { data, type, color ,quantity } = props;//data - stockId,stockName, price * quantity = amount
     const [open, setOpen] = useState(false);
@@ -17,7 +16,6 @@ function BuyDialog(props) {
     };
     const handleTradeComplete = (e) => {
         e.preventDefault();
-        //console.log('trade complete')
         const sendData={
             studentId:joinedUser.classUser,
             quantity:quantity,
@@ -27,11 +25,15 @@ function BuyDialog(props) {
         axios.post(`/api/stocks/${data.stockId}/orders`, sendData)
             .then(function (response) {
                 console.log(response);
+                if(response.data.success){
+                    alert('주식 매수가 완료되었습니다.')
+                }else{
+                    alert(response.data.err)
+                }
             })
             .catch(function (error) {
                 console.log(error);
-            });
-
+            })
             handleClose();
     }
     return (

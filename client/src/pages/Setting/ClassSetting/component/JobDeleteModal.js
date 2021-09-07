@@ -52,7 +52,6 @@ function JobDeleteModal(props) {
   let classData = useSelector((state) => state.classInfo.classData);
 
   const [rows, setRows] = useState(props.rows);
-  console.log("delete", props.rows);
 
   const modalClose = () => {
     props.close(false);

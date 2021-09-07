@@ -39,7 +39,10 @@ function DepositAdd({ balance }) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleAfterClose=()=>{
+    setOpen(false);
+    window.location.reload()  
+  }
   // stepper
   const handleNext = () => {
     if (activeStep === 0) {
@@ -107,7 +110,6 @@ function DepositAdd({ balance }) {
       }) //
       .then(function (response) {
         console.log(response);
-        //setopensnackbar(true)
         handleNext();
       })
       .catch(function (error) {
@@ -127,9 +129,11 @@ function DepositAdd({ balance }) {
       <Dialog open={open} aria-labelledby="dialog-depositjoin">
         <DialogTitle id="dialog-depositjoin">
           예금 상품 가입
+          {activeStep === steps.length?null:
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
+          }
         </DialogTitle>
         <DialogContent>
           <>
@@ -145,7 +149,7 @@ function DepositAdd({ balance }) {
               <div>
                 <div>가입이 완료되었습니다.</div>
                 <div style={{ display: "block", float: "right" }}>
-                  <Button onClick={handleClose}>닫기</Button>
+                  <Button onClick={handleAfterClose}>닫기</Button>
                 </div>
               </div>
             ) : (

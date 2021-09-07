@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-
-import Topbar from "../../../components/Navigation/Topbar";
-import Footer from "../../../components/Footer";
-import ScrollToTop from "../../../components/Scroll";
+import PageFrame from "../../../pages/PageFrame";
 import Loading from "../../../components/Loading";
 
 import Transfer from "./components/Transfer";
@@ -139,75 +136,49 @@ function Penalty() {
     },
   ];
   return (
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
-              <div className="row justify-content-center">
-                <div className="col-lg-8">
-                  <div className="text-center py-5 mx-4">
-                    {user.userData && user.userData.role === 0 ? (
-                      <h3>벌금</h3>
-                    ) : (
-                      <h3>나의 벌금 내역</h3>
-                    )}
-                    {isLoading ? (
-                      <Loading />
-                    ) : (
-                      user.userData &&
-                      fines && (
-                        <PenaltyTable
-                          data={
-                            user.userData.role === 0
-                              ? fines
-                              : fines.filter(
-                                  (v) => v.studentId_id == user.userData._id
-                                )
-                          }
-                          columns={
-                            user.userData.role === 0 ? columns : columnStudent
-                          }
-                        />
-                      )
-                    )}
-                  </div>
-                  {user.userData && user.userData.role === 0 ? (
-                    <div className="text-center card py-5 shadow">
-                      <h4>벌금부과</h4>
-                      <div className="row justify-content-center">
-                        {isLoading ? null : (
-                          <Transfer users={users} laws={laws} />
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
+    <PageFrame>
+      <div className="row justify-content-center">
+        {user.userData && user.userData.role === 0 ? (
+          <div className="col">
+            <div className="row justify-content-center mt-5">
+              <div
+                className="text-center card py-5 shadow"
+                style={{ width: "80%" }}
+              >
+                <h4>벌금부과</h4>
+                <div className="row justify-content-center">
+                  {isLoading ? null : <Transfer users={users} laws={laws} />}
                 </div>
               </div>
-              {/* <!-- Content Row --> */}
             </div>
-            {/* <!-- /.container-fluid --> */}
           </div>
-          {/* <!-- End of Main Content --> */}
-
-          {/* <!-- Footer --> */}
-          <Footer></Footer>
-          {/* <!-- End of Footer --> */}
+        ) : null}
+        <div className="col">
+          <div className="text-center py-5 mx-4">
+            {user.userData && user.userData.role === 0 ? (
+              <h3>벌금 부여 내역</h3>
+            ) : (
+              <h3>나의 벌금 내역</h3>
+            )}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              user.userData &&
+              fines && (
+                <PenaltyTable
+                  data={
+                    user.userData.role === 0
+                      ? fines
+                      : fines.filter((v) => v.studentId_id == user.userData._id)
+                  }
+                  columns={user.userData.role === 0 ? columns : columnStudent}
+                />
+              )
+            )}
+          </div>
         </div>
-        {/* <!-- End of Content Wrapper --> */}
       </div>
-      {/* <!-- End of Page Wrapper --> */}
-      {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
-    </div>
+    </PageFrame>
   );
 }
 export default Penalty;

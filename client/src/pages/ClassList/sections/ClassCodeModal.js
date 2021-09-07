@@ -7,8 +7,13 @@ import "../../../styles/css/classCodeModal.css";
 export default class ClassCodeModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      className: props.className,
+      id: props.id,
+      entrycode: props.entrycode,
+    };
   }
+
   componentDidMount() {
     $(document).ready(function () {
       new ClipboardJS(".btn");
@@ -40,7 +45,7 @@ export default class ClassCodeModal extends Component {
                 <img src="img/background-main2.png" /> {/*이미지*/}
                 <div className="modal-header justify-content-center">
                   <div className="modal-code" id="DisplayCodeModal">
-                    <span>국가 : {this.props.className}</span>
+                    <span>국가 : {this.state.className}</span>
                   </div>
                 </div>
                 <div className="form-inline mt-2">
@@ -61,7 +66,7 @@ export default class ClassCodeModal extends Component {
                           id="CopyCode"
                           className="form-control"
                           placeholder="Invite Code"
-                          defaultValue={this.props.entrycode}
+                          defaultValue={this.state.entrycode}
                         />
                       </div>
                       <div

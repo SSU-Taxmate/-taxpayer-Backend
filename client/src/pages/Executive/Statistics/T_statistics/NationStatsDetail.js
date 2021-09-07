@@ -8,7 +8,6 @@ import Loading from '../../../../components/Loading'
 const NationStatsDetail = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [columns, setColumns] = useState([])
-
     const [data, setData] = useState([])
     const [isError, setIsError] = useState(false);
     const hw_pie_data = {
@@ -36,7 +35,7 @@ const NationStatsDetail = () => {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get('/api/stats/nation');//가짜데이터
+                const result = await axios.get('/api/stats/nation');//임시 데이터
                 //setData(result.data['data']);
                 //setColumns(result.data['columns'])
             } catch (error) {
@@ -72,10 +71,7 @@ const NationStatsDetail = () => {
                 <div className="row">
                     <ChartPie title='학급과제현황' id='학급과제현황' data={hw_pie_data} />
                 </div>
-
             </CardBasic>
-
-
         </div>
     )
 }

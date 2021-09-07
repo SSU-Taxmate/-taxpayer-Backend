@@ -318,6 +318,7 @@ router.get('/:id/stocks', async (req, res) => {
     const stocktax = tax.taxlist.stock//stock에 붙는 tax
     const userStocks = await StockAccount.findOne({ studentId: studentId })
     const holdingStocks = userStocks.holdingStocks
+    
     let result = await Promise.all(
       holdingStocks.map(async (v, i) => {
         //const stock = await Stock.findOne({ '_id': v.stockId })
@@ -364,8 +365,6 @@ router.get('/:id/stocks', async (req, res) => {
           }
         ])
         const stock = temp[0]
-        //console.log(stock)
-
         const now = new Date()
         //console.log('날짜확인!',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
         const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -449,8 +448,6 @@ router.get('/:id/stocks/statistics', async (req, res) => {
           }
         ])
         const stock = temp[0]
-
-
 
         //console.log('>?aggregate?',stock)
         const now = new Date()

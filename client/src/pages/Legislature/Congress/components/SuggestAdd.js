@@ -1,0 +1,205 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { withStyles, makeStyles, lighten } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
+
+//Navigation
+import Topbar from "../../../../components/Navigation/Topbar";
+import ScrollToTop from "../../../../components/Scroll";
+import Footer from "../../../../components/Footer";
+
+import ThumbUpAltRoundedIcon from "@material-ui/icons/ThumbUpAltRounded";
+import ThumbDownAltRoundedIcon from "@material-ui/icons/ThumbDownAltRounded";
+import TextField from "@material-ui/core/TextField";
+import PageHeading from "../../../../components/PageHeading";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    border: "none",
+    boxShadow: theme.shadows[5],
+    minWidth: 360,
+  },
+
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    overflow: "auto",
+    maxHeight: 200,
+    justifyContent: "center",
+  },
+
+  inline: {
+    display: "inline",
+  },
+
+  listSection: {
+    backgroundColor: "inherit",
+  },
+  ul: {
+    backgroundColor: "inherit",
+    padding: 0,
+  },
+
+  margin: {
+    margin: theme.spacing(1),
+  },
+}));
+
+export default function SuggestAdd({ match }) {
+  const [lawtitle, setlawtitle] = useState("");
+  const [lawcontent, setlawcontent] = useState({}); //{title:'',content:''}
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+    axios
+      .post(`/api/congress`, {
+        classId: classData.classId,
+        title: lawtitle,
+        content: lawcontent,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const onTitleChange = (e) => {
+    setlawtitle(e.target.value); //e.currentTarget.value
+  };
+  const onContentChange = (value) => {
+    /*editor에서 현재 editor 값 넘겨줌 */
+    setlawcontent(value);
+  };
+
+  const classes = useStyles();
+
+  const [err, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [data, setData] = useState({
+    title: "직업활동에 붙는 세금을 낮춰주세요",
+    student: "배미혜",
+    dueDate: 10,
+    detail:
+      "현재 환경미화원으로 일하고 있는 배미혜입니다. 환경미화원은 월 200미소를 받는데 이중 세금으로 40미소를 내고 있습니다.\n이러한 세율은 지나치게 높다고 생각됩니다. 따라서 세법의 개정을 건의하는 바입니다. \n 상세개정안\n -근로소득의 세율을 현행 20%d에서 15%로 낮춘다. \n -부족한 세수를 확보하기 위하여 현재 세금을 매기지 않고 있는 이자소득에 대해 소득의 5%를 세금으로 부과한다",
+  });
+
+  let classData = useSelector((state) => state.classInfo.classData);
+  let user = useSelector((state) => state.user);
+
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
+
+    try {
+      const result = await axios.get("/", {
+        params: { classId: classData.classId },
+      });
+      setData(result);
+    } catch (error) {
+      setIsError(true);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    // fetchData();
+  }, []);
+
+  return (
+    <div>
+      {/* <!-- Page Wrapper --> */}
+      <div id="wrapper">
+        {/* <!-- End of Sidebar --> */}
+
+        {/* <!-- Content Wrapper --> */}
+        <div id="content-wrapper" className="d-flex flex-column">
+          {/* <!-- Main Content --> */}
+          <div id="content">
+            {/* <!-- Topbar --> */}
+            <Topbar />
+            {/* <!-- End of Topbar --> */}
+
+            {/* <!-- Begin Page Content --> */}
+            <div className="container-fluid">
+              {/* <!-- Page Heading --> */}
+              <PageHeading title="법안 발의" />
+              <div className="row py-2 justify-content-center" >
+                <div className="card mb-5" style={{ width: "60%", minWidth: "310px"}}>
+                <form onSubmit={handleSubmit} >
+                  <h5 className="card-header">법안 발의 제안서</h5>
+                  <div className="card-body">
+                    <div className="row p-2" style={{alignItems:"center"}}>
+                      <div
+                        className="text-gray-900 font-weight-bold ml-2 mr-4"
+                        htmlFor="suggestlawtitle"
+                      >
+                        제목
+                      </div>
+                      <TextField
+                        className="text-gray-900 text-center col-9"
+                        name="whatdo"
+                        required
+                        variant="outlined"
+                        margin="none"
+                        size="small"
+                        onChange={onTitleChange}
+                        id='newlawtitle'
+                      />
+                    </div>
+
+                    <hr />
+
+                    <div className="row py-2">
+                      <div className="text-gray-900 font-weight-bold col-auto mb-2">
+                        건의내용
+                      </div>
+
+                    </div>
+                      <TextField
+                        className="text-gray-900 text-center col-11"
+                        name="whatdo"
+                        required
+                        multiline
+                        rows={20}
+                        variant="outlined"
+                        margin="none"
+                        onChange={onContentChange}
+                      />
+
+                  </div>
+                  <div className="row p-4 justify-content-center">
+                  {/* <Button color="primary" onClick={handleSubmit} type="submit">
+                    추가
+                  </Button> */}
+                  <button type="submit" onClick={handleSubmit} class="btn btn-outline-primary mr-2">등록</button>
+                  <button type="button" class="btn btn-outline-primary ml-2">취소</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+            {/* <!-- /.container-fluid --> */}
+          </div>
+          {/* <!-- End of Main Content --> */}
+
+          {/* <!-- Footer --> */}
+          <Footer />
+          {/* <!-- End of Footer --> */}
+        </div>
+        {/* <!-- End of Content Wrapper --> */}
+      </div>
+      {/* <!-- End of Page Wrapper --> */}
+
+      {/* <!-- Scroll to Top Button--> */}
+
+      <ScrollToTop />
+    </div>
+  );
+}

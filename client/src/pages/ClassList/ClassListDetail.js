@@ -38,7 +38,6 @@ function ClassListDetail() {
           params: { userId: user.userData._id, role: user.userData.role },
         }); //
         setclasses(result.data);
-        console.log(result.data);
       } catch (error) {
         setIsError(true);
       }
@@ -104,7 +103,7 @@ function FormDialog() {
   };
 
   const onTitleChange = (e) => {
-    setclassname(e.target.value); //e.currentTarget.value
+    setclassname(e.target.value);
   };
   const onContentChange = (e) => {
     /*editor에서 현재 editor 값 넘겨줌 */
@@ -112,9 +111,6 @@ function FormDialog() {
   };
 
   const handleSubmit = (e) => {
-    //e.preventDefault();
-    //console.log('handleSubmit',user.userData._id)
-    //데이터 저장
     axios
       .post("/api/classes", {
         name: classname,
@@ -206,8 +202,6 @@ function FormDialog2() {
 
   const handleChange = (type) => (e) => {
     setdata({ ...data, [type]: e.target.value });
-    console.log(e);
-    console.log("테스트", data);
   };
 
   //전체 dialog open/close
@@ -225,13 +219,11 @@ function FormDialog2() {
         return seterrmsg("국가 코드를 입력해주세요");
       } else {
         //클래스 데이터 설정
-        console.log("hello", data.entryCode);
         const result = axios
           .get("/api/classes/findClass", {
             params: { entryCode: data.entryCode },
           })
           .then(function (response) {
-            console.log(response);
             if (response.data == null) {
               return seterrmsg("해당 국가가 없습니다.");
             } else {
@@ -239,7 +231,6 @@ function FormDialog2() {
                 entryClass: response.data,
               });
             }
-            console.log("첫번째 스탭", data.class);
           })
           .catch(function (error) {
             console.log(error);
@@ -269,7 +260,6 @@ function FormDialog2() {
     });
     setActiveStep(0);
   };
-  console.log("data1", data);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -281,17 +271,8 @@ function FormDialog2() {
           />
         );
       case 1:
-        // return (
-        //   <SecondStep
-        //     data={data}
-        //     handleChange={handleChange}
-        //     // balance={balance}
-        //   />
-        // );
         return <SecondStep data={entryClass} handleChange={handleChange} />;
 
-      // case 2:
-      // return <ConfirmStep data={data} handleChange={handleChange} />;
       default:
         return "Unknown stepIndex";
     }
@@ -302,9 +283,6 @@ function FormDialog2() {
   };
 
   const onSubmit = (e) => {
-    // e.preventDefault();
-    console.log("handleSubmit", user.userData._id);
-    //데이터 저장
     axios
       .post("/api/classes/join", {
         classInfo: entryClass.entryClass,
@@ -320,13 +298,11 @@ function FormDialog2() {
       .catch(function (error) {
         console.log(error);
       });
-    // handleNext();
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <IconButton onClick={handleClickOpen}>
-        {/* <Icon color="primary">add_circle</Icon> */}
         <img src="img/nationality.png" style={{ width: "4rem" }}></img>
       </IconButton>
       새로운 시민권 발급 받기

@@ -105,10 +105,10 @@ function AddDepositDialog() {
         ),[]
     )
     return (
-        <div>
-            <button onClick={handleOpen} className='col-12 btn btn-outline-primary mb-3'>+</button>
-            <Dialog aria-labelledby="depositAdd" open={open}>
-                <DialogTitle id="depositAdd">예금 상품 추가</DialogTitle>
+        <>
+            <button onClick={handleOpen} className='col-2 col-md-1 btn btn-outline-primary mb-3'>+</button>
+            <Dialog open={open}>
+                <DialogTitle >예금 상품 추가</DialogTitle>
                 <form onSubmit={handleSubmit}>
                     <DialogContent>
                         {nameField}
@@ -124,7 +124,7 @@ function AddDepositDialog() {
                 </form>
 
             </Dialog>
-        </div>
+        </>
     )
 }
 

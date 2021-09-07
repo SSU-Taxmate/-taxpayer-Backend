@@ -11,7 +11,6 @@ function InvestStatus() {
     let joinedUser = useSelector(state => state.classUser);
     let classData = useSelector(state => state.classInfo.classData);
 
-    //console.log(data)//로그인 한 사람의 sum[currentPrice, allPayAmount] 
 
     const fetchData = async () => {
         setIsError(false);

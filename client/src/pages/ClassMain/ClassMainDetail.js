@@ -13,8 +13,7 @@ export default function ClassMainDetail() {
     let user = useSelector((state) => state.user);
 
     return (
-
-    /* student 기준 */
+        /* student 기준 */
         <div className="row justify-content-center ">
             <div className="col-lg-10 col-xs-12">
                 <div className="card-body m-4">
@@ -25,18 +24,18 @@ export default function ClassMainDetail() {
                             <hr className="m-0"/>
                             
                             <div className="py-3"></div>
-                            <CongressPanel/>
-                                
+                            <CongressPanel />
+
                         </div>
 
-                    <div className="col-lg-6">
-                   
-                   <StockPanel/>
+                        <div className="col-lg-6">
+
+                            <StockPanel />
+                        </div>
                     </div>
-              </div>
                 </div>
             </div>
-            </div>
+        </div>
     )
 }
 
