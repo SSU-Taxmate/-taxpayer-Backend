@@ -68,6 +68,16 @@ export default function SuggestAdd(props) {
       });
   };
 
+  const onTitleChange = (e) => {
+    setlawtitle(e.target.value); //e.currentTarget.value
+  };
+  const onContentChange = (value) => {
+    /*editor에서 현재 editor 값 넘겨줌 */
+    setlawcontent(value);
+    console.log(value);
+  };
+
+
     const classes = useStyles();
 
     const [err, setIsError] = useState(false);
@@ -112,6 +122,7 @@ export default function SuggestAdd(props) {
                   variant="outlined"
                   margin="none"
                   size="small"
+                  onChange={onTitleChange}
                 /></div>
 
 <hr />
@@ -128,6 +139,7 @@ export default function SuggestAdd(props) {
                   rows={15}
                   variant="outlined"
                   margin="none"
+                  onChange={onContentChange}
                 /></div>
 
 
