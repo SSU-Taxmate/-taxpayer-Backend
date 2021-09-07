@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
+
 import Error from "../../../../components/Error";
 import Loading from "../../../../components/Loading";
 import Modal from "@material-ui/core/Modal";
@@ -52,9 +54,6 @@ export default function SuggestDetail(props) {
 
   const handleSubmit = (e) => {
     //e.preventDefault();
-    if(user.userData._id==""){
-      alert("이미 동의하셨습니다");
-    }
 
     if (window.confirm("정말 동의하시겠습니까?")) {
       alert("동의하셨습니다");
@@ -180,7 +179,7 @@ export default function SuggestDetail(props) {
                     {" "}
                     <ThumbUpAltRoundedIcon />{" "}
                   </span>
-                  <span className="text">동의합니다</span>
+                  <span className="text" onClick={handleSubmit}>동의합니다</span>
                 </a>
               </div>
               <hr />

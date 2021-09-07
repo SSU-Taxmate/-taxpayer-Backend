@@ -187,20 +187,50 @@ router.post('/agree', function (req, res) {
     });
   });
 });
+router.post('/vote', function (req, res) {
+  console.log(req.body._id);
+  LawSuggest.updateOne({
+    _id: req.body._id
+  }, {
+    $push: {
+      vote: {
+        initiator: req.body.vote.initiator,
+        value: req.body.vote.value
+      }
+    }
+  }, function (err, doc) {
+    if (err) return res.json({
+      success: false,
+      err: err
+    });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
 /*
     SuggestLaw 하나의 vote값만 가져오기
 */
 
 router.get('/:id/vote', function (req, res) {
-  var suggestId = req.params.id;
-  LawSuggest.findOne({
-    _id: suggestId
+  console.log(req.body._id);
+  LawSuggest.updateOne({
+    _id: req.body._id
+  }, {
+    $push: {
+      vote: {
+        initiator: req.body.vote.initiator,
+        value: req.body.vote.value
+      }
+    }
   }, function (err, doc) {
-    if (err) return res.status(500).json({
-      error: err
+    if (err) return res.json({
+      success: false,
+      err: err
     });
-    console.log(doc.vote);
-    res.json(doc.vote);
+    return res.status(200).json({
+      success: true
+    });
   });
 });
 module.exports = router;
