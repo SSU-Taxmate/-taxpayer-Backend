@@ -95,14 +95,14 @@ export default function BillDetail(props) {
       <Fade in={props.open}>
         <div className="card col-lg-8">
 
-          <div className="text-gray-900 font-weight-bold text-center mx-2 h5 my-5">{data.title}</div>
+          <div className="text-gray-900 font-weight-bold text-center mx-2 h5 my-5">{props.data.title}</div>
 
           <div className="row justify-content-center no-gutters align-items-center mb-4">
             <div className="col-md-8 mr-2">
               <div className="row no-gutters align-items-center justify-content-between">
-                <div className="text-xs font-weight-bold text-uppercase mb-1">{data.pros}%</div>
-                <div className="font-weight-bold mb-1">투표율 [ {Math.round(data.voter/data.all*100)}% ]</div>
-                <div className="text-xs font-weight-bold text-uppercase mb-1">{data.cons}%</div>
+                <div className="text-xs font-weight-bold text-uppercase mb-1">{Math.round(props.data.numpros/props.data.numvoter*100)}%</div>
+                <div className="font-weight-bold mb-1">투표율 [ {Math.round(props.data.numvoter/props.numofstudent*100)}% ]</div>
+                <div className="text-xs font-weight-bold text-uppercase mb-1">{100-Math.round(props.data.numpros/props.data.numvoter*100)}%</div>
               </div>
               <div className="row no-gutters align-items-center">
                 <div className="col-auto">
@@ -111,8 +111,8 @@ export default function BillDetail(props) {
                 <div className="col">
                   <div className="progress mr-2 justify-content-between">
                     {/*동의/비동의 비율*/}
-                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${data.pros}%` }} aria-valuenow={data.pros} aria-valuemin="0" aria-valuemax="100"></div>
-                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${data.cons}%` }} aria-valuenow={data.cons} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${Math.round(props.data.numpros/props.data.numvoter*100)}%` }} aria-valuenow={Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${100-Math.round(props.data.numpros/props.data.numvoter*100)}%` }} aria-valuenow={100-Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
                 <div className="col-auto">
@@ -126,10 +126,10 @@ export default function BillDetail(props) {
           <div className="row justify-content-center">
             <div className="text-center font-weight-bold m-2 label job-label">발의자</div>
             <div className="seperator-gray m-1"></div>
-            <div className="text-gray-900 text-center m-2 job-input">{data.student}</div>
+            <div className="text-gray-900 text-center m-2 job-input">{props.data.initiator.name}</div>
             <div className="text-center font-weight-bold m-2 job-label">마감기간</div>
             <div className="seperator-gray m-1"></div>
-            <div className="text-gray-900 text-center m-2 job-input">{"D-" + data.dueDate}</div>
+            <div className="text-gray-900 text-center m-2 job-input">{"D-" + moment(props.data.createdAt).tz('Asia/Seoul').add(7,'d').diff(moment().tz('Asia/Seoul'),'days')}</div>
           </div>
 
           <hr />
@@ -137,7 +137,7 @@ export default function BillDetail(props) {
 
 
           <div className="row py-2">
-            <div className="text-gray-900 mx-4 job-input">{data.content}</div>
+            <div className="text-gray-900 mx-4 job-input">{props.data.content}</div>
           </div>
 
           <div className="row py-2 justify-content-center">
