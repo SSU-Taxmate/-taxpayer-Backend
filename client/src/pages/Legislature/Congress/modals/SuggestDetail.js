@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import Error from "../../../../components/Error";
 import Loading from "../../../../components/Loading";
-//modal import
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -50,6 +49,36 @@ const useStyles = makeStyles((theme) => ({
 export default function SuggestDetail(props) {
   //console.log('suggestDetail', props.data)
   const classes = useStyles();
+
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+    if(user.userData._id==""){
+      alert("이미 동의하셨습니다");
+    }
+
+    if (window.confirm("정말 동의하시겠습니까?")) {
+      alert("동의하셨습니다");
+      axios
+      .post(`/api/congress/agree`, {
+        _id:props.data._id,
+        vote:{
+        initiator: user.userData._id,
+        value: true}
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      modalClose();
+      
+  } else {
+      alert("동의취소하셨습니다");
+  }
+
+
+  };
 
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
