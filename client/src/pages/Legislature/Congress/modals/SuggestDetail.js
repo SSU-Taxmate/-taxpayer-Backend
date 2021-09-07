@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import Error from '../../../../components/Error'
@@ -53,6 +54,36 @@ const useStyles = makeStyles((theme) => ({
 export default function SuggestDetail(props) {
   //console.log('suggestDetail', props.data)
   const classes = useStyles();
+
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+    if(user.userData._id==""){
+      alert("이미 동의하셨습니다");
+    }
+
+    if (window.confirm("정말 동의하시겠습니까?")) {
+      alert("동의하셨습니다");
+      axios
+      .post(`/api/congress/agree`, {
+        _id:props.data._id,
+        vote:{
+        initiator: user.userData._id,
+        value: true}
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      modalClose();
+      
+  } else {
+      alert("동의취소하셨습니다");
+  }
+
+
+  };
 
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -134,7 +165,7 @@ export default function SuggestDetail(props) {
 
                     <a className="btn btn-success btn-icon-split m-2">
                       <span className="icon text-white-50"> <ThumbUpAltRoundedIcon /> </span>
-                      <span className="text">동의합니다</span>
+                      <span className="text" onClick={handleSubmit}>동의합니다</span>
                     </a>
 
 
