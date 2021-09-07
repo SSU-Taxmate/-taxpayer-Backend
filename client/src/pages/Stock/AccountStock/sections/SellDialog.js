@@ -30,7 +30,7 @@ function SellDialog(props) {
         axios.post(`/api/stocks/${data.stockId}/orders`, sendData)
             .then(function (response) {
                 if(response.data.success){
-                    alert('성공')
+                    alert('주식 매도가 완료되었습니다.')
                     window.location.reload()
                 }else{
                     alert(response.data.err)

@@ -26,7 +26,7 @@ function BuyDialog(props) {
             .then(function (response) {
                 console.log(response);
                 if(response.data.success){
-                    alert('성공')
+                    alert('주식 매수가 완료되었습니다.')
                 }else{
                     alert(response.data.err)
                 }
