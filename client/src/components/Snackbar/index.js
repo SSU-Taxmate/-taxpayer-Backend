@@ -1,19 +1,17 @@
 import React from 'react'
-
-function Snackbar({message,color}) {
-    const [opensnackbar, setopensnackbar] = useState(false);
-    const closesnackbar = () => {
-        setopensnackbar(false)
+import { IconButton } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close';
+function Snackbar({open,message,color}) {
+    const closesnackbar=()=>{
+        
     }
-
     return (
         <>
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={opensnackbar}
+                open={open}
                 message={`${message}`}
                 autoHideDuration={2000}
-                onClose={closesnackbar}
                 action={<IconButton
                     aria-label="close"
                     color={color}

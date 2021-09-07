@@ -333,8 +333,11 @@ router.post('/:id/orders', async (req, res) => {
 
   try {
     session.startTransaction();// 트랜젝션 시작
+    if(quantity<=0){
+      throw '수량을 다시 입력해주세요'
+    }
     const account = await Account.findOne({ studentId: studentId }).exec({ session })
-    console.log('account1', account)
+    
     if (orderType === '매수') {
       console.log('매수')
       // 1) 은행 잔고 확인
