@@ -93,8 +93,8 @@ export default function BillDetail(props) {
                 <div className="col">
                   <div className="progress mr-2 justify-content-between">
                     {/*동의/비동의 비율*/}
-                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${Math.round(props.data.numpros/props.data.numvoter*100)}%` }} aria-valuenow={Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
-                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${100-Math.round(props.data.numpros/props.data.numvoter*100)}%` }} aria-valuenow={100-Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${props.data.numvoter !== 0? Math.round(props.data.numpros/props.data.numvoter*100) : 0}%` }} aria-valuenow={Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${ props.data.numvoter !==0 ? 100-Math.round(props.data.numpros/props.data.numvoter*100) : 0}%` }} aria-valuenow={100-Math.round(props.data.numpros/props.data.numvoter*100)} aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
                 <div className="col-auto">
