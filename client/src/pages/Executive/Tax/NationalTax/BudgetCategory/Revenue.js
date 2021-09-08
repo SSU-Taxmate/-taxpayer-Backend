@@ -49,7 +49,7 @@ function Revenue({ data }) {
         <p className="h5 font-weight-bold ">벌금</p>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
-            총 벌금 : <span style={{ float: "right", marginRight: "2rem" }}> {} <sub>미소</sub></span>
+            총 벌금 : <span style={{ float: "right", marginRight: "2rem" }}> {data.fine} <sub>미소</sub></span>
           </li>
         </ul>
       </div>

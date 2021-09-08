@@ -205,7 +205,7 @@ console.log('suggestdetail',props.data)
                   </span>
                   <span className="text" onClick={handleSubmit1}>동의합니다</span>
                 </a>
-                {user.userData.role === 0 ? (
+                {user.userData&&user.userData.role === 0 ? (
                                 <a className="btn btn-danger btn-icon-split m-2">
                                 <span className="text" onClick={handleSubmit2}>승인</span></a>
                   ) : null}
