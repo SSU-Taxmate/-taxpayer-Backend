@@ -1,25 +1,14 @@
-import React, { Component } from "react";
-import $ from "jquery";
-import ClipboardJS from "clipboard";
+import React,{useRef} from "react";
 import ShareIcon from "@material-ui/icons/Share";
 import "../../../styles/css/classCodeModal.css";
 
-export default class ClassCodeModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      className: props.className,
-      id: props.id,
-      entrycode: props.entrycode,
-    };
+export default function ClassCodeModal (props) {
+  const inputcode = useRef();
+  const handlecopy=()=>{
+    const e=inputcode.current
+    e.select()
+    document.execCommand('copy')
   }
-
-  componentDidMount() {
-    $(document).ready(function () {
-      new ClipboardJS(".btn");
-    });
-  }
-  render() {
     return (
       <>
         <div>
@@ -27,17 +16,16 @@ export default class ClassCodeModal extends Component {
             className="dropdown-item"
             href="#"
             data-toggle="modal"
-            data-target={`#${this.state.id}Modal`}
+            data-target={`#${props.id}Modal`}
           >
-            {/*    <i className={this.state.icon}></i>*/}
             <ShareIcon />
           </a>
           <div
             className="modal fade"
-            id={`${this.state.id}Modal`}
+            id={`${props.id}Modal`}
             tabIndex="-1"
             role="dialog"
-            aria-labelledby={`#${this.state.id}ModalLabel`}
+            aria-labelledby={`#${props.id}ModalLabel`}
             aria-hidden="true"
           >
             <div className="modal-dialog" role="document">
@@ -45,7 +33,7 @@ export default class ClassCodeModal extends Component {
                 <img src="img/background-main2.png" /> {/*이미지*/}
                 <div className="modal-header justify-content-center">
                   <div className="modal-code" id="DisplayCodeModal">
-                    <span>국가 : {this.state.className}</span>
+                    <span>국가 : {props.className}</span>
                   </div>
                 </div>
                 <div className="form-inline mt-2">
@@ -66,17 +54,20 @@ export default class ClassCodeModal extends Component {
                           id="CopyCode"
                           className="form-control"
                           placeholder="Invite Code"
-                          defaultValue={this.state.entrycode}
+                          ref={inputcode}
+                          readOnly
+                          defaultValue={props.entrycode}
                         />
                       </div>
-                      <div
+                      <button
                         className="btn btn-info btn-clipboard"
                         id="entryCodebtn"
                         data-clipboard-action="copy"
                         data-clipboard-target="#CopyCode"
+                        onClick={handlecopy}
                       >
                         Copy
-                      </div>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -86,5 +77,5 @@ export default class ClassCodeModal extends Component {
         </div>
       </>
     );
-  }
+ 
 }
