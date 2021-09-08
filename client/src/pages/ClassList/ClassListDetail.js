@@ -293,6 +293,9 @@ function FormDialog2() {
         console.log(response);
         if (response.data.success === true) {
           finish();
+        }else{
+          alert(response.data.err)
+          handleReset();
         }
       })
       .catch(function (error) {

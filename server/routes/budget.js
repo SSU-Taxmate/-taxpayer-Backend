@@ -11,7 +11,8 @@ const ObjectId = mongoose.Types.ObjectId;
 const router = express.Router();
 
 /*
-  [정상] : 예산 사용[1달 단위로 budgetaccount에 업데이트]
+  [정상] : 예산 사용
+  (1달 단위로 budgetaccount에 업데이트)
   {classId:}
 */
 router.post('/', async (req, res) => {
@@ -52,7 +53,6 @@ router.get('/',(req,res)=>{
 })
 /*
   [정상] : 이번달 학급 예산 상황 보기
-  {classId:}
 */
 router.get('/month', (req, res) => {
   const classId = req.query.classId
@@ -63,8 +63,7 @@ router.get('/month', (req, res) => {
   })
 })
 /*
-  [] : 학급 예산 월별 기록
-  {classId:}
+  [정상] : 학급 예산 월별 기록
 */
 router.get('/history', async (req, res) => {
   const classId = req.query.classId
@@ -90,8 +89,6 @@ router.get('/history', async (req, res) => {
         '_id.transType':1
       }}
     ])
-    //console.log(history)
-    
     res.json(history)
   } catch (err) {
     res.status(500).json({ success: false, error: err });
