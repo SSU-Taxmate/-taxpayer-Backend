@@ -375,8 +375,8 @@ router.get('/:id/stocks', async (req, res) => {
           stockId: v.stockId,
           quantity: v.quantity,//잔고
           allPayAmount: v.allPayAmount,//매입가
-          evaluated: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100),//평가금액:잔고*현재가*(100-세금)/100
-          gainNloss: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100) - v.allPayAmount,//평가손익
+          evaluated: Math.round(v.quantity * stock.prices[index].value ),//평가금액:잔고*현재가
+          gainNloss: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100) - v.allPayAmount,//평가손익:추정자산-총매입
           stockName: stock.stockName,
           currentPrice: stock.prices[index].value//현재가
         }
@@ -457,28 +457,31 @@ router.get('/:id/stocks/statistics', async (req, res) => {
         return {
           stockId: v._id,
           PayAmount: v.allPayAmount,//총매입
-          evaluated: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100),//총 평가금액:현재가*잔고*(100-세금)/100
-          evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount//총 평가손익:총평가금액-총매입
+          estimatedAssets :Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100),//추정자산:세금제외
+          evaluated: Math.round(stock.prices[index].value * v.quantity),//총 평가금액:현재가*잔고
+          evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount//총 평가손익:추정자산-총매입
         }
       })
     )
-    let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)
-    let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)
-    let evaluatedIncome = allEvaluated - allPayAmount
-    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100) / 100
+    let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)//총매입
+    let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)//총 평가금액
+    let allestimatedAssets = await first.reduce((v,c)=> v+ c.estimatedAssets,0)//추정자산
+    let evaluatedIncome = allestimatedAssets - allPayAmount //평가손익=추정자산-총매입
+    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100)
     /*
     {
         allPay:,//총매입 - allPayAmount 다 더하기
         allEvaluated:,//총평가 //currentPrice*quantity를 다더하기
-        evaluatedIncome:,평가손익 총평가-총매입
+        evaluatedIncome:,평가손익 추정자산-총매입
         evaluatedProfit:,평가수익률//(총평가-총매입)/총매입*100
     }
     */
     res.json({
-      allPay: allPayAmount,
-      allEvaluated,
-      evaluatedIncome,
-      evaluatedProfit,
+      allPay: allPayAmount,//총매입
+      allEvaluated,//총 평가 금액
+      allestimatedAssets, //총 추정자산
+      evaluatedIncome,//총 평가 손익
+      evaluatedProfit,//평가 수익률
     });
   } catch (err) {
     res.json({ success: false, err });
