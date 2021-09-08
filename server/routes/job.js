@@ -178,8 +178,6 @@ router.post('/salary', async (req, res) => {
         // 2) 월급
         const give = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: job.salary } }).exec({ session })
         const after = await Account.findOne({ studentId: v._id }).exec({session})
-        //console.log('after',job)
-        //=========> 여기서 문제 생김
         const salary = new AccountTransaction({
           accountId: account._id,
           transactionType: 1,
