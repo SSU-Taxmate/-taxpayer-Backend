@@ -2,7 +2,8 @@
   : /api/classes
 */
 const express = require("express");
-const { startSession } = require('mongoose');
+const { startSession, set } = require('mongoose');
+const { Budget } = require("../models/Tax/Budget");
 const { Fine } = require("../models/Judiciary/Fine");
 const { JoinedUser } = require("../models/JoinedUser");
 const { Account } = require('../models/Bank/Account');
@@ -68,8 +69,9 @@ router.put("/", async (req, res) => {
       afterbalance: account.currentBalance -Amount
     })
     await payfine.save({ session })
-
-
+    //벌금납부이후 Budget에 더하기
+    bugget2 = await Budget.findOne({classId: req.body.studentId.classId}).exec({session})
+    bugget = await Budget.updateOne({ classId: req.body.studentId.classId },{ $inc: { "balance.fine": + Amount } }).exec({ session })
 
     await session.commitTransaction();
     session.endSession();
