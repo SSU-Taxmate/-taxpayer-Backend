@@ -16,6 +16,7 @@ function DurationMonth() {
             const result = await axios.get("/api/budget/month", {
                 params: { classId: classData.classId },
             });
+            console.log('>>>>>>>>>>>>>>>>>',result.data.expenditure)
             setbudget({
                 balance: result.data.balance,
                 debet: result.data.debet,
@@ -66,7 +67,8 @@ function DurationMonth() {
                                 <td style={{ float: "right", marginRight: "1rem" }}>
                                     {budget.expenditure.culture +
                                         budget.expenditure.education +
-                                        budget.expenditure.environment}
+                                        budget.expenditure.environment+
+                                        budget.expenditure.etc}
                                     미소
                                 </td>
                             </tr>

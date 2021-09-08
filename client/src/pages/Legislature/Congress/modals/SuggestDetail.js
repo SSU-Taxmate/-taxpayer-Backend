@@ -106,7 +106,7 @@ export default function SuggestDetail(props) {
 
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const quorum = 10;
+  const quorum = 3;
 
   let user = useSelector((state) => state.user);
 

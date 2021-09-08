@@ -14,7 +14,7 @@ export default function TabPanel(props) {
     setPage(value);
   };
 
-  const quorum = 10;
+  const quorum = 3;
 
   const { children, value, index, data, numofstudent, ...other } = props;
 
@@ -79,7 +79,9 @@ export default function TabPanel(props) {
                   </div>
                 ) : (
                   <div className="col-auto h5 font-weight-bold text-primary">
-                    {numofstudent===0?0:Math.round((item.numvoter / numofstudent) * 100) + "%"}
+                    {numofstudent === 0
+                      ? 0
+                      : Math.round((item.numvoter / numofstudent) * 100) + "%"}
                   </div>
                 )}
                 {/* ayes:numvoter */}
