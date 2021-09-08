@@ -7,7 +7,7 @@ const router = express.Router();
 const { JoinedUser } = require('../models/JoinedUser');
 const { startSession } = require('mongoose');
 const { Account } = require('../models/Bank/Account');
-const { AccountTransaction } = require('../models/Bank/AccountTransaction');
+const {AccountTransaction}=require('../models/Bank/AccountTransaction')
 const { Tax } = require('../models/Tax/Tax');
 const { Budget } = require('../models/Tax/Budget');
 const mongoose = require("mongoose");
@@ -170,37 +170,31 @@ router.post('/salary', async (req, res) => {
 
     // 1) student의 job & account 확인
     const jobs = await JoinedUser.find({ classId: classId }).exec({ session })
-    //console.log('jobs',jobs)
 
     for await (const v of jobs) {
       const userjob = await Job.find({ '_id': { $in: v.jobId } }).exec({ session })
-      //console.log('*')
       for await (const job of userjob) {//user가 가지고 있는 job들
-        //console.log('x')
-        const account = await Account.findOne({ studentId: v._id })
-        //console.log(account.currentBalance,account.alias,'+',job.salary)
+        const account = await Account.findOne({ studentId: v._id }).exec({session})
         // 2) 월급
         const give = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: job.salary } }).exec({ session })
-        //console.log(give)
-        const after = await Account.findOne({ studentId: v._id })
-        //console.log(after.currentBalance)
-        const grantsalary = new AccountTransaction({
+        const after = await Account.findOne({ studentId: v._id }).exec({session})
+        const salary = new AccountTransaction({
           accountId: account._id,
           transactionType: 1,
           amount: job.salary,
-          afterbalance: after.currentBalance,//
+          afterbalance: after.currentBalance,
           memo: '월급'
         })
-        await grantsalary.save({ session })
+        await salary.save({ session })
+        
         // 3) 세금
         //3-1) 세금 비율 확인
         const tax = await Tax.findOne({ classId: classId }).exec({ session })
-        const incometax = await Math.round(tax.taxlist.income * job.salary / 100)
+        const incometax = Math.round(tax.taxlist.income * job.salary / 100)
         //3-2) 통장에서 세금 징수
-        if (incomeetax > 0) {
+        if (incometax > 0) {
           const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: - incometax } }).exec({ session })
-          const after2 = await Account.findOne({ studentId: v._id })
-          //console.log('-',incometax,after2.currentBalance)
+          const after2 = await Account.findOne({ studentId: v._id }).exec({session})
           //3-3) 통장에 내역 기록 -------------------------
           const paytax = new AccountTransaction({
             accountId: account._id,
@@ -224,6 +218,7 @@ router.post('/salary', async (req, res) => {
       success: true
     })
   } catch (err) {
+    console.log(err)
     await session.abortTransaction();
     session.endSession();
     res.json({ success: false, err });
