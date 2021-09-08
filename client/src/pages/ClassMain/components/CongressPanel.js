@@ -35,7 +35,7 @@ const [numofstudent, setnumofstudent] = useState()
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
     const lawstate = { 0: 'suggest-law', 1: 'suggest-vote' }
-    const quorum = 10;
+    const quorum = 3;
 
     return (
       <div

@@ -48,13 +48,13 @@ function ByDate() {
             label: '입금',
             data: bydatein,
             backgroundColor: [
-                'rgba(255, 99, 132)',
-                'rgba(255, 159, 64)',
-                'rgba(255, 205, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(54, 162, 235)',
-                'rgba(153, 102, 255)',
-                'rgba(201, 203, 207)'
+                'rgb(46,89,217)',
+                'rgb(46,89,217)',
+                'rgb(46,89,217)',
+                'rgb(46,89,217)',
+                'rgb(46,89,217)',
+                'rgb(46,89,217)',
+                'rgb(46,89,217)',
             ],
             hoverOffset: 4
         },
@@ -62,7 +62,14 @@ function ByDate() {
             label: '출금',
             data: bydateout,
             backgroundColor: [
-                'rgba(201, 203, 207, 0.2)',
+                'rgb(221, 0, 59)',
+                'rgb(221, 0, 59)',
+                'rgb(221, 0, 59)',
+                'rgb(221, 0, 59)',
+                'rgb(221, 0, 59)',
+                'rgb(221, 0, 59)',
+                'rgb(221, 0, 59)',
+
             ],
         }]
     }];
