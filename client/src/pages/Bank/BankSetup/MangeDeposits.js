@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 import Error from '../../../components/Error';
 import Loading from '../../../components/Loading';
 
-import AddDepositDialog from './AddDepositDialog';
-
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button, ButtonGroup } from '@material-ui/core';
 import "../../../styles/css/jobModal.css"
+import AddDepositDialog from './AddDepositDialog';
 
 function MangeDeposits() {
     let classData = useSelector(state => state.classInfo.classData);
@@ -45,9 +44,9 @@ function MangeDeposits() {
     return (
         <div className="row justify-content-center">
             <div className='col-lg-8'>
-                <div className="row p-2 align-items-center " style={{justifyContent:"space-between"}}><h4>예금 상품 관리 <br></br></h4>
-                {/* 예금 상품 추가 */}
-                <AddDepositDialog />
+                <div className="row p-2 align-items-center " style={{ justifyContent: "space-between" }}><h4>예금 상품 관리 <br></br></h4>
+                    {/* 예금 상품 추가 */}
+                    <AddDepositDialog />
                 </div>
                 {/* 기존 예금 상품 렌더링 */}
                 {isError ? <Error /> :
@@ -91,11 +90,10 @@ function MangeDeposits() {
                                     </div>
                                 </div>
                             </div>
-                        )
-                }
-                </div>
+                        )}
             </div>
-   
+        </div>
+
     )
 }
 

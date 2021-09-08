@@ -147,7 +147,7 @@ router.get('/stock/news', async (req, res) => {
     }
 })
 /*
-    StockPanel - 수익률/등락률[student]
+    [student]StockPanel - 수익률/등락률
 */
 router.get('/stock/rate', async (req, res) => {
     const classId = req.query.classId
@@ -160,7 +160,7 @@ router.get('/stock/rate', async (req, res) => {
         const userStocks = await StockAccount.findOne({ studentId: studentId })
         const holdingStocks = userStocks.holdingStocks
         if (holdingStocks.length === 0) {//학생이 보유한 stock이 없다면
-            res.json({ exist: false })
+            res.json({ evaluatedProfit:'---', fluctuation:'---' })
         } else {
             let first = await Promise.all(
                 holdingStocks.map(async (v, i) => {
@@ -217,7 +217,7 @@ router.get('/stock/rate', async (req, res) => {
                         if (stock.prices[index + 1].value === 0) {
                             frate = 0
                         } else {
-                            frate = await Math.round((stock.prices[index].value - stock.prices[index + 1].value) / stock.prices[index + 1].value * 100)
+                            frate = Math.round((stock.prices[index].value - stock.prices[index + 1].value) / stock.prices[index + 1].value * 100)
                         }
                     }
                     return {
@@ -234,8 +234,8 @@ router.get('/stock/rate', async (req, res) => {
             let evaluatedIncome = allEvaluated - allPayAmount//평가손익
             let fluct = await first.reduce((v, c) => v + c.fluctuation, 0)
             let evaluatedProfit = allPayAmount === 0 ? 0 : await Math.round(evaluatedIncome / allPayAmount * 100) / 100//평가수익률
-            let fluctuation = await Math.round(fluct / first.length)//평균 등락률
-            res.json({ exist: true,  evaluatedProfit, fluctuation })
+            let fluctuation =  Math.round(fluct / first.length)//평균 등락률
+            res.json({evaluatedProfit, fluctuation })
         }
 
     } catch (err) {

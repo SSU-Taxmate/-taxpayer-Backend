@@ -9,7 +9,6 @@ function FirstStep({ data, handleChange, seterrmsg }) {
   const [deposits, setdeposits] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [value, setvalue] = useState();
   const fetchData = async () => {
     setIsError(false);
     setIsLoading(true);
@@ -27,14 +26,9 @@ function FirstStep({ data, handleChange, seterrmsg }) {
     fetchData();
   }, []);
   const handleStepChange = (type) => (e) => {
-    setvalue(
-      deposits[deposits.findIndex((i) => i._id === e.target.value)].name
-    );
     seterrmsg("");
-
     handleChange(type);
-    data.product =
-      deposits[deposits.findIndex((i) => i._id === e.target.value)];
+    data.product = deposits[deposits.findIndex((i) => i._id === e.target.value)];
     data.amount = data.product.minAmount;
   };
   return (

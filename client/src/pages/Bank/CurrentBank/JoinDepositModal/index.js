@@ -31,19 +31,19 @@ function DepositAdd({ balance }) {
     console.log(data);
   };
 
-  //전체 dialog open/close
-  const handleClickOpen = () => {
+  /* 전체 dialog open/close */
+  const handleDialogOpen = () => {
     setOpen(true);
   };
-
-  const handleClose = () => {
+  const handleDialogClose = () => {
     setOpen(false);
   };
-  const handleAfterClose=()=>{
+  const handleAfterClose = () => {
     setOpen(false);
-    window.location.reload()  
+    window.location.reload()
   }
-  // stepper
+  /* stepper */
+  // 다음 단계
   const handleNext = () => {
     if (activeStep === 0) {
       if (data.product === undefined) {
@@ -62,12 +62,12 @@ function DepositAdd({ balance }) {
     seterrmsg("");
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
+  // 이전 단계
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     seterrmsg("");
   };
-
+  // 초기화
   const handleReset = () => {
     setdata({
       product: undefined,
@@ -75,7 +75,7 @@ function DepositAdd({ balance }) {
     });
     setActiveStep(0);
   };
-
+  // 단계별 내용
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -97,17 +97,16 @@ function DepositAdd({ balance }) {
       case 2:
         return <ConfirmStep data={data} handleChange={handleChange} />;
       default:
-        return "Unknown stepIndex";
+        return "알 수 없는 단계의 인덱스입니다.";
     }
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(`/api/bank/deposits/${data.product._id}/join`, {
-        studentId: joinedUser.classUser,
-        amount: data.amount,
-      }) //
+    axios.post(`/api/bank/deposits/${data.product._id}/join`, {
+      studentId: joinedUser.classUser,
+      amount: data.amount,
+    })
       .then(function (response) {
         console.log(response);
         handleNext();
@@ -116,12 +115,11 @@ function DepositAdd({ balance }) {
         console.log(error);
       });
   };
-  //sucess
   return (
     <>
       <div className="row py-3 justify-content-center">
         <div className="account-card shadow justify-content-center col-md-12 bg-white">
-          <div className="text-center" onClick={handleClickOpen}>
+          <div className="text-center" onClick={handleDialogOpen}>
             <i className="fas fa-plus"></i>
           </div>
         </div>
@@ -129,10 +127,10 @@ function DepositAdd({ balance }) {
       <Dialog open={open} aria-labelledby="dialog-depositjoin">
         <DialogTitle id="dialog-depositjoin">
           예금 상품 가입
-          {activeStep === steps.length?null:
-          <IconButton onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
+          {activeStep === steps.length ? null :
+            <IconButton onClick={handleDialogClose}>
+              <CloseIcon />
+            </IconButton>
           }
         </DialogTitle>
         <DialogContent>

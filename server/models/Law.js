@@ -15,7 +15,7 @@ const lawSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    state:{ /* 투표중=>[발의]=>본회의심의=>[의결]=>대통령거부권행사=>[공포]*/
+    state:{ // real-law <= law-vote <= law-suggest 
         type:String,
         default:'real-law'
     },

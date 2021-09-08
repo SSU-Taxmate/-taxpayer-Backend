@@ -59,7 +59,7 @@ export default function ClassCodeModal (props) {
                           defaultValue={props.entrycode}
                         />
                       </div>
-                      <button
+                      <div
                         className="btn btn-info btn-clipboard"
                         id="entryCodebtn"
                         data-clipboard-action="copy"
@@ -67,7 +67,7 @@ export default function ClassCodeModal (props) {
                         onClick={handlecopy}
                       >
                         Copy
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>

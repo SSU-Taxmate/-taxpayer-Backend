@@ -318,9 +318,8 @@ router.delete('/:id', async (req, res) => {
 })
 
 /*
-  [90%완료] 주식 주문
+  [완료] 주식 주문
   : 학생의 Stock 매수/매도 req.params orderType로 구분
-  매도: classId 추가로 필요
  */
 router.post('/:id/orders', async (req, res) => {
   const stockId = req.params.id //어떤 stock을

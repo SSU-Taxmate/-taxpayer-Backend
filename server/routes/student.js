@@ -467,13 +467,13 @@ router.get('/:id/stocks/statistics', async (req, res) => {
     let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)//총 평가금액
     let allestimatedAssets = await first.reduce((v,c)=> v+ c.estimatedAssets,0)//추정자산
     let evaluatedIncome = allestimatedAssets - allPayAmount //평가손익=추정자산-총매입
-    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100)
+    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100)//평가수익률
     /*
     {
-        allPay:,//총매입 - allPayAmount 다 더하기
+        allPay:,//총매입
         allEvaluated:,//총평가 //currentPrice*quantity를 다더하기
-        evaluatedIncome:,평가손익 추정자산-총매입
-        evaluatedProfit:,평가수익률//(총평가-총매입)/총매입*100
+        evaluatedIncome:,평가손익 추정자산-총매입(투자총액)
+        evaluatedProfit:,평가수익률//평가손익/총매입*100
     }
     */
     res.json({

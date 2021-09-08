@@ -1,6 +1,6 @@
 /*
-    Fine 벌금!
-    DB!
+    Fine 
+    : 벌금
 */
 const mongoose = require("mongoose");
 
@@ -24,12 +24,12 @@ const FineSchema = mongoose.Schema({
     type: Number,
     require:true,
   },
-  isPayed : {  /* 냈는지 안냈는 지 표기*/
+  isPayed : {  /* 납부 여부 */
     type:Boolean,
     default:false,
  }
 
 });
-const Fine = mongoose.model("Fine", FineSchema); /* 모델 생성 */
+const Fine = mongoose.model("Fine", FineSchema);
 
 module.exports = { Fine };

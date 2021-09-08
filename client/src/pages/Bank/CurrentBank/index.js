@@ -32,18 +32,14 @@ function Bank() {
 
     <PageFrame>
       <div className="row">
+        {/* 학생 계좌 */}
         <div className="col-lg-6 justify-content-center">
           {user.userData && (userAccount &&
-            <>
-              <Account
-                user={user.userData.name}
-                balance={userAccount.currentBalance} />
-            </>
+              <Account user={user.userData.name} balance={userAccount.currentBalance} />
           )}
           <Deposit balance={userAccount.currentBalance} />
-
         </div>
-        {/*Bank Statistics */}
+        {/* 학생 계좌 통계 */}
         <Statistics />
       </div>
     </PageFrame>

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useSelector } from "react-redux";
-
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
 import ShowChartIcon from '@material-ui/icons/ShowChart';
-
+import Error from '../../../components/Error';
+import Loading from '../../../components/Loading';
 const listStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -31,7 +30,7 @@ function TodayNews() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     let classData = useSelector(state => state.classInfo.classData);
-      
+
     let today = new Date();
     let month = ('0' + (today.getMonth() + 1)).slice(-2);
     let day = ('0' + today.getDate()).slice(-2);
@@ -44,7 +43,7 @@ function TodayNews() {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get(`/api/dashboard/stock/news`, { params: { classId: classData.classId} })
+                const result = await axios.get(`/api/dashboard/stock/news`, { params: { classId: classData.classId } })
                 console.log(result.data)
                 setData(result.data)
             } catch (error) {
@@ -73,14 +72,16 @@ function TodayNews() {
                     <div className="py-2"></div>
                     <div>
                         <List className={classes.root} dense={true}>
-                            {data&&data.map((item, i) => (
-                                <div key={i} >
-                                    <ListItem >
-                                        <ListItemText primary={item.prices[0].hint} />
-                                    </ListItem>
-                                    <hr className="m-2" />
-                                </div>))}
-
+                            {isError ? <Error /> :
+                                isLoading ? <Loading /> :
+                                    data && data.map((item, i) => (
+                                        <div key={i} >
+                                            <ListItem >
+                                                <ListItemText primary={item.prices[0].hint} />
+                                            </ListItem>
+                                            <hr className="m-2" />
+                                        </div>))
+                            }
                         </List>
                     </div>
 

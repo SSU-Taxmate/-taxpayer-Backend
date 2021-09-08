@@ -1,6 +1,6 @@
 const mongoose =require('mongoose')
 /*
-    Coupon
+    [추후 업데이트] Coupon
 */
 const couponSchema = mongoose.Schema({
     issuedate:{

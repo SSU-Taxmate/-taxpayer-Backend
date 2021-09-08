@@ -1,7 +1,7 @@
 /*
     Budget[이번달]
-    Class 만들때 생성O
-    한달마다 BudgetHistory, BudgetAccount로
+    :한달마다 BudgetHistory, BudgetAccount로
+    Class 만들때 자동 생성
 */
 const mongoose = require('mongoose')
 
@@ -49,19 +49,19 @@ const budgetSchema = mongoose.Schema({
         default: 0
     },
     expenditure: { // 이번달 세출현황
-        culture: {
+        culture: {//문화비
             type: Number,
             default: 0
         },
-        education: {
+        education: {//교육비
             type: Number,
             default: 0
         },
-        environment: {
+        environment: {//환경미화비
             type: Number,
             default: 0
         },
-        etc: {
+        etc: {//기타
             type: Number,
             default: 0
         }

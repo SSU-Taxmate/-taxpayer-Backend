@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from "react-redux";
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -20,7 +19,6 @@ function TodayRate() {
             setIsLoading(true);
             try {
                 const result = await axios.get(`/api/dashboard/stock/rate`, { params: { classId: classData.classId, studentId: joinedUser.classUser } })
-                console.log(result.data)
                 setData(result.data)
             } catch (error) {
                 setIsError(true);
@@ -31,15 +29,13 @@ function TodayRate() {
     }, [])
     return (
         <>
-            {isError && <Error></Error>}
+            {isError && <Error/>}
             {isLoading ?
                 <Loading /> : (
                     data &&
                     <div className="row justify-content-center">
                         <div className="col-xl-10 col-md-10 ">
                             <div className="row justify-content-center">
-
-
                                 <div className="col-xl-6 col-md-6 col-6 ">
                                     <div className=" h-100 py-2">
                                         <div className="row no-gutters align-items-center">

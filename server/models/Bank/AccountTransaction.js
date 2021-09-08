@@ -1,8 +1,7 @@
 /*
     AccountTransaction 
-    : 은행 거래 데이터
+    : 계좌 입/출금 내역
 */
-
 const mongoose =require('mongoose')
 
 const AccountTransactionSchema = mongoose.Schema({
@@ -11,7 +10,7 @@ const AccountTransactionSchema = mongoose.Schema({
         ref:'Account',
         require:true
     },
-   transactionType:{/*어떤 행동 - 입금(1) 출금(0)*/
+   transactionType:{/*입금(1) 출금(0)*/
         type:Number,
         require:true
    },
