@@ -76,8 +76,6 @@ router.get('/', async (req, res) => {
 
         ])
         const result = { lawsuggest, studentnum: studentnum }
-        console.log(result)
-
         res.send(result);
     } catch (error) {
         return res.json({ success: false, err });
@@ -101,7 +99,6 @@ router.put('/', (req, res) => {
   [정상] Suggest_Law 삭제 : deleteOne
 */
 router.delete('/:id', (req, res) => {
-    console.log(req.params.id)
     const lawId = req.params.id
     LawSuggest.deleteOne({ _id: lawId }, (err, doc) => {
         if (err) return res.json({ success: false, err });
@@ -115,7 +112,6 @@ router.delete('/:id', (req, res) => {
   [정상] Suggest_law 업데이트
 */
 router.post('/agree', (req, res) => {
-    console.log(req.body._id);
     LawSuggest.updateOne({ _id: req.body._id }, {
         $push: {
             vote: { initiator: req.body.vote.initiator, value: req.body.vote.value }
@@ -129,7 +125,6 @@ router.post('/agree', (req, res) => {
 })
 
 router.post('/vote', (req, res) => {
-    console.log(req.body._id);
     LawSuggest.updateOne({ _id: req.body._id }, {
         $push: {
             vote: { initiator: req.body.vote.initiator, value: req.body.vote.value }
@@ -155,7 +150,6 @@ router.post('/approve', (req, res) => {
     SuggestLaw 하나의 vote값만 가져오기
 */
 router.get('/:id/vote', (req, res) => {
-    console.log(req.body._id);
     LawSuggest.updateOne({ _id: req.body._id }, {
         $push: {
             vote: { initiator: req.body.vote.initiator, value: req.body.vote.value }

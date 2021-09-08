@@ -241,7 +241,6 @@ router.delete("/:id/join", async (req, res) => {
     session.endSession();
     res.status(200).json({ success: true, message: '삭제 완료되었습니다' })
   } catch (err) {
-    console.log(err)
     await session.abortTransaction();
     session.endSession();
     res.json({ success: false, err })

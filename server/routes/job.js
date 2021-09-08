@@ -17,7 +17,6 @@ const ObjectId = mongoose.Types.ObjectId;
   {classId: , Job정보들~}
 */
 router.post('/', (req, res) => {
-  //console.log('job post', req.body)
   const newJob = new Job(req.body);
   newJob.save((err, doc) => {
     if (err) return res.json({ success: false, err })
@@ -30,10 +29,8 @@ router.post('/', (req, res) => {
   : Job에서 classId 이용. {classId:} ondelete 관계 없이
 */
 router.get('/manage', (req, res) => {
-  //console.log('job get', req.query)
   const classId = req.query.classId
   Job.find({ classId: classId }, function (err, jobs) {
-    //console.log(jobs)
     const result = jobs
     if (err) return res.status(500).json({ error: err });
     res.json(result)
@@ -44,10 +41,8 @@ router.get('/manage', (req, res) => {
   : Job에서 classId 이용. {classId:} ondelete:false
 */
 router.get('/', (req, res) => {
-  //console.log('job get', req.query)
   const classId = req.query.classId
   Job.find({ classId: classId, ondelete: false }, function (err, jobs) {
-    //console.log(jobs)
     const result = jobs
     if (err) return res.status(500).json({ error: err });
     res.json(result)
@@ -78,15 +73,12 @@ router.delete('/:id', async (req, res) => {
 
     // joinedUser에 jobId가 없다면 (해당 job을 가진 학생이 없다)
     const havejob = await JoinedUser.countDocuments({ jobId: jobId }).exec({ session })
-    console.log(havejob)
     if (havejob <= 0) {
       //job 
       const res1 = await JoinedUser.updateMany({}, { $pull: { jobId: jobId } }).exec({ session })
-      //console.log(res1)
 
       //job 삭제
       const res2 = await Job.deleteOne({ _id: jobId }).exec({ session })
-      //console.log(res2)
     } else {
       const res3 = await Job.updateOne({ _id: jobId }, { $set: { ondelete: true } }).exec({ session })
     }
@@ -141,21 +133,9 @@ router.get('/:id/students', (req, res) => {
     },
   ]).exec((err, employee) => {
     const result = employee
-    console.log(employee)//_id(studentId), name(user.name)
     if (err) return res.status(500).json({ error: err });
     res.json(result)
   })
-
-  /*
-
-  JoinedUser.find({"jobId":jobId}) .populate("userId", "email name alias jobId").exec((err,students)=>{
-       console.log(students)
-       const result = students
-       if (err) return res.status(500).json({ error: err });
-       res.json(result)
-  })
-
-  */
 })
 
 /*
@@ -210,9 +190,7 @@ router.post('/salary', async (req, res) => {
       }
     }
 
-    // 트랜젝션 커밋
     await session.commitTransaction();
-    // 트랜젝션 종료
     session.endSession();
     res.status(200).json({
       success: true

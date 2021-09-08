@@ -25,7 +25,6 @@ router.get('/', async (req, res) => {
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
     }
-    //console.log(stocks)
     const stock = await Stock.find({ _id: { $in: stocks } })
     const now = new Date()
 
@@ -36,7 +35,6 @@ router.get('/', async (req, res) => {
         return v
       })
     )
-    //console.log(result)
     res.json(result)
   } catch (err) {
     res.status(500).json({ error: err });
@@ -50,7 +48,6 @@ router.get('/statistics', async (req, res) => {
   const startDate = req.query.startDate
   const endDate = req.query.endDate
 
-  //  console.log('/api/stocks/statistics',classId,startDate,new Date(startDate),endDate)//2021-08-22T15:00:00Z 2021-08-22T15:00:00.000Z 2021-08-29T14:59:59Z
   try {
     const classstock = await ClassStock.find({ classId: classId }, "stockId")
     let stocks = []
@@ -99,12 +96,10 @@ router.get('/statistics', async (req, res) => {
 router.get('/manage', async (req, res) => {
   try {
     const classstock = await ClassStock.find(req.query, "stockId")
-    //console.log(req.query, classstock)
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
     }
-    //console.log(stocks)
     const stock = await Stock.find({ _id: { $in: stocks } })
     res.json(stock)
   } catch (err) {
@@ -116,7 +111,6 @@ router.get('/manage', async (req, res) => {
 */
 router.get('/:id/manage', (req, res) => {
   const stockId = req.params.id
-  //console.log(stockId)
 
   Stock.aggregate([
     {
@@ -161,7 +155,6 @@ router.get('/:id/manage', (req, res) => {
     }
   ]).exec((err, stock) => {
     const result = stock[0]
-    //console.log(stock)
     if (err) return res.status(500).json({ error: err });
     res.json(result)
   })
@@ -174,18 +167,15 @@ router.post("/", async (req, res) => {
   //console.log('create', req.body.stockInfo)
   const session = await startSession();
   try {
-    // 트랜젝션 시작
     session.startTransaction();
     // 1) Stock 생성
     const newstock = new Stock(req.body.stockInfo);
 
     await newstock.save({ session });
-    //console.log("savestock",newstock);
 
     // 2) Class-Stock 연관
     const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id });
     await newclass.save({ session });
-    //console.log('class-stock', newclass);
 
     // 트랜젝션 커밋
     await session.commitTransaction();
@@ -206,7 +196,6 @@ router.post("/", async (req, res) => {
 */
 router.post('/:id/prices', (req, res) => {
   const stockId = req.params.id
-  //console.log('update', req.body)
   var price = req.body
   Stock.updateOne(
     {
@@ -229,7 +218,6 @@ router.post('/:id/prices', (req, res) => {
 */
 router.put('/:id/prices', (req, res) => {
   const stockId = req.params.id
-  //console.log('update',req.body)
   //daily 입력값이있다면(date로 확인) 빼고 그 자리에 새로운값 넣기
   Stock.updateOne(
     {
@@ -273,24 +261,19 @@ router.delete('/:id/prices/:priceId', (req, res) => {
 
 */
 router.delete('/:id', async (req, res) => {
-  //console.log('delete', req.params)
   const stockId = req.params.id
   const session = await startSession();
   try {
-    // 트랜젝션 시작
     session.startTransaction();
     // Stock.ondelete = true
     const notclosed = await StockAccount.countDocuments({ 'holdingStocks.stockId': stockId }).exec({ session })
-    //console.log(notclosed)
 
     if (notclosed <= 0) {//보유중인 사람이 없다면
       // 1) Class-Stock 연관 삭제 - classId필요없음
       const delclasstock = await ClassStock.deleteOne({ stockId: stockId }, { session: session });
-      //console.log('del: class-stock', delclasstock);
 
       // 2) Stock 삭제
       const delstock = await Stock.deleteOne({ _id: stockId }, { session: session })
-      //console.log('del:stock', delstock);
 
       await session.commitTransaction();
       session.endSession();
@@ -327,7 +310,6 @@ router.post('/:id/orders', async (req, res) => {
   const studentId = req.body.studentId //누가
   const quantity = req.body.quantity //얼만큼
   const currentPrice = req.body.currentPrice//현재가
-  //console.log(stockId, currentPrice, orderType, studentId, quantity)
   const session = await startSession();
 
   try {
@@ -350,7 +332,6 @@ router.post('/:id/orders', async (req, res) => {
           payAmount: currentPrice * quantity  //currentPrice&Tax에서 얻은 Stock필요
         })
         await history.save({ session })
-        //console.log(history)
 
         // 3) 은행 처리
         const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- history.payAmount) } }, { session })
@@ -362,13 +343,10 @@ router.post('/:id/orders', async (req, res) => {
           afterbalance: account.currentBalance - history.payAmount
         })
         await transfer.save({ session })
-        //console.log(transfer)
 
         // 4) holdingStocks 확인
         const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
-        //console.log(stockaccount)
         const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-        //console.log(index)
         if (index > -1) {// 4-1) 기존 stock이 있다면,
           const addStock = await StockAccount.updateOne({ studentId: studentId },
             {

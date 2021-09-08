@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
         const student = await JoinedUser.findOne({ _id: v.studentId }).populate(
           "userId"
         );
-        console.log(v.studentId);
+        //console.log(v.studentId);
         return {
           _id: v._id,
           studentId: v.studentId,

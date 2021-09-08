@@ -49,11 +49,8 @@ router.post("/register", async(req, res, next) => {
             tokenExp: null,
             role: myrole
         });
-        //console.log('추가된 user:' + user);
         return res.json({ success: true, err: '회원가입성공!' })
         next();
-
-        // return res.redirect('/login');
     } catch (error) {
         return res.json({ success: false, err: '회원가입실패' })
     }
