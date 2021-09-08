@@ -20,26 +20,26 @@ function MangeDeposits() {
     const onhandleClick = (id) => {
         axios.delete(`/api/bank/deposits/${id}`)
             .then(function (response) {
-                console.log(response);
+                fetchData();
+                alert(response.data.message);
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
-
+    const fetchData = async () => {
+        setIsError(false);
+        setIsLoading(true);
+        try {
+            // 기존의 예금 상품 불러오기
+            const result = await axios.get(`/api/bank/deposits`, { params: { classId: classData.classId } })
+            setdeposits(result.data)
+        } catch (error) {
+            setIsError(true);
+        }
+        setIsLoading(false);
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            setIsError(false);
-            setIsLoading(true);
-            try {
-                // 기존의 예금 상품 불러오기
-                const result = await axios.get(`/api/bank/deposits`, { params: { classId: classData.classId } })
-                setdeposits(result.data)
-            } catch (error) {
-                setIsError(true);
-            }
-            setIsLoading(false);
-        };
         fetchData();
     }, [classData.classId])
     return (
