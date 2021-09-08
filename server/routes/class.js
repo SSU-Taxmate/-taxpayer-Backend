@@ -10,7 +10,10 @@ const { Class } = require("../models/Class");
 const { JoinedUser } = require("../models/JoinedUser");
 const { Tax } = require("../models/Tax/Tax");
 const { StockAccount } = require("../models/Stock/StockAccount");
-
+const { AccountTransaction } = require("../models/Bank/AccountTransaction");
+const {Fine}=require('../models/Judiciary/Fine')
+const {JoinDeposit}=require('../models/Bank/JoinDeposit')
+const {StockOrderHistory}=require('../models/Stock/StockOrderHistory')
 const router = express.Router();
 
 /*
@@ -147,15 +150,14 @@ router.post('/join', async (req, res) => {
     // (1) class에서 entry code로 참가할 class를 찾는다.
     const classInfo = await Class.findOne({ entrycode: entrycode }).session(session)
     // 1-1) 이미 가입 되어있다면,
-    const already=await JoinedUser.countDocuments({userId:userId,classId:classInfo._id}).exec({ session })
-    if (already>0){
+    const already = await JoinedUser.countDocuments({ userId: userId, classId: classInfo._id }).exec({ session })
+    if (already > 0) {
       throw '이미 가입되어 있습니다!'
     }
     // 1-2) 최초 가입이라면,
     // (2) JoinedUser 스키마에 학생ID, classID를 넣어 학생을 등록시킨다.
     const cjoineduser = new JoinedUser({ userId: userId, classId: classInfo._id });
     const savejoineduser = await cjoineduser.save({ session })
-    //console.log('Save Joined User',savejoineduser)
     // (3) 기본 계좌 개설
     const caccount = new Account({ studentId: cjoineduser._id })
     //console.log('create Account',caccount)
@@ -181,60 +183,19 @@ router.post('/join', async (req, res) => {
   : redux에 저장하기 위해서 사용
 */
 router.get("/:id/join", (req, res) => {
-  //console.log(req.params.id,req.query)
   const classId = req.params.id;
   const userId = req.query.userId;
   JoinedUser.findOne(
     { classId: classId, userId: userId },
     function (err, joineduser) {
-      //console.log(joineduser)
       const result = joineduser._id;
       if (err) return res.status(500).json({ error: err });
       res.json(result);
     }
   );
 });
-/*
-      [] JoinedUser 학생 한명 삭제
-      학생의 클래스 탈퇴
-      클래스에 속한 학생의 모든 정보를 삭제해야 함
-    */
-router.delete("/:id/join", (req, res) => {
-  // {classId:, userId:}
-  console.log(req.params.id, req.query.userId);
-  const classId = req.params.id;
-  const userId = req.query.userId;
-
-  JoinedUser.findOne({ classId: classId, userId: userId }).deleteOne(function (
-    err
-  ) {
-    if (err) return handleError(err);
-    res.json({ success: true });
-  });
-});
-
-// class extends React.Component {
-//     state = { number: [0, 0, 0, 0, 0, 0, 0] };
-//     randomize = () => {
-//         if (!this.state.effect) {
-//             const numberCopy = numbers.map((x) => x);
-//             const arr = [];
-//             for (let i = 0; i <= 7; i++) {
-//                 const random = Math.floor(
-//                     Math.random() * (numberCopy.length - 1)
-//                 );
-//                 arr.push(numberCopy[random] + 1);
-//                 numberCopy.splice(random, 1);
-//             }
-//             this.setState({ number: arr, effect: true });
-//             setTimeout(() => {
-//                 this.setState({ effect: false });
-//             }, 8000);
-//         }
-//     };
-// }
 /*참가코드로 해당 국가 찾기*/
-router.get("/findClass", (req, res) => {
+router.get("/find", (req, res) => {
   entryCode = req.query.entryCode;
   Class.findOne({ entrycode: entryCode }, function (err, classes) {
     console.log(classes);
@@ -242,4 +203,50 @@ router.get("/findClass", (req, res) => {
     res.json(classes);
   });
 });
+/*
+  [] JoinedUser 학생 한명 삭제
+  학생의 클래스 탈퇴 or 선생님 권한으로 삭제 : 클래스에 속한 학생의 모든 정보를 삭제해야 함
+  */
+router.delete("/:id/join", async (req, res) => {
+  // {classId:, userId:}
+  //console.log(req.params.id, req.query.userId);
+  const classId = req.params.id;
+  const userId = req.query.userId;
+
+  const session = await startSession();
+  try {
+    session.startTransaction();
+    //JoinedUser
+    const joined = await JoinedUser.findOne({ classId: classId, userId: userId }).exec({ session })
+    //모든 Account
+    const allaccount=await Account.find({studentId:joined._id}).exec({session})
+
+    // 1) Account(Account._id: AccountTransaction), Fine, Joindeposit, StockOrderHistory, StockAccount, 
+    //AccountTransaction
+    const deltrans=await AccountTransaction.deleteMany({accountId:{$in:allaccount}}).exec({session})
+    //Account
+    const delaccount=await Account.deleteMany({ studentId: joined._id }).exec({session})
+    //Fine
+    const delfine=await Fine.deleteMany({studentId:joined._id}).exec({session})
+    //Joindeposit
+    const deljoindeposit=await JoinDeposit.deleteMany({studentId:joined._id}).exec({session}) 
+    //StockOrderHistory
+    const delhistory=await StockOrderHistory.deleteMany({studentId:joined._id}).exec({session})
+    //StockAccount
+    const delstockacc=await StockAccount.deleteMany({studentId:joined._id}).exec({session})
+    //JoinedUser
+    const deljoined = await JoinedUser.deleteOne({ classId: classId, userId: userId }).exec({ session })
+    
+    await session.commitTransaction();
+    session.endSession();
+    res.status(200).json({ success: true, message: '삭제 완료되었습니다' })
+  } catch (err) {
+    console.log(err)
+    await session.abortTransaction();
+    session.endSession();
+    res.json({ success: false, err })
+  }
+});
+
+
 module.exports = router;

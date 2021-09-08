@@ -13,67 +13,66 @@ const router = express.Router();
   : Suggest_law
 */
 router.post('/', (req, res) => {
-        const laws = new LawSuggest(req.body);
-        laws.save((err, doc) => {
-            if (err) return res.json({ success: false, err })
-            return res.status(200).json({ success: true })
-        })
+    const laws = new LawSuggest(req.body);
+    laws.save((err, doc) => {
+        if (err) return res.json({ success: false, err })
+        return res.status(200).json({ success: true })
     })
-    /*
-      [정상] Class별 SuggestLaw 모두 보여주기
-      : Suggest_Law
-        - req.query {classId:}
-    */
-
-router.get('/', async(req, res) => {
+})
+/*
+  [정상] Class별 SuggestLaw 모두 보여주기
+  : Suggest_Law
+    - req.query {classId:}
+*/
+router.get('/', async (req, res) => {
     const classId = req.query.classId
     try {
         const studentnum = await JoinedUser.countDocuments({ 'classId': classId }).exec()
 
         const lawsuggest = await LawSuggest.aggregate([{
-                $match: {
-                    "classId": ObjectId(classId)
-                }
-            },
-            {
-                $lookup: {
-                    from: 'users',
-                    let: { initiator: '$initiator' },
-                    pipeline: [{
-                            $match: {
-                                $expr: {
-                                    $eq: ['$$initiator', '$_id']
-                                }
-                            }
-                        },
-                        {
-                            $project: {
-                                'name': 1
-                            }
+            $match: {
+                "classId": ObjectId(classId)
+            }
+        },
+        {
+            $lookup: {
+                from: 'users',
+                let: { initiator: '$initiator' },
+                pipeline: [{
+                    $match: {
+                        $expr: {
+                            $eq: ['$$initiator', '$_id']
                         }
-                    ],
-                    as: 'initiator',
+                    }
+                },
+                {
+                    $project: {
+                        'name': 1
+                    }
                 }
-            },
-            {
-                $unwind: '$initiator'
-            },
-            {
-                $addFields: {
-                    'numvoter': { $size: '$vote' },
-                    'numpros': {
-                        $size: {
-                            $filter: {
-                                input: '$vote',
-                                as: 'voter',
-                                cond: {
-                                    $eq: ['$$voter.value', true]
-                                }
+                ],
+                as: 'initiator',
+            }
+        },
+        {
+            $unwind: '$initiator'
+        },
+        {
+            $addFields: {
+                'numvoter': { $size: '$vote' },
+                'numpros': {
+                    $size: {
+                        $filter: {
+                            input: '$vote',
+                            as: 'voter',
+                            cond: {
+                                $eq: ['$$voter.value', true]
                             }
                         }
                     }
                 }
             }
+        }
 
         ])
         const result = { lawsuggest, studentnum: studentnum }
@@ -91,16 +90,16 @@ router.get('/', async(req, res) => {
   : Suggest_Law
 */
 router.put('/', (req, res) => {
-        LawSuggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
-            if (err) return res.json({ success: false, err });
-            return res.status(200).json({
-                success: true
-            })
+    LawSuggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
         })
     })
-    /*
-      [정상] Suggest_Law 삭제 : deleteOne
-    */
+})
+/*
+  [정상] Suggest_Law 삭제 : deleteOne
+*/
 router.delete('/:id', (req, res) => {
     console.log(req.params.id)
     const lawId = req.params.id

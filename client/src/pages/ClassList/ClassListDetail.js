@@ -220,7 +220,7 @@ function FormDialog2() {
       } else {
         //클래스 데이터 설정
         const result = axios
-          .get("/api/classes/findClass", {
+          .get("/api/classes/find", {
             params: { entryCode: data.entryCode },
           })
           .then(function (response) {
