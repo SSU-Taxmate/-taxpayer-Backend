@@ -59,7 +59,7 @@ function TaxMonth() {
                                             data.expenditure.culture +
                                         data.expenditure.education +
                                         data.expenditure.environment+
-                                        budget.expenditure.etc}미소</div>
+                                        data.expenditure.etc}미소</div>
                                         </div>
                                     </div>
                                 </div>
