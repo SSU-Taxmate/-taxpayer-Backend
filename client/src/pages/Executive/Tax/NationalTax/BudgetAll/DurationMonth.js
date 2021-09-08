@@ -58,7 +58,8 @@ function DurationMonth() {
                                         budget.balance.electric +
                                         budget.balance.stamp +
                                         budget.balance.vat +
-                                        budget.balance.stock}
+                                        budget.balance.stock+
+                                        budget.balance.fine}
                                     미소
                                 </td>
                             </tr>
