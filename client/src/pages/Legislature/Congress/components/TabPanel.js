@@ -79,7 +79,7 @@ export default function TabPanel(props) {
                   </div>
                 ) : (
                   <div className="col-auto h5 font-weight-bold text-primary">
-                    {Math.round((item.numvoter / numofstudent) * 100) + "%"}
+                    {numofstudent===0?0:Math.round((item.numvoter / numofstudent) * 100) + "%"}
                   </div>
                 )}
                 {/* ayes:numvoter */}

@@ -108,13 +108,12 @@ export default function SuggestDetail(props) {
   const [isLoading, setIsLoading] = useState(false);
   const quorum = 10;
 
-  let classData = useSelector((state) => state.classInfo.classData);
   let user = useSelector((state) => state.user);
 
   const modalClose = () => {
     props.modalClose();
   };
-
+console.log('suggestdetail',props.data)
   return (
     <Modal
       id="billDetailModal"

@@ -77,6 +77,8 @@ router.get('/', async(req, res) => {
 
         ])
         const result = { lawsuggest, studentnum: studentnum }
+        console.log(result)
+
         res.send(result);
     } catch (error) {
         return res.json({ success: false, err });

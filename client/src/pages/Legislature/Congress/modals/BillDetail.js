@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { withStyles, makeStyles, lighten } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { makeStyles,  } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 
 
@@ -55,30 +54,13 @@ const useStyles = makeStyles((theme) => ({
 export default function BillDetail(props) {
 
   const classes = useStyles();
-
-  const [err, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
-
-  const [data, setData] = useState({
-    title: props.data.title,
-    student: props.data.initiator.name,
-    dueDate: moment(props.data.createdAt).tz('Asia/Seoul').add(7,'d').diff(moment().tz('Asia/Seoul'),'days'),//7일후마감
-    content:props.data.content,
-    all:props.numofstudent,
-    voter:props.data.numvoter,
-    pros:Math.round(props.data.numpros/props.data.numvoter*100),
-    cons:100-Math.round(props.data.numpros/props.data.numvoter*100),
-  }
-  )
+  
   // data props로 받기
-
-  let classData = useSelector(state => state.classInfo.classData);
-  let user = useSelector((state) => state.user);
 
   const modalClose = () => {
     props.modalClose()
   }
-
+  console.log('BilDetail',props.data)
   return (
 
     <Modal
@@ -101,7 +83,7 @@ export default function BillDetail(props) {
             <div className="col-md-8 mr-2">
               <div className="row no-gutters align-items-center justify-content-between">
                 <div className="text-xs font-weight-bold text-uppercase mb-1">{Math.round(props.data.numpros/props.data.numvoter*100)}%</div>
-                <div className="font-weight-bold mb-1">투표율 [ {Math.round(props.data.numvoter/props.numofstudent*100)}% ]</div>
+                <div className="font-weight-bold mb-1">투표율 [ {props.numofstudent===0?0:Math.round(props.data.numvoter/props.numofstudent*100)}% ]</div>
                 <div className="text-xs font-weight-bold text-uppercase mb-1">{100-Math.round(props.data.numpros/props.data.numvoter*100)}%</div>
               </div>
               <div className="row no-gutters align-items-center">
