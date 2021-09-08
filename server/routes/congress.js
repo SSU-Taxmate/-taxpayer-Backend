@@ -77,6 +77,8 @@ router.get('/', async(req, res) => {
 
         ])
         const result = { lawsuggest, studentnum: studentnum }
+        console.log(result)
+
         res.send(result);
     } catch (error) {
         return res.json({ success: false, err });
@@ -139,6 +141,15 @@ router.post('/vote', (req, res) => {
             success: true
         })
     });
+})
+
+router.post('/approve', (req, res) => {
+    LawSuggest.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        })
+    })
 })
 
 /*

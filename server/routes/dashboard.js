@@ -41,10 +41,10 @@ router.get('/bank', async (req, res) => {
             },
         ])
         //이번달꺼만 사용하기
-        if(thismonth.length===0){
-            income= { exist: false}
-        }else{
-            income={income:thismonth,exist:true}
+        if (thismonth.length === 0) {
+            income = { exist: false }
+        } else {
+            income = { income: thismonth, exist: true }
         }
         // 3. 예금
         let deposit = await JoinDeposit.aggregate([
@@ -66,9 +66,9 @@ router.get('/bank', async (req, res) => {
                 $unwind: '$product'
             }
         ])
-        
+
         if (deposit.length === 0) {
-            deposit={exist:false}
+            deposit = { exist: false }
         }
         else {
             const createdAt = deposit[0].createdAt
@@ -92,11 +92,10 @@ router.get('/congress', (req, res) => {
     // 2. 안건 투표 리스트
 })
 /*
-    StockPanel
+    StockPanel - 오늘의 뉴스
 */
-router.get('/stock', async (req, res) => {
+router.get('/stock/news', async (req, res) => {
     const classId = req.query.classId
-    const studentId = req.query.studentId
     try {
         // 1. 오늘의 뉴스
         const classstock = await ClassStock.find({ classId: classId }, "stockId")
@@ -141,13 +140,27 @@ router.get('/stock', async (req, res) => {
                 }
             }
         ])
+        res.json(hint)
+
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+})
+/*
+    StockPanel - 수익률/등락률[student]
+*/
+router.get('/stock/rate', async (req, res) => {
+    const classId = req.query.classId
+    const studentId = req.query.studentId
+    try {
+
         // 2. 수익률, 등락률
         const tax = await Tax.findOne({ classId: classId })
         const stocktax = tax.taxlist.stock//stock에 붙는 tax
         const userStocks = await StockAccount.findOne({ studentId: studentId })
         const holdingStocks = userStocks.holdingStocks
         if (holdingStocks.length === 0) {//학생이 보유한 stock이 없다면
-            res.json({exist:false ,hint})
+            res.json({ exist: false })
         } else {
             let first = await Promise.all(
                 holdingStocks.map(async (v, i) => {
@@ -222,7 +235,7 @@ router.get('/stock', async (req, res) => {
             let fluct = await first.reduce((v, c) => v + c.fluctuation, 0)
             let evaluatedProfit = allPayAmount === 0 ? 0 : await Math.round(evaluatedIncome / allPayAmount * 100) / 100//평가수익률
             let fluctuation = await Math.round(fluct / first.length)//평균 등락률
-            res.json({exist:true, hint, evaluatedProfit, fluctuation })
+            res.json({ exist: true,  evaluatedProfit, fluctuation })
         }
 
     } catch (err) {

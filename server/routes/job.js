@@ -201,7 +201,7 @@ router.post('/salary', async (req, res) => {
           const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: - incometax } }).exec({ session })
           const after2 = await Account.findOne({ studentId: v._id })
           //console.log('-',incometax,after2.currentBalance)
-          //3-3) 통장에 내역 기록 
+          //3-3) 통장에 내역 기록 -------------------------
           const paytax = new AccountTransaction({
             accountId: account._id,
             transactionType: 0,

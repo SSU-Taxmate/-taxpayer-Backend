@@ -9,7 +9,6 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import moment from "moment-timezone";
-
 import ThumbUpAltRoundedIcon from "@material-ui/icons/ThumbUpAltRounded";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +51,7 @@ export default function SuggestDetail(props) {
   //console.log('suggestDetail', props.data)
   const classes = useStyles();
 
-  const handleSubmit = (e) => {
+  const handleSubmit1 = (e) => {
     //e.preventDefault();
 
     if (window.confirm("정말 동의하시겠습니까?")) {
@@ -79,17 +78,42 @@ export default function SuggestDetail(props) {
 
   };
 
+  const handleSubmit2 = (e) => {
+    //e.preventDefault();
+
+    if (window.confirm("정말 승인하시겠습니까?")) {
+      alert("승인하셨습니다");
+      axios
+      .post(`/api/congress/approve`, {
+        _id:props.data._id,
+        state:"suggest-vote",
+        vote:[]
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      modalClose();
+      
+  } else {
+      alert("동의취소하셨습니다");
+  }
+
+
+  };
+
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const quorum = 10;
 
-  let classData = useSelector((state) => state.classInfo.classData);
   let user = useSelector((state) => state.user);
 
   const modalClose = () => {
     props.modalClose();
   };
-
+console.log('suggestdetail',props.data)
   return (
     <Modal
       id="billDetailModal"
@@ -179,8 +203,12 @@ export default function SuggestDetail(props) {
                     {" "}
                     <ThumbUpAltRoundedIcon />{" "}
                   </span>
-                  <span className="text" onClick={handleSubmit}>동의합니다</span>
+                  <span className="text" onClick={handleSubmit1}>동의합니다</span>
                 </a>
+                {user.userData.role === 0 ? (
+                                <a className="btn btn-danger btn-icon-split m-2">
+                                <span className="text" onClick={handleSubmit2}>승인</span></a>
+                  ) : null}
               </div>
               <hr />
             </>

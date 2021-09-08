@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
+import Error from '../../../components/Error';
+import Loading from '../../../components/Loading';
 import List from '@material-ui/core/List';
 
 import Tabs from '@material-ui/core/Tabs';
@@ -10,26 +12,15 @@ import Box from '@material-ui/core/Box';
 import ErrorIcon from '@material-ui/icons/Error';
 
 
-const tabStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background,
-  },
-}));
 
 
 function CongressPanel() {
+  let classData = useSelector(state => state.classInfo.classData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-
-  const tab = tabStyles();
-  const [data, setData] = useState([
-
-    { title: "일기 제출하기", datail: "매주 일기 2번씩 써서 선생님께 제출하기" },
-    { title: "독서록 제출하기", datail: "권장도서 읽고 독서록 쓰기" },
-    { title: "사물함 청소하기", datail: "월요일에 사물함 검사 있음" },
-    { title: "독서록 제출하기", datail: "권장도서 읽고 독서록 쓰기" },
-    { title: "사물함 청소하기", datail: "월요일에 사물함 검사 있음" },
-  ]);
-
+  const [data, setData] = useState();
+const [numofstudent, setnumofstudent] = useState()
 
   const [value, setValue] = React.useState(0);
 
@@ -43,7 +34,8 @@ function CongressPanel() {
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
-
+    const lawstate = { 0: 'suggest-law', 1: 'suggest-vote' }
+    const quorum = 10;
 
     return (
       <div
@@ -56,11 +48,19 @@ function CongressPanel() {
 
         <Box p={3}>
           <List dense={true} >
-            {data.slice(0, 3).map((item, i) => (
+            {data && data.filter((v) => v.state === lawstate[value]).slice(0, 3).map((item, i) => (
               <div className="col-12 col-xl-12 col-md-12" key={i}>
-                <h4 className="small">{item.title}<span className="float-right">60%</span></h4>
+                <h4 className="small">{item.title}
+                  <span className="float-right">
+                    {value === 0 ? Math.round((item.numvoter / quorum) * 100) : Math.round(item.numvoter/numofstudent*100)}%
+                  </span></h4>{/*동의율 , 투표율*/}
                 <div className="progress mb-4">
-                  <div className="progress-bar" role="progressbar" style={{ width: "60%" }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div></div>
+                  <div className="progress-bar" role="progressbar"
+                    style={{ width: `${value === 0 ? Math.round((item.numvoter / quorum) * 100) :  Math.round(item.numvoter/numofstudent*100)}%` }}
+                    aria-valuenow={value === 0 ? Math.round((item.numvoter / quorum) * 100) :  Math.round(item.numvoter/numofstudent*100)}
+                    aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
               </div>))}
 
           </List>
@@ -69,6 +69,24 @@ function CongressPanel() {
       </div>
     );
   }
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        const result = await axios.get(`/api/congress`, { params: { classId: classData.classId } })
+        setnumofstudent(result.data.studentnum)
+        setData(result.data.lawsuggest)//Alert로 사용자에게 보여주기
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [])
 
   return (
 
@@ -84,7 +102,7 @@ function CongressPanel() {
               <div className="col-auto">
 
 
-                <span className=" font-weight-bold text-gray-500 d-none d-sm-inline mx-2"> 2건</span>
+                {data && <span className=" font-weight-bold text-gray-500 d-none d-sm-inline mx-2"> {data.length}건</span>}
 
                 <ErrorIcon className="text-danger" />
               </div>
