@@ -55,9 +55,11 @@ function TaxMonth() {
                                         <div className="col-auto">
                                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 세출</div>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{data.expenditure.culture +
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{
+                                            data.expenditure.culture +
                                         data.expenditure.education +
-                                        data.expenditure.environment}미소</div>
+                                        data.expenditure.environment+
+                                        budget.expenditure.etc}미소</div>
                                         </div>
                                     </div>
                                 </div>
