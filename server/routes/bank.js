@@ -3,6 +3,7 @@
 */
 const express = require('express');
 const { startSession } = require('mongoose');
+const {Tax}=require('../models/Tax/Tax')
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { Deposit } = require('../models/Bank/Deposit');
@@ -71,10 +72,10 @@ router.delete('/deposits/:id', async (req, res) => {
 
     if (notclosed <= 0) {//예금 상품에 가입 중인 사람이 없다면
       // 삭제 가능
-      const delJoinDeposit = await JoinDeposit.deleteOne({ productId: depositId }, { session })
+      const delJoinDeposit = await JoinDeposit.deleteOne({ productId: depositId }).exec({session})
       //console.log(delJoinDeposit)
 
-      const delDeposit = await Deposit.deleteOne({ _id: depositId }, { session })
+      const delDeposit = await Deposit.deleteOne({ _id: depositId }).exec({session})
       //console.log(delDeposit)
       await session.commitTransaction();
       session.endSession();
@@ -83,7 +84,7 @@ router.delete('/deposits/:id', async (req, res) => {
         message: '성공적으로 상품 삭제가 완료되었습니다.'
       })
     } else {//예금 상품에 가입중인 사람이 있다면
-      const allow = await Deposit.updateOne({ _id: depositId }, { $set: { joinPossible: false } }, { session })
+      const allow = await Deposit.updateOne({ _id: depositId }, { $set: { joinPossible: false } }).exec({session})
       await session.commitTransaction();
       session.endSession();
       res.status(200).json({
@@ -134,7 +135,7 @@ router.post('/deposits/:id/join', async (req, res) => {
         //console.log('가입 계좌',account)
         if (account.currentBalance >= amount) {//지불가능하다면,
           //3-1) 계좌에서는 출금.
-          const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- amount) } }, { session })
+          const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- amount) } }).exec({session})
           //console.log(account.currentBalance)
 
           //4) 상품 가입 완료
@@ -180,43 +181,37 @@ router.post('/deposits/:id/join', async (req, res) => {
 router.delete('/deposits/:id/join/:joinId', async (req, res) => {
   const depositId = req.params.id
   const joinId = req.params.joinId
+  const classId=req.query.classId
   const session = await startSession();
   try {
     session.startTransaction();
     // 1) 적용 이율 계산
     // 1-1) JoinDeposit 의 createdAt 
     const contract = await JoinDeposit.findOne({ _id: joinId }).exec({ session })
-    //console.log('delete:/api/bank/deposits/join\n계약서', contract)
     const product = await Deposit.findOne({ _id: depositId }).exec({ session })
-    //console.log('예금상품',product)
 
     let rate;
     const today = new Date()
     const create = new Date(contract.createdAt)
-    //console.log(today,create)
+
     const diff = Math.round((today.getTime() - create.getTime()) / (1000 * 3600 * 24))//가입기간
     if (diff >= product.minDuration) {
       rate = product.interestRate//
     } else {
       rate = 0
     }
-    //console.log(rate)
     // 2) JoinDeposit의 closedAt : 현재시각 isClosed:true 로 설정.
-    const close = await JoinDeposit.updateOne({ _id: contract._id }, { $set: { isClosed: true, closedAt: today } }, { session })
-    //console.log('delete!!!!!!!!!!!!!',close)
+    const close = await JoinDeposit.updateOne({ _id: contract._id }, { $set: { isClosed: true, closedAt: today } }).exec({session})
 
     // 3) Account에 입금
     // 3-1) rate를 토대로 해지 후 금액 구하기
     const newamount = Math.round((rate + 100) * contract.amount / 100)
-    //console.log(newamount)
     // 3-2) Account currentBalance update
     const account = await Account.findOne({ studentId: contract.studentId }).exec({ session })
-    await Account.updateOne({ studentId: contract.studentId }, { $inc: { currentBalance: (+ newamount) } }, { session })
-    //console.log('account!!!!!!!!!!!',account)
+    await Account.updateOne({ studentId: contract.studentId }, { $inc: { currentBalance: (+ newamount) } }).exec({session})
 
     // 4) AccountTransaction 입금 기록
     // 4-1) AccountId 찾기
-    //console.log(account._id)
     const transferB = new AccountTransaction({ 
       accountId: account._id, 
       transactionType: 1, 
@@ -224,6 +219,22 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
       afterbalance:account.currentBalance+newamount,
       memo: "예금상품해지" })
     await transferB.save({ session })
+    //5) 예금으로 얻은 수익이 0보다 크다면, 소득세 부여
+    if (rate*contract.amount>0){
+      const classtax = await Tax.findOne({ classId: classId }).exec({session})
+      const taxrate=classtax.taxlist.income
+      const incometax=Math.round(taxrate*rate*contract.amount/10000)
+      await Account.updateOne({ studentId: contract.studentId }, { $inc: { currentBalance: (- incometax) } }).exec({session})
+      const account2 = await Account.findOne({ studentId: contract.studentId }).exec({ session })
+
+      const transferC = new AccountTransaction({ 
+        accountId: account._id, 
+        transactionType: 0, 
+        amount: incometax, 
+        afterbalance:account2.currentBalance,
+        memo: "소득세" })
+      await transferC.save({ session })
+    }
 
     await session.commitTransaction();
     session.endSession();
@@ -261,7 +272,7 @@ router.post('/transfer', async (req, res) => {
     //console.log(balance, amount)
     if (balance.currentBalance >= amount) {
       //1-2) 출금
-      const minus = await Account.updateOne({ _id: sender }, { $inc: { currentBalance: (- amount) } }, { session })
+      const minus = await Account.updateOne({ _id: sender }, { $inc: { currentBalance: (- amount) } }).exec({session})
       // 1-3) 출금 기록
       const transferA = new AccountTransaction({ 
         accountId: sender, 
@@ -273,7 +284,7 @@ router.post('/transfer', async (req, res) => {
 
       // 2) 입금 계좌 to
       // 2-1) 입금 계좌 확인& 입금
-      const plus = await Account.updateOne({ _id: receiver }, { $inc: { currentBalance: amount } }, { session })
+      const plus = await Account.updateOne({ _id: receiver }, { $inc: { currentBalance: amount } }).exec({session})
 
       // 2-2) 입금 기록 
       const transferB = new AccountTransaction({ 

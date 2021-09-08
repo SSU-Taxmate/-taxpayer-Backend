@@ -8,6 +8,8 @@ function Deposit({balance}) {
   const [isError, setIsError] = useState(false);
   const [userdeposit, setuserdeposit] = useState();
   const joinedUser = useSelector(state => state.classUser);
+  let classData = useSelector(state => state.classInfo.classData);
+
   const fetchData = async () => {
     setIsError(false);
     setIsLoading(true);
@@ -24,7 +26,7 @@ function Deposit({balance}) {
   };
   useEffect(() => {
     fetchData();
-  }, [joinedUser.classUser])
+  }, [joinedUser.classUser,])
   const calculate = (type) => {
     if (type === '만기') {
       return Math.round((userdeposit.productId.interestRate + 100) * userdeposit.amount / 100)
@@ -41,7 +43,7 @@ function Deposit({balance}) {
   }
   const onhandleclick = (e) => {
     e.preventDefault();
-    axios.delete(`/api/bank/deposits/${userdeposit.productId._id}/join/${userdeposit._id}`)
+    axios.delete(`/api/bank/deposits/${userdeposit.productId._id}/join/${userdeposit._id}`,{params:{classId:classData.classId}})
       .then(function (response) {
         fetchData();
         console.log(response);
