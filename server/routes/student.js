@@ -207,7 +207,7 @@ router.get('/:id/account/statistics', async (req, res) => {
         {
           $match: {
             "accountId": account._id,
-            'transactionType': 0,
+            'transactionType': 1,//입금
             "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
           },
 
@@ -223,7 +223,7 @@ router.get('/:id/account/statistics', async (req, res) => {
         {
           $match: {
             "accountId": account._id,
-            'transactionType': 1,
+            'transactionType': 0,//출금
             "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
           },
 
