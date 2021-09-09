@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SuggestDetail(props) {
-  //console.log('suggestDetail', props.data)
   const classes = useStyles();
 
   const handleSubmit1 = (e) => {
@@ -174,7 +173,7 @@ console.log('suggestdetail',props.data)
                 </div>
                 <div className="seperator-gray m-1"></div>
                 <div className="text-gray-900 text-center m-2 job-input">
-                  {props.data.student}
+                  {props.data.initiator.name}
                 </div>
                 <div className="text-center font-weight-bold m-2 job-label">
                   마감기간
