@@ -1,6 +1,6 @@
 # Taxpayer😊
 ---------------------
-The repository for tax pay simulation for children
+비대면 경제 & 사회 교육을 위한 플랫폼
 
 # Collaborator🙅‍♀️
 ----------------------
