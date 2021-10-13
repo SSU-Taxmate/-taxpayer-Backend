@@ -1,9 +1,7 @@
 
 /*
-    BudgetAccount[국가계좌]
-    : Class 각각이 가지고 있는 Budget Account
-    Class 만들때 생성O
-    한달마다 BudgetHistory로
+// 필요하다면, 누적 계산해서 띄우기
+: 삭제하자
 */
 const mongoose = require('mongoose')
 

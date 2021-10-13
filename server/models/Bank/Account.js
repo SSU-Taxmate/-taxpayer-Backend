@@ -15,11 +15,7 @@ const accountSchema = mongoose.Schema({
     currentBalance:{/*현재보유금액*/
         type:Number,
         default:0
-    },
-    purpose:{/*일반 user(0), 개인 사업자(1)*/
-        type:Number,
-        default:0
-    }//[추후] 1은 마켓 개설시 자동으로 만들어진다.
+    }
 })
 const Account = mongoose.model('Account', accountSchema)
 

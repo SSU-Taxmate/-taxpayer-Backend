@@ -5,7 +5,7 @@ const express = require("express");
 const { startSession } = require("mongoose");
 const { Account } = require("../models/Bank/Account");
 const { Budget } = require("../models/Tax/Budget");
-const { BudgetAccount } = require('../models/Tax/BudgetAccount')
+//const { BudgetAccount } = require('../models/Tax/BudgetAccount')
 const { Class } = require("../models/Class");
 const { JoinedUser } = require("../models/JoinedUser");
 const { Tax } = require("../models/Tax/Tax");
@@ -45,9 +45,9 @@ router.post("/", async (req, res) => {
     const taxres = await cTax.save({ session });
     // 3) Class Account 생성
     const budget = new Budget({ classId: cClass._id });
-    const budgetaccount = new BudgetAccount({ classId: cClass._id })
+    //const budgetaccount = new BudgetAccount({ classId: cClass._id })
     const accountres = await budget.save({ session });
-    const bacount = await budgetaccount.save({ session });
+   // const bacount = await budgetaccount.save({ session });
 
     await session.commitTransaction();
     session.endSession();

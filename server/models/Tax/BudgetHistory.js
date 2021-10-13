@@ -1,6 +1,7 @@
 /*
     BudgetHistory
     :  Budget History내역 - 한달마다 업데이트
+    => 삭제하기.
 */
 const mongoose = require('mongoose')
 
@@ -21,10 +22,6 @@ const budgethistorySchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    memo:{/*벌금(세입일부), 소득세, 부동산세, 자리세, 부가가치세, 인지세, 증권거래세, 문화비, 교육비, 환경미화비*/
-        type:String,
-        default:''
-    }
 })
 const BudgetHistory = mongoose.model('BudgetHistory', budgethistorySchema)
 module.exports = {BudgetHistory}

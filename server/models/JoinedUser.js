@@ -8,6 +8,7 @@ const joineduserSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Class'
     },
+    //role 추가 
     userId:{/*학생 계정정보*/
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
@@ -16,8 +17,12 @@ const joineduserSchema = mongoose.Schema({
         type:String,
         default:''
     },
+
 /*
     클래스에 속한 student가 갖는 고유 정보 
+    jobId가 없어져도 되고 Contract 테이블에서 JoinedUser
+    id로 검사해서 찾으면 됨.
+    
 */
     jobId:[{
         type:mongoose.Schema.Types.ObjectId,

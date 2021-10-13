@@ -150,8 +150,10 @@ router.post('/salary', async (req, res) => {
 
     // 1) student의 job & account 확인
     const jobs = await JoinedUser.find({ classId: classId }).exec({ session })
-
-    for await (const v of jobs) {
+    //let i =0;
+    for (const v of jobs) {
+      //console.log('>>>>>>',i,'>>>>>>',v)
+      //i++;
       const userjob = await Job.find({ '_id': { $in: v.jobId } }).exec({ session })
       for await (const job of userjob) {//user가 가지고 있는 job들
         const account = await Account.findOne({ studentId: v._id }).exec({session})

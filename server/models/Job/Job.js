@@ -1,13 +1,14 @@
 const mongoose = require('mongoose')
 /*
     Job
+    : 수정안되게하자
 */
 const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
     classId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
-    name: {/*직업명 */
+    name: {/*직업명 : unique 없애고 검사하는 로직 추가하기 */
         type: String,
         unique:true
     },
@@ -18,7 +19,6 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type: String,
         default: ''
     },
-   
     /*Job Posting : 반 정규화*/
     qualification: {/*자격요건-나중업데이트*/
         type: String,

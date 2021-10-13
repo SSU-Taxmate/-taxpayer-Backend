@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 });
 
 export default function Sidebar(props) {
+  console.log('sidebar')
   const classes = useStyles();
 
   const [state, setState] = React.useState({
@@ -69,7 +70,7 @@ export default function Sidebar(props) {
         </Link>
 
         <hr className="sidebar-divider my-0" />
-
+        {console.log('render:user.userData',user.userData)}
         {user.userData && (
           <>
             {/* 1. 학급 메인 */}
@@ -340,6 +341,8 @@ export default function Sidebar(props) {
       <Button onClick={toggleDrawer("left", true)}>
         <MenuIcon />
       </Button>
+      {console.log('render:user',user)}
+
       <Drawer
         anchor={"left"}
         open={state["left"]}

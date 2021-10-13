@@ -72,6 +72,7 @@ function SignUp(props) {
                   }}
                   validationSchema={Yup.object().shape({
                     name: Yup.string().required("이름을 입력해주세요"),
+                    //sId 필드 삭제해야 함
                     sId: Yup.string().required("번호를 입력해주세요"),
                     email: Yup.string()
                       .email("유효하지 않은 이메일입니다")

@@ -27,8 +27,8 @@ function ByStudentStock() {
                     })
                 console.log('result', result)
                 if (result.data.length !== 0) {
-                    let temp = result.data.map((v, i) => v.currentPrice * v.quantity)
-                    let sumData = temp.reduce((prev, cur) => prev + cur)
+                    let sumData = result.data.map((v, i) => v.currentPrice * v.quantity)
+                                            .reduce((prev, cur) => prev + cur)
                     setdata(result.data.map((v, i) => Math.round(v.currentPrice * v.quantity / sumData * 100)))
                     setdatalabel(result.data.map((v, i) => v.stockName))
                 }

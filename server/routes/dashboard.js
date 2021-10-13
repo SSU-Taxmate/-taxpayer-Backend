@@ -84,13 +84,7 @@ router.get('/bank', async (req, res) => {
 
 
 })
-/*
-    CongressPanel
-*/
-router.get('/congress', (req, res) => {
-    // 1. 법률 제안 리스트
-    // 2. 안건 투표 리스트
-})
+
 /*
     StockPanel - 오늘의 뉴스
 */

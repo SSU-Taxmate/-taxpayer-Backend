@@ -41,7 +41,8 @@ router.post('/', async (req, res) => {
   }
 })
 /*
-  [정상] :전체기간 학급 계좌 확인
+  [수정필요] :전체기간 학급 계좌 확인
+  : Budget History 부분에서 aggregate로 계산하기
 */
 router.get('/',(req,res)=>{
   const classId = req.query.classId
@@ -52,7 +53,7 @@ router.get('/',(req,res)=>{
   })
 })
 /*
-  [정상] : 이번달 학급 예산 상황 보기
+  [수정필요] : 이번달 학급 예산 상황 보기
 */
 router.get('/month', (req, res) => {
   const classId = req.query.classId
@@ -63,12 +64,14 @@ router.get('/month', (req, res) => {
   })
 })
 /*
-  [정상] : 학급 예산 월별 기록
+  [수정필요] : 학급 예산 월별 기록
+  BudgetHistory를 삭제하고 
+  Budget에 저장된 월 정보를  
 */
 router.get('/history', async (req, res) => {
   const classId = req.query.classId
   try {
-    const history = await BudgetHistory.aggregate([
+    const history = await Budget.aggregate([
       {
         $match: {
           "classId": ObjectId(classId)
@@ -77,16 +80,11 @@ router.get('/history', async (req, res) => {
       {
         $group:
         {
-          _id:{
-            'transType':'$transType',
-            'month':{$month:{date:'$date',timezone:'Asia/Seoul'}},//group by multiple&timezone
-          },
-          sum:{$sum:'$amount'}
+          _id:'$month'
         }
       },
       { $sort:{
         '_id.month':1,
-        '_id.transType':1
       }}
     ])
     res.json(history)
