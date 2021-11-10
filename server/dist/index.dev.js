@@ -51,9 +51,6 @@ app.use('/api/jobs', require('./routes/job'));
 /*주식 */
 
 app.use('/api/stocks', require('./routes/stock'));
-/*통계청 */
-
-app.use('/api/homeworks', require('./routes/homework'));
 /* 국세청 */
 
 app.use('/api/taxes', require('./routes/tax'));

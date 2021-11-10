@@ -5,7 +5,7 @@
 */
 var express = require('express');
 
-var _require = require('../models/Law_suggest'),
+var _require = require('../models/Law/Law_suggest'),
     LawSuggest = _require.LawSuggest;
 
 var _require2 = require('../models/JoinedUser'),
@@ -148,7 +148,6 @@ router.put('/', function (req, res) {
 */
 
 router["delete"]('/:id', function (req, res) {
-  console.log(req.params.id);
   var lawId = req.params.id;
   LawSuggest.deleteOne({
     _id: lawId
@@ -167,7 +166,6 @@ router["delete"]('/:id', function (req, res) {
 */
 
 router.post('/agree', function (req, res) {
-  console.log(req.body._id);
   LawSuggest.updateOne({
     _id: req.body._id
   }, {
@@ -188,7 +186,6 @@ router.post('/agree', function (req, res) {
   });
 });
 router.post('/vote', function (req, res) {
-  console.log(req.body._id);
   LawSuggest.updateOne({
     _id: req.body._id
   }, {
@@ -228,7 +225,6 @@ router.post('/approve', function (req, res) {
 */
 
 router.get('/:id/vote', function (req, res) {
-  console.log(req.body._id);
   LawSuggest.updateOne({
     _id: req.body._id
   }, {
