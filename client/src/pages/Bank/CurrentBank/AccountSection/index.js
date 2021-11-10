@@ -4,7 +4,7 @@ import Transfer from './TransferSection'
 import { useSelector } from "react-redux";
 
 import moment from 'moment-timezone';
-import {Table,TableBody,TableCell, TableHead, TableRow,TableFooter, TablePagination } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -19,7 +19,7 @@ function Account(props) {
     const [history, sethistory] = useState([]);
     const [startdate, setstartdate] = useState(moment().tz('Asia/Seoul').subtract(7, 'd').format('YYYY-MM-DD'));//7일전내역까지
     const [enddate, setenddate] = useState(moment().tz('Asia/Seoul').format('YYYY-MM-DD'));//현재날짜
-    const column = ['날짜', '입/출금', '값', '잔액','메모'];
+    const column = ['날짜', '입/출금', '값', '잔액', '메모'];
     /*페이지 */
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -44,30 +44,37 @@ function Account(props) {
     }
     const getDate = (date) => {
         let localtime = moment(date).tz('Asia/Seoul').format('YYYY-MM-DD')
-        console.log(date)
         return localtime
     }
     const fetchData = async () => {
         setIsError(false);
         setIsLoading(true);
         try {
-            const result = await axios.get(`/api/students/${joinedUser.classUser}/account/history`, 
-            { params: { startDate: moment(startdate).tz('Asia/Seoul').startOf('day').utc().format(), 
-                endDate: moment(enddate).tz('Asia/Seoul').endOf('day').utc().format() } })
+            const result = await axios.get(`/api/students/${joinedUser.classUser}/account/history`,
+                {
+                    params: {
+                        startDate: moment(startdate).tz('Asia/Seoul').startOf('day').utc().format(),
+                        endDate: moment(enddate).tz('Asia/Seoul').endOf('day').utc().format()
+                    }
+                })
             //console.log("/api/students/:id/account/history", result.data);
             const temp = result.data
             const res = []
             for (let i = 0; i < temp.length; i++) {
                 if (temp[i].transactionType == 1) {//입금
-                    res.push({ id: temp[i]._id, transactionType: '입금', amount: temp[i].amount, 
-                    date: getDate(temp[i].date),
-                    afterbalance:temp[i].afterbalance,
-                    memo: temp[i].memo })
+                    res.push({
+                        id: temp[i]._id, transactionType: '입금', amount: temp[i].amount,
+                        date: getDate(temp[i].date),
+                        afterbalance: temp[i].afterbalance,
+                        memo: temp[i].memo
+                    })
                 } else {//출금
-                    res.push({ id: temp[i]._id, transactionType: '출금', amount: temp[i].amount,
-                    date: getDate(temp[i].date), 
-                    afterbalance:temp[i].afterbalance,
-                    memo: temp[i].memo })
+                    res.push({
+                        id: temp[i]._id, transactionType: '출금', amount: temp[i].amount,
+                        date: getDate(temp[i].date),
+                        afterbalance: temp[i].afterbalance,
+                        memo: temp[i].memo
+                    })
                 }
             }
             sethistory(res)
@@ -89,11 +96,12 @@ function Account(props) {
                     <hr />
                     <div className="accordion">
                         <div className="justify-content-center d-flex" id="headingOne">
+                            {/*
                             <div className="p-2"><button className="btn" type="button" data-toggle="collapse" data-target="#transfer" aria-expanded="true" aria-controls="collapseOne">
                                 이체
                             </button>
                             </div>
-
+                            */}
                             <div className="p-2">
                                 <button className="btn collapsed" type="button" data-toggle="collapse" data-target="#bank_statement" aria-expanded="false" aria-controls="collapseTwo">
                                     이용내역
@@ -102,7 +110,7 @@ function Account(props) {
                         </div>
 
                         <div id="transfer" className="collapse" aria-labelledby="transfer" >
-                            <div><Transfer /></div>
+                            {/*<div><Transfer /></div>*/}
                         </div>
                         <div id="bank_statement" className="collapse" aria-labelledby="bank_statement" >
                             <div style={{ textAlign: 'right' }}>
@@ -125,9 +133,9 @@ function Account(props) {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {(rowsPerPage>0?
-                                        history.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage)
-                                        :history
+                                        {(rowsPerPage > 0 ?
+                                            history.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            : history
                                         ).map((row, i) => (
                                             <TableRow key={i}>
                                                 <TableCell>{row.date}</TableCell>
@@ -139,7 +147,7 @@ function Account(props) {
                                                 <TableCell>{row.memo}</TableCell>
                                             </TableRow>
                                         ))}
-                                        
+
                                     </TableBody>
                                     <TableFooter>
                                         <TableRow>
@@ -173,58 +181,57 @@ export default Account;
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
-      flexShrink: 0,
-      marginLeft: theme.spacing(2.5),
+        flexShrink: 0,
+        marginLeft: theme.spacing(2.5),
     },
-  }));
+}));
 function TablePaginationActions(props) {
     const classes = useStyles1();
     const theme = useTheme();
     const { count, page, rowsPerPage, onPageChange } = props;
-  
+
     const handleFirstPageButtonClick = (event) => {
-      onPageChange(event, 0);
+        onPageChange(event, 0);
     };
-  
+
     const handleBackButtonClick = (event) => {
-      onPageChange(event, page - 1);
+        onPageChange(event, page - 1);
     };
-  
+
     const handleNextButtonClick = (event) => {
-      onPageChange(event, page + 1);
+        onPageChange(event, page + 1);
     };
-  
+
     const handleLastPageButtonClick = (event) => {
-      onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+        onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
     };
-  
+
     return (
-      <div className={classes.root}>
-        <IconButton
-          onClick={handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="first page"
-        >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-        </IconButton>
-        <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-        </IconButton>
-        <IconButton
-          onClick={handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="next page"
-        >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-        </IconButton>
-        <IconButton
-          onClick={handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="last page"
-        >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-        </IconButton>
-      </div>
+        <div className={classes.root}>
+            <IconButton
+                onClick={handleFirstPageButtonClick}
+                disabled={page === 0}
+                aria-label="first page"
+            >
+                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+            </IconButton>
+            <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </IconButton>
+            <IconButton
+                onClick={handleNextButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="next page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </IconButton>
+            <IconButton
+                onClick={handleLastPageButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="last page"
+            >
+                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+            </IconButton>
+        </div>
     );
-  }
-  
+}

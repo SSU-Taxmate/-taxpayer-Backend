@@ -1,54 +1,43 @@
-import React from "react";
+import React, { useState } from 'react'
 //Navigation
-import Topbar from "../../components/Navigation/Topbar";
-import Footer from "../../components/Footer";
 import PageHeading from "../../components/PageHeading";
-import ClassMainDetail from "./ClassMainDetail";
-import ScrollToTop from "../../components/Scroll";
-
+import { useSelector } from "react-redux";
+import "../../styles/css/class_main.css"
+import TaxPanel from './components/TaxPanel';
+import BankPanel from './components/BankPanel';
+import CongressPanel from './components/CongressPanel';
+import StockPanel from './components/StockPanel';
+import PageFrame from "../PageFrame";
 function ClassMain() {
+  let user = useSelector((state) => state.user);
+
   return (
-    <div>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-        {/* <!-- Sidebar --> */}
+    <PageFrame>
+      <PageHeading title="클래스 Dashboard" />
 
-        {/* <!-- End of Sidebar --> */}
-
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-              {/* <!-- Page Heading --> */}
-
-              <PageHeading title="클래스 Dashboard" />
-
-              {/* <!-- Content Row --> */}
-
-              <ClassMainDetail />
+      <div className="row justify-content-center ">
+        <div className="col-lg-10 col-xs-12">
+          <div className="card-body m-4">
+            <div className="row">
+              <div className="col-lg-6 mb-0">
+                {/* 학생 - 계좌 요약 정보, 선생님 - 세금 요약 정보*/}
+                {user.userData && (user.userData.role === 1 ? <BankPanel /> : <TaxPanel />)}
+                <hr className="m-0" />
+                <div className="py-3"></div>
+                {/* 국회 */}
+                <CongressPanel />
+              </div>
+              <div className="col-lg-6">
+                {/* 주식 */}
+                <StockPanel />
+              </div>
             </div>
-            {/* <!-- /.container-fluid --> */}
           </div>
-          {/* <!-- End of Main Content --> */}
-
-          {/* <!-- Footer --> */}
-          <Footer />
-          {/* <!-- End of Footer --> */}
         </div>
-        {/* <!-- End of Content Wrapper --> */}
       </div>
-      {/* <!-- End of Page Wrapper --> */}
 
-      {/* <!-- Scroll to Top Button--> */}
-      {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
-    </div>
+
+    </PageFrame>
   );
 }
 

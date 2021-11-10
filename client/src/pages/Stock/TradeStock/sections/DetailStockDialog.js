@@ -10,7 +10,6 @@ import SelectDate from './SelectDate';
 import moment from 'moment-timezone';
 
 function DetailStockDialog({selectedValue}) {
-    console.log('DetailStockDialog', selectedValue)
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -19,8 +18,6 @@ function DetailStockDialog({selectedValue}) {
     const handleClose = () => {
         setOpen(false);
     };
-    /*  */
-   
 
     const adjustData = (data) => {
         return {

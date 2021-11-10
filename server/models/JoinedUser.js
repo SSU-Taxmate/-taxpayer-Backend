@@ -1,18 +1,18 @@
 const mongoose = require('mongoose')
 /*
-    JoinedUser (예전JoinClass)
-    : Class와 Student를 연결하는 Schema
+    JoinedUser
+    : Class에 속해있는 Student
 */
 const joineduserSchema = mongoose.Schema({
     classId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Class'
     },
-    userId:{//학생의 계정정보
+    userId:{/*학생 계정정보*/
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    alias:{//동명이인 위해서
+    alias:{/*동명 이인*/
         type:String,
         default:''
     },
@@ -25,10 +25,9 @@ const joineduserSchema = mongoose.Schema({
         default:null
     }],
     /*creditRating - */
-    /*account - JoinedUser._id로 Account에서 찾기*/
-    
+    /*account - JoinedUser._id로 Account에서 확인*/
     /* holdingStocks 
-    - JoinedUser._id로 StockAacount에서 찾기*/
+    - JoinedUser._id로 StockAacount에서 확인*/
    
 })
 const JoinedUser=mongoose.model('JoinedUser',joineduserSchema);

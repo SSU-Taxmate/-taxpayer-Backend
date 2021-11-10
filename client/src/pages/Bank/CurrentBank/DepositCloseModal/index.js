@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function DepositCloseModal({onhandleclick}) {
+export default function DepositCloseModal({deleteDeposit}) {
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
       setOpen(true);
@@ -23,7 +23,7 @@ export default function DepositCloseModal({onhandleclick}) {
                 open={open}
                 aria-labelledby="dialog-deposit-close"
             >
-                <form onSubmit={onhandleclick}>
+                <form onSubmit={deleteDeposit}>
                     <DialogTitle id="dialog-deposit-close">
                         예금 상품 해지
                     </DialogTitle>

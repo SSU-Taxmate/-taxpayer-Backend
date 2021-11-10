@@ -4,8 +4,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { makeStyles } from "@material-ui/core/styles";
 
 function InputTax({ title, value, name, readOnly, onChange, unit }) {
-  //console.log('inputtax', value)                step="5"
-  //스타일
   const useStyles = makeStyles({
     taxInput: {
       marginRight: "3rem",
@@ -13,7 +11,7 @@ function InputTax({ title, value, name, readOnly, onChange, unit }) {
       width: "13rem",
     },
   });
-  const classes = useStyles(); //스타일 사용
+  const classes = useStyles();
   return (
     <TextField
       className={classes.taxInput}

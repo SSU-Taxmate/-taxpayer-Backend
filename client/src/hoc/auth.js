@@ -1,12 +1,17 @@
-/* auth 기능 - client 측면에서*/
+/*client-Auth*/
 import React, { useEffect } from 'react';
 import { auth } from '../../src/redux/_actions/index';
 import { useSelector, useDispatch } from "react-redux";
 
 export default function (SpecificComponent, option, adminRoute = null) {
-    //option - null(아무나 출입이 가능) true(로그인한 user만 출입 가능) false(로그인한 user는 출입 불가능)
-    //adminRoute - admin user만 들어가기 원하는 페이지 
-
+    /*  SpecificComponent : Auth check하는 Component 
+        option : 
+            [AnyBody] null
+            [Login User] true
+            [Not Logined] false
+        adminRoute : 
+            only Admin User(Teacher)
+    */
     function AuthenticationCheck(props) {
         
         let user = useSelector(state => state.user);
@@ -14,13 +19,12 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
         useEffect(() => {
             dispatch(auth()).then(response => {
-                //console.log('client/src/hoc/auth.js',response)
                 if (!response.payload.isAuth) {
                     if (option) {
                         props.history.push('/')
                     }
                 } else {
-                    if (adminRoute && !response.payload.isAdmin) {/*0이면 isAdmin:True,  */
+                    if (adminRoute && !response.payload.isAdmin) {/*0이면 isAdmin:True*/
                         props.history.push('/classes')
                     }
                     else {

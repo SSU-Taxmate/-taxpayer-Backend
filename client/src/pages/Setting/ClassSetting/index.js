@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Topbar from '../../../components/Navigation/Topbar';
-import Footer from '../../../components/Footer'
 import PageHeading from '../../../components/PageHeading';
-import ScrollToTop from '../../../components/Scroll'
 import CheckIcon from '@material-ui/icons/Check';
 
 import axios from 'axios'
@@ -14,6 +11,7 @@ import ApplyJob from './component/ApplyJob'
 import JobTable from './component/JobTable';
 import StudentJob from './component/StudentJob';
 import PaySalary from './component/PaySalary';
+import PageFrame from '../../PageFrame';
 
 
 function ClassSetting() {
@@ -79,68 +77,25 @@ function ClassSetting() {
 
 
   return (
-    <>
-      {/* <!-- Page Wrapper --> */}
-      <div id="wrapper">
-
-        {/* <!-- Sidebar --> */}
-
-        {/* <!-- End of Sidebar --> */}
-
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-
-          {/* <!-- Main Content --> */}
-          <div id="content">
-
-            {/* <!-- Topbar --> */}
-            <Topbar />
-            {/* <!-- End of Topbar --> */}
-
-            {/* <!-- Begin Page Content --> */}
-            <div className="container-fluid">
-
-              {/* <!-- Page Heading --> */}
-
-              <PageHeading title="직업 설정" />
-
-              {/* <!-- Content Row --> */}
-              {isLoading ?
-                <Loading /> : (
-                  <>
-                    {user.userData &&
-                      data &&
-                      <div className='row'>
-                        <JobTable
-                          columns={user.userData.role === 0 ? jobcolumns : jobstudentcolumns}
-                          data={data}
-                        />
-                        {user.userData.role===1?<StudentJob/>:<PaySalary/>}
-                      </div>
-                    }
-                  </>
-                )}
-
-
-            </div>
-            {/* <!-- /.container-fluid --> */}
-
-          </div>
-          {/* <!-- End of Main Content --> */}
-
-          {/* <!-- Footer --> */}
-          <Footer />
-          {/* <!-- End of Footer --> */}
-
-        </div>
-        {/* <!-- End of Content Wrapper --> */}
-
-      </div>
-      {/* <!-- End of Page Wrapper --> */}
-
-      {/* <!-- Scroll to Top Button--> */}
-      <ScrollToTop />
-    </>
+    <PageFrame>
+      <PageHeading title="직업 설정" />
+      {/* <!-- Content Row --> */}
+      {isLoading ?
+        <Loading /> : (
+          <>
+            {user.userData &&
+              data &&
+              <div className='row'>
+                <JobTable
+                  columns={user.userData.role === 0 ? jobcolumns : jobstudentcolumns}
+                  data={data}
+                />
+                {user.userData.role === 1 ? <StudentJob /> : <PaySalary />}
+              </div>
+            }
+          </>
+        )}
+    </PageFrame>
 
   )
 }

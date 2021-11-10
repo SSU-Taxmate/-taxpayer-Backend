@@ -4,7 +4,6 @@ import BuyDialog from './BuyDialog';
 function InputAmount(props) {
     const selectedValue=props.selectedValue;
     const [quantity, setquantity] = useState(1)
-    //console.log(selectedValue)
     const handleQuantity = (e) => {
         e.preventDefault()
         setquantity(e.target.value)

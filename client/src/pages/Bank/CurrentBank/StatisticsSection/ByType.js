@@ -30,8 +30,6 @@ function ByType() {
                         type: 'bytype'
                     }
                 })
-            //console.log("/api/students/:id/statistics", result.data);
-
             setdata(result.data)
             setsumdata(result.data.map((v, i) => v.sum))
             setcountdata(result.data.map((v, i) => v.count))
@@ -65,6 +63,10 @@ function ByType() {
                 'rgb(255, 205, 86)',
                 'rgb(255, 99, 132)',
                 'rgb(153, 102, 255)',
+                'rgb(46,89,217)',
+                'rgb(221, 0, 59)',
+                'rgb(39, 165, 52)',
+
             ],
             hoverOffset: 4
         }]
@@ -83,6 +85,7 @@ function ByType() {
         <>
             <div style={{ textAlign: 'center', marginBottom: '5px' }}>
                 <h5>입/출금 내역</h5>
+                {/* 날짜 선택 조회하기*/}
                 <input id='startDate' defaultValue={startdate}
                     max={moment().tz('Asia/Seoul').format('YYYY-MM-DD')}
                     type='date' onChange={handlestartdate} style={{ marginRight: '3px' }}></input>
@@ -91,11 +94,12 @@ function ByType() {
                     type='date' onChange={handleenddate} style={{ marginRight: '3px' }}></input>
                 <button onClick={onhandleclick}>조회하기</button>
             </div>
-            {isError && <Error></Error>}
-            {isLoading ?
-                <Loading /> : (
-                    sumdata&&datalabel&&
-                    pieChartField)}
+            {isError ? <Error /> :
+                isLoading ?
+                    <Loading /> : (
+                        sumdata && datalabel &&
+                        pieChartField)
+            }
         </>
     )
 }

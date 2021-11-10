@@ -9,15 +9,15 @@ const budgethistorySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
-    transType: {/*어떤 행동 세입:0, 세출:1, 국채발행:2| level2 */
+    transType: {/*세입:0, 세출:1, 국채발행:2 */
         type: Number,
         require: true
     },
-    amount: {/* 얼마나 */
+    amount: {/* 양 */
         type: Number,
         require: true
     },
-    date: {/* 언제-월별 */
+    date: {/* 언제-매월1일자정 */
         type: Date,
         default: Date.now
     },

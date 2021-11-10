@@ -18,11 +18,7 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type: String,
         default: ''
     },
-    /*고용기간 endDate - 매달1일 정산:월급 주면서 데이터에서 삭제
-    period:{
-        type:Date,
-        default:() => new Date(+new Date() + 7*24*60*60*1000)
-    },*/
+   
     /*Job Posting : 반 정규화*/
     qualification: {/*자격요건-나중업데이트*/
         type: String,
@@ -36,7 +32,7 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type:Boolean,
         default:false
     },
-    /*직업 apply가능여부는 다른 schema이용하기
+    /*직업 apply가능여부는 직업 설정 테이블 이용하기
     joinPossible:{
         type:Boolean,
         default:false

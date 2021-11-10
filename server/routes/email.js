@@ -57,8 +57,8 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
         res.send(process.env.DB_NAME);
     });
 
-    console.log(req.body);
-    console.log('넘어온 이메일:' + req.body.email);
+    //console.log(req.body);
+    //console.log('넘어온 이메일:' + req.body.email);
 
 
     // 이미 가입된 이메일인지 확인

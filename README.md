@@ -1,7 +1,6 @@
 # Taxpayer😊
-The repository for tax pay simulation for children 
-<br>
-<br>
+비대면 경제 & 사회 교육을 위한 플랫폼
+
 # Collaborator🙅‍♀️
 - Kim Seung Joo [🏠️](https://github.com/SeungJooKim)
 - Park Eun Jeong [🏠️](https://github.com/Eundms)

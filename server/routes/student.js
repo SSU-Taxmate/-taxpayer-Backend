@@ -51,14 +51,11 @@ router.get("/", async (req, res) => {
   query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
 */
 router.get("/job", async (req, res) => {
-  //console.log("classId:", req.query)
   try {
-    // console.log("studentId:",req.params.id,req.query)
     const students = await JoinedUser.find(req.query, ["userId", "jobId"])
       .populate("userId")
       .populate("jobId")
       .exec();
-    console.log(students);
     let result = await Promise.all(
       students.map(async (v, i) => {
         return {
@@ -80,7 +77,6 @@ router.get("/job", async (req, res) => {
 router.post("/:id/jobs/:jobId", (req, res) => {
   const studentId = req.params.id;
   const jobId = req.params.jobId;
-  console.log(studentId, jobId)
 
   JoinedUser.updateOne(
     { _id: studentId, jobId: { $ne: jobId } },
@@ -97,7 +93,6 @@ router.post("/:id/jobs/:jobId", (req, res) => {
  */
 router.get('/:id/jobs', (req, res) => {
   const studentId = req.params.id
-  console.log(req.params)
 
   JoinedUser.findOne({ _id: studentId }).populate('jobId').exec((err, doc) => {
     const result = { Job: doc.jobId, studentId: studentId };
@@ -115,7 +110,6 @@ router.get('/:id/jobs', (req, res) => {
 router.delete("/:id/jobs/:jobId", (req, res) => {
   const studentId = req.params.id;
   const jobId = req.params.jobId;
-  //console.log(studentId,jobId)
   JoinedUser.updateOne(
     { _id: studentId },
     { $pull: { jobId: jobId } },
@@ -136,7 +130,6 @@ router.delete("/:id/jobs/:jobId", (req, res) => {
   : accountId 모르지만, studentId는 아는 상황
 */
 router.get("/:id/account", (req, res) => {
-  //console.log("studentId",req.params.id)
   Account.findOne({ studentId: req.params.id }, (err, doc) => {
     const result = doc;
     if (err) return res.status(500).json({ error: err });
@@ -152,9 +145,7 @@ router.get('/:id/account/history', async (req, res) => {
   const startDate = req.query.startDate
   const endDate = req.query.endDate
   try {
-    //console.log("studentId:",startDate,endDate, new Date(endDate))
     const account = await Account.findOne({ studentId: req.params.id })
-    //console.log(account)
     const accounttrans = await AccountTransaction.find(
       {
         accountId: account._id,
@@ -207,7 +198,7 @@ router.get('/:id/account/statistics', async (req, res) => {
         {
           $match: {
             "accountId": account._id,
-            'transactionType': 0,
+            'transactionType': 1,//입금
             "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
           },
 
@@ -223,7 +214,7 @@ router.get('/:id/account/statistics', async (req, res) => {
         {
           $match: {
             "accountId": account._id,
-            'transactionType': 1,
+            'transactionType': 0,//출금
             "date": { $gte: new Date(startDate), $lte: new Date(endDate) }
           },
 
@@ -271,7 +262,6 @@ router.get("/:id/deposit", (req, res) => {
 /*
   [정상] [student] Student의 수행 여부 가져오기
   { studentId:joinedUser의 _id }로 GrantedHomework에서 찾는다. 
-  homeworkId는 필요가 없다.
 */
 router.get("/:id/homeworks", async (req, res) => {
   try {
@@ -307,20 +297,18 @@ router.get("/:id/homeworks", async (req, res) => {
 */
 
 router.get('/:id/stocks', async (req, res) => {
-  //console.log(req.params)
   const studentId = req.params.id;
   const classId = req.query.classId;
 
   try {
     const tax = await Tax.findOne({ classId: classId })
-    //console.log(tax)
 
     const stocktax = tax.taxlist.stock//stock에 붙는 tax
     const userStocks = await StockAccount.findOne({ studentId: studentId })
     const holdingStocks = userStocks.holdingStocks
+    
     let result = await Promise.all(
       holdingStocks.map(async (v, i) => {
-        //const stock = await Stock.findOne({ '_id': v.stockId })
 
         const temp = await Stock.aggregate([
           {
@@ -364,20 +352,16 @@ router.get('/:id/stocks', async (req, res) => {
           }
         ])
         const stock = temp[0]
-        //console.log(stock)
-
         const now = new Date()
-        //console.log('날짜확인!',new Date(now.getFullYear(),now.getMonth(), now.getDate()))
         const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
         const index = stock.prices.findIndex(isSameDate)
-        //console.log(index)
 
         return {
           stockId: v.stockId,
           quantity: v.quantity,//잔고
           allPayAmount: v.allPayAmount,//매입가
-          evaluated: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100),//평가금액:잔고*현재가*(100-세금)/100
-          gainNloss: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100) - v.allPayAmount,//평가손익
+          evaluated: Math.round(v.quantity * stock.prices[index].value ),//평가금액:잔고*현재가
+          gainNloss: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100) - v.allPayAmount,//평가손익:추정자산-총매입
           stockName: stock.stockName,
           currentPrice: stock.prices[index].value//현재가
         }
@@ -394,7 +378,7 @@ router.get('/:id/stocks', async (req, res) => {
 */
 
 router.get('/:id/stocks/statistics', async (req, res) => {
-  console.log('/stocks/statistics', req.params)
+ // console.log('/stocks/statistics', req.params)
   const studentId = req.params.id;
   const classId = req.query.classId
   try {
@@ -450,8 +434,6 @@ router.get('/:id/stocks/statistics', async (req, res) => {
         ])
         const stock = temp[0]
 
-
-
         //console.log('>?aggregate?',stock)
         const now = new Date()
         const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -460,28 +442,31 @@ router.get('/:id/stocks/statistics', async (req, res) => {
         return {
           stockId: v._id,
           PayAmount: v.allPayAmount,//총매입
-          evaluated: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100),//총 평가금액:현재가*잔고*(100-세금)/100
-          evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount//총 평가손익:총평가금액-총매입
+          estimatedAssets :Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100),//추정자산:세금제외
+          evaluated: Math.round(stock.prices[index].value * v.quantity),//총 평가금액:현재가*잔고
+          evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount//총 평가손익:추정자산-총매입
         }
       })
     )
-    let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)
-    let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)
-    let evaluatedIncome = allEvaluated - allPayAmount
-    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100) / 100
+    let allPayAmount = await first.reduce((v, c) => v + c.PayAmount, 0)//총매입
+    let allEvaluated = await first.reduce((v, c) => v + c.evaluated, 0)//총 평가금액
+    let allestimatedAssets = await first.reduce((v,c)=> v+ c.estimatedAssets,0)//추정자산
+    let evaluatedIncome = allestimatedAssets - allPayAmount //평가손익=추정자산-총매입
+    let evaluatedProfit = allPayAmount===0?0:await Math.round(evaluatedIncome / allPayAmount * 100)//평가수익률
     /*
     {
-        allPay:,//총매입 - allPayAmount 다 더하기
+        allPay:,//총매입
         allEvaluated:,//총평가 //currentPrice*quantity를 다더하기
-        evaluatedIncome:,평가손익 총평가-총매입
-        evaluatedProfit:,평가수익률//(총평가-총매입)/총매입*100
+        evaluatedIncome:,평가손익 추정자산-총매입(투자총액)
+        evaluatedProfit:,평가수익률//평가손익/총매입*100
     }
     */
     res.json({
-      allPay: allPayAmount,
-      allEvaluated,
-      evaluatedIncome,
-      evaluatedProfit,
+      allPay: allPayAmount,//총매입
+      allEvaluated,//총 평가 금액
+      allestimatedAssets, //총 추정자산
+      evaluatedIncome,//총 평가 손익
+      evaluatedProfit,//평가 수익률
     });
   } catch (err) {
     res.json({ success: false, err });

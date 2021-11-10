@@ -20,6 +20,7 @@ function ChartArea() {
     stamp: "인지세",
     stock: "증권 거래세",
     vat: "부가가치세",
+    fine: "벌금"
   };
   const expendto = {
     culture: "문화비",
@@ -31,7 +32,7 @@ function ChartArea() {
     setIsError(false);
     setIsLoading(true);
     try {
-      const result = await axios.get("/api/budget", {
+      const result = await axios.get("/api/budget/month", {
         params: { classId: classData.classId },
       });
       setexpenditure(Object.values(result.data.expenditure));

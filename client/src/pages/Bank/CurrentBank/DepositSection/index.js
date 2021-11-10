@@ -8,23 +8,23 @@ function Deposit({balance}) {
   const [isError, setIsError] = useState(false);
   const [userdeposit, setuserdeposit] = useState();
   const joinedUser = useSelector(state => state.classUser);
+  let classData = useSelector(state => state.classInfo.classData);
+
   const fetchData = async () => {
     setIsError(false);
     setIsLoading(true);
     try {
       const result = await axios.get(`/api/students/${joinedUser.classUser}/deposit`);
-      //console.log("/api/students/:id/deposit", result.data);
       setuserdeposit(result.data)
-      console.log(result.data)
-
     } catch (error) {
       setIsError(true);
     }
     setIsLoading(false);
   };
+
   useEffect(() => {
     fetchData();
-  }, [joinedUser.classUser])
+  }, [joinedUser.classUser,])
   const calculate = (type) => {
     if (type === '만기') {
       return Math.round((userdeposit.productId.interestRate + 100) * userdeposit.amount / 100)
@@ -39,9 +39,9 @@ function Deposit({balance}) {
       }
     }
   }
-  const onhandleclick = (e) => {
+  const deleteDeposit = (e) => {
     e.preventDefault();
-    axios.delete(`/api/bank/deposits/${userdeposit.productId._id}/join/${userdeposit._id}`)
+    axios.delete(`/api/bank/deposits/${userdeposit.productId._id}/join/${userdeposit._id}`,{params:{classId:classData.classId}})
       .then(function (response) {
         fetchData();
         console.log(response);
@@ -51,9 +51,7 @@ function Deposit({balance}) {
       });
   }
   if (userdeposit) {
-    //console.log(userdeposit)
     return (
-      
       <div className="row justify-content-center">
         <div className="account-card shadow justify-content-center col-md-12 bg-white">
           <div className="d-flex justify-content-between collapsed"
@@ -69,7 +67,7 @@ function Deposit({balance}) {
               <div className="text-center py-3" > 지금 해지시: $ {calculate('지금')} </div>
               <div className="d-flex justify-content-center">
 
-              <DepositCloseModal onhandleclick={onhandleclick}/>
+              <DepositCloseModal deleteDeposit={deleteDeposit}/>
               </div>
             </div>
           </div>

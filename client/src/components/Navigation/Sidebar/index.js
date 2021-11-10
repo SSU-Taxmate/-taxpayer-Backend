@@ -8,9 +8,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 const useStyles = makeStyles({
-  list: {
-    // width: 250,
-  },
   fullList: {
     width: "auto",
   },
@@ -42,10 +39,7 @@ export default function Sidebar(props) {
   };
 
   let user = useSelector((state) => state.user);
-  if (user.userData) {
-    //주석처리
-    console.log(user.userData.role);
-  }
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -74,20 +68,21 @@ export default function Sidebar(props) {
           <div className="sidebar-brand-text mx-3">TAX MATE</div>
         </Link>
 
-        {/* <!-- Divider --> */}
         <hr className="sidebar-divider my-0" />
 
-        {/* <!-- Nav Item - Dashboard --> */}
         {user.userData && (
-          <div>
+          <>
+            {/* 1. 학급 메인 */}
             <li className="nav-item">
               <Link className="nav-link" to="/classes/:classId">
                 <i className="fas fa-home"></i>
                 <span>학급 메인</span>
               </Link>
             </li>
-
             <hr className="sidebar-divider my-0" />
+            {/* 2. 클래스 설정
+                  1) 학생관리 [선생님] 
+                  2) 직업 관리*/}
             <li className="nav-item">
               <a
                 className="nav-link collapsed"
@@ -106,6 +101,7 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
+                  {/* 선생님 */}
                   {user.userData.role === 0 ? (
                     <>
                       <Link
@@ -122,9 +118,9 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
+                  {/* 학생 */}
                   {user.userData.role === 1 ? (
                     <>
-                      <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/set-up/class"
@@ -137,10 +133,12 @@ export default function Sidebar(props) {
               </div>
             </li>
 
-            {/* <!-- Divider --> */}
-
-            <hr className="sidebar-divider my-0" />
-            {/* <!-- Nav Item - Pages Collapse Menu --> */}
+            <hr className="sidebar-divider" />
+            <div className="sidebar-heading">금융</div>
+            {/* 3. 은행
+                - 중앙은행 
+                  1) 설정 [선생님]
+                  2) 내계좌 [학생]*/}
             <li className="nav-item">
               <a
                 className="nav-link collapsed"
@@ -160,7 +158,7 @@ export default function Sidebar(props) {
               >
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">중앙은행</h6>
-
+                  {/* 선생님 */}
                   {user.userData.role === 0 ? (
                     <>
                       <Link
@@ -171,7 +169,8 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role === 1 /*학생의 경우 */ ? (
+                  {/* 학생 */}
+                  {user.userData.role === 1 ? (
                     <>
                       <Link
                         className="collapse-item"
@@ -181,20 +180,13 @@ export default function Sidebar(props) {
                       </Link>
                     </>
                   ) : null}
-                  {user.userData.role === 0 /*학생의 경우 */ ? (
-                    <>
-                      <h6 className="collapse-header">신용등급</h6>
-                      <Link
-                        className="collapse-item"
-                        to="/classes/:classId/credit"
-                      >
-                        신용등급
-                      </Link>
-                    </>
-                  ) : null}
                 </div>
               </div>
             </li>
+            {/* 4. 증권거래소
+                  1) 호가창 
+                  2) 내계좌 [학생] 
+                  3) 설정 [선생님]*/}
             <li className="nav-item">
               <a
                 className="nav-link collapsed"
@@ -234,52 +226,15 @@ export default function Sidebar(props) {
                         to="/classes/:classId/stock/manage"
                       >
                         설정
-                      </Link>{" "}
+                      </Link>
                     </>
                   ) : null}
                 </div>
               </div>
             </li>
-            {/* <!-- Nav Item - Utilities Collapse Menu --> */}
-            {/* <li className="nav-item">
-              <a
-                className="nav-link collapsed"
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapse_market"
-                aria-expanded="true"
-                aria-controls="collapseUtilities"
-              >
-                <i className="fas fa-store"></i>
-                <span>시장</span>
-              </a>
-              <div
-                id="collapse_market"
-                className="collapse"
-                aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar"
-              >
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <Link
-                    className="collapse-item"
-                    to="/classes/:classId/real_estate_setting"
-                  >
-                    부동산
-                  </Link>
-                  <Link className="collapse-item" to="/classes/:classId/market">
-                    매점
-                  </Link>
-                </div>
-              </div>
-            </li> */}
-
-            {/* <!-- Divider --> */}
             <hr className="sidebar-divider" />
-
-            {/* <!-- Heading --> */}
+            {/* 5. 국세청 */}
             <div className="sidebar-heading">행정부</div>
-
-            {/* <!-- Nav Item - Pages Collapse Menu --> */}
             <li className="nav-item">
               <a
                 className="nav-link collapsed"
@@ -306,7 +261,6 @@ export default function Sidebar(props) {
                   </Link>
                   {user.userData.role === 1 ? (
                     <>
-                      <h6 className="collapse-header">학생</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/tax-invoice"
@@ -317,7 +271,6 @@ export default function Sidebar(props) {
                   ) : null}
                   {user.userData.role === 0 ? (
                     <>
-                      <h6 className="collapse-header">선생님</h6>
                       <Link
                         className="collapse-item"
                         to="/classes/:classId/tax/manage"
@@ -330,66 +283,9 @@ export default function Sidebar(props) {
               </div>
             </li>
 
-            {/* <!-- Nav Item - Utilities Collapse Menu --> */}
-            {/* <li className="nav-item">
-              <a
-                className="nav-link collapsed"
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapseStats"
-                aria-expanded="true"
-                aria-controls="collapseStats"
-              >
-                <i className="fas fa-chart-line"></i>
-                <span>통계청</span>
-              </a>
-              <div
-                id="collapseStats"
-                className="collapse"
-                aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar"
-              >
-                <div className="bg-white py-2 collapse-inner rounded">
-                  {user.userData.role === 0 ? (
-                    <>
-                      <h6 className="collapse-header">선생님</h6>
-                      <Link
-                        className="collapse-item"
-                        to="/classes/:classId/national-stats"
-                      >
-                        나라 통계
-                      </Link>
-                      <Link
-                        className="collapse-item"
-                        to="/classes/:classId/stats/manage"
-                      >
-                        숙제 관리
-                      </Link>{" "}
-                    </>
-                  ) : null}
-                  {user.userData.role === 1 ? (
-                    <>
-                      <h6 className="collapse-header">학생</h6>
-                      <Link
-                        className="collapse-item"
-                        to="/classes/:classId/personal-stats"
-                      >
-                        나의 통계
-                      </Link>
-                    </>
-                  ) : null}
-                </div>
-              </div>
-            </li> */}
-
-            {/* <!-- Divider --> */}
             <hr className="sidebar-divider" />
-
-            {/* <!-- Heading --> */}
             <div className="sidebar-heading">입법부</div>
-
-            {/* <!-- Nav Item - Charts --> */}
-
+            {/* 6. 법률 */}
             <li className="nav-item">
               <a
                 className="nav-link collapsed"
@@ -409,37 +305,31 @@ export default function Sidebar(props) {
                 data-parent="#accordionSidebar"
               >
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 className="collapse-header">선생님</h6>
                   <Link className="collapse-item" to="/classes/:classId/law">
                     법
                   </Link>
                 </div>
               </div>
             </li>
-            {/* <!-- Nav Item - Tables --> */}
-            {/* <li className="nav-item">
-              <Link className="nav-link" to="/classes/:classId/lawmaking">
+            {/* 7. 국회 */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/classes/:classId/congress">
                 <i className="fas fa-vote-yea"></i>
                 <span>국회</span>
               </Link>
-            </li> */}
-            {/* <!-- Divider --> */}
+            </li>
+
             <hr className="sidebar-divider" />
-
-            {/* <!-- Heading --> */}
             <div className="sidebar-heading">사법부</div>
-
-            {/* <!-- Nav Item - Tables --> */}
+            {/* 8. 벌금 */}
             <li className="nav-item">
               <Link className="nav-link" to="/classes/:classId/penalty">
                 <i className="fas fa-gavel"></i>
                 <span>벌금</span>
               </Link>
             </li>
-
-            {/* <!-- Divider --> */}
             <hr className="sidebar-divider d-none d-md-block" />
-          </div>
+          </>
         )}
       </ul>
     </div>

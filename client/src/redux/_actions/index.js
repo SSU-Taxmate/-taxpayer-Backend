@@ -10,7 +10,6 @@ import {
 
 /*selectClass - ClassCard에서 사용함.*/
 export function selectClass (selectedClass){
-    //console.log('_actions/',selectedClass)
    
     return{
         type:SELECT_CLASS,
@@ -18,10 +17,8 @@ export function selectClass (selectedClass){
     }
 }
 export function selectUser(selected){
-    //console.log(selected)
     const request=axios.get(`/api/classes/${selected.classId}/join`,{params:{userId:selected.userId}})
     .then(response=>response.data);
-    //console.log(request)
     return {
         type:SELECT_USER,
         payload:request
@@ -44,9 +41,6 @@ export function auth(){
 }
 
 export function loginUser(dataToSubmit) {
-    /*클라이언트=>서버 보낼때도 암호화되어야함
-    현재는 서버에서 암호화해서 mongoDB에 올림 */
-    console.log('redux/_actions : login원하는 User정보',dataToSubmit)
     const request = axios.post('/api/users/login', dataToSubmit)
         .then(response => response.data)
 
@@ -70,7 +64,6 @@ export function registerUser(dataToSubmit) {
 
 }
 export function logoutUser(){
-    //console.log('_actions/logoutUser:LOGOUTUSER1')
     const request = axios.get('/api/users/logout')
     .then(response => response);
 

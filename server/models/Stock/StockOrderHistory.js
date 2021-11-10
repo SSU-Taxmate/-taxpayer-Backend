@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 /*
     StockOrderHistory
-    : stock 구입 당시 기록 저장
+    : stock 매수 기록
  */
 const stockorderhistorySchema = mongoose.Schema({
     studentId: {//구매자
@@ -9,15 +9,15 @@ const stockorderhistorySchema = mongoose.Schema({
         ref: 'JoinedUser',
         require: true
     },
-    stockId: { 
+    stockId: { /* 매수 주식 */
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Stock'
     },
-    quantity:{//양
+    quantity:{/* 수량 */
         type:Number,
         require:true
     },
-    purchasePrice:{//구입당시가격=매입가 - 필요한 이유 평균매입가
+    purchasePrice:{//구입당시가격(매입가) 
         type:Number,
         require:true
     },
@@ -25,7 +25,7 @@ const stockorderhistorySchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    payAmount: {// price*quantity
+    payAmount: {// 총 투자 금액 : price*quantity
         type: Number,
         require: true
     },

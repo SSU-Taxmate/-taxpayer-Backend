@@ -4,13 +4,15 @@
 const express = require('express');
 const { startSession } = require('mongoose');
 const { Budget } = require('../models/Tax/Budget');
+const{BudgetAccount}=require('../models/Tax/BudgetAccount')
 const { BudgetHistory } = require('../models/Tax/BudgetHistory');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const router = express.Router();
 
 /*
-  [] : 예산 사용
+  [정상] : 예산 사용
+  (1달 단위로 budgetaccount에 업데이트)
   {classId:}
 */
 router.post('/', async (req, res) => {
@@ -39,10 +41,20 @@ router.post('/', async (req, res) => {
   }
 })
 /*
-  [정상] : 학급 계좌(예산) 보기
-  {classId:}
+  [정상] :전체기간 학급 계좌 확인
 */
-router.get('/', (req, res) => {
+router.get('/',(req,res)=>{
+  const classId = req.query.classId
+  BudgetAccount.findOne({ classId: classId }, (err, doc) => {
+    const result = doc
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
+  })
+})
+/*
+  [정상] : 이번달 학급 예산 상황 보기
+*/
+router.get('/month', (req, res) => {
   const classId = req.query.classId
   Budget.findOne({ classId: classId }, (err, doc) => {
     const result = doc
@@ -51,8 +63,7 @@ router.get('/', (req, res) => {
   })
 })
 /*
-  [] : 학급 예산 월별 기록
-  {classId:}
+  [정상] : 학급 예산 월별 기록
 */
 router.get('/history', async (req, res) => {
   const classId = req.query.classId
@@ -68,7 +79,7 @@ router.get('/history', async (req, res) => {
         {
           _id:{
             'transType':'$transType',
-            'month':{$month:'$date'},//group by multiple
+            'month':{$month:{date:'$date',timezone:'Asia/Seoul'}},//group by multiple&timezone
           },
           sum:{$sum:'$amount'}
         }
@@ -78,8 +89,6 @@ router.get('/history', async (req, res) => {
         '_id.transType':1
       }}
     ])
-    //console.log(history)
-    
     res.json(history)
   } catch (err) {
     res.status(500).json({ success: false, error: err });

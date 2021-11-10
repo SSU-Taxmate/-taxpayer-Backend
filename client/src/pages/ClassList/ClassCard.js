@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { selectClass, selectUser } from "../../redux/_actions";
-import ClassCodeModal from "../../components/Modal/ClassCodeModal";
+import ClassCodeModal from "./sections/ClassCodeModal";
 import moment from "moment-timezone";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -78,9 +78,13 @@ function ClassCard(props) {
               className={props.title}
             ></ClassCodeModal>
           </IconButton>
-          <IconButton aria-label="delete" style={{ marginLeft: "auto" }}>
-            <DeleteIcon />
-          </IconButton>
+          {user.userData && user.userData.role === 0 ? (
+            <IconButton aria-label="delete" style={{ marginLeft: "auto" }}>
+              <DeleteIcon />
+            </IconButton>
+          ) : (
+            ""
+          )}
         </CardActions>
       </Card>
     </div>

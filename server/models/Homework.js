@@ -1,6 +1,7 @@
 const mongoose =require('mongoose')
 /*
-    Homework
+    [추후 업데이트] Homework
+    : 과제
 */
 const homeworkSchema = mongoose.Schema({
     name: {
@@ -10,7 +11,7 @@ const homeworkSchema = mongoose.Schema({
     detail:{
         type:String,
     },
-    expDate:{
+    expDate:{/*deadline : 기본7일 */
         type: Date,
         default:() => new Date(+new Date() + 7*24*60*60*1000)
     },
@@ -23,11 +24,11 @@ const homeworkSchema = mongoose.Schema({
 const Homework = mongoose.model('Homework', homeworkSchema)
 
 /*
-    GrantedHomework
+    [추후 업데이트] GrantedHomework
     : Student와 Homework를 연결짓는 Schema
 */
 const grantedhomeworkSchema= mongoose.Schema({
-    studentId:{/*반드시 JoinedUser*/
+    studentId:{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'JoinedUser'
     },
@@ -35,11 +36,11 @@ const grantedhomeworkSchema= mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref: 'Homework'
     },
-    submission:{//제출여부, true, false,
+    submission:{/*제출여부 : true,false*/
         type:Boolean,
         default:null
     },
-    withinDeadline:{//기한 내 제출,true,false,null
+    withinDeadline:{/*기한 내 제출 : true,false,null*/
         type:Boolean,
         default:null
     },

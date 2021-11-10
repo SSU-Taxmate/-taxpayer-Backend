@@ -1,17 +1,18 @@
 const mongoose =require('mongoose')
 /*
     Stock
+    : 주식
  */
 const stockSchema = mongoose.Schema({
-    stockName:{
+    stockName:{/* 주식명 */
         type:String,
         required:true,
     },
-    description:{
+    description:{/* 설명 */
         type:String,
         default:''
     },
-    prices:[{
+    prices:[{/* Daily 가격 정보, 금액, 힌트 */
         updateDate:{
             type:Date,
             default:Date.now

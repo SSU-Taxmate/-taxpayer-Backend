@@ -40,7 +40,6 @@ function SettingStocks() {
         setIsLoading(true);
         try {
             const result = await axios.get(`/api/stocks/manage`, { params: { classId: classData.classId } });
-            //console.log("/api/stocks/manage", result.data);
             setstocks(result.data)
         } catch (error) {
             setIsError(true);
@@ -56,8 +55,10 @@ function SettingStocks() {
             {isLoading ?
                 <Loading /> : (
                     <>
+                        <div className="container" id="stockSetting-outContainer">
                         <AddStockDialog />
-                        <Table aria-label="setting-table" size="small">
+                        <div className="container" id="stockSetting-container" style={{overflow:"auto"}} >
+                        <Table aria-label="setting-table" size="small" style={{minWidth:"1000px"}} >
                             <TableHead>
                                 <TableRow>
                                     {column.map((v, i) =>
@@ -72,11 +73,11 @@ function SettingStocks() {
                                 ).map((row, i) => (
                                     <TableRow key={i}>
                                         <TableCell style={{ width: '1rem' }}><DeleteStockDialog stockId={row._id} /></TableCell>
-                                        <TableCell style={{ width: '5rem' }}>
+                                        <TableCell style={{ width: '10rem' }}>
                                             {row.stockName}
                                         </TableCell>
                                         <TableCell >{row.description}</TableCell>
-                                        <TableCell>{row.ondelete ? moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD') : ''}</TableCell>
+                                        <TableCell>{row.ondelete ? moment(row.ondeleteDay).tz('Asia/Seoul').format('YYYY-MM-DD') : 'X'}</TableCell>
                                         <TableCell >
                                             <Link
                                                 to={
@@ -111,6 +112,8 @@ function SettingStocks() {
                                 </TableRow>
                             </TableFooter>
                         </Table>
+                        </div>
+                        </div>
                     </>
                 )
             }

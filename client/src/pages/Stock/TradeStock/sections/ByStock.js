@@ -23,7 +23,6 @@ function ByStock() {
                         endDate: moment().subtract(1, 'weeks').endOf('isoWeek').add(1, 'd').format('YYYY-MM-DD')//일
                     }
                 })
-            console.log(result.data)
             setdata(result.data)
 
         } catch (error) {

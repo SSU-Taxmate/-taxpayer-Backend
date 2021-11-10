@@ -72,27 +72,28 @@ function MangeValueDialog({ type, stockId,price}) {
 
   return (
     <>
-      <IconButton color="primary" onClick={handleOpen}>{type === 'add' ? <AddIcon /> : <EditIcon />}</IconButton>
+      <IconButton color="primary" onClick={handleOpen} style={{padding:"0"}}>{type === 'add' ? <AddIcon/> : <EditIcon />}</IconButton>
       <Dialog fullWidth aria-labelledby="stock-dialog-title" open={open} onClose={handleClose}>
         <DialogTitle id="stock-dialog-title">주가 입력</DialogTitle>
         <DialogContent>
           <form onSubmit={onSubmit}>
-            <div className='row'>
-              <label htmlFor="value" >주가</label>
-              <div className='col' id='inputstock'>
+            <div className='row p-2'>
+              <div className="col-sm-1 col-md-1 col-lg-1 p-0 mt-1">
+              <span >주가</span></div>
+              <div className='col-sm-9 col-md-7 col-lg-7 p-0 mr-1' id='inputstock'>
                 {todayValueField}
               </div>
-              <div className='col-*' id='inputDate'>
+              <div className='col-sm-12 col-md-3 col-lg-3 p-0 mt-1' id='inputDate'>
                 {dateField}
               </div>
             </div>
-            <label htmlFor="hint" className="col-sm-2 col-form-label">한 줄 뉴스</label>
+            <label htmlFor="hint" className="col-form-label">한 줄 뉴스</label>
             {todayNewsField}
-            <div className="float-right pr-2">
+            <div className="row d-flex pl-2 pr-2 mt-3" style={{justifyContent:"flex-end"}}>
+              <button className="btn mr-2" onClick={handleClose}>취소</button>
               <button type="submit" className="btn btn-primary">입력</button>
             </div>
           </form>
-          <button className="btn" onClick={handleClose}>취소</button>
 
         </DialogContent>
       </Dialog>
