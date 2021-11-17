@@ -14,6 +14,7 @@ const { AccountTransaction } = require("../models/Bank/AccountTransaction");
 const {Fine}=require('../models/Judiciary/Fine')
 const {JoinDeposit}=require('../models/Bank/JoinDeposit')
 const {StockOrderHistory}=require('../models/Stock/StockOrderHistory')
+const moment=require('moment-timezone')
 const router = express.Router();
 
 /*
@@ -44,7 +45,7 @@ router.post("/", async (req, res) => {
     const cTax = new Tax({ classId: cClass._id });
     const taxres = await cTax.save({ session });
     // 3) Class Account 생성
-    const budget = new Budget({ classId: cClass._id });
+    const budget = new Budget({ classId: cClass._id ,month:moment().tz('Asia/Seoul').month()+1});
     //const budgetaccount = new BudgetAccount({ classId: cClass._id })
     const accountres = await budget.save({ session });
    // const bacount = await budgetaccount.save({ session });
