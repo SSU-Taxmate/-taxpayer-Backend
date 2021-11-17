@@ -32,6 +32,15 @@ router.post("/", async (req, res) => {
         Random = 10000;
       }
     } // 중복없는 랜덤번호
+
+    const exClass = await Class.findOne({ name: req.body.name }); // 이메일 중복 확인
+        if (exClass) {
+            console.log('존재하는 클래스명입니다.');
+            res.send('class_create_error=exist');
+            // return res.status(403).send('error 설명 메시지');
+            next(error);
+        }//클래스의 중복이름체크
+
     const cClass = await Class.create({
       name: req.body.name,
       image: req.body.image,
