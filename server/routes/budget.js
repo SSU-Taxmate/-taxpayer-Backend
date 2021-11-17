@@ -12,13 +12,11 @@ const router = express.Router();
 
 /*
   [정상] : 예산 사용
-  (1달 단위로 budgetaccount에 업데이트)
   {classId:}
 */
 router.post("/", async (req, res) => {
   const classId = req.body.classId;
   //body:{type:culture/education/environment/etc,amount:10}
-  //console.log(classId)
   const session = await startSession();
   try {
     session.startTransaction();
@@ -43,30 +41,36 @@ router.post("/", async (req, res) => {
   }
 });
 /*
-  [수정필요] :전체기간 학급 계좌 확인
+  [] :전체기간 학급 계좌 확인
   : Budget History 부분에서 aggregate로 계산하기
 */
 router.get("/", (req, res) => {
-  // const classId = req.query.classId;
-  // BudgetAccount.findOne({ classId: classId }, (err, doc) => {
-  //   const result = doc;
-  //   if (err) return res.status(500).json({ error: err });
-  //   res.json(result);
-  // });
+    const classId = req.query.classId;
+    Budget.findOne({classId:classId},(err,doc)=>{
+      const result={
+        balance:doc.revenue.income+doc.revenue.realestate+doc.revenue.vat+doc.revenue.stock+doc.revenue.fine,
+        debet : doc.debet
+      }
+      console.log(result)
+      if (err) return res.status(500).json({ error: err });
+      
+      res.json(result);
+    });
 });
 /*
-  [수정필요] : 이번달 학급 예산 상황 보기
+  [month:month+1추가] : 이번달 학급 예산 상황 보기
 */
 router.get("/month", (req, res) => {
   const classId = req.query.classId;
-  Budget.findOne({ classId: classId }, (err, doc) => {
+  const month= req.query.month;
+  Budget.findOne({ classId: classId, month:month+1}, (err, doc) => {// 
     const result = doc;
     if (err) return res.status(500).json({ error: err });
     res.json(result);
   });
 });
 /*
-  [수정필요] : 학급 예산 월별 기록
+  [] : 학급 예산 월별 기록
   BudgetHistory를 삭제하고 
   Budget에 저장된 월 정보를  
 */

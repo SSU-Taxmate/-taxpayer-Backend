@@ -39,7 +39,18 @@ var ObjectId = mongoose.Types.ObjectId;
 */
 
 router.post('/', function (req, res) {
-  var newJob = new Job(req.body);
+  var newJob = new Job(req.body); // jab생성시 이름이 중복으로 존재하는지 체크함
+
+  var exJob = Job.findOne({
+    jobId: req.body.jobId
+  });
+
+  if (exJob) {
+    console.log('존재하는 직업입니다.');
+    res.send('job_create_error=exist');
+    next(error);
+  }
+
   newJob.save(function (err, doc) {
     if (err) return res.json({
       success: false,
