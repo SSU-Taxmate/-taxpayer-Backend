@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import Error from '../../../components/Error'
 import Loading from '../../../components/Loading'
+import moment from 'moment-timezone';
+
 function TaxMonth() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -15,7 +17,7 @@ function TaxMonth() {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get(`/api/budget/month`, { params: { classId: classData.classId } })
+                const result = await axios.get(`/api/budget/month`, { params: { classId: classData.classId ,month:moment().tz('Asia/Seoul').month()} })
                 setData(result.data)
             } catch (error) {
                 setIsError(true);
