@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     const newJob = new Job(req.body);
 
     // jab생성시 이름이 중복으로 존재하는지 체크함
-    const exJob = await Job.findOne({ jobId: req.body.jobId });
+    const exJob = Job.findOne({ jobId: req.body.jobId });
     if (exJob) {
         console.log('존재하는 직업입니다.');
         res.send('job_create_error=exist');
