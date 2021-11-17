@@ -11,28 +11,16 @@ const budgetSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
-    month:{//세금 현황 월 추가?!
+    month:{
         type:Number,
         required:true
     },
-    balance: { // 이번달 세입현황=>revenue
+    revenue: { // 이번달 세입현황(과거 budget& 종류 축소)
         income: { //소득세
             type: Number,
             default: 0
         },
         realestate: { //부동산세
-            type: Number,
-            default: 0
-        },
-        place: { //자리세
-            type: Number,
-            default: 0
-        },
-        electric: { //전기세
-            type: Number,
-            default: 0
-        },
-        stamp: { //인지세
             type: Number,
             default: 0
         },

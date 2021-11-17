@@ -54,9 +54,6 @@ function DurationMonth() {
                                 <td style={{ float: "right", marginRight: "1rem" }}>
                                     {budget.balance.income +
                                         budget.balance.realestate +
-                                        budget.balance.place +
-                                        budget.balance.electric +
-                                        budget.balance.stamp +
                                         budget.balance.vat +
                                         budget.balance.stock+
                                         budget.balance.fine}
