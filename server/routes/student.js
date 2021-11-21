@@ -1,5 +1,5 @@
 /* base URL
-  : /api/students
+    : /api/students
 */
 const express = require("express");
 const router = express.Router();
@@ -11,10 +11,10 @@ const { JoinDeposit } = require('../models/Bank/JoinDeposit');
 const { StockAccount } = require('../models/Stock/StockAccount');
 const { Stock } = require('../models/Stock/Stock');
 const { Tax } = require('../models/Tax/Tax')
-    /*
-      [완료] 클래스 내 학생에 대한 모든 정보 - 학생 관리 테이블
-      query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
-    */
+/*
+    [완료] 클래스 내 학생에 대한 모든 정보 - 학생 관리 테이블
+    query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
+*/
 router.get("/", async(req, res) => {
     try {
         const students = await JoinedUser.find(req.query, [
@@ -46,8 +46,8 @@ router.get("/", async(req, res) => {
 });
 
 /*
-  [완료] 클래스 내 학생에 대한 job 정보 - job 테이블
-  query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
+    [완료] 클래스 내 학생에 대한 job 정보 - job 테이블
+    query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
 */
 router.get("/job", async(req, res) => {
     try {
@@ -70,8 +70,8 @@ router.get("/job", async(req, res) => {
     }
 });
 /*
-  [완료] 클래스 내 한 학생의 직업 지원 
-  : 이미 가지고 있는 직업에 apply 안됨
+    [완료] 클래스 내 한 학생의 직업 지원 
+    : 이미 가지고 있는 직업에 apply 안됨
 */
 router.post("/:id/jobs/:jobId", (req, res) => {
     const studentId = req.params.id;
@@ -85,7 +85,7 @@ router.post("/:id/jobs/:jobId", (req, res) => {
     })
 });
 /*
-  [] 클래스 내 한 학생의 직업 현황
+    [] 클래스 내 한 학생의 직업 현황
  */
 router.get('/:id/jobs', (req, res) => {
     const studentId = req.params.id
@@ -101,7 +101,7 @@ router.get('/:id/jobs', (req, res) => {
 })
 
 /* 
-   [완료] 클래스 내 한 학생의 job 삭제
+    [완료] 클래스 내 한 학생의 job 삭제
 */
 router.delete("/:id/jobs/:jobId", (req, res) => {
     const studentId = req.params.id;
@@ -117,11 +117,11 @@ router.delete("/:id/jobs/:jobId", (req, res) => {
 });
 
 /*
-  ====================== 계좌 정보, 거래 내역
+    ====================== 계좌 정보, 거래 내역
 */
 /*
-  [정상] : 학생 자신의 기본 계좌 정보 가져오기
-  : accountId 모르지만, studentId는 아는 상황
+    [정상] : 학생 자신의 기본 계좌 정보 가져오기
+    : accountId 모르지만, studentId는 아는 상황
 */
 router.get("/:id/account", (req, res) => {
     Account.findOne({ studentId: req.params.id }, (err, doc) => {
@@ -131,8 +131,8 @@ router.get("/:id/account", (req, res) => {
     });
 });
 /*
-  [정상] : 학생 자신의 계좌 거래 내역보기
-  {accountId:,startDate:,endDate:} <=studentId로 Account에서 찾을 수 있음
+    [정상] : 학생 자신의 계좌 거래 내역보기
+    {accountId:,startDate:,endDate:} <=studentId로 Account에서 찾을 수 있음
 */
 
 router.get('/:id/account/history', async(req, res) => {
@@ -232,7 +232,6 @@ router.get('/:id/account/statistics', async(req, res) => {
   isClosed : false인 것만!
 */
 router.get("/:id/deposit", (req, res) => {
-    //console.log("studentId:", req.params.id)
     const studentId = req.params.id;
     JoinDeposit.findOne({ studentId: studentId, isClosed: false }, [
             "productId",
@@ -250,7 +249,7 @@ router.get("/:id/deposit", (req, res) => {
 
 /*
     [정상]student가 구매한 모든 stock 보여주기
-    : ByStudentStock이 이거 사용중
+    : ByStudentStock이 사용중
 */
 
 router.get('/:id/stocks', async(req, res) => {
@@ -311,13 +310,14 @@ router.get('/:id/stocks', async(req, res) => {
                         const now = new Date()
                         const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
                         const index = stock.prices.findIndex(isSameDate)
-
+                        
+                        const evaluatedvalue=v.quantity * stock.prices[index].value//평가금액:잔고*현재가
                         return {
                             stockId: v.stockId,
                             quantity: v.quantity, //잔고
                             allPayAmount: v.allPayAmount, //매입가
-                            evaluated: Math.round(v.quantity * stock.prices[index].value), //평가금액:잔고*현재가
-                            gainNloss: Math.round(v.quantity * stock.prices[index].value * (100 - stocktax) / 100) - v.allPayAmount, //평가손익:추정자산-총매입
+                            evaluated:evaluatedvalue, //평가금액
+                            gainNloss: Math.round(evaluatedvalue * (100 - stocktax) / 100) - v.allPayAmount, //평가손익:추정자산-총매입
                             stockName: stock.stockName,
                             currentPrice: stock.prices[index].value //현재가
                         }
@@ -346,7 +346,6 @@ router.get('/:id/stocks/statistics', async(req, res) => {
 
         let first = await Promise.all(
             holdingStocks.map(async(v, i) => {
-                //const stock = await Stock.findOne({ '_id': v.stockId })
                 const temp = await Stock.aggregate([{
                         $match: {
                             '_id': v.stockId
@@ -389,17 +388,18 @@ router.get('/:id/stocks/statistics', async(req, res) => {
                 ])
                 const stock = temp[0]
 
-                //console.log('>?aggregate?',stock)
                 const now = new Date()
                 const isSameDate = (v) => v.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate())
                 const index = stock.prices.findIndex(isSameDate)
                     //console.log('statistics:',index)
+                
+                const estimatedAssets=Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100)//추정자산:세금제외
                 return {
                     stockId: v._id,
                     PayAmount: v.allPayAmount, //총매입
-                    estimatedAssets: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100), //추정자산:세금제외
-                    evaluated: Math.round(stock.prices[index].value * v.quantity), //총 평가금액:현재가*잔고
-                    evaluatedIncome: Math.round(stock.prices[index].value * v.quantity * (100 - stocktax) / 100) - v.allPayAmount //총 평가손익:추정자산-총매입
+                    estimatedAssets: estimatedAssets, //추정자산
+                    evaluated: stock.prices[index].value * v.quantity, //총 평가금액:현재가*잔고
+                    evaluatedIncome:estimatedAssets - v.allPayAmount //총 평가손익:추정자산-총매입
                 }
             })
         )
@@ -408,20 +408,12 @@ router.get('/:id/stocks/statistics', async(req, res) => {
         let allestimatedAssets = await first.reduce((v, c) => v + c.estimatedAssets, 0) //추정자산
         let evaluatedIncome = allestimatedAssets - allPayAmount //평가손익=추정자산-총매입
         let evaluatedProfit = allPayAmount === 0 ? 0 : await Math.round(evaluatedIncome / allPayAmount * 100) //평가수익률
-            /*
-            {
-                allPay:,//총매입
-                allEvaluated:,//총평가 //currentPrice*quantity를 다더하기
-                evaluatedIncome:,평가손익 추정자산-총매입(투자총액)
-                evaluatedProfit:,평가수익률//평가손익/총매입*100
-            }
-            */
         res.json({
             allPay: allPayAmount, //총매입
-            allEvaluated, //총 평가 금액
+            allEvaluated, //총 평가 금액 : currentPrice*quantity를 다더하기
             allestimatedAssets, //총 추정자산
-            evaluatedIncome, //총 평가 손익
-            evaluatedProfit, //평가 수익률
+            evaluatedIncome, // 평가 손익 : 추정자산-총매입(투자총액)
+            evaluatedProfit, //평가 수익률 : 평가손익/총매입*100
         });
     } catch (err) {
         res.json({ success: false, err });
