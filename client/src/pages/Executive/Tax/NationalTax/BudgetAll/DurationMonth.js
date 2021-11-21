@@ -16,12 +16,8 @@ function DurationMonth() {
             const result = await axios.get("/api/budget/month", {
                 params: { classId: classData.classId },
             });
-            console.log('>>>>>>>>>>>>>>>>>',result.data.expenditure)
-            setbudget({
-                balance: result.data.balance,
-                debet: result.data.debet,
-                expenditure: result.data.expenditure,
-            });
+            console.log('>>>>>>>>>>>>>>>>>',result.data)
+            setbudget(result.data);
         } catch (error) {
             setIsError(true);
         }
@@ -52,11 +48,11 @@ function DurationMonth() {
                             <tr>
                                 <td>세입</td>
                                 <td style={{ float: "right", marginRight: "1rem" }}>
-                                    {budget.balance.income +
-                                        budget.balance.realestate +
-                                        budget.balance.vat +
-                                        budget.balance.stock+
-                                        budget.balance.fine}
+                                    {budget.revenue.income +
+                                        budget.revenue.realestate +
+                                        budget.revenue.vat +
+                                        budget.revenue.stock+
+                                        budget.revenue.fine}
                                     미소
                                 </td>
                             </tr>

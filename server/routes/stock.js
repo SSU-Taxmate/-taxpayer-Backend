@@ -12,7 +12,7 @@ const { Tax } = require('../models/Tax/Tax');
 const { Budget } = require('../models/Tax/Budget');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-
+const moment = require('moment-timezone')
 const router = express.Router();
 /*
   [*정상] Class에서 사용하는 Stock GET : 오늘 날짜까지만, prices 정보 가져오기
@@ -26,12 +26,10 @@ router.get('/', async (req, res) => {
       stocks.push(classstock[i].stockId)
     }
     const stock = await Stock.find({ _id: { $in: stocks } })
-    const now = new Date()
-
-    //오늘 0시 : new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const now = moment().tz('Asia/Seoul')
     let result = await Promise.all(
       stock.map(async (v, i) => {
-        v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.getFullYear(), now.getMonth(), now.getDate()));
+        v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.year(), now.month(), now.date()));
         return v
       })
     )
@@ -267,7 +265,7 @@ router.delete('/:id', async (req, res) => {
     session.startTransaction();
     // Stock.ondelete = true
     const notclosed = await StockAccount.countDocuments({ 'holdingStocks.stockId': stockId }).exec({ session })
-
+    console.log(notclosed)
     if (notclosed <= 0) {//보유중인 사람이 없다면
       // 1) Class-Stock 연관 삭제 - classId필요없음
       const delclasstock = await ClassStock.deleteOne({ stockId: stockId }, { session: session });
@@ -283,8 +281,7 @@ router.delete('/:id', async (req, res) => {
       })
     } else {//보유중인 사람이 있다면
       //1) 상장폐지 신청
-      const ondelete = await Stock.updateOne({ _id: stockId }, { $set: { ondelete: true, ondeleteDay: new Date(+new Date() + 15 * 24 * 60 * 60 * 1000) } }).exec({ session })
-
+      const ondelete = await Stock.updateOne({ _id: stockId }, { $set: { ondelete: true, ondeleteDay: moment().tz('Asia/Seoul').add(15,'d') } }).exec({ session })
       await session.commitTransaction();
       session.endSession();
       res.status(200).json({
