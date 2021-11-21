@@ -34,7 +34,7 @@ function TaxTypeArea() {
       ) : (
         data && (
           <>
-            <Revenue data={data.balance} />
+            <Revenue data={data.revenue} />
             <Expenditure data={data.expenditure} />
           </>
         )

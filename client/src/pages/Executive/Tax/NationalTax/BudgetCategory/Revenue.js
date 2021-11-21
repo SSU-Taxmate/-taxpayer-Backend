@@ -19,25 +19,16 @@ function Revenue({ data }) {
             <span style={{ float: "right", marginRight: "2rem" }}>{data.realestate} <sub>미소</sub>
             </span>
           </li>
-          <li className="list-group-item">
-            (임대) 자리세 : 
-            <span style={{ float: "right", marginRight: "2rem" }}>{data.place} <sub>미소</sub>
-            </span>
-          </li>
+
         </ul>
       </div>
       <div id="indirect_tax" className="mt-4">
         <p className="h5 font-weight-bold ">간접세</p>
         <ul className="list-group list-group-flush h6">
           <li className="list-group-item">
-            (재산) 부가가치세 :  <span style={{ float: "right", marginRight: "2rem" }}>{data.electric}
-             <sub>미소</sub>
-             </span> 
-          </li>
-          <li className="list-group-item">
-            {" "}
-            (재산) 인지세 :  <span style={{ float: "right", marginRight: "2rem" }}> {data.stamp} <sub>미소</sub>
-            </span>
+            (재산) 부가가치세 :  <span style={{ float: "right", marginRight: "2rem" }}>{data.vat}
+            <sub>미소</sub>
+            </span> 
           </li>
           <li className="list-group-item">
             (재산) 증권 거래세 :  <span style={{ float: "right", marginRight: "2rem" }}>  {data.stock} <sub>미소</sub>

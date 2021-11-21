@@ -60,9 +60,12 @@ router.get("/", (req, res) => {
 */
 router.get("/month", (req, res) => {
   const classId = req.query.classId;
-  const month= req.query.month;
-  Budget.findOne({ classId: classId, month:month+1}, (err, doc) => {// 
+  const moment = require('moment-timezone')
+  const now = moment().tz('Asia/Seoul')
+  const month=now.month()+1
+  Budget.findOne({ classId: classId, month:month}, (err, doc) => {// 
     const result = doc;
+    console.log(result)
     if (err) return res.status(500).json({ error: err });
     res.json(result);
   });
