@@ -32,10 +32,10 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type:Boolean,
         default:false
     },
-    /*직업 apply가능여부는 직업 설정 테이블 이용하기
-    joinPossible:{
+    /*
+    editable:{
         type:Boolean,
-        default:false
+        default:true
     }*/
 },{timestamps:true})
 const Job = mongoose.model('Job', jobSchema)

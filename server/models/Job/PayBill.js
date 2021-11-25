@@ -1,7 +1,7 @@
 const mongoose =require('mongoose')
 /*
     PayBill
-    : 월급 명세서
+    : 월급 명세서_한 클래스에 하나 존재
 */
 const paybillSchema = mongoose.Schema({
     classId:{
