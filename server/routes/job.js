@@ -58,11 +58,9 @@ router.get('/', (req, res) => {
 })
 
 /*
-    [PUT] 직업 정보 수정 
+    [PUT] 직업 정보 수정=>없애기로 함 
     Job 정보 업데이트 => 삭제하고 수정안되도록 하자.
-    필요하다면, 지원 apply 가능 여부를 처리하는 직업 설정 테이블 이용하기
-    _ apply 가능 전에는 수정할 수 있게
-*/
+
 router.put('/', (req, res) => {
     Job.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
         if (err) return res.json({ success: false, err });
@@ -71,9 +69,12 @@ router.put('/', (req, res) => {
         })
     })
 })
-/*
+*/
+
+
+/*  <일요일-같이 해결하자>
     Job 삭제 -> 예금 삭제처럼 된 로직 
-    바꾸기
+    Job 삭제 급여를 줬는지 안줬는지, 고용한 사람의 직업인지
 */
 router.delete('/:id', async (req, res) => {
     const jobId = req.params.id;
@@ -109,7 +110,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 /*
-    해당 직업을 가지고 있는 모든 학생 =>Contract에서 찾도록 해야 함.
+    1. 해당 잡에 고용중인 학생만 볼 수 있게 _라우터 이름 바꿨으면=> CLIENT에서도 찾아서 바꾸자
 */
 router.get('/:id/students', (req, res) => {
     const jobId = req.params.id
@@ -147,9 +148,31 @@ router.get('/:id/students', (req, res) => {
         res.json(result)
     })
 })
+/*
+    1.2. 고용당한 학생을 다 모아볼 수 있는거
+    
+*/
+/*
+1.3. 
+    해당 직업을 가지고 있는 모든 학생 =>Contract에서 찾도록 해야 함.
+*/
+
+/**
+    2. 지원한 사람들 모아서 볼수 있는 거[선생님]
+ */
+/**
+ * 2.1._ 허락/거절 할 때 db에 반영되도록
+ * 
+ */
+/**
+ * 3. 학생 자신의 지원 결과 및 지원 여부를 볼 수 있는 라우터 
+ * 
+ */
+
 
 /*
   Job마다 salary 부여&세금 부여=>PayBill생성
+  급여명세서_급여를 줬는 안줬는지
 */
 router.post('/salary', async (req, res) => {
     console.log('/salary', req.body)
