@@ -8,7 +8,7 @@ function PaySalary() {
 
   const onhandleclick = () => {
     axios
-      .post("/api/jobs/salary", { classId: classData.classId })
+      .post("/api/jobs/paysalary", { classId: classData.classId })
       .then(function (response) {
         console.log(response);
       })

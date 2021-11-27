@@ -3,7 +3,7 @@
 */
 const express = require("express");
 const router = express.Router();
-
+const moment=require('moment-timezone')
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { JoinedUser } = require('../models/JoinedUser');
@@ -11,6 +11,8 @@ const { JoinDeposit } = require('../models/Bank/JoinDeposit');
 const { StockAccount } = require('../models/Stock/StockAccount');
 const { Stock } = require('../models/Stock/Stock');
 const { Tax } = require('../models/Tax/Tax')
+const {Contract}=require('../models/Job/Contract')
+const {User}=require('../models/User')
 /*
     [완료] 클래스 내 학생에 대한 모든 정보 - 학생 관리 테이블
     query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
@@ -46,21 +48,24 @@ router.get("/", async(req, res) => {
 });
 
 /*
-    [완료] 클래스 내 학생에 대한 job 정보 - job 테이블
-    query{classId:} 로 class에 속한 학생의 userId, studentId는 아는 상황
+    클래스 내 모든 학생의 job정보
+    => Contract 확인으로 변경=> 계약 기간 만료된 학생인지 확인 안함
 */
 router.get("/job", async(req, res) => {
+    //classId
+    console.log(req.query)
     try {
-        const students = await JoinedUser.find(req.query, ["userId", "jobId"])
-            .populate("userId")
-            .populate("jobId")
+        const students = await Contract.find(req.query)
+            .populate("joinedUser")
             .exec();
         let result = await Promise.all(
             students.map(async(v, i) => {
+                const joinedUser=v.joinedUser
+                const user =await User.findOne({_id:joinedUser.userId})
                 return {
-                    studentId: v.userId._id,
-                    name: v.userId.name,
-                    job: v.jobId,
+                    studentId: joinedUser._id,
+                    name: user.name,
+                    job: v.job._id,
                 };
             })
         );
@@ -69,39 +74,27 @@ router.get("/job", async(req, res) => {
         res.status(500).json({ success: false, error: err });
     }
 });
-/*
-    [완료] 클래스 내 한 학생의 직업 지원 
-    : 이미 가지고 있는 직업에 apply 안됨
-*/
-router.post("/:id/jobs/:jobId", (req, res) => {
-    const studentId = req.params.id;
-    const jobId = req.params.jobId;
 
-    JoinedUser.updateOne({ _id: studentId, jobId: { $ne: jobId } }, { $addToSet: { jobId: jobId } }, (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
-        })
-    })
-});
 /*
-    [] 클래스 내 한 학생의 직업 현황
+    [GET] 한 학생의 만료되지 않은 계약서 = 현재 직업
  */
 router.get('/:id/jobs', (req, res) => {
     const studentId = req.params.id
-
-    JoinedUser.findOne({ _id: studentId }).populate('jobId').exec((err, doc) => {
+    Contract.findOne({ joinedUser: studentId, exp:{$gt:moment()}}).populate('jobId').exec((err, doc) => {
         const result = { Job: doc.jobId, studentId: studentId };
-
         if (err) return res.status(500).json({ error: err });
         res.json(result);
     })
-
-
 })
-
+/*
+    학생의 지원서 볼 수 있음
+    =>
+*/
+router.get('/:id/appliances',(req,res)=>{
+    
+})
 /* 
-    [완료] 클래스 내 한 학생의 job 삭제
+    해고=>계약서 파기하는 것으로 바꾸기
 */
 router.delete("/:id/jobs/:jobId", (req, res) => {
     const studentId = req.params.id;
@@ -117,11 +110,10 @@ router.delete("/:id/jobs/:jobId", (req, res) => {
 });
 
 /*
-    ====================== 계좌 정보, 거래 내역
+    ====================== 계좌 정보, 거래 내역    ===================================
 */
 /*
-    [정상] : 학생 자신의 기본 계좌 정보 가져오기
-    : accountId 모르지만, studentId는 아는 상황
+    [GET] : 학생 자신의 기본 계좌 정보
 */
 router.get("/:id/account", (req, res) => {
     Account.findOne({ studentId: req.params.id }, (err, doc) => {
@@ -131,10 +123,8 @@ router.get("/:id/account", (req, res) => {
     });
 });
 /*
-    [정상] : 학생 자신의 계좌 거래 내역보기
-    {accountId:,startDate:,endDate:} <=studentId로 Account에서 찾을 수 있음
+    [GET] : 자신의 계좌 거래 내역
 */
-
 router.get('/:id/account/history', async(req, res) => {
     const startDate = req.query.startDate
     const endDate = req.query.endDate
@@ -154,10 +144,9 @@ router.get('/:id/account/history', async(req, res) => {
 })
 
 /*
-    [*정상]자신 계좌의 통계정보 확인
+    [GET]자신 계좌의 통계정보 확인
     : 입/출금
 */
-
 router.get('/:id/account/statistics', async(req, res) => {
     const startDate = req.query.startDate
     const endDate = req.query.endDate
@@ -225,11 +214,11 @@ router.get('/:id/account/statistics', async(req, res) => {
 });
 
 /*
-  ====================== 가입한 금융 상품
+    ====================== 가입한 금융 상품    ======================
 */
 /*
-  [정상] : 가입한 상품 보여주세요 {studentId:}
-  isClosed : false인 것만!
+    [get] : 본인이 가입한 상품 {studentId:}
+    isClosed : false인 것만!
 */
 router.get("/:id/deposit", (req, res) => {
     const studentId = req.params.id;
@@ -248,10 +237,9 @@ router.get("/:id/deposit", (req, res) => {
 });
 
 /*
-    [정상]student가 구매한 모든 stock 보여주기
+    [get] 본인이 구매한 모든 stock 보여주기
     : ByStudentStock이 사용중
 */
-
 router.get('/:id/stocks', async(req, res) => {
         const studentId = req.params.id;
         const classId = req.query.classId;
@@ -329,10 +317,10 @@ router.get('/:id/stocks', async(req, res) => {
             res.json({ success: false, err })
         }
     })
-    /*
-        [정상]stuent 가 구매한 stock들에 대한 통계정보
-    */
 
+/*
+    [get]본인이 구매한 stock들에 대한 통계정보
+*/
 router.get('/:id/stocks/statistics', async(req, res) => {
     // console.log('/stocks/statistics', req.params)
     const studentId = req.params.id;

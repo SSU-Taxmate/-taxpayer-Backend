@@ -2,34 +2,43 @@
     : /api/jobs
 */
 const express = require('express');
-const { Job } = require('../models/Job/Job');
 const router = express.Router();
+const { Job } = require('../models/Job/Job');
+const { User } = require('../models/User')
 const { JoinedUser } = require('../models/JoinedUser');
 const { startSession } = require('mongoose');
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction')
 const { Tax } = require('../models/Tax/Tax');
 const { Budget } = require('../models/Tax/Budget');
+const { JobApply } = require('../models/Job/JobApply');
 const mongoose = require("mongoose");
+const { Contract } = require('../models/Job/Contract');
+const { PayBill } = require('../models/Job/PayBill');
+const moment = require('moment-timezone')
+
 const ObjectId = mongoose.Types.ObjectId;
 /*
     [Post] 직업 생성
 */
-router.post('/', (req, res) => {
-    const newJob = new Job(req.body);
-
-    // job생성시 이름이 중복으로 존재하는지 체크함
-    const exJob = Job.findOne({ jobId: req.body.jobId });
-    if (exJob) {
-        console.log('존재하는 직업입니다.');
-        res.send('job_create_error=exist');
-        next(error);
+router.post('/', async (req, res) => {
+    const classId = req.body.classId
+    const jobname = req.body.name
+    try {
+        // job생성시 이름이 중복으로 존재하는지 체크함
+        const exJob = await Job.findOne({ classId: classId, name: jobname });
+        console.log(exJob)
+        if (exJob) {
+            console.log('존재하는 직업입니다.');
+            throw ('job_create_error=exist');
+        }
+        const newJob = new Job(req.body);
+        newJob.save()
+        res.status(200).json({ success: true })
+    } catch (err) {
+        res.json({ success: false, err });
     }
 
-    newJob.save((err, doc) => {
-        if (err) return res.json({ success: false, err })
-        return res.status(200).json({ success: true })
-    })
 })
 
 /*
@@ -56,20 +65,6 @@ router.get('/', (req, res) => {
         res.json(result)
     })
 })
-
-/*
-    [PUT] 직업 정보 수정=>없애기로 함 
-    Job 정보 업데이트 => 삭제하고 수정안되도록 하자.
-
-router.put('/', (req, res) => {
-    Job.updateOne({ _id: req.body._id }, { $set: req.body }, (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
-        })
-    })
-})
-*/
 
 
 /*  <일요일-같이 해결하자>
@@ -158,46 +153,117 @@ router.get('/:id/students', (req, res) => {
 */
 
 /**
-    2. 지원한 사람들 모아서 볼수 있는 거[선생님]
+    [GET] 직업별 지원자 확인_선생님
  */
-/**
- * 2.1._ 허락/거절 할 때 db에 반영되도록
- * 
- */
-/**
- * 3. 학생 자신의 지원 결과 및 지원 여부를 볼 수 있는 라우터 
- * 
- */
-
-
-/*
-  Job마다 salary 부여&세금 부여=>PayBill생성
-  급여명세서_급여를 줬는 안줬는지
-*/
-router.post('/salary', async (req, res) => {
-    console.log('/salary', req.body)
-    const classId = req.body.classId
+router.get('/:jobId/applicants', async (req, res) => {
+    const jobId = req.params.jobId;
     const session = await startSession();
     try {
         session.startTransaction();
 
-        // 1) student의 job & account 확인
-        const jobs = await JoinedUser.find({ classId: classId }).exec({ session })
-        //let i =0;
-        for (const v of jobs) {
-            //console.log('>>>>>>',i,'>>>>>>',v)
-            //i++;
-            const userjob = await Job.find({ '_id': { $in: v.jobId } }).exec({ session })
-            for await (const job of userjob) { //user가 가지고 있는 job들
-                const account = await Account.findOne({ studentId: v._id }).exec({ session })
+        const appliances = await JobApply.find({ jobId: jobId }).exec({ session })
+        let applicants = await Promise.all(
+            appliances.map(async (v, i) => {
+                const applicantId = await JoinedUser.findOne({ _id: v.joinedUser._id })
+                const applicant = await User.findOne({ _id: applicantId.userId })
+                return { name: applicant.name, studentId: applicantId._id }
+            })
+        )
+
+        await session.commitTransaction();
+        session.endSession();
+
+        res.status(200).json(applicants)
+    } catch (err) {
+        console.log(err)
+        await session.abortTransaction();
+        session.endSession();
+        res.json({ success: false, err });
+    }
+
+})
+/*
+    [POST] 직업 지원_학생
+*/
+router.post('/apply', (req, res) => {
+    const appliance = new JobApply(req.body)
+    appliance.save((err, doc) => {
+        if (err) return res.json({ success: false, err })
+        res.status(200).json({ success: true })
+    })
+
+})
+/**
+ * [GET] 고용 or 탈락
+ */
+router.get('/hire', async (req, res) => {
+    const hiring = req.body.hiring //true, false
+    const classId = req.body.classId
+    const joinedUser = req.body.joinedUser
+    const jobId = req.body.jobId
+    console.log(req.body)
+    const session = await startSession();
+    try {
+        session.startTransaction();
+
+        if (hiring) {    // 고용 => 계약서 작성
+            const job = await Job.findOne({ _id: jobId }).exec({ session })
+            const contractedJob = {_id:job._id, name: job.name, salary: job.salary, whatdo: job.whatdo }
+            console.log(job, contractedJob)
+            const newcontract = new Contract({ classId: classId, joinedUser: joinedUser, job: contractedJob })
+            console.log(newcontract)
+
+            await newcontract.save({ session })
+        }
+        // 지원서 상태 업데이트
+        await JobApply.updateOne({ classId: classId, joinedUser: joinedUser, jobId: jobId }, { state: hiring ? 'allow' : 'reject' }).exec({ session })
+
+        await session.commitTransaction();
+        session.endSession();
+        res.status(200).json({
+            success: true
+        })
+    } catch (err) {
+        await session.abortTransaction();
+        session.endSession();
+        res.json({ success: false, err });
+    }
+})
+/*
+    [POST]월급 부여 
+    월급 부여 날인 경우
+*/
+router.post('/paysalary', async (req, res) => {
+    console.log('/paysalary', req.body)
+    const classId = req.body.classId
+    const session = await startSession();
+    try {
+        session.startTransaction();
+        // 클래스별로 하나 존재하는 PayBill확인
+        const paybill = await PayBill.findOne({ classId: classId })
+
+        // 1) student의 job 확인_월급날이 아닌 경우 제거
+        const contracts = await Contract.find({ classId: classId, payday: moment().date() }).exec({ session })
+
+        for (const contract of contracts) {
+            const job = contract.job
+            //한 학생이 해당 월에 대한 직업의 급여을 받았는가?
+            const payed = await paybill.employees.filter(v => v.jobname==job.name && moment(v.payedDate).month() == moment().month() && v.joinedUser.toString() == contract.joinedUser.toString())
+            
+            // 월급 명세서 확인
+            if (payed.length == 0) {
+                await PayBill.updateOne({ classId: classId }, { $push: { joinedUser: contract.joinedUser, payedDate: moment(), payment: job.salary,jobname:job.name } }).exec({ session })
+
+                // 1)월급 통장 찾기
+                const account = await Account.findOne({ studentId: contract.joinedUser }).exec({ session })
                 // 2) 월급
                 const give = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: job.salary } }).exec({ session })
-                const after = await Account.findOne({ studentId: v._id }).exec({ session })
+                const afterpayment = await Account.findOne({ studentId: contract.joinedUser }).exec({ session })
                 const salary = new AccountTransaction({
                     accountId: account._id,
                     transactionType: 1,
                     amount: job.salary,
-                    afterbalance: after.currentBalance,
+                    afterbalance: afterpayment.currentBalance,
                     memo: '월급'
                 })
                 await salary.save({ session })
@@ -209,7 +275,7 @@ router.post('/salary', async (req, res) => {
                 //3-2) 통장에서 세금 징수
                 if (incometax > 0) {
                     const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: -incometax } }).exec({ session })
-                    const after2 = await Account.findOne({ studentId: v._id }).exec({ session })
+                    const after2 = await Account.findOne({ studentId: contract.joinedUser }).exec({ session })
                     //3-3) 통장에 내역 기록 -------------------------
                     const paytax = new AccountTransaction({
                         accountId: account._id,
@@ -220,9 +286,11 @@ router.post('/salary', async (req, res) => {
                     })
                     await paytax.save({ session })
                     // 3-4) Budget의 income에 추가
-                    const budget = await Budget.updateOne({ classId: classId }, { $inc: { "balance.income": +incometax } }).exec({ session })
+                    const budget = await Budget.updateOne({ classId: classId }, { $inc: { "revenue.income": +incometax } }).exec({ session })
                 }
             }
+            
+
         }
 
         await session.commitTransaction();
@@ -237,6 +305,8 @@ router.post('/salary', async (req, res) => {
         res.json({ success: false, err });
     }
 })
-// 월급 명세서 보여주는 화면 추가
 
+/*
+
+*/
 module.exports = router;

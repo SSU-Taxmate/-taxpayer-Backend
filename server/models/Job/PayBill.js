@@ -1,7 +1,7 @@
 const mongoose =require('mongoose')
 /*
     PayBill
-    : 월급 명세서_한 클래스에 하나 존재
+    : 월급 명세서_클래스 생성될때 추가
 */
 const paybillSchema = mongoose.Schema({
     classId:{
@@ -15,9 +15,12 @@ const paybillSchema = mongoose.Schema({
             ref:'JoinedUser',
             required:true
         },
-        payrequired:{
-            type:Boolean,
-            default:true
+        jobname:{
+            type:String,
+            required:true
+        },
+        payedDate:{
+            type:Date
         },
         payment:{
             type:Number,
@@ -27,3 +30,4 @@ const paybillSchema = mongoose.Schema({
 })
 
 const PayBill = mongoose.model('PayBill', paybillSchema)
+module.exports = { PayBill}
