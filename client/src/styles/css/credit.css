@@ -1,9 +1,0 @@
-.creditBaseTable{
-    background-color:lightblue ;
-}
-
-.creditChart{
-    display: "flex";
-    flex-direction: "column";
-    justify-Content: " space-around";
-}

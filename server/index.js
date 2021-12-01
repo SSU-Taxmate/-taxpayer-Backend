@@ -48,9 +48,15 @@ app.use('/api/congress', require('./routes/congress'))
 //app.use('/api/batch',require('./routes/batch'))
 /* 벌금 */
 app.use('/api/fine', require('./routes/fine'))
+<<<<<<< Updated upstream
 /* 대시보드 */
 app.use('/api/dashboard',require('./routes/dashboard'))
 app.get('/', (req, res) => res.send('Hello World!'))
+=======
+    /* 대시보드 */
+app.use('/api/dashboard', require('./routes/dashboard'))
+app.get('/', (req, res) => res.send('Hello dff!'))
+>>>>>>> Stashed changes
 
 app.get('/api/stats/nation', (req, res) => {
 
