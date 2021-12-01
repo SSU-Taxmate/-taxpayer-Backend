@@ -48,6 +48,7 @@ app.use('/api/congress', require('./routes/congress'))
 app.use('/api/fine', require('./routes/fine'))
     /* 대시보드 */
 app.use('/api/dashboard', require('./routes/dashboard'))
+
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/api/stats/nation', (req, res) => {
