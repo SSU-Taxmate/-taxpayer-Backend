@@ -1,7 +1,8 @@
 /*
     Budget[이번달]
-    :한달마다 BudgetHistory, BudgetAccount로
-    Class 만들때 자동 생성
+    :한달마다 새로 만들기.
+    : 전달 기록은 남긴다.
+    Class 만들때 초기 값만 자동 생성
 */
 const mongoose = require('mongoose')
 
@@ -10,24 +11,16 @@ const budgetSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
-    balance: { // 이번달 세입현황
+    month:{
+        type:Number,
+        required:true
+    },
+    revenue: { // 이번달 세입현황(과거 budget& 종류 축소)
         income: { //소득세
             type: Number,
             default: 0
         },
         realestate: { //부동산세
-            type: Number,
-            default: 0
-        },
-        place: { //자리세
-            type: Number,
-            default: 0
-        },
-        electric: { //전기세
-            type: Number,
-            default: 0
-        },
-        stamp: { //인지세
             type: Number,
             default: 0
         },

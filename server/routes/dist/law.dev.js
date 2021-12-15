@@ -5,7 +5,7 @@
 */
 var express = require('express');
 
-var _require = require('../models/Law'),
+var _require = require('../models/Law/Law'),
     Law = _require.Law;
 
 var router = express.Router(); //create - classlaw에도 저장을 해야 함.
@@ -16,9 +16,7 @@ var router = express.Router(); //create - classlaw에도 저장을 해야 함.
 */
 
 router.post('/', function (req, res) {
-  //console.log('Law',req.body)
   var laws = new Law(req.body);
-  console.log(laws);
   laws.save(function (err, doc) {
     if (err) return res.json({
       success: false,
@@ -36,10 +34,8 @@ router.post('/', function (req, res) {
 */
 
 router.get('/', function (req, res) {
-  //console.log('/law',req.query)
   Law.find(req.query, function (err, classlaw) {
-    var result = classlaw; //console.log(result)
-
+    var result = classlaw;
     if (err) return res.status(500).json({
       error: err
     });
@@ -52,7 +48,6 @@ router.get('/', function (req, res) {
 */
 
 router.put('/', function (req, res) {
-  //console.log('update',req.body)
   Law.updateOne({
     _id: req.body._id
   }, {
@@ -72,7 +67,6 @@ router.put('/', function (req, res) {
 */
 
 router["delete"]('/:id', function (req, res) {
-  console.log(req.params.id);
   var lawId = req.params.id;
   Law.deleteOne({
     _id: lawId
