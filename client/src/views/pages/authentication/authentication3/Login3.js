@@ -65,14 +65,7 @@ const Login = () => {
                             gutterBottom
                             variant={matchDownSM ? "h3" : "h2"}
                           >
-                            Hi, Welcome Back
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            fontSize="16px"
-                            textAlign={matchDownSM ? "center" : "inherit"}
-                          >
-                            Enter your credentials to continue
+                            로그인
                           </Typography>
                         </Stack>
                       </Grid>
