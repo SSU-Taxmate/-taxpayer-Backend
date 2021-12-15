@@ -7,6 +7,7 @@ const { Budget } = require("../models/Tax/Budget");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const router = express.Router();
+const moment = require('moment-timezone')
 
 /*
   [정상] : 예산 사용
@@ -60,7 +61,6 @@ router.get("/", (req, res) => {
 */
 router.get("/month", (req, res) => {
   const classId = req.query.classId;
-  const moment = require('moment-timezone')
   const now = moment().tz('Asia/Seoul')
   const month=now.month()+1
   Budget.findOne({ classId: classId, month:month}, (err, doc) => {// 

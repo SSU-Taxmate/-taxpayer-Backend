@@ -1,16 +1,15 @@
 const mongoose = require('mongoose')
 /*
     Job
-    : 수정안되게하자
+    : 수정 불가
 */
 const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
     classId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class'
     },
-    name: {/*직업명 : unique 없애고 검사하는 로직 추가하기 */
+    name: {/*직업명 */
         type: String,
-        unique:true
     },
     salary: {/*예상 월급 */
         type: Number,
@@ -32,11 +31,6 @@ const jobSchema = mongoose.Schema({ /*해당 클래스의 job */
         type:Boolean,
         default:false
     },
-    /*직업 apply가능여부는 직업 설정 테이블 이용하기
-    joinPossible:{
-        type:Boolean,
-        default:false
-    }*/
 },{timestamps:true})
 const Job = mongoose.model('Job', jobSchema)
 module.exports = { Job}
