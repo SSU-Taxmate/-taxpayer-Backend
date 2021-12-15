@@ -13,11 +13,8 @@ function ChartArea() {
   const [revenue, setrevenue] = useState();
   const [rlabel, setrlabel] = useState();
   const revenueto = {
-    electric: "전기세",
     income: "소득세",
-    place: "자리세",
     realestate: "부동산세",
-    stamp: "인지세",
     stock: "증권 거래세",
     vat: "부가가치세",
     fine: "벌금"
@@ -39,8 +36,8 @@ function ChartArea() {
       setelabel(
         Object.keys(result.data.expenditure).map((v, i) => expendto[v])
       );
-      setrevenue(Object.values(result.data.balance));
-      setrlabel(Object.keys(result.data.balance).map((v, i) => revenueto[v]));
+      setrevenue(Object.values(result.data.revenue));
+      setrlabel(Object.keys(result.data.revenue).map((v, i) => revenueto[v]));
     } catch (error) {
       setIsError(true);
     }
@@ -62,8 +59,6 @@ function ChartArea() {
             "rgb(255, 205, 86)",
             "rgb(75, 192, 192)",
             "rgb(54, 162, 235)",
-            "rgb(153, 102, 255)",
-            "rgb(201, 203, 207)",
           ],
           hoverOffset: 2,
         },

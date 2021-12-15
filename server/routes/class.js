@@ -5,7 +5,7 @@ const express = require("express");
 const { startSession } = require("mongoose");
 const { Account } = require("../models/Bank/Account");
 const { Budget } = require("../models/Tax/Budget");
-const { BudgetAccount } = require('../models/Tax/BudgetAccount')
+//const { BudgetAccount } = require('../models/Tax/BudgetAccount')
 const { Class } = require("../models/Class");
 const { JoinedUser } = require("../models/JoinedUser");
 const { Tax } = require("../models/Tax/Tax");
@@ -14,6 +14,7 @@ const { AccountTransaction } = require("../models/Bank/AccountTransaction");
 const {Fine}=require('../models/Judiciary/Fine')
 const {JoinDeposit}=require('../models/Bank/JoinDeposit')
 const {StockOrderHistory}=require('../models/Stock/StockOrderHistory')
+const moment=require('moment-timezone')
 const router = express.Router();
 
 /*
@@ -32,6 +33,15 @@ router.post("/", async (req, res) => {
         Random = 10000;
       }
     } // 중복없는 랜덤번호
+
+    const exClass = await Class.findOne({ name: req.body.name }); // 이메일 중복 확인
+        if (exClass) {
+            console.log('존재하는 클래스명입니다.');
+            res.send('class_create_error=exist');
+            // return res.status(403).send('error 설명 메시지');
+            next(error);
+        }//클래스의 중복이름체크
+
     const cClass = await Class.create({
       name: req.body.name,
       image: req.body.image,
@@ -44,10 +54,10 @@ router.post("/", async (req, res) => {
     const cTax = new Tax({ classId: cClass._id });
     const taxres = await cTax.save({ session });
     // 3) Class Account 생성
-    const budget = new Budget({ classId: cClass._id });
-    const budgetaccount = new BudgetAccount({ classId: cClass._id })
+    const budget = new Budget({ classId: cClass._id ,month:moment().tz('Asia/Seoul').month()+1});
+    //const budgetaccount = new BudgetAccount({ classId: cClass._id })
     const accountres = await budget.save({ session });
-    const bacount = await budgetaccount.save({ session });
+   // const bacount = await budgetaccount.save({ session });
 
     await session.commitTransaction();
     session.endSession();

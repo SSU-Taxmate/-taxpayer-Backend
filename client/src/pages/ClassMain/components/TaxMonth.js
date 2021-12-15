@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import Error from '../../../components/Error'
 import Loading from '../../../components/Loading'
+import moment from 'moment-timezone';
+
 function TaxMonth() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -15,7 +17,7 @@ function TaxMonth() {
             setIsError(false);
             setIsLoading(true);
             try {
-                const result = await axios.get(`/api/budget/month`, { params: { classId: classData.classId } })
+                const result = await axios.get(`/api/budget/month`, { params: { classId: classData.classId ,month:moment().tz('Asia/Seoul').month()} })
                 setData(result.data)
             } catch (error) {
                 setIsError(true);
@@ -42,13 +44,11 @@ function TaxMonth() {
                                         <div className="col-auto">
                                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 세입</div>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{data.balance.income +
-                                        data.balance.realestate +
-                                        data.balance.place +
-                                        data.balance.electric +
-                                        data.balance.stamp +
-                                        data.balance.vat +
-                                        data.balance.stock}미소</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{
+                                        data.revenue.income+
+                                        data.revenue.realestate +
+                                        data.revenue.vat +
+                                        data.revenue.stock}미소</div>
                                         </div>
 
 
@@ -57,9 +57,9 @@ function TaxMonth() {
                                                 세출</div>
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">{
                                             data.expenditure.culture +
-                                        data.expenditure.education +
-                                        data.expenditure.environment+
-                                        data.expenditure.etc}미소</div>
+                                            data.expenditure.education +
+                                            data.expenditure.environment+
+                                            data.expenditure.etc}미소</div>
                                         </div>
                                     </div>
                                 </div>

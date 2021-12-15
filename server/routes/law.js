@@ -2,7 +2,7 @@
   : /api/laws
 */
 const express = require('express');
-const { Law } = require('../models/Law');
+const { Law } = require('../models/Law/Law');
 const router = express.Router();
 //create - classlaw에도 저장을 해야 함.
 /*
