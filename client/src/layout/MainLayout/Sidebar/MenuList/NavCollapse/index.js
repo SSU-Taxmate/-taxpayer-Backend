@@ -34,6 +34,16 @@ const NavCollapse = ({ menu, level }) => {
                 return <NavCollapse key={item.id} menu={item} level={level + 1} />;
             case 'item':
                 return <NavItem key={item.id} item={item} level={level + 1} />;
+            case 'teacher'://선생님인 경우에만 띄울 수 있도록
+                if (1==1) 
+                    return <NavItem key={item.id} item={item} level={level + 1} />;
+                else 
+                    break
+            case 'student': //학생인 경우에만 띄울 수 있도록
+                if (1==1)
+                    return <NavItem key={item.id} item={item} level={level + 1} />;
+                else 
+                    break
             default:
                 return (
                     <Typography key={item.id} variant="h6" color="error" align="center">
