@@ -40,7 +40,7 @@ const utilities = {
           id: "deposit",
           title: "예금",
           type: "item",
-          url: "/icons/tabler-icons",
+          url: "/bank/default",
           breadcrumbs: false,
         },
         {
@@ -63,7 +63,7 @@ const utilities = {
           id: "stock",
           title: "주식",
           type: "item",
-          url: "/icons/tabler-icons",
+          url: "/stock/default",
           breadcrumbs: false,
         },
         {
@@ -93,7 +93,7 @@ const utilities = {
           id: "national-tax",
           title: "나라 세금 통계",
           type: "item",
-          url: "/icons/tabler-icons",
+          url: "/national-tax/default",
           breadcrumbs: false,
         },
         {
@@ -123,7 +123,7 @@ const utilities = {
           id: "national-law",
           title: "국가 법률",
           type: "item",
-          url: "/icons/tabler-icons",
+          url: "/law/default",
           breadcrumbs: false,
         },
       ],
@@ -134,7 +134,7 @@ const utilities = {
       id: "congress",
       title: "국회",
       type: "item",
-      url: "/dashboard/default",
+      url: "/congress/default",
       icon: icons.IconPalette,
     },
 
@@ -147,18 +147,19 @@ const utilities = {
       children: [
         {
           id: "national-law",
+          title: "벌금 통계",
+          type: "teacher",
+          url: "/fine/default",
+          breadcrumbs: false,
+        },
+        {
+          id: "national-law",
           title: "벌금 설정",
           type: "teacher",
           url: "/icons/tabler-icons",
           breadcrumbs: false,
         },
-        {
-          id: "national-law",
-          title: "벌금 통계",
-          type: "teacher",
-          url: "/icons/tabler-icons",
-          breadcrumbs: false,
-        },
+
         {
           id: "national-law",
           title: "나의 벌금",

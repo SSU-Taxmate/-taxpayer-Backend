@@ -25,20 +25,64 @@ const UtilsTablerIcons = Loadable(
 // sample page routing
 const SamplePage = Loadable(lazy(() => import("../views/sample-page")));
 
+//===============TaxMate import======================================//
+const ClassMain = Loadable(
+  lazy(() => import("../views/pages/classmain/ClassMain"))
+);
+const Bank = Loadable(lazy(() => import("../views/pages/bank/Bank")));
+
+const Stock = Loadable(lazy(() => import("../views/pages/stock/Stock")));
+
+const Congress = Loadable(
+  lazy(() => import("../views/pages/congress/Congress"))
+);
+
+const NationalTax = Loadable(
+  lazy(() => import("../views/pages/tax/NationalTax"))
+);
+
+const Law = Loadable(lazy(() => import("../views/pages/law/Law")));
+const Fine = Loadable(lazy(() => import("../views/pages/fine/Fine")));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
   path: "/",
   element: <MainLayout />,
   children: [
+    //====taxmate================================
     {
       path: "/",
       element: <DashboardDefault />,
     },
     {
-      path: "/dashboard/default",
-      element: <DashboardDefault />,
+      path: "/classmain/default",
+      element: <ClassMain />,
     },
+    {
+      path: "/bank/default",
+      element: <Bank />,
+    },
+    {
+      path: "/stock/default",
+      element: <Stock />,
+    },
+    {
+      path: "/congress/default",
+      element: <Congress />,
+    },
+    {
+      path: "/national-tax/default",
+      element: <NationalTax />,
+    },
+    {
+      path: "/law/default",
+      element: <Law />,
+    },
+    {
+      path: "/fine/default",
+      element: <Fine />,
+    },
+    //=======================================
     {
       path: "/utils/util-typography",
       element: <UtilsTypography />,

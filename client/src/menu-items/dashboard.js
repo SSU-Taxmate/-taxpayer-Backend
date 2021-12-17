@@ -15,7 +15,7 @@ const dashboard = {
       id: "default",
       title: "학급메인",
       type: "item",
-      url: "/dashboard/default",
+      url: "/classmain/default",
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
