@@ -146,14 +146,14 @@ const utilities = {
       icon: icons.IconAlertTriangle,
       children: [
         {
-          id: "national-law",
+          id: "fine",
           title: "벌금 통계",
           type: "teacher",
           url: "/fine/default",
           breadcrumbs: false,
         },
         {
-          id: "national-law",
+          id: "fineconfig",
           title: "벌금 설정",
           type: "teacher",
           url: "/icons/tabler-icons",
@@ -161,7 +161,7 @@ const utilities = {
         },
 
         {
-          id: "national-law",
+          id: "myfine",
           title: "나의 벌금",
           type: "teacher",
           url: "/icons/tabler-icons",
