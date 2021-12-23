@@ -2,13 +2,14 @@ import React from "react";
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Grid, Typography, Chip, Collapse,  } from '@mui/material';
+import { Avatar, Grid, Typography, Chip, Collapse,Divider } from '@mui/material';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import StockChart from "./StockChart";
 import StockInfo from './StockInfo';
 
-function StockLine() {
+function StockLine(props) {
+    const company = props.company;
     const theme = useTheme();
     const chipSX = {
         height: 40,
@@ -30,55 +31,54 @@ function StockLine() {
     return (
         <>
             <Grid container direction="column" onClick={handleClick}>
-                <Grid item>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item xs={8}>
-                            <Typography variant="subtitle1" color="inherit" fontSize={20}>
-                                CoConut
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Chip label="trade" bgcolor="grey.300" sx={chipTradeSX} />
-                        </Grid>
-                        <Grid item>
-                            <Grid container alignItems="center" justifyContent="space-between">
-                                <Grid item>
-                                    <Typography variant="subtitle1" color="inherit" fontSize={24}>
-                                        $200.00
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Avatar
-                                        variant="rounded"
-                                        sx={{
-                                            width: 24,
-                                            height: 24,
-                                            borderRadius: '5px',
-                                            backgroundColor: theme.palette.error.light,
-                                            color: theme.palette.error.dark,
-                                            ml: 2
-                                        }}
-                                    >
-                                        <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
-                                    </Avatar>
-                                </Grid>
+                <Grid container alignItems="center" justifyContent="space-between">
+                    <Grid item xs={8}>
+                        <Typography variant="subtitle1" color="inherit" fontSize={20}>
+                            {company.name}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Chip label="trade" bgcolor="grey.300" sx={chipTradeSX} />
+                    </Grid>
+                    <Grid item>
+                        <Grid container alignItems="center" justifyContent="space-between">
+                            <Grid item>
+                                <Typography variant="subtitle1" color="inherit" fontSize={24}>
+                                    {company.stock}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Avatar
+                                    variant="rounded"
+                                    sx={{
+                                        width: 24,
+                                        height: 24,
+                                        borderRadius: '5px',
+                                        backgroundColor: theme.palette.error.light,
+                                        color: theme.palette.error.dark,
+                                        ml: 2
+                                    }}
+                                >
+                                    <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
+                                </Avatar>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid container direction="column">
+                {/* 접히는 부분 */}
                 <Collapse in={open}>
-                    <Grid container direction='row'>
+                    <Grid container direction='row' alignItems="center" justifyContent="space-between">
                         <Grid item xs={6} sx={{ pt: '16px !important' }}>
                             <StockChart />
                         </Grid>
-                        <Grid item xs={0.5} sx={{ pt: '16px !important' }} />
-                        <Grid item xs={5} sx={{ pt: '16px !important' }}>
-                           <StockInfo/>
-                        </Grid>
-                        <Grid item xs={0.5} sx={{ pt: '16px !important' }} />
+                        
+                        <Divider orientation="vertical" flexItem/>
 
+                        <Grid item xs={5} sx={{ pt: '16px !important' }}>
+                            <StockInfo />
+                        </Grid>
                     </Grid>
                 </Collapse>
             </Grid>
