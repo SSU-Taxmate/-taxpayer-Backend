@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Grid, Typography, Chip, Collapse, Divider } from '@mui/material';
+import {  Grid, Divider } from '@mui/material';
 
 function StockInfo() {
     return (
@@ -12,7 +12,7 @@ function StockInfo() {
                     100
                 </Grid>
             </Grid>
-            <Divider sx={{ my: 1, background: '#212121' }} />
+            <Divider sx={{ my: 1}} />
 
 
             <Grid item sx={{ p: '8px !important', fontSize: 18 }}>
