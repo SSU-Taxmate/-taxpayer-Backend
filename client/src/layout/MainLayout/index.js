@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery,Container } from '@mui/material';
 
 // project imports
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
@@ -104,9 +104,11 @@ const MainLayout = () => {
 
             {/* main content */}
             <Main theme={theme} open={leftDrawerOpened}>
+                <Container sx={{width:"80%"}}>
                 {/* breadcrumb */}
                 <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
                 <Outlet />
+                </Container>
             </Main>
             <Customization />
         </Box>
