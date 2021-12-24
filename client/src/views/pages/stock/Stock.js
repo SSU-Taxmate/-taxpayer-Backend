@@ -3,9 +3,10 @@ import { useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Divider, Grid, Menu, MenuItem, Typography, Pagination } from '@mui/material';
+import { Divider, Grid, Menu, MenuItem, Stack, Container, Paper, Pagination } from '@mui/material';
 
 import { gridSpacing } from '../../../store/constant';
+import { styled } from '@mui/material/styles';
 
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 
@@ -24,6 +25,19 @@ function Stock() {
     setAnchorEl(null);
   };
 
+  const Item = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(2),
+    fontSize: '18px'
+  }));
+  const SecondHeaderTitle = styled(Paper)(({ theme }) => ({
+    color: '#000000',
+    fontWeight:'bold',
+    fontSize: '18px'
+  }));
+  const SecondHeaderData = styled(Paper)(({ theme }) => ({
+    color: '#2F80ED',
+    fontSize: '18px',
+  }));
   return <Grid container spacing={gridSpacing} sx={{ justifyContent: 'space-around' }} xs={12}>
     <Grid item xs={12}>
       <Grid container alignContent="center" justifyContent='flex-end'>
@@ -74,7 +88,45 @@ function Stock() {
         <Grid item >1000000000</Grid>
       </div>
     </Grid>
-      <Divider sx={{ padding:'20px',display: 'flex', justifyContent: 'center',pb: 1.5, width: '900px' }} />
+    <Divider sx={{ padding: '20px', display: 'flex', justifyContent: 'center', pb: 1.5, width: '900px' }} />
+    <Item>
+      <Grid item xs={12} mt={2} style={{ display: 'flex' }}>
+        <Grid item xs={6}>
+          <SecondHeaderTitle>총 매입 </SecondHeaderTitle>
+        </Grid>
+        <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <SecondHeaderData>555,156 </SecondHeaderData>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} mt={2} style={{ display: 'flex' }}>
+        <Grid item xs={6} style={{ display: 'flex' }}>
+          <SecondHeaderTitle>총 평가 </SecondHeaderTitle>
+        </Grid>
+        <Grid item xs={6}  style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <SecondHeaderData>555,156,154 </SecondHeaderData>
+        </Grid>
+      </Grid>
+    </Item>
+    <Item>
+      <Grid item xs={12} mt={2} style={{ display: 'flex' }}>
+        <Grid item xs={6}>
+          <SecondHeaderTitle>추정자산 </SecondHeaderTitle>
+        </Grid>
+        <Grid item xs={6}>
+          <SecondHeaderData>555,156 </SecondHeaderData>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} mt={2} style={{ display: 'flex' }}>
+        <Grid item xs={6}>
+          <SecondHeaderTitle>평가 손익 </SecondHeaderTitle>
+        </Grid>
+        <Grid item xs={6} >
+          <SecondHeaderData>555,156,154 </SecondHeaderData>
+        </Grid>
+      </Grid>
+    </Item>
+
+
     {/* 주식 목록 */}
     <Grid item xs={12}>
       <StockLine company={company} />
