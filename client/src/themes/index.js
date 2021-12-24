@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-
+/* theme바꾸는 곳 */
 // assets
 import colors from "../assets/scss/_themes-vars.module.scss";
 
@@ -21,13 +21,13 @@ export const theme = (customization) => {
     heading: color.grey900,
     paper: color.paper,
     backgroundDefault: color.paper,
-    background: color.primaryLight,
+    //background: color.primaryLight,
     darkTextPrimary: color.grey700,
     darkTextSecondary: color.grey500,
     textDark: color.grey900,
     menuSelected: color.secondaryDark,
     menuSelectedBack: color.secondaryLight,
-    divider: color.grey200,
+    divider: color.grey400,
     customization,
   };
 
