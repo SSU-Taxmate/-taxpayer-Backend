@@ -6,7 +6,7 @@ const icons = { IconDashboard };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
-const dashboard = {
+const classmenu = {
   id: "class",
   title: "학급",
   type: "group",
@@ -15,7 +15,7 @@ const dashboard = {
       id: "default",
       title: "학급메인",
       type: "item",
-      url: "/classmain/default",
+      url: "/class",
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
@@ -23,11 +23,11 @@ const dashboard = {
       id: "classconfig",
       title: "학급설정",
       type: "teacher",
-      url: "/dashboard/default",
+      url: "/class/manage",
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
   ],
 };
 
-export default dashboard;
+export default classmenu;

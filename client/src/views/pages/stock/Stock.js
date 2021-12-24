@@ -8,18 +8,18 @@ import {
   Grid,
   Menu,
   MenuItem,
-  Stack,
-  Container,
   Paper,
   Pagination,
+  Button,
 } from "@mui/material";
-
+import { Link } from "react-router-dom";
 import { gridSpacing } from "../../../store/constant";
 import { styled } from "@mui/material/styles";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-import StockLine from "./StockLine";
+import StockLine from "./StockList";
 import blueBox from "../../../assets/images/blue_box.svg";
 function Stock() {
   const company = { name: "coconut", stock: 100 };
@@ -30,13 +30,15 @@ function Stock() {
     setAnchorEl(event.currentTarget);
   };
 
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const Item = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(2),
-    fontSize: "18px",
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    color: theme.palette.text.secondary,
   }));
   const SecondHeaderTitle = styled(Paper)(({ theme }) => ({
     color: "#000000",
@@ -51,11 +53,11 @@ function Stock() {
     <Grid
       container
       spacing={gridSpacing}
-      sx={{ justifyContent: "space-around" }}
+      sx={{ justifyContent: "space-between" }}
       xs={12}
     >
       <Grid item xs={12}>
-        <Grid container alignContent="center" justifyContent="flex-end">
+        <Grid container justifyContent="flex-end">
           <Grid item>
             <MoreHorizOutlinedIcon
               fontSize="small"
@@ -90,9 +92,11 @@ function Stock() {
         </Grid>
       </Grid>
       {/*  홍길동님의 주식 */}
+
       <Grid
         item
-        style={{ display: "flex", paddingBlockStart: "50px", fontSize: "36px" }}
+        xs={12}
+        style={{ display: "flex", justifyContent: 'center', paddingBlockStart: "50px", fontSize: "36px" }}
       >
         <div
           style={{ display: "flex", fontWeight: "bold", marginRight: "50px" }}
@@ -110,76 +114,90 @@ function Stock() {
             홍길동
           </div>
           님의 주식
+
         </div>
         <div style={{ display: "flex", fontWeight: "bold" }}>
-          <Grid item sx={{ pr: "15px", fontSize: "14px" }}>
+          <Grid item sx={{ paddingRight: "15px", fontSize: "14px" }}>
             평가금액
           </Grid>
           <Grid item>1000000000</Grid>
+
         </div>
       </Grid>
-      <Divider
-        sx={{
-          padding: "20px",
-          display: "flex",
-          justifyContent: "center",
-          pb: 1.5,
-          width: "900px",
-        }}
-      />
-      <Item style={{ width: "30%" }}>
-        <Grid container xs={12} mt={2} style={{ display: "flex" }}>
-          <Grid item xs={12} sm={6}>
-            <SecondHeaderTitle>총 매입 </SecondHeaderTitle>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <SecondHeaderData>555,156 </SecondHeaderData>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} mt={2} style={{ display: "flex" }}>
-          <Grid item xs={6} style={{ display: "flex" }}>
-            <SecondHeaderTitle>총 평가 </SecondHeaderTitle>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <SecondHeaderData>555,156,154 </SecondHeaderData>
-          </Grid>
-        </Grid>
-      </Item>
 
-      <Item style={{ width: "30%" }}>
-        <Grid item xs={12} mt={2} style={{ display: "flex" }}>
-          <Grid item xs={6}>
-            <SecondHeaderTitle>추정자산 </SecondHeaderTitle>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <SecondHeaderData>555,156 </SecondHeaderData>
-          </Grid>
+
+      {/*자세히보러가기*/}
+      <Grid
+        item
+        style={{ display: "flex", justifyContent: 'flex-end', paddingTop: "30px", width: "96%" }}
+      >
+        <Link to={`/taxmate/students/${100}/stock-account`} key={100} style={{ verticalAlign: "top", fontSize: "12px" }}>
+          자세히 보러가기
+          <ArrowForwardIosIcon
+            fontSize="12px"
+            sx={{
+              color: theme.palette.primary[200],
+              cursor: "pointer",
+            }}
+          />
+        </Link>
+      </Grid>
+
+      {/*구분선*/}
+      <Grid
+        item
+        xs={12}
+        style={{ paddingTop: "3px", paddingBottom: 20, display: "flex", justifyContent: 'center' }}
+      >
+        <Divider
+          sx={{
+            width: "90%",
+          }}
+        />
+      </Grid>
+
+      {/*표*/}
+      <Grid container spacing={2}>
+        <Grid item xs={1} md={1} />
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderTitle>총매입</SecondHeaderTitle></Item>
         </Grid>
-        <Grid item xs={12} mt={2} style={{ display: "flex" }}>
-          <Grid item xs={6}>
-            <SecondHeaderTitle>평가 손익 </SecondHeaderTitle>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <SecondHeaderData>555,156,154 </SecondHeaderData>
-          </Grid>
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderData>11111111</SecondHeaderData></Item>
         </Grid>
-      </Item>
+        <Grid item xs={2} md={2}>
+        </Grid>
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderTitle>추정자산</SecondHeaderTitle></Item>
+        </Grid>
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderData>2222222222</SecondHeaderData></Item>
+        </Grid>
+        <Grid item xs={1} md={1} />
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={1} md={1} />
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderTitle>총평가</SecondHeaderTitle></Item>
+        </Grid>
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderData>11111111</SecondHeaderData></Item>
+        </Grid>
+        <Grid item xs={2} md={2}>
+        </Grid>
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderTitle>평가손익</SecondHeaderTitle></Item>
+        </Grid>
+        <Grid item xs={2} md={2}>
+          <Item><SecondHeaderData>2222222222</SecondHeaderData></Item>
+        </Grid>
+        <Grid item xs={1} md={1} />
+      </Grid>
+
+      {/*증권거래소 입장*/}
+      <Grid container sx={{ display: "flex", justifyContent: "center", mt: "5%" }}>
+        <Button variant="outlined" href={`/taxmate/stock-market`} sx={{ width: "90%" }}>증권 거래소 입장</Button>
+      </Grid>
 
       {/* 주식 목록 */}
       <Grid item xs={12}>

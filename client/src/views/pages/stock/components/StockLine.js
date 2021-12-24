@@ -1,15 +1,10 @@
-import React from "react";
-
-// material-ui
+import React from 'react'
 import { useTheme } from '@mui/material/styles';
+
 import { Avatar, Grid, Typography, Chip, Collapse,Divider } from '@mui/material';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import StockChart from "./StockChart";
-import StockInfo from './StockInfo';
-
-function StockLine(props) {
-    const company = props.company;
+function StockLine({company}) {
     const theme = useTheme();
     const chipSX = {
         height: 40,
@@ -18,20 +13,15 @@ function StockLine(props) {
         fontSize: '14px',
         fontWeight: 'bold'
     };
+
     const chipTradeSX = {
         ...chipSX,
         color: "#212121",
         backgroundColor: "#e0e0e0",
     };
-    const [open, setOpen] = React.useState(false);
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
     return (
         <>
-            <Grid container direction="column" onClick={handleClick}>
-                <Grid container alignItems="center" justifyContent="space-between">
+           <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item xs={8}>
                         <Typography variant="subtitle1" color="inherit" fontSize={20}>
                             {company.name}
@@ -64,25 +54,7 @@ function StockLine(props) {
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Grid>
-            <Grid container direction="column">
-                {/* 접히는 부분 */}
-                <Collapse in={open}>
-                    <Grid container direction='row' alignItems="center" justifyContent="space-between">
-                        <Grid item xs={6} sx={{ pt: '16px !important' }}>
-                            <StockChart />
-                        </Grid>
-                        
-                        <Divider orientation="vertical" flexItem/>
-
-                        <Grid item xs={5} sx={{ pt: '16px !important' }}>
-                            <StockInfo />
-                        </Grid>
-                    </Grid>
-                </Collapse>
-            </Grid>
-
+                </Grid>  
         </>
     )
 }
