@@ -7,12 +7,11 @@ import { styled } from "@mui/material/styles";
 
 import StockLine from '../components/StockLine';
 import StockChart from '../components/StockChart';
+import TabPanel from '../components/TabPanel';
+import SellPanel from './SellPanel';
+import BuyPanel from './BuyPanel';
 function StockMarket() {
-    const Item = styled(Paper)(({ theme }) => ({
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        color: theme.palette.text.secondary,
-    }));
+
     const SecondHeaderTitle = styled(Paper)(({ theme }) => ({
         color: "#000000",
         fontWeight: "bold",
@@ -23,7 +22,7 @@ function StockMarket() {
         fontSize: "18px",
     }));
 
-/*tab관련 */
+    /*tab관련 */
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -32,63 +31,60 @@ function StockMarket() {
 
     return (
         <div>
-            stockmarket
-            <Grid container xs={12} sx={{ justifyContent: "center" }}>
-                <StockLine company={{ "name": "코코넛2" }} />
-                <StockChart />
+            <Grid container direction="column" sx={{ justifyContent: "center" }}>
+                <Grid container direction="row" sx={{ justifyContent: "center" }}>
+                    <StockLine company={{ "name": "코코넛2", stock: "2222" }} />
+                </Grid>
+                <Box marginTop="40px"marginBottom="40px">
+                    <StockChart />
+                </Box>
 
                 {/*표*/}
-                <Grid container spacing={2}>
-                    <Grid item xs={1} md={1} />
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderTitle>전일가</SecondHeaderTitle></Item>
+                <Grid container direction="row" style={{ padding: "10px", display: "flex", justifyContent: "space-around" }}>
+                    <Grid item style={{ padding: '10px', fontWeight: "bold", display: "flex" }}>
+                        <Grid item sx={{ paddingRight: "15px" }}>
+                            <SecondHeaderTitle>전일가</SecondHeaderTitle>
+                        </Grid>
+                        <Grid item ><SecondHeaderData>11111111</SecondHeaderData></Grid>
                     </Grid>
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderData>100</SecondHeaderData></Item>
+                    <Grid item style={{ padding: "10px", fontWeight: "bold", display: "flex" }}>
+                        <Grid item sx={{ paddingRight: "15px" }}>
+                            <SecondHeaderTitle>전일비</SecondHeaderTitle>
+                        </Grid>
+                        <Grid item style={{ fontSize: "36px" }}><SecondHeaderData>15000000000</SecondHeaderData></Grid>
                     </Grid>
-                    <Grid item xs={2} md={2}>
-                    </Grid>
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderTitle>전일비</SecondHeaderTitle></Item>
-                    </Grid>
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderData>100%</SecondHeaderData></Item>
-                    </Grid>
-                    <Grid item xs={1} md={1} />
                 </Grid>
-                <Grid container spacing={2}>
-                    <Grid item xs={1} md={1} />
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderTitle>한달최고가</SecondHeaderTitle></Item>
-                    </Grid>
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderData>200</SecondHeaderData></Item>
-                    </Grid>
-                    <Grid item xs={2} md={2}>
-                    </Grid>
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderTitle>한달최저가</SecondHeaderTitle></Item>
-                    </Grid>
-                    <Grid item xs={2} md={2}>
-                        <Item><SecondHeaderData>200</SecondHeaderData></Item>
-                    </Grid>
-                    <Grid item xs={1} md={1} />
-                </Grid>
-                {/* 매도 / 매수 */}
 
+                <Grid container direction="row" style={{ paddingBottom: "10px", display: "flex", justifyContent: "space-around" }}>
+                    <Grid item style={{ padding: '10px', fontWeight: "bold", display: "flex" }}>
+                        <Grid item sx={{ paddingRight: "15px" }}>
+                            <SecondHeaderTitle>한달최고가</SecondHeaderTitle>
+                        </Grid>
+                        <Grid item ><SecondHeaderData>11111111</SecondHeaderData></Grid>
+                    </Grid>
+                    <Grid item style={{ padding: '10px', fontWeight: "bold", display: "flex" }}>
+                        <Grid item sx={{ paddingRight: "15px" }}>
+                            <SecondHeaderTitle>한달최저가</SecondHeaderTitle>
+                        </Grid>
+                        <Grid item style={{ fontSize: "36px" }}><SecondHeaderData>2222222222</SecondHeaderData></Grid>
+                    </Grid>
+                </Grid>
+
+
+                {/* 매도 / 매수 */}
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-                            <Tab label="매수" id={`buytab`} areaControls={`buytabpanel`}/>
-                            <Tab label="매도"  id={`selltab`} areaControls={`selltabpanel`}/>
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth">
+                            <Tab label="매수" id={`buytab`} areaControls={`buytabpanel`} />
+                            <Tab label="매도" id={`selltab`} areaControls={`selltabpanel`} />
                         </Tabs>
                     </Box>
-                    <div value={value} index={0}>
-                        매수
-                    </div>
-                    <div value={value} index={1}>
-                        매도
-                    </div>
+                    <TabPanel value={value} index={0}>
+                        <BuyPanel />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <SellPanel />
+                    </TabPanel>
                 </Box>
             </Grid>
         </div>

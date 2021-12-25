@@ -11,6 +11,7 @@ import {
   Paper,
   Pagination,
   Button,
+  Box
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { gridSpacing } from "../../../store/constant";
@@ -19,7 +20,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-import StockLine from "./StockList";
+import StockListItem from "./StockListItem";
 import blueBox from "../../../assets/images/blue_box.svg";
 function Stock() {
   const company = { name: "coconut", stock: 100 };
@@ -35,11 +36,7 @@ function Stock() {
     setAnchorEl(null);
   };
 
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    color: theme.palette.text.secondary,
-  }));
+
   const SecondHeaderTitle = styled(Paper)(({ theme }) => ({
     color: "#000000",
     fontWeight: "bold",
@@ -91,17 +88,15 @@ function Stock() {
           </Grid>
         </Grid>
       </Grid>
-      {/*  홍길동님의 주식 */}
 
+      {/*  홍길동님의 주식 */}
       <Grid
-        item
-        xs={12}
-        style={{ display: "flex", justifyContent: 'center', paddingBlockStart: "50px", fontSize: "36px" }}
+        container direction="row"
+        style={{ display: "flex", justifyContent: "space-around" }}
       >
-        <div
-          style={{ display: "flex", fontWeight: "bold", marginRight: "50px" }}
-        >
-          <div
+        <Grid item style={{ padding: '5%', fontWeight: "bold", display: "flex", fontSize: "36px" }}>
+          <Grid
+            item
             style={{
               textAlign: "right",
               width: "130px",
@@ -112,24 +107,22 @@ function Stock() {
             }}
           >
             홍길동
-          </div>
-          님의 주식
-
-        </div>
-        <div style={{ display: "flex", fontWeight: "bold" }}>
+          </Grid>
+          <Grid item sx={{ paddingRight: "15px" }}>님의 주식</Grid>
+        </Grid>
+        <Grid item style={{ padding: '5%', fontWeight: "bold", display: "flex" }}>
           <Grid item sx={{ paddingRight: "15px", fontSize: "14px" }}>
             평가금액
           </Grid>
-          <Grid item>1000000000</Grid>
-
-        </div>
+          <Grid item style={{ fontSize: "36px" }}>1000000000</Grid>
+        </Grid>
       </Grid>
 
 
       {/*자세히보러가기*/}
       <Grid
         item
-        style={{ display: "flex", justifyContent: 'flex-end', paddingTop: "30px", width: "96%" }}
+        style={{ display: "flex", justifyContent: 'flex-end', width: "96%" }}
       >
         <Link to={`/taxmate/students/${100}/stock-account`} key={100} style={{ verticalAlign: "top", fontSize: "12px" }}>
           자세히 보러가기
@@ -157,55 +150,51 @@ function Stock() {
       </Grid>
 
       {/*표*/}
-      <Grid container spacing={2}>
-        <Grid item xs={1} md={1} />
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderTitle>총매입</SecondHeaderTitle></Item>
+      <Grid container direction="row" style={{ display: "flex", justifyContent: "space-around" }}>
+        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
+          <Grid item sx={{ paddingRight: "15px" }}>
+            <SecondHeaderTitle>총매입</SecondHeaderTitle>
+          </Grid>
+          <Grid item ><SecondHeaderData>11111111</SecondHeaderData></Grid>
         </Grid>
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderData>11111111</SecondHeaderData></Item>
+        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
+          <Grid item sx={{ paddingRight: "15px" }}>
+            <SecondHeaderTitle>추정자산</SecondHeaderTitle>
+          </Grid>
+          <Grid item style={{ fontSize: "36px" }}><SecondHeaderData>15000000000</SecondHeaderData></Grid>
         </Grid>
-        <Grid item xs={2} md={2}>
-        </Grid>
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderTitle>추정자산</SecondHeaderTitle></Item>
-        </Grid>
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderData>2222222222</SecondHeaderData></Item>
-        </Grid>
-        <Grid item xs={1} md={1} />
       </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={1} md={1} />
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderTitle>총평가</SecondHeaderTitle></Item>
+      <Grid container direction="row" style={{ display: "flex", justifyContent: "space-around" }}>
+        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
+          <Grid item sx={{ paddingRight: "15px" }}>
+            <SecondHeaderTitle>총평가</SecondHeaderTitle>
+          </Grid>
+          <Grid item ><SecondHeaderData>11111111</SecondHeaderData></Grid>
         </Grid>
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderData>11111111</SecondHeaderData></Item>
+        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
+          <Grid item sx={{ paddingRight: "15px" }}>
+            <SecondHeaderTitle>평가손익</SecondHeaderTitle>
+          </Grid>
+          <Grid item style={{ fontSize: "36px" }}><SecondHeaderData>2222222222</SecondHeaderData></Grid>
         </Grid>
-        <Grid item xs={2} md={2}>
-        </Grid>
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderTitle>평가손익</SecondHeaderTitle></Item>
-        </Grid>
-        <Grid item xs={2} md={2}>
-          <Item><SecondHeaderData>2222222222</SecondHeaderData></Item>
-        </Grid>
-        <Grid item xs={1} md={1} />
       </Grid>
 
       {/*증권거래소 입장*/}
+      {/*
       <Grid container sx={{ display: "flex", justifyContent: "center", mt: "5%" }}>
         <Button variant="outlined" href={`/taxmate/stock-market`} sx={{ width: "90%" }}>증권 거래소 입장</Button>
       </Grid>
+      */}
+
+      <Box margin="20px" />
 
       {/* 주식 목록 */}
       <Grid item xs={12}>
-        <StockLine company={company} />
+        <StockListItem company={company} />
         <Divider sx={{ my: 1.5 }} />
-        <StockLine company={company} />
+        <StockListItem company={company} />
         <Divider sx={{ my: 1.5 }} />
-        <StockLine company={company} />
+        <StockListItem company={company} />
         <Grid>
           <Pagination
             count={5}
