@@ -8,96 +8,173 @@ const { StockAccount } = require('../models/Stock/StockAccount');
 const { StockOrderHistory } = require('../models/Stock/StockOrderHistory');
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
-
+const { Tax } = require('../models/Tax/Tax');
+const { Budget } = require('../models/Tax/Budget');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
+const moment = require('moment-timezone')
 const router = express.Router();
 /*
-  [정상] Default Stock 모두 가져오기
+  [GET] 클래스에서 사용하는 모든 주식들
+  조건_ 모든 주식의 가격, 뉴스 관련 정보는 오늘 날짜를 포함하여 이전의 것이다.
 */
-router.get('/', (req, res) => {
-  Stock.find({ userDefined: false }, (err, doc) => {
-    res.json(doc)
-    if (err) return res.status(500).json({ error: err })
-  })
-})
-
-/*
-  [정상] Default Stock 사용
-*/
-router.post("/use", (req, res) => {
-  const usestock = new ClassStock(req.body)//{classId:,stockId:}
-  usestock.save((err, doc) => {
-    if (err) return res.status(500).json({ error: err })
-    res.status(200).json({
-      success: true
-    })
-  })
-})
-
-/*
-  [정상] 클래스에서 사용하는 모든 stock 가져오기
-  : ClassStock {classId:,}
-*/
-router.get("/use", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const classstock = await ClassStock.find(req.query, "stockId")
-    //console.log(req.query, classstock)
     let stocks = []
     for (let i = 0; i < classstock.length; i++) {
       stocks.push(classstock[i].stockId)
     }
-    //console.log(stocks)
-    const result = await Stock.find({ _id: { $in: stocks } })
-    //console.log(result)
+    const stock = await Stock.find({ _id: { $in: stocks } })
+    const now = moment().tz('Asia/Seoul')
+    
+    let result = await Promise.all(
+      stock.map(async (v, i) => {
+        v.prices = await v.prices.filter(price => price.updateDate <= new Date(now.year(), now.month(), now.date()));
+        return v
+      })
+    )
     res.json(result)
-
   } catch (err) {
     res.status(500).json({ error: err });
   }
 })
-
 /*
-  [정상] default stock (userDefined:false) 미사용.
-  : ClassStock에서만 삭제
+  [GET] 클래스에서 사용하는 모든 주식에 대한 통계정보
 */
-router.delete("/use", (req, res) => {
-  //console.log(req.query)
-  ClassStock.deleteOne({ stockId: req.query._id, classId: req.query.classId }, function (err, stock) {
-    const result = stock
-    if (err) return res.status(500).json({ error: err })
-    res.status(200).json({
-      success: true
-    })
+router.get('/statistics', async (req, res) => {
+  const classId = req.query.classId
+  const startDate = req.query.startDate
+  const endDate = req.query.endDate
+
+  try {
+    const classstock = await ClassStock.find({ classId: classId }, "stockId")
+    let stocks = []
+    for (let i = 0; i < classstock.length; i++) {
+      stocks.push(classstock[i].stockId)
+    }
+
+    //클래스내 stockId
+    const buyhistory = await StockOrderHistory.aggregate([
+      {
+        $match: {
+          'stockId': { $in: stocks },
+          "createdAt": { $gte: new Date(startDate), $lte: new Date(endDate) }
+        }
+      },
+      {
+        $group:
+        {
+          _id: '$stockId',
+          count: { $sum: 1 },
+          allquantity: { $sum: '$quantity' },
+          allpayAmount: { $sum: '$payAmount' }
+        }
+      },
+      {
+        $lookup: {
+          from: "stocks",
+          localField: "_id",
+          foreignField: "_id",
+          as: 'stock'
+        }
+      },
+      {
+        $unwind: '$stock',
+      },
+    ])
+    res.json(buyhistory)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ error: err });
+  }
+})
+/*
+  [GET] 클래스에서 사용하는 모든 주식
+  선생님의 주식 설정 탭에서 사용된다.
+  조건_ 모든 주식의 가격, 뉴스 관련 정보를 가져온다. (모든 날짜)
+*/
+router.get('/manage', async (req, res) => {
+  try {
+    const classstock = await ClassStock.find(req.query, "stockId")
+    const stocks=classstock.map(stock=>stock.stockId)
+    const stock = await Stock.find({ _id: { $in: stocks } })
+    res.json(stock)
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+})
+/*
+  [GET] 클래스에서 사용하는 하나의 주식 GET
+  선생님의 주식 설정 탭>자세히보기에서 사용된다.
+*/
+router.get('/:id/manage', (req, res) => {
+  const stockId = req.params.id
+
+  Stock.aggregate([
+    {
+      $match: {
+        '_id': ObjectId(stockId)
+      }
+    },
+    {
+      $unwind: '$prices'
+    },
+    {
+      $sort: {
+        'prices.updateDate': -1
+      }
+    },
+    {
+      $group: {
+        _id: "$_id",
+
+        description: {
+          $first: "$description"
+        },
+        ondelete: {
+          $first: '$ondelete'
+        },
+        ondeleteDay: {
+          $first: '$ondeleteDay'
+        },
+        stockName: {
+          $first: '$stockName'
+        },
+        createdAt: {
+          $first: '$createdAt'
+        },
+        updatedAt: {
+          $first: 'updatedAt'
+        },
+        prices: {
+          $push: '$prices'
+        }
+      }
+    }
+  ]).exec((err, stock) => {
+    const result = stock[0]
+    if (err) return res.status(500).json({ error: err });
+    res.json(result)
   })
 })
-
-
 /*
-  사용자 Defined Stock (userDefined:true)
-  : Create, Update, Delete
+  [POST] 주식 생성&사용 
+  : Stock, ClassStock body-{stockInfo:,classId:}필수
 */
-/*
-  [정상] DIY stock 생성&사용 
-  : Stock, ClassStock body-{stockInfo:{userDefined:true필수},classId:}필수
-*/
-router.post("/custom", async (req, res) => {
-  // console.log('create', req.body)
+router.post("/", async (req, res) => {
   const session = await startSession();
   try {
-    // 트랜젝션 시작
     session.startTransaction();
     // 1) Stock 생성
     const newstock = new Stock(req.body.stockInfo);
-    const savestock = await newstock.save({ session });
-    //console.log('savestock', savestock);
+    await newstock.save({ session });
 
     // 2) Class-Stock 연관
-    const newclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id, userDefined: true });
-    const sclassstock = await newclass.save({ session });
-    //console.log('class-stock', sclassstock);
+    const relateclass = new ClassStock({ classId: req.body.classId, stockId: newstock._id });
+    await relateclass.save({ session });
 
-    // 트랜젝션 커밋
     await session.commitTransaction();
-    // 끝
     session.endSession();
     res.status(200).json({
       success: true
@@ -110,66 +187,107 @@ router.post("/custom", async (req, res) => {
 
 });
 /*
-  [정상] DIY stock 가져오기(true)
-  : ClassStock에서 classId이용해서 다 stockId를 찾은다음에,
-    Stock에서 위의 결과를 이용해서 userDefined가 false인 것을 찾는다.
+  [POST] 주식 가격/뉴스 추가
+  조건_ 같은 날짜가 있다면 안 바뀜
 */
-router.get("/custom", async (req, res) => {
-  //console.log(req.query)
-  try {
-    const allusestock = await ClassStock.find(req.query)
-    let stockIds = []
-    for (let i = 0; i < allusestock.length; i++) {
-      stockIds.push(allusestock[i].stockId)
-    }
-    //console.log(stockIds)
-    const userstock = await Stock.find({ _id: { $in: stockIds }, userDefined: true })
-    //console.log(userstock)
-    const result = userstock
-    res.json(result)
-  } catch (err) {
-    res.json({ success: false, err })
-  }
-
-})
-/*
-   [정상] DIY stock 수정 : Stock {stockId:, description:null가능, price:{daily update이니까}}
-*/
-router.put('/custom', (req, res) => {
-  //console.log('update',req.body)
-
-  Stock.updateOne({ _id: req.body._id }, { $push: { prices: { hint: req.body.description, value: req.body.price } } }, (err, doc) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true
+router.post('/:id/prices', (req, res) => {
+  const stockId = req.params.id
+  var price = req.body
+  Stock.updateOne(
+    {
+      _id: stockId,
+      'prices.updateDate': { $ne: price.updateDate }
+    },
+    {
+      $push: {
+        prices: req.body
+      }
+    }, (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true
+      })
     })
-  })
-
 })
 /*
-  [정상] DIY stock 삭제&미사용 : ClassStock , Stock  { stockId: }
-  - classId필요없음 custom이므로 이 Stock은 클래스 한 곳에만 종속적
-  주식을 보유중인 학생이 있다면, 
+  [put] stock prices 수정
+  조건_ 미래의 날짜이면 바꿀 수 있다.
 */
-router.delete('/custom', async (req, res) => {
-  console.log('delete', req.query)
+router.put('/:id/prices', (req, res) => {
+  const stockId = req.params.id
+  const now = moment().format('YYYY-MM-DD')
+  if (moment(req.body.updateDate).isSameOrBefore(now)){//과거, 현재이면 바꿀 수 없다.
+    return res.status(400).json({ success: false, err:'잘못된 요청' })
+  }
+  Stock.updateOne(
+    {
+      _id: stockId,
+      'prices': { $elemMatch: { updateDate: req.body.updateDate } }
+    },
+    {
+      '$set': {
+        'prices.$.value': req.body.value,
+        'prices.$.hint': req.body.hint
+      }
+    }, (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true
+      })
+  })
+})
+/*
+  [delete] 주식 가격/뉴스 삭제
+*/
+router.delete('/:id/prices/:priceId', (req, res) => {
+  const stockId = req.params.id
+  const priceId = req.params.priceId
+  Stock.updateOne({ _id: stockId },
+    {
+      $pull: {
+        "prices": { _id: ObjectId(priceId) }
+      }
+    }, (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({
+        success: true
+      })
+    })
+})
+
+/*
+  [delete]  주식 삭제
+  조건_ 보유하는 사람이 한명이라도 있을 때는 미사용으로 바꾼다.
+*/
+router.delete('/:id', async (req, res) => {
+  const stockId = req.params.id
   const session = await startSession();
   try {
-    // 트랜젝션 시작
     session.startTransaction();
-    // 1) Class-Stock 연관 삭제 - classId필요없음
-    const delclasstock = await ClassStock.deleteOne({ stockId: req.query.stockId }, { session: session });
-    console.log('del: class-stock', delclasstock);
+    const countwhohas = await StockAccount.countDocuments({ 'holdingStocks.stockId': stockId }).exec({ session })
+    if (countwhohas <= 0) {//보유중인 사람이 없다면
+      // 1) Class-Stock 연관 삭제
+      const deleteRelation = await ClassStock.deleteOne({ stockId: stockId }, { session: session });
 
-    // 2) Stock 삭제
-    const delstock = await Stock.deleteOne({ _id: req.query.stockId ,userDefined:true}, { session: session })
-    console.log('del:stock', delstock);
+      // 2) Stock 삭제
+      const deleteStock = await Stock.deleteOne({ _id: stockId }, { session: session })
 
-    await session.commitTransaction();
-    session.endSession();
-    res.status(200).json({
-      success: true
-    })
+      await session.commitTransaction();
+      session.endSession();
+      res.status(200).json({
+        success: true,
+        message: '성공적으로 상장 폐지가 되었습니다.'
+      })
+    } else {//보유중인 사람이 있다면
+      //1) 상장폐지 신청
+      const ondelete = await Stock.updateOne({ _id: stockId }, { $set: { ondelete: true, ondeleteDay: moment().tz('Asia/Seoul').add(15,'d') } }).exec({ session })
+      await session.commitTransaction();
+      session.endSession();
+      res.status(200).json({
+        success: true,
+        message: '상장 폐지 신청이 완료되었습니다. 15일 뒤에 삭제됩니다.'
+      })
+    }
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
@@ -179,23 +297,8 @@ router.delete('/custom', async (req, res) => {
 })
 
 /*
-  기본 제공 stock (userDefined:false)  /default
-  : programmer만 Create, Update, Delete 가능
-*/
-router.post("/", (req, res) => {
-  const newstock = new Stock(req.body)
-  newstock.save((err, doc) => {
-    if (err) return res.json({ success: false, err })
-    res.status(200).json({
-      success: true
-    })
-  })
-})
-
-/*
-  [90%완료] 주식 주문
+  [POST] 주식 주문
   : 학생의 Stock 매수/매도 req.params orderType로 구분
-  매도 - tax 아직 안함
  */
 router.post('/:id/orders', async (req, res) => {
   const stockId = req.params.id //어떤 stock을
@@ -203,13 +306,15 @@ router.post('/:id/orders', async (req, res) => {
   const studentId = req.body.studentId //누가
   const quantity = req.body.quantity //얼만큼
   const currentPrice = req.body.currentPrice//현재가
- // console.log(stockId, orderType, studentId, quantity)
   const session = await startSession();
 
   try {
     session.startTransaction();// 트랜젝션 시작
-    const account = await Account.findOne({ studentId: studentId }).session(session)
-
+    if(quantity<=0){
+      throw '수량을 다시 입력해주세요'
+    }
+    const account = await Account.findOne({ studentId: studentId }).exec({ session })
+    
     if (orderType === '매수') {
       console.log('매수')
       // 1) 은행 잔고 확인
@@ -222,11 +327,10 @@ router.post('/:id/orders', async (req, res) => {
           currentPrice: currentPrice,
           payAmount: currentPrice * quantity  //currentPrice&Tax에서 얻은 Stock필요
         })
-        history.save({ session })
-        //console.log(history)
+        await history.save({ session })
 
         // 3) 은행 처리
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- history.payAmount) } }, { session })
+        await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- history.payAmount) } }, { session })
         const transfer = new AccountTransaction({
           accountId: account._id,
           transactionType: 0,
@@ -235,15 +339,12 @@ router.post('/:id/orders', async (req, res) => {
           afterbalance: account.currentBalance - history.payAmount
         })
         await transfer.save({ session })
-        //console.log(transfer)
 
         // 4) holdingStocks 확인
         const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
-        //console.log(stockaccount)
         const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-        //console.log(index)
         if (index > -1) {// 4-1) 기존 stock이 있다면,
-          const addStock = await StockAccount.updateOne({ studentId: studentId },
+          await StockAccount.updateOne({ studentId: studentId },
             {
               $inc: {
                 [`holdingStocks.${index}.quantity`]: quantity,
@@ -254,7 +355,7 @@ router.post('/:id/orders', async (req, res) => {
           //console.log('yeah',addStock)
 
         } else {// 4-2) 기존 stock이 없다면,
-          const addStock = await StockAccount.updateOne({ studentId: studentId }, {
+          await StockAccount.updateOne({ studentId: studentId }, {
             $push: {
               holdingStocks: {
                 stockId: stockId,
@@ -270,32 +371,67 @@ router.post('/:id/orders', async (req, res) => {
       }
 
     } else {
-      console.log('매도')
+      //console.log('매도')
+      const classId = req.body.classId
       const stockaccount = await StockAccount.findOne({ studentId: studentId }).exec({ session })
       const index = stockaccount.holdingStocks.findIndex(v => v.stockId == stockId)
-      //console.log(stockaccount.holdingStocks[index].quantity)
-      if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {
+      //console.log('매도-보유수량',quantity,stockaccount,stockaccount.holdingStocks[index].quantity)
+
+      if (index > -1 && quantity <= stockaccount.holdingStocks[index].quantity) {//매도수량 확인
         //매도
-        const minusStock = await StockAccount.updateOne({ studentId: studentId },
+        await StockAccount.updateOne({ studentId: studentId },
           {
             $inc: {
               [`holdingStocks.${index}.quantity`]: - quantity,
-              [`holdingStocks.${index}.allPayAmount`]: - currentPrice*quantity
+              [`holdingStocks.${index}.allPayAmount`]: - currentPrice * quantity
             }
           }
-          , { session })
-        //은행 (입금)
-        const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice*quantity } }, { session })
-        // 은행 거래 데이터 추가
+          ).exec({session})
+        // 주식 보유수량:0 => 삭제
+        await StockAccount.updateOne({ studentId: studentId },
+          {
+            $pull: {
+              holdingStocks: { quantity: 0 }//수량없는 경우
+            }
+          }).exec({session})
+
+        // 1. 은행 (입금)
+        await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: currentPrice * quantity } }).exec({session})
+
+        // 은행 거래 데이터 추가(입금)
         const transfer = new AccountTransaction({
           accountId: account._id,
           transactionType: 1,
-          amount: currentPrice*quantity,
+          amount: currentPrice * quantity,
           memo: '주식매도',
-          afterbalance: account.currentBalance + currentPrice*quantity
+          afterbalance: account.currentBalance + currentPrice * quantity
         })
         await transfer.save({ session })
-        //console.log(transfer)
+
+        // 2. 세금 계산
+        const tax = await Tax.findOne({ classId: classId }).exec({ session })
+        const stocktax = tax.taxlist.stock
+        const tax2user = Math.round(stocktax * currentPrice * quantity / 100)
+
+        //은행 (출금)
+        await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- tax2user) } }).exec({session})
+        //은행 거래 데이터 추가(출금)
+        const account2 = await Account.findOne({ _id: account._id }).exec({ session })
+
+        if (tax2user > 0)  {
+          const transfer2 = new AccountTransaction({
+            accountId: account2._id,
+            transactionType: 0,
+            amount: tax2user,
+            memo: '증권거래세',
+            afterbalance: account2.currentBalance
+          })
+          await transfer2.save({ session })
+        }
+        // 국세청 세금에 추가
+        await Budget.updateOne({ classId: classId },
+          { $inc: { 'balance.stock': tax2user } }).exec({ session })
+
       } else {
         throw '주문 수량이 매도 가능 수량보다 많습니다.'
       }

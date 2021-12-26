@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
-
 const { auth } = require("../middleware/auth");
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 //=================================
 //             User
@@ -13,7 +15,8 @@ router.get("/auth", auth, (req, res) => {
     //auth를 통과했다.( user와 token이 올바르다=로그인한 상태) 
     res.status(200).json({
         _id: req.user._id,
-        isAdmin: req.user.role === 0 ? true : false,/*0이면 선생님, 1이면 학생 */
+        isAdmin: req.user.role === 0 ? true : false,
+        /*0이면 선생님, 1이면 학생 */
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
@@ -21,15 +24,117 @@ router.get("/auth", auth, (req, res) => {
     });
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async(req, res, next) => {
 
-    const user = new User(req.body);
-    user.save((err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
+    var myrole = 1;
+    const { email, name, password, AuthNum, role } = req.body;
+    if (role == '') {
+        myrole = 1;
+    } else {
+        myrole = 0;
+    }
+    try {
+        const exUser = await User.findOne({ email: email }); // 이메일 중복 확인
+        if (exUser) {
+            return res.json({ success: false, err: '이미가입된 회원입니다' })
+        }
+        if (req.body.AuthNum == 0) {
+            return res.json({ success: false, err: '이메일 인증을 먼저 진행해주세요' });
+        }
+        const user = await User.create({
+            email: email,
+            name: name,
+            password: password,
+            token: "",
+            tokenExp: null,
+            role: myrole
         });
-    });
+        return res.json({ success: true, err: '회원가입성공!' })
+        next();
+    } catch (error) {
+        return res.json({ success: false, err: '회원가입실패' })
+    }
+
+
+    // const { email, name, AuthNum, role, passsword } = req.body;
+    // onsole.log(req.body);
+    // const user = new User(req.body);
+    // if (req.body.AuthNum == 1) {
+    //     user.save((err, doc) => {
+    //         if (err) return res.json({ success: false, err: '회원가입실패' });
+    //         return res.status(200).json({
+    //             success: true
+    //         });
+    //     });
+    //     console.log("회원가입성공");
+    // } else {
+    //     return res.json({ success: false, err: '회원가입실패' })
+    // }
+    //회원가입시 현재 이게 불리는거임.
+});
+
+
+router.post('/email', async(req, res, next) => {
+    const email = req.body.email;
+    const name = req.body.name;
+    const sId = req.body.sId;
+    const emailverify = req.body.emailverify;
+    const password = req.body.password;
+    const confirmpassword = req.body.confirmpassword;
+    const entryCode = req.body.entryCode;
+
+    // 이미 가입된 이메일인지 확인
+    try {
+        const exUser = await User.findOne({ email: email }); // 이메일 중복 확인
+        if (exUser) {
+            console.log('이미 가입된 이메일입니다.');
+            res.send('email_error=exist');
+            // return res.status(403).send('error 설명 메시지');
+            next(error);
+        }
+
+        let authNum = Math.random().toString().substr(2, 6); //인증번호
+        let emailTemplete;
+        // ejs.renderFile(appDir + '/config/authemail.ejs', { authCode: authNum }, function(err, data) {
+        //     if (err) { console.log(err) }
+        //     emailTemplete = data;
+        // });
+        //transport는 메일을 보낼 객체이다.
+        let transporter = nodemailer.createTransport({
+            //service: 'Naver' _ 네이버는 전송이 안됨............
+            host: 'smtp.gmail.com', //호스트의 경우는 
+            port: 465, //네이버에서 확인가능함.
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: "noino19990819@gmail.com", //메일 서버의 계정.
+                pass: "Ro68523200!",
+            },
+        });
+        console.log(process.env.REACT_APP_NODEMAILER_USER);
+        let mailOptions = ({
+            from: 'Taxmate',
+            to: email,
+            subject: '회원가입을 위한 인증번호를 입력해주세요.',
+            html: "오른쪽 숫자 6자리를 입력해주세요 : " + authNum //emailTemplete,
+        });
+
+
+        transporter.sendMail(mailOptions, function(emailError, info) {
+            if (emailError) {
+                console.log(emailError);
+                console.log('메일 보내기 실패 in /email');
+                next(emailError);
+            } else {
+                console.log("Finish sending email : " + info.response);
+                res.send(authNum); // 인증번호
+                // res.redirect( path.join(__dirname, '/signup'));
+                transporter.close();
+            }
+        });
+    } catch (error) {
+        return res.status(403).send('This account does not exist');
+        // return res.status(403).send('error 설명 메시지');
+    }
 });
 
 router.post("/login", (req, res) => {

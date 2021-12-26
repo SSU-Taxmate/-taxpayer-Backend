@@ -3,6 +3,7 @@
 */
 const express = require('express');
 const { startSession } = require('mongoose');
+const {Tax}=require('../models/Tax/Tax')
 const { Account } = require('../models/Bank/Account');
 const { AccountTransaction } = require('../models/Bank/AccountTransaction');
 const { Deposit } = require('../models/Bank/Deposit');
@@ -30,10 +31,8 @@ router.get('/deposits', (req, res) => {
 */
 /*
   [정상] 예금 상품 추가
-  classId 정보도 추가
 */
 router.post('/deposits', (req, res) => {
-  console.log('/api/bank/deposits', req.body)
   const cDeposit = new Deposit(req.body)
   cDeposit.save((err, doc) => {
     if (err) return res.json({ success: false, err })
@@ -53,39 +52,34 @@ router.put('/deposits', (req, res) => {
   })
 })
 /*
-  [] 예금 상품 삭제 :id이용.
-  : JoinDeposit에서도 삭제 해야 함.
+  [정상] 예금 상품 삭제 
+  : 
     1) JoinDeposit에 이 예금 상품({productId:req.params.id})에 가입중인 사람이 있다면, (isClosed:false)
-    Deposit의 joinPossible 만 true로(나중에 JoinDeposit을 productId로 aggregate해서 isClosed:false가 없다면, 서버에서 알아서 주기적으로 삭제)
+    Deposit의 joinPossible 만 true로(나중에 JoinDeposit을 productId로 aggregate해서 isClosed:false가 없다면, 삭제)
     2) JoinDeposit에 가입 중인 사람(isClosed:false)이 없다면, 바로 즉시 2-1)JoinDeposit에서 {productId:req.params.id}로 삭제 2-2)Deposit에서 {_id:req.params.id}로 삭제
 */
 router.delete('/deposits/:id', async (req, res) => {
-  //console.log('/api/bank/deposits/:id', req.params.id)
   const depositId = req.params.id
 
   const session = await startSession();
   try {
-    // 트랜젝션 시작
     session.startTransaction();
-    //joinPossible true로 하고 나중에 
     const notclosed = await JoinDeposit.countDocuments({ productId: depositId, isClosed: false }).exec({ session })
-    //console.log(notclosed)
 
     if (notclosed <= 0) {//예금 상품에 가입 중인 사람이 없다면
       // 삭제 가능
-      const delJoinDeposit = await JoinDeposit.deleteOne({ productId: depositId }, { session })
-      //console.log(delJoinDeposit)
+      const delJoinDeposit = await JoinDeposit.deleteOne({ productId: depositId }).exec({session})
 
-      const delDeposit = await Deposit.deleteOne({ _id: depositId }, { session })
-      //console.log(delDeposit)
+      const delDeposit = await Deposit.deleteOne({ _id: depositId }).exec({session})
       await session.commitTransaction();
+
       session.endSession();
       res.status(200).json({
         success: true,
         message: '성공적으로 상품 삭제가 완료되었습니다.'
       })
     } else {//예금 상품에 가입중인 사람이 있다면
-      const allow = await Deposit.updateOne({ _id: depositId }, { $set: { joinPossible: false } }, { session })
+      const allow = await Deposit.updateOne({ _id: depositId }, { $set: { joinPossible: false } }).exec({session})
       await session.commitTransaction();
       session.endSession();
       res.status(200).json({
@@ -93,14 +87,11 @@ router.delete('/deposits/:id', async (req, res) => {
         message: '가입 기간이 남은 학생이 있어서 실패하였습니다. 더이상 가입 불가능하도록 하였습니다..'
       })
     }
-
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
     res.json({ success: false, err })
   }
-
-
 })
 
 /*
@@ -108,9 +99,7 @@ router.delete('/deposits/:id', async (req, res) => {
 */
 
 /*
-  [정상] : 학생의 상품 가입
-  productId = req.params.id
-  {studentId:,amount:,isClosed:}
+  [정상] : 학생의 예금 상품 가입
 */
 router.post('/deposits/:id/join', async (req, res) => {
   const session = await startSession();
@@ -118,31 +107,25 @@ router.post('/deposits/:id/join', async (req, res) => {
     const productId = req.params.id
     const amount = req.body.amount
     const studentId = req.body.studentId
-    //console.log(req.params.id, req.body)
 
-    // 트랜젝션 시작
     session.startTransaction();
     //1) 가입 가능 여부 check
-    const joinpossible = await Deposit.findOne({ _id: productId, joinPossible: true })//결과 존재==가입가능하다
-    //console.log(joinpossible)
+    const joinpossible = await Deposit.findOne({ _id: productId, joinPossible: true }).exec({session})//결과 존재==가입가능하다
     if (joinpossible) {
       //2) 중복 가입인지 check
-      const accountexists = await JoinDeposit.findOne({ studentId: studentId, isClosed: false })
-      //console.log(!accountexists)
+      const accountexists = await JoinDeposit.findOne({ studentId: studentId, isClosed: false }).exec({session})
       if (!accountexists) {//중복 가입이 아니라면,
         //3) 선택한 상품에 비용 지불
         //3-1) 지불 가능한지 check
-        const account = await Account.findOne({ studentId: studentId }).session(session)
+        const account = await Account.findOne({ studentId: studentId }).exec(session)
         //console.log('가입 계좌',account)
         if (account.currentBalance >= amount) {//지불가능하다면,
           //3-1) 계좌에서는 출금.
-          const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- amount) } }, { session })
-          //console.log(account.currentBalance)
+          const minus = await Account.updateOne({ _id: account._id }, { $inc: { currentBalance: (- amount) } }).exec({session})
 
           //4) 상품 가입 완료
           const cjoindeposit = new JoinDeposit({ ...req.body, productId: productId })
           const joinin = await cjoindeposit.save({ session })
-          //console.log(joinin)
 
           //5) 계좌 거래 내역에 출금으로 추가
           const transferA = new AccountTransaction({
@@ -151,7 +134,6 @@ router.post('/deposits/:id/join', async (req, res) => {
              amount: amount, 
              memo: '예금상품가입',
              afterbalance:account.currentBalance-amount})
-          //console.log(transferA)
           await transferA.save({ session })
 
           await session.commitTransaction();
@@ -175,50 +157,42 @@ router.post('/deposits/:id/join', async (req, res) => {
   }
 })
 /*
-  [정상] : 학생의 상품 해지 완료
-  GET /students/:id/deposit 으로 JoinDeposit의 _id 알고 있음.
-  Deposit._id : deposits 이율 정보 알기 위해서 필요
+  [정상] : 학생의 예금 상품 해지 
 */
 router.delete('/deposits/:id/join/:joinId', async (req, res) => {
-  const depositId = req.params.id
+  const depositId = req.params.id//deposit 이율 정보 위해
   const joinId = req.params.joinId
+  const classId=req.query.classId
   const session = await startSession();
   try {
     session.startTransaction();
     // 1) 적용 이율 계산
     // 1-1) JoinDeposit 의 createdAt 
     const contract = await JoinDeposit.findOne({ _id: joinId }).exec({ session })
-    //console.log('delete:/api/bank/deposits/join\n계약서', contract)
     const product = await Deposit.findOne({ _id: depositId }).exec({ session })
-    //console.log('예금상품',product)
 
     let rate;
     const today = new Date()
     const create = new Date(contract.createdAt)
-    //console.log(today,create)
+
     const diff = Math.round((today.getTime() - create.getTime()) / (1000 * 3600 * 24))//가입기간
     if (diff >= product.minDuration) {
       rate = product.interestRate//
     } else {
       rate = 0
     }
-    //console.log(rate)
     // 2) JoinDeposit의 closedAt : 현재시각 isClosed:true 로 설정.
-    const close = await JoinDeposit.updateOne({ _id: contract._id }, { $set: { isClosed: true, closedAt: today } }, { session })
-    //console.log('delete!!!!!!!!!!!!!',close)
+    const close = await JoinDeposit.updateOne({ _id: contract._id }, { $set: { isClosed: true, closedAt: today } }).exec({session})
 
     // 3) Account에 입금
     // 3-1) rate를 토대로 해지 후 금액 구하기
-    const newamount = (rate + 100) * contract.amount / 100
-    //console.log(newamount)
+    const newamount = Math.round((rate + 100) * contract.amount / 100)
     // 3-2) Account currentBalance update
     const account = await Account.findOne({ studentId: contract.studentId }).exec({ session })
-    await Account.updateOne({ studentId: contract.studentId }, { $inc: { currentBalance: (+ newamount) } }, { session })
-    //console.log('account!!!!!!!!!!!',account)
+    await Account.updateOne({ studentId: contract.studentId }, { $inc: { currentBalance: (+ newamount) } }).exec({session})
 
     // 4) AccountTransaction 입금 기록
     // 4-1) AccountId 찾기
-    //console.log(account._id)
     const transferB = new AccountTransaction({ 
       accountId: account._id, 
       transactionType: 1, 
@@ -226,6 +200,22 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
       afterbalance:account.currentBalance+newamount,
       memo: "예금상품해지" })
     await transferB.save({ session })
+    //5) 예금으로 얻은 수익이 0보다 크다면, 소득세 부여
+    if (rate*contract.amount>0){
+      const classtax = await Tax.findOne({ classId: classId }).exec({session})
+      const taxrate=classtax.taxlist.income
+      const incometax=Math.round(taxrate*rate*contract.amount/10000)
+      await Account.updateOne({ studentId: contract.studentId }, { $inc: { currentBalance: (- incometax) } }).exec({session})
+      const account2 = await Account.findOne({ studentId: contract.studentId }).exec({ session })
+
+      const transferC = new AccountTransaction({ 
+        accountId: account._id, 
+        transactionType: 0, 
+        amount: incometax, 
+        afterbalance:account2.currentBalance,
+        memo: "소득세" })
+      await transferC.save({ session })
+    }
 
     await session.commitTransaction();
     session.endSession();
@@ -238,8 +228,6 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
     res.json({ success: false, err })
   }
 })
-
-
 
 /*
   ********** 거래 ***********
@@ -263,7 +251,7 @@ router.post('/transfer', async (req, res) => {
     //console.log(balance, amount)
     if (balance.currentBalance >= amount) {
       //1-2) 출금
-      const minus = await Account.updateOne({ _id: sender }, { $inc: { currentBalance: (- amount) } }, { session })
+      const minus = await Account.updateOne({ _id: sender }, { $inc: { currentBalance: (- amount) } }).exec({session})
       // 1-3) 출금 기록
       const transferA = new AccountTransaction({ 
         accountId: sender, 
@@ -275,7 +263,7 @@ router.post('/transfer', async (req, res) => {
 
       // 2) 입금 계좌 to
       // 2-1) 입금 계좌 확인& 입금
-      const plus = await Account.updateOne({ _id: receiver }, { $inc: { currentBalance: amount } }, { session })
+      const plus = await Account.updateOne({ _id: receiver }, { $inc: { currentBalance: amount } }).exec({session})
 
       // 2-2) 입금 기록 
       const transferB = new AccountTransaction({ 

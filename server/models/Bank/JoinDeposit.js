@@ -6,38 +6,28 @@
 const mongoose =require('mongoose')
 
 const joindepositSchema = mongoose.Schema({
-    productId:{/*어떤 상품을*/
+    productId:{/*가입 상품*/
         type: mongoose.Schema.Types.ObjectId, 
         ref:'Deposit',
         require:true
     },
-    studentId:{/*어떤 학생이 가입하였는가*/
+    studentId:{/*가입인*/
         type: mongoose.Schema.Types.ObjectId, 
         ref:'JoinedUser',
         require:true
     },
-    /*해지시 돈 받을 통장 - 학생1=통장1이기에 없어도 됨
-    accountId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Account',
-        require:true
-    },*/
-    amount:{/*얼마나 예금하였는가*/
+    amount:{/*예금 금액*/
         type:Number,
         require:true
     },
-    //가입일 - 항상 해지시점과 비교해서 interestRate 구하기
-    createdAt:{
+    createdAt:{/* 가입일 : 해지시점과 비교해서 interestRate를 구한다 */
         type:Date,
         default:Date.now
     },
-    //가입기간
-    
-    //해지 시점
-    closedAt:{
+    closedAt:{/*해지 시점 */
         type:Date
     },
-    isClosed:{//해지되었는가 - 해지되었다면, 한달에 한번 싹다 없애버리자
+    isClosed:{/*해지 여부 - 한달에 한번 true 없앤다*/
         type:Boolean,
         default:false
     }

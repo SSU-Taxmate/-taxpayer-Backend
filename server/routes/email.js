@@ -8,6 +8,40 @@ var appDir = path.dirname(require.main.filename);
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 
+let nodemailer = require('nodemailer');    //노드메일러 모듈을 사용할 거다!
+
+
+
+router.post('/sendEmail', async function (req, res) {
+
+
+    let user_email = req.body.email;     //받아온 email user_email에 초기화
+    console.log(user_email);
+
+
+    // 메일발송 함수
+
+    let transporter = nodemailer.createTransport({
+        service: 'naver'              //사용하고자 하는 서비스
+        , prot: 995
+        , host: 'smtp.naver.com'
+        , secure: false
+        , requireTLS: true
+        , auth: {
+            user:NODEMAILER_USER         //gmail주소입력
+            , pass: NODEMAILER_PASS                 //gmail패스워드 입력
+        }
+    });
+
+    let info = await transporter.sendMail({   
+        from: NODEMAILER_USER,             //보내는 주소 입력
+        to: user_email,                        //위에서 선언해준 받는사람 이메일
+        subject: 'TaxMate',                  //메일 제목
+        text: '회원가입안내',                       //내용
+      });
+    })
+
+
 router.post('/', isNotLoggedIn, async(req, res, next) => {
     const email = req.body.email;
     const name = req.body.name;
@@ -17,8 +51,14 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
     const confirmpassword = req.body.confirmpassword;
     const entryCode = req.body.entryCode;
 
-    console.log(req.body);
-    console.log('넘어온 이메일:' + req.body.email);
+
+    router.get('/dotenv', function(req, res, next) {
+        // DB_NAME 출력
+        res.send(process.env.DB_NAME);
+    });
+
+    //console.log(req.body);
+    //console.log('넘어온 이메일:' + req.body.email);
 
 
     // 이미 가입된 이메일인지 확인
@@ -42,7 +82,7 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
         let transporter = nodemailer.createTransport({
             service: 'Naver',
             // host: 'smtp.gmail.com', //호스트의 경우는 
-            port: 587,
+            port: 465, //네이버에서 확인가능함.
             secure: true, // true for 465, false for other ports
             auth: {
                 user: process.env.NODEMAILER_USER, //메일 서버의 계정.
@@ -75,6 +115,39 @@ router.post('/', isNotLoggedIn, async(req, res, next) => {
         // return res.status(403).send('error 설명 메시지');
     }
 });
+
+class Signup_page extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '', // 입력받은 email state값
+
+        }
+        this.sendEmail = this.sendEmail.bind(this);
+
+    }
+
+
+    sendEmail(e) {
+        e.preventDefault();
+        console.log(this.state.email);
+        const data = { //현재의 email state값을 data객체로 감쌌다
+            email: this.state.email
+        }
+
+        fetch('http://localhost:3000/sendEmail', { //sendEmail 라우터로 보내버리기
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            })
+            .then(res => res.json())
+            .then(json => {
+
+            })
+
+    }
+}
 
 
 
