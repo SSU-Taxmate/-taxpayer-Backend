@@ -3,6 +3,8 @@ import { lazy } from "react";
 // project imports
 import MainLayout from "../layout/MainLayout";
 import Loadable from "../ui-component/Loadable";
+import StockAccount from "../views/pages/stock/account/StockAccount";
+import StockMarket from "../views/pages/stock/market/StockMarket";
 
 // dashboard routing
 const DashboardDefault = Loadable(
@@ -55,7 +57,7 @@ const MainRoutes = {
       element: <DashboardDefault />,
     },
     {
-      path: "/classmain/default",
+      path: "/class",
       element: <ClassMain />,
     },
     {
@@ -65,6 +67,14 @@ const MainRoutes = {
     {
       path: "/stock/default",
       element: <Stock />,
+    },
+    {
+      path: "/students/:studentId/stock-account",
+      element: <StockAccount/>,
+    },
+    {
+      path: "/stock-market",
+      element: <StockMarket/>,
     },
     {
       path: "/congress/default",
