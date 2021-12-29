@@ -11,6 +11,7 @@ import Chart from 'react-apexcharts';
 
 // project imports
 import chartData from '../../../dashboard/Default/chart-data/bajaj-area-chart';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 //./chart-data/bajaj-area-chart
 // ===========================|| DASHBOARD DEFAULT - BAJAJ AREA CHART CARD ||=========================== //
 
@@ -19,42 +20,42 @@ const StockChart = () => {
     const customization = useSelector((state) => state.customization);
     const { navType } = customization;
 
-    const orangeDark = theme.palette.secondary[800];
+    const primaryColor = theme.palette.primary[800];
 
     useEffect(() => {
         const newSupportChart = {
             ...chartData.options,
-            colors: [orangeDark],
+            colors: [primaryColor],
             tooltip: {
                 theme: 'light'
             }
         };
         ApexCharts.exec(`support-chart`, 'updateOptions', newSupportChart);
-    }, [navType, orangeDark]);
+    }, [navType, primaryColor]);
 
     return (
-        <Card sx={{ bgcolor: 'secondary.light' }}>
-            <Grid container sx={{ p: 2, pb: 0, color: '#fff' }}>
+        <Card >
                 <Grid item xs={12}>
                     <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item>
-                            <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.dark }}>
-                                Bajaj Finery
+                        <Grid item xs={9}>
+                            <Typography variant="h3" sx={{  fontWeight:"bold" }} >
+                                코코넛
                             </Typography>
                         </Grid>
-                        <Grid item>
-                            <Typography variant="h4" sx={{ color: theme.palette.grey[800] }}>
+                    <Grid item xs={1}>
+
+                    <Typography variant="subtitle2" sx={{ color: theme.palette.grey[800] ,pt:1}} align='end'>
+                    <ArrowDropUpIcon sx={{ color: 'error.main'}}  />
+                    </Typography>
+                </Grid>
+                        <Grid item xs={2} align='end'>
+                            <Typography variant="h4" sx={{ color: theme.palette.grey[800] }} align='center'>
                                 $1839.00
                             </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="subtitle2" sx={{ color: theme.palette.grey[800] }}>
-                        10% Profit
-                    </Typography>
-                </Grid>
-            </Grid>
+               
             <Chart {...chartData} />
         </Card>
     );

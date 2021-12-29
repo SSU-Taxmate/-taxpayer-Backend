@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import '../../../css/custom.css'
+
 
 // material-ui
 import { useTheme } from "@mui/material/styles";
@@ -11,7 +13,8 @@ import {
   Paper,
   Pagination,
   Button,
-  Box
+  Box,
+  Typography
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { gridSpacing } from "../../../store/constant";
@@ -53,6 +56,7 @@ function Stock() {
       sx={{ justifyContent: "space-between" }}
       xs={12}
     >
+      
       <Grid item xs={12}>
         <Grid container justifyContent="flex-end">
           <Grid item>
@@ -90,37 +94,20 @@ function Stock() {
       </Grid>
 
       {/*  홍길동님의 주식 */}
-      <Grid
-        container direction="row"
-        style={{ display: "flex", justifyContent: "space-around" }}
-      >
-        <Grid item style={{ padding: '5%', fontWeight: "bold", display: "flex", fontSize: "36px" }}>
-          <Grid
-            item
-            style={{
-              textAlign: "right",
-              width: "130px",
-              backgroundSize: "120px 30px",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "left 30%",
-              backgroundImage: `url(${blueBox})`,
-            }}
-          >
-            홍길동
-          </Grid>
-          <Grid item sx={{ paddingRight: "15px" }}>님의 주식</Grid>
-        </Grid>
-        <Grid item style={{ padding: '5%', fontWeight: "bold", display: "flex" }}>
-          <Grid item sx={{ paddingRight: "15px", fontSize: "14px" }}>
-            평가금액
-          </Grid>
-          <Grid item style={{ fontSize: "36px" }}>1000000000</Grid>
-        </Grid>
-      </Grid>
 
+      <Grid  container spacing={4} sx={{marginTop:3}}>
 
-      {/*자세히보러가기*/}
-      <Grid
+<Grid item xs={6} >
+    <div className="custom-title"><span className="half_highlight">&nbsp;&nbsp;&nbsp;&nbsp;홍길동</span>님의 주식현황</div>
+</Grid>
+<Grid item xs={2}>
+    <Typography variant='subtitle2' sx={{marginTop: '10px',marginBottom: '10px'}}  align='end'>평가금액</Typography>
+</Grid>
+<Grid item xs={4}>
+  <div className="custom-title">100,000</div>
+</Grid>
+ {/*자세히보러가기*/}
+ <Grid
         item
         style={{ display: "flex", justifyContent: 'flex-end', width: "96%" }}
       >
@@ -136,11 +123,11 @@ function Stock() {
         </Link>
       </Grid>
 
-      {/*구분선*/}
-      <Grid
+ {/*구분선*/}
+ <Grid
         item
         xs={12}
-        style={{ paddingTop: "3px", paddingBottom: 20, display: "flex", justifyContent: 'center' }}
+        style={{ paddingTop: "3px", paddingBottom: 20, display: "flex", justifyContent: 'center',margin:'10px',marginTop:'20px'}}
       >
         <Divider
           sx={{
@@ -149,33 +136,43 @@ function Stock() {
         />
       </Grid>
 
+
+
+</Grid>
+
+     
+     
       {/*표*/}
       <Grid container direction="row" style={{ display: "flex", justifyContent: "space-around" }}>
-        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
-          <Grid item sx={{ paddingRight: "15px" }}>
-            <SecondHeaderTitle>총매입</SecondHeaderTitle>
-          </Grid>
-          <Grid item ><SecondHeaderData>11111111</SecondHeaderData></Grid>
+        <Grid item xs={6} md={3}>
+            <div className="custom-title-item">총 매입</div>
         </Grid>
-        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
-          <Grid item sx={{ paddingRight: "15px" }}>
-            <SecondHeaderTitle>추정자산</SecondHeaderTitle>
-          </Grid>
-          <Grid item style={{ fontSize: "36px" }}><SecondHeaderData>15000000000</SecondHeaderData></Grid>
+        <Grid item xs={6} md={3} >
+            <div className="custom-title-item">100,000</div>
+            
+        </Grid>
+        <Grid item xs={6} md={3}>
+            <div className="custom-title-item">추정자산</div>
+        </Grid>
+        <Grid item xs={6} md={3} >
+            <div className="custom-title-item">100,000</div>
+            
         </Grid>
       </Grid>
       <Grid container direction="row" style={{ display: "flex", justifyContent: "space-around" }}>
-        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
-          <Grid item sx={{ paddingRight: "15px" }}>
-            <SecondHeaderTitle>총평가</SecondHeaderTitle>
-          </Grid>
-          <Grid item ><SecondHeaderData>11111111</SecondHeaderData></Grid>
+        <Grid item xs={6} md={3}>
+            <div className="custom-title-item">총 평가</div>
         </Grid>
-        <Grid item style={{ padding: '5px', fontWeight: "bold", display: "flex" }}>
-          <Grid item sx={{ paddingRight: "15px" }}>
-            <SecondHeaderTitle>평가손익</SecondHeaderTitle>
-          </Grid>
-          <Grid item style={{ fontSize: "36px" }}><SecondHeaderData>2222222222</SecondHeaderData></Grid>
+        <Grid item xs={6} md={3} >
+            <div className="custom-title-item">100,000</div>
+            
+        </Grid>
+        <Grid item xs={6} md={3}>
+            <div className="custom-title-item">평가손익</div>
+        </Grid>
+        <Grid item xs={6} md={3} >
+            <div className="custom-title-item">100,000</div>
+            
         </Grid>
       </Grid>
 

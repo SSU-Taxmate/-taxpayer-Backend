@@ -32,9 +32,6 @@ function StockMarket() {
     return (
         <div>
             <Grid container direction="column" sx={{ justifyContent: "center" }}>
-                <Grid container direction="row" sx={{ justifyContent: "center" }}>
-                    <StockLine company={{ "name": "코코넛2", stock: "2222" }} />
-                </Grid>
                 <Box marginTop="40px"marginBottom="40px">
                     <StockChart />
                 </Box>

@@ -1,0 +1,74 @@
+.half_highlight {
+    background:linear-gradient(to top, #CCE3FF 65%, transparent 35%);}
+.custom-title{
+    font-size: x-large;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.custom-title-item{
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.account{
+
+    background: linear-gradient(to bottom right, #cce3ff, pink);
+    height: 175px;
+    align-items : center;
+
+}
+
+.account-record-item{
+    padding: 15px 20px;
+}
+
+
+
+/* Rectangle 7 */
+
+.primary-graph-light{
+position: absolute;
+width: 15px;
+margin:1;
+
+background: #CCE3FF;
+mix-blend-mode: normal;
+border-radius: 5px;
+}
+
+
+/* Rectangle 12 */
+
+.primary-graph{
+position: absolute;
+width: 15px;
+
+
+background: #2C98F0;
+mix-blend-mode: normal;
+border-radius: 5px;
+
+}
+
+
+/* Line 9 */
+
+.primary-graph-average{
+position: absolute;
+width: 750px;
+height: 0px;
+
+border: 3px dashed #C4C4C4;
+}
+
+.diagonal-gradient {
+   
+  }
