@@ -33,6 +33,7 @@ const ClassMain = Loadable(
 );
 const Bank = Loadable(lazy(() => import("../views/Bank")));
 const BankStatement = Loadable(lazy(() => import("../views/BankStatement")));
+const Deposit = Loadable(lazy(() => import("../views/Deposit")));
 
 
 const Stock = Loadable(lazy(() => import("../views/pages/stock/Stock")));
@@ -62,10 +63,7 @@ const MainRoutes = {
       path: "/class",
       element: <ClassMain />,
     },
-    {
-      path: "/bank/default",
-      element: <Bank />,
-    },
+  
     {
       path: "/stock/default",
       element: <Stock />,
@@ -120,12 +118,16 @@ const MainRoutes = {
       element: <SamplePage />,
     },
     {
-      path: "/bank",
+      path: "/bank/default",
       element: <Bank />,
     },
     {
       path: "/bankstatement",
       element: <BankStatement />,
+    },
+    {
+      path: "/deposit/default",
+      element: <Deposit />,
     },
   ],
 };

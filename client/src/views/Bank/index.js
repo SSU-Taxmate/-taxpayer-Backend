@@ -10,8 +10,8 @@ import DonutChart from './DonutChart'
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const Bank = () => (
-  
-        <Grid  container spacing={4}>
+  <div>
+        <Grid  container spacing={4} sx={{marginTop:5}}>
 
         <Grid item xs={6} >
             <div className="custom-title"><span className="half_highlight">&nbsp;&nbsp;&nbsp;&nbsp;홍길동</span>님의 자산현황</div>
@@ -51,6 +51,9 @@ const Bank = () => (
         </Grid>
     
         
+</Grid>
+
+<Grid  container spacing={4} sx={{marginTop:10}}>
 
         <Grid item xs={6} >
             <div className="custom-title">지출 · 소비</div>
@@ -90,22 +93,19 @@ const Bank = () => (
         <Grid item xs={0} md={2}>
         </Grid>
 
-        <Grid item xs={0} md={4}>
-        </Grid>
-        <Grid item xs={12} md={4}>
+   
+        <Grid item xs={12} md={6}>
             <DonutChart/>
         </Grid>
-        <Grid item xs={0} md={4}>
-        </Grid>
 
-        <Grid item xs={0} md={3}>
-        </Grid>
         <Grid item xs={12} md={6}>
             <ColumChart/>
         </Grid>
-        <Grid item xs={0} md={3}>
+
+
         </Grid>
-        </Grid>
+
+        </div>
     
 );
 

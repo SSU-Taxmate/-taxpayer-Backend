@@ -1,3 +1,4 @@
+import { margin } from "@mui/system";
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 
@@ -7,11 +8,18 @@ export default class DonutChart extends React.Component {
 
       this.state = {
       
-        series: [44, 55, 41, 17, 15],
+        series: [44, 55, 41, 17],
         options: {
           chart: {
             type: 'donut',
           },
+          legend:{  
+            show: false,
+          },
+        fill: {
+            colors: ['#1C5085', '#3E80CE','#64D5FF','#54A0FF', ]
+          },
+
           responsive: [{
             breakpoint: 480,
             options: {
@@ -23,19 +31,18 @@ export default class DonutChart extends React.Component {
               }
             }
           }]
-        },
-      
-      
-      };
-    }
+        }
+        }
+       
 
-  
+      }
+      
 
     render() {
       return (
         
 
-  <div id="chart">
+  <div id="chart" style={{padding:2, marginTop:30}}>
 <Chart options={this.state.options} series={this.state.series} type="donut" />
 </div>
 

@@ -8,13 +8,20 @@ export default class ColumChart extends React.Component {
               this.state = {
               
                 series: [{
-                  name: 'Net Profit',
-                  data: [44, 55, 57, 56, 61, 58, 63]
-                }, ],
+                  name: '지출',
+                  data: [0, 55, 57, 56, 61, 58, 63]
+                },
+              
+                {
+                  name: '지출',
+                  data: [44,0,0,0,0,0,0]
+                },
+                ],
                 options: {
                   chart: {
                     type: 'bar',
-                    height: 350
+                    height: 350,
+                    stacked: true,
                   },
                   plotOptions: {
                     bar: {
@@ -26,25 +33,36 @@ export default class ColumChart extends React.Component {
                   dataLabels: {
                     enabled: false
                   },
-                  stroke: {
-                    show: true,
-                    width: 2,
-                    colors: ['transparent']
-                  },
+                
                   xaxis: {
                     categories: ['월', '화','수','목','금','토','일'],
+                    style: {
+
+                      fontWeight: 'bold',
                   },
+                  },
+
+                  yaxis: {  labels: {
+                    show: false,}},
                   
                   fill: {
-                    opacity: 1
+                    colors: ['#CCE3FF', '#2C98F0']
                   },
-                  tooltip: {
-                    y: {
-                      formatter: function (val) {
-                        return "$ " + val + " thousands"
+                  grid: {
+                    show: false,
+                    xaxis: {
+                      lines: {
+                          show: false
                       }
-                    }
-                  }
+                  },   
+                    row: {
+                    
+                        opacity: 0
+                    }, },
+
+                    legend: {
+                      show: false,}
+                 
                 },
               
               
@@ -58,7 +76,7 @@ export default class ColumChart extends React.Component {
                 
     
           <div id="chart">
-      <Chart options={this.state.options} series={this.state.series} type="bar" height={200} />
+      <Chart options={this.state.options} series={this.state.series} type="bar" height={250} />
     </div>  );
         }
       }

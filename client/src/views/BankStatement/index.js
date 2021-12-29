@@ -52,7 +52,8 @@ const record = data.slice((page - 1) * 10, page * 10).map((i,index) =>
 <Card>
       <CardContent>
      <Account amount={1000000}/>
-     {record}
+     
+     <div style={{marginTop:40, m:5}}>{record}</div>
 
 
      <Pagination
@@ -61,7 +62,7 @@ const record = data.slice((page - 1) * 10, page * 10).map((i,index) =>
         count={Math.ceil(data.length / 10)}
         color="primary"
         onChange={pageChange}
-        sx={{ justifyContent:'center', display:"flex", m:'10px'}}
+        sx={{ justifyContent:'center', display:"flex", m:'10px',marginTop:5}}
    
         />
       </CardContent>
