@@ -18,11 +18,6 @@ const joineduserSchema = mongoose.Schema({
         default:''
     },
 
-    /*creditRating - */
-    /*account - JoinedUser._id로 Account에서 확인*/
-    /* holdingStocks 
-    - JoinedUser._id로 StockAacount에서 확인*/
-   
 })
 const JoinedUser=mongoose.model('JoinedUser',joineduserSchema);
 module.exports = { JoinedUser}
