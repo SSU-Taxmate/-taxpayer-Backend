@@ -1,18 +1,22 @@
 # Taxpayer😊
 비대면 경제 & 사회 교육을 위한 플랫폼
 
-# Collaborator🙅‍♀️
+## 시연 (YOUTUBE)
+[![Video Label](http://img.youtube.com/vi/jm-642W1Xgw/0.jpg)](https://youtu.be/jm-642W1Xgw?t=0)
+
+## Collaborator🙅‍♀️
 - Kim Seung Joo [🏠️](https://github.com/SeungJooKim)
 - Park Eun Jeong [🏠️](https://github.com/Eundms)
 - Bae mi hea [🏠️](https://github.com/mihea1206)
 - Choi si eon [🏠️](https://github.com/noino0819)
 
-# Reference
+## Reference
 1. 세금내는 아이들 (YOUTUBE) : [💰](https://www.youtube.com/channel/UC_yS9qx6-ZxS67HKPyWeXDg)
 
 <br>
 
-# 브랜치 관리 방법
+# 협업
+## 브랜치 관리 방법
  - master : 모든 기능이 구현 완료 되었을 때 master 브랜치에 반영한다.
  - develop : 각 브랜치에서 작업이 완료 된 사항을 develop 브랜치에 반영한다. 
  - 각자 작업할 기능들은 새로 브랜치를 생성하여 작업하며 브랜치명은 feature/기능명으로 한다. 
@@ -21,7 +25,7 @@
 
 <br>
 
-# 커밋메세지 작성 방법
+## 커밋메세지 작성 방법
 
 ```
  타입(type): 제목 (subject)
@@ -43,7 +47,7 @@
 
 <br>
 
-## 커밋메세지 명령어
+### 커밋메세지 명령어
 - FIX : 올바르지 않은 동작을 고친 경우에 사용
 - ADD : 코드, 테스트, 예제 ,문서 등 추가한 경우
 - REMOVE : 코드의 삭제가 있을 때 사용
@@ -53,5 +57,5 @@
 
 <br>
 
-# 이슈 작성방법
+## 이슈 작성방법
 - 이슈 작성 템플릿을 기반으로 작성한다. (label도 함께)
