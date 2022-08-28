@@ -1,5 +1,12 @@
 # Taxpayer😊
+
 비대면 경제 & 사회 교육을 위한 플랫폼
+
+## 사용 기술 및 도구
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+
 
 ## 시연 (YOUTUBE)
 [![Video Label](http://img.youtube.com/vi/jm-642W1Xgw/0.jpg)](https://youtu.be/jm-642W1Xgw?t=0)
