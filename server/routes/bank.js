@@ -11,6 +11,11 @@ const { JoinDeposit } = require('../models/Bank/JoinDeposit');
 
 const router = express.Router();
 
+const TRANSACTION_TYPE = {
+  WITHDRAWAL: 0, // 출금
+  DEPOSIT: 1    // 입금
+};
+
 /*
   ============= 금융 상품 (공통) =============
 */
@@ -138,7 +143,7 @@ router.post('/deposits/:id/join', async (req, res) => {
     //5) 계좌 거래 내역에 출금으로 추가
     const transferA = new AccountTransaction({
         accountId: account._id, 
-        transactionType: 0, 
+        transactionType: TRANSACTION_TYPE.WITHDRAWAL, 
         amount: amount, 
         memo: '예금상품가입',
         afterbalance:account.currentBalance - amount})
@@ -146,9 +151,7 @@ router.post('/deposits/:id/join', async (req, res) => {
 
     await session.commitTransaction();
     session.endSession();
-    res.status(200).json({
-      success: true
-    })
+    res.status(200).json({success: true})
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
@@ -196,7 +199,7 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
     // 4-1) AccountId 찾기
     const transferB = new AccountTransaction({ 
       accountId: account._id, 
-      transactionType: 1, 
+      transactionType: TRANSACTION_TYPE.DEPOSIT, 
       amount: newamount, 
       afterbalance:account.currentBalance+newamount,
       memo: "예금상품해지" })
@@ -215,7 +218,7 @@ router.delete('/deposits/:id/join/:joinId', async (req, res) => {
       const account2 = await Account.findOne({ studentId: contract.studentId }).exec({ session })
       const transferC = new AccountTransaction({ 
         accountId: account._id, 
-        transactionType: 0, 
+        transactionType: TRANSACTION_TYPE.WITHDRAWAL, 
         amount: incometax, 
         afterbalance:account2.currentBalance - incomeTax,
         memo: "소득세" })
@@ -260,7 +263,7 @@ router.post('/transfer', async (req, res) => {
       // 1-3) 출금 기록
       const transferA = new AccountTransaction({ 
         accountId: sender, 
-        transactionType: 0, 
+        transactionType: TRANSACTION_TYPE.WITHDRAWAL, 
         amount: amount, 
         afterbalance:balance.currentBalance-amount,
         memo: '계좌이체' })
@@ -273,7 +276,7 @@ router.post('/transfer', async (req, res) => {
       // 2-2) 입금 기록 
       const transferB = new AccountTransaction({ 
         accountId: receiver,
-        transactionType: 1,
+        transactionType: TRANSACTION_TYPE.DEPOSIT,
         amount: amount,
         afterbalance:balance.currentBalance+amount,
         memo:'계좌이체'
