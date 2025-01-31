@@ -64,40 +64,45 @@ router.put('/deposits', (req, res) => {
     2) JoinDeposit에 가입 중인 사람(isClosed:false)이 없다면, 바로 즉시 2-1)JoinDeposit에서 {productId:req.params.id}로 삭제 2-2)Deposit에서 {_id:req.params.id}로 삭제
 */
 router.delete('/deposits/:id', async (req, res) => {
-  const depositId = req.params.id
+  const depositId = req.params.id;
 
   const session = await startSession();
   try {
     session.startTransaction();
-    const notclosed = await JoinDeposit.countDocuments({ productId: depositId, isClosed: false }).exec({ session })
 
-    if (notclosed <= 0) {//예금 상품에 가입 중인 사람이 없다면
-      // 삭제 가능
-      const delJoinDeposit = await JoinDeposit.deleteOne({ productId: depositId }).exec({session})
+    // 트랜잭션 내에서 가입 중인 학생이 있는지 확인
+    const hasJoiners = await JoinDeposit.findOne({ productId: depositId, isClosed: false }).session(session);
 
-      const delDeposit = await Deposit.deleteOne({ _id: depositId }).exec({session})
+    if (!hasJoiners) {
+      // 예금 상품에 가입 중인 사람이 없다면 삭제 가능
+      await JoinDeposit.deleteMany({ productId: depositId }).session(session);
+      await Deposit.deleteOne({ _id: depositId }).session(session);
+
       await session.commitTransaction();
-
       session.endSession();
-      res.status(200).json({
+
+      return res.status(200).json({
         success: true,
         message: '성공적으로 상품 삭제가 완료되었습니다.'
-      })
-    } else {//예금 상품에 가입중인 사람이 있다면
-      const allow = await Deposit.updateOne({ _id: depositId }, { $set: { joinPossible: false } }).exec({session})
+      });
+    } else {
+      // 예금 상품에 가입 중인 사람이 있으면 상태만 변경
+      await Deposit.updateOne({ _id: depositId }, { $set: { joinPossible: false } }).session(session);
+
       await session.commitTransaction();
       session.endSession();
-      res.status(200).json({
+
+      return res.status(200).json({
         success: true,
-        message: '가입 기간이 남은 학생이 있어서 실패하였습니다. 더이상 가입 불가능하도록 하였습니다..'
-      })
+        message: '가입 기간이 남은 학생이 있어서 실패하였습니다. 더 이상 가입 불가능하도록 설정하였습니다.'
+      });
     }
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
-    res.json({ success: false, err })
+    res.status(500).json({ success: false, err: err.message });
   }
-})
+});
 
 /*
   ************ 금융 상품 가입/해지(학생) *************
